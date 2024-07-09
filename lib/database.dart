@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:flutter/widgets.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
+import 'package:intl/intl.dart';
+
 
 void main() async {
   // Avoid errors caused by flutter upgrade.
@@ -20,17 +22,17 @@ void main() async {
       return db.execute(
         'CREATE TABLE registers('
         'id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, '
-        'username VARCHAR(255) NOT NULL, '
-        'password VARCHAR(255) NOT NULL, '
-        'nama_lengkap VARCHAR(255) NOT NULL, '
-        'gambar VARCHAR(255) NOT NULL, '
-        'tempat_lahir VARCHAR(255) NOT NULL, '
-        'tanggal_lahir DATE NOT NULL, '
-        'alamat_lengkap VARCHAR(255) NOT NULL, '
-        'agama VARCHAR(255) NOT NULL, '
-        'jenis_pekerjaan VARCHAR(255) NOT NULL, '
-        'jenis_kelamin VARCHAR(255) NOT NULL, '
-        'no_telepon BIGINT NOT NULL, '
+        'username VARCHAR(255) NOT NULL,'
+        'password VARCHAR(255) NOT NULL,'
+        'nama_lengkap VARCHAR(255) NOT NULL,'
+        'gambar VARCHAR(255) NOT NULL,'
+        'tempat_lahir VARCHAR(255) NOT NULL,'
+        'tanggal_lahir DATE NOT NULL,'
+        'alamat_lengkap VARCHAR(255) NOT NULL,'
+        'agama VARCHAR(255) NOT NULL,'
+        'jenis_pekerjaan VARCHAR(255) NOT NULL,'
+        'jenis_kelamin VARCHAR(255) NOT NULL,'
+        'no_telepon BIGINT NOT NULL,'
         'no_rekening BIGINT NOT NULL'
         ')',
       );
@@ -61,104 +63,123 @@ void main() async {
     // Get a reference to the database.
     final db = await database;
 
-    // Query the table for all the dogs.
+    // Query the table for all the registers.
     final List<Map<String, Object?>> registerMaps = await db.query('registers');
 
-    // Convert the list of each dog's fields into a list of `Dog` objects.
+  // Convert the list of each register's fields into a list of `Register` objects.
     return [
       for (final {
-            'id': id as int,
-            'name': name as String,
-            'age': age as int,
-          } in registerMaps)
-        Register(id: id, name: name, age: age),
+        'id': id as int,
+        'username': username as String,
+        'password': password as String,
+        'nama_lengkap': namaLengkap as String,
+        'gambar': gambar as String,
+        'tempat_lahir': tempatLahir as String,
+        'tanggal_lahir': tanggalLahir as String,
+        'alamat_lengkap': alamatLengkap as String,
+        'agama': agama as String,
+        'jenis_pekerjaan': jenisPekerjaan as String,
+        'jenis_kelamin': jenisKelamin as String,
+        'no_telepon': noTelepon as int,
+        'no_rekening': noRekening as int,
+      } in registerMaps)
+        Register(
+          id: id,
+          username: username,
+          password: password,
+          namaLengkap: namaLengkap,
+          gambar: gambar,
+          tempatLahir: tempatLahir,
+          tanggalLahir: DateTime.parse(tanggalLahir),
+          alamatLengkap: alamatLengkap,
+          agama: agama,
+          jenisPekerjaan: jenisPekerjaan,
+          jenisKelamin: jenisKelamin,
+          noTelepon: noTelepon,
+          noRekening: noRekening,
+        ),
     ];
   }
-
-  Future<void> updateRegister(Register register) async {
-    // Get a reference to the database.
-    final db = await database;
-
-    // Update the given Dog.
-    await db.update(
-      'registers',
-      register.toMap(),
-      // Ensure that the Dog has a matching id.
-      where: 'id = ?',
-      // Pass the Dog's id as a whereArg to prevent SQL injection.
-      whereArgs: [register.id],
-    );
-  } 
-
-  Future<void> deleteRegister(int id) async {
-    // Get a reference to the database.
-    final db = await database;
-
-    // Remove the Dog from the database.
-    await db.delete(
-      'registers',
-      // Use a `where` clause to delete a specific dog.
-      where: 'id = ?',
-      // Pass the Dog's id as a whereArg to prevent SQL injection.
-      whereArgs: [id],
-    );
-  }
-
-  // Create a Dog and add it to the dogs table
-  var fido = Register(
+  
+  // Create a Register and add it to the registers table
+  var newUser = Register(
     id: 0,
-    name: 'Fido',
-    age: 35,
+    username: 'Fido',
+    password: 'password123',
+    namaLengkap: 'Fido Dog',
+    gambar: 'assets/my_image.jpg',
+    tempatLahir: 'Jakarta',
+    tanggalLahir: DateTime.parse('2000-02-29 00:00:00'),
+    alamatLengkap: 'Jl. Jend. Sudirman No.1, Jakarta',
+    agama: 'Islam',
+    jenisPekerjaan: 'Software Engineer',
+    jenisKelamin: 'Pria',
+    noTelepon: int.parse('081233442211'),
+    noRekening: int.parse('1234567890'),
   );
 
-  await insertRegister(fido);
+  await insertRegister(newUser);
 
-  // Now, use the method above to retrieve all the dogs.
-  print(await registers()); // Prints a list that include Fido.
-
-  // Update Fido's age and save it to the database.
-  fido = Register(
-    id: fido.id,
-    name: fido.name,
-    age: fido.age + 7,
-  );
-  await updateRegister(fido);
-
-  // Print the updated results.
-  print(await registers()); // Prints Fido with age 42.
-
-  // Delete Fido from the database.
-  await deleteRegister(fido.id);
-
-  // Print the list of dogs (empty).
-  print(await registers());
+  // Now, use the method above to retrieve all the registers.
+  print(await registers()); // Prints a list that includes newUser.
 }
 
 class Register {
   final int id;
-  final String name;
-  final int age;
+  final String username;
+  final String password;
+  final String namaLengkap;
+  final String gambar;
+  final String tempatLahir;
+  final DateTime tanggalLahir;
+  final String alamatLengkap;
+  final String agama;
+  final String jenisPekerjaan;
+  final String jenisKelamin;
+  final int noTelepon;
+  final int noRekening;
 
   Register({
     required this.id,
-    required this.name,
-    required this.age,
+    required this.username,
+    required this.password,
+    required this.namaLengkap,
+    required this.gambar,
+    required this.tempatLahir,
+    required this.tanggalLahir,
+    required this.alamatLengkap,
+    required this.agama,
+    required this.jenisPekerjaan,
+    required this.jenisKelamin,
+    required this.noTelepon,
+    required this.noRekening,
   });
 
-  // Convert a Dog into a Map. The keys must correspond to the names of the
+  // Convert a Register into a Map. The keys must correspond to the names of the
   // columns in the database.
   Map<String, Object?> toMap() {
     return {
       'id': id,
-      'name': name,
-      'age': age,
+      'username': username,
+      'password': password,
+      'nama_lengkap': namaLengkap,
+      'gambar': gambar,
+      'tempat_lahir': tempatLahir,
+      // Format tanggalLahir as 'yyyy-MM-dd' to ignore time information
+      'tanggal_lahir': DateFormat('yyyy-MM-dd').format(tanggalLahir),
+      'alamat_lengkap': alamatLengkap,
+      'agama': agama,
+      'jenis_pekerjaan': jenisPekerjaan,
+      'jenis_kelamin': jenisKelamin,
+      'no_telepon': noTelepon,
+      'no_rekening': noRekening,
     };
   }
 
   // Implement toString to make it easier to see information about
-  // each dog when using the print statement.
+  // each register when using the print statement.
   @override
   String toString() {
-    return 'Register{id: $id, name: $name, age: $age}';
+    return 'Register{id: $id, username: $username, password: $password, namaLengkap: $namaLengkap, gambar: $gambar, tempatLahir: $tempatLahir, tanggalLahir: $tanggalLahir, alamatLengkap: $alamatLengkap, agama: $agama, jenisPekerjaan: $jenisPekerjaan, jenisKelamin: $jenisKelamin, noTelepon: $noTelepon, noRekening: $noRekening}';
   }
 }
