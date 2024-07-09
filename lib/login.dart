@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'database_helper.dart';
 import 'register.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -8,6 +9,43 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
+  String? _username;
+  String? _password;
+
+  void _submitForm() async {
+    if (_formKey.currentState!.validate()) {
+      _formKey.currentState!.save();
+      final dbHelper = DatabaseHelper.instance;
+      final registers = await dbHelper.getRegisters();
+      try {
+        final user = registers.firstWhere(
+          (register) =>
+              register.username == _username && register.password == _password,
+          orElse: () => throw Exception('User not found'),
+        );
+        // Process login with `user`
+        // Navigate to another screen, for example
+        Navigator.pushReplacementNamed(context, '/home', arguments: user);
+      } catch (e) {
+        // Display an error message if user is not found
+        showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: Text('Login Failed'),
+            content: Text('Invalid username or password'),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text('OK'),
+              ),
+            ],
+          ),
+        );
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -98,6 +136,15 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                             style: TextStyle(
                                 color: Colors.black, fontFamily: 'Ubuntu'),
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Username tidak boleh kosong';
+                              }
+                              return null;
+                            },
+                            onSaved: (value) {
+                              _username = value;
+                            },
                           ),
                           SizedBox(height: 15),
                           Text(
@@ -127,6 +174,15 @@ class _LoginScreenState extends State<LoginScreen> {
                             obscureText: true,
                             style: TextStyle(
                                 color: Colors.black, fontFamily: 'Ubuntu'),
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Password tidak boleh kosong';
+                              }
+                              return null;
+                            },
+                            onSaved: (value) {
+                              _password = value;
+                            },
                           ),
                         ],
                       ),
@@ -139,11 +195,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 height: 45,
                 width: 280,
                 child: ElevatedButton(
-                  onPressed: () {
-                    if (_formKey.currentState!.validate()) {
-                      // Process login
-                    }
-                  },
+                  onPressed: _submitForm,
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Color(0xFF2F5061),
                     padding: EdgeInsets.symmetric(vertical: 10.0),

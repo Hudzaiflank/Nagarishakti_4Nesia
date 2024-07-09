@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'database_helper.dart';
 import 'login.dart';
 
 class RegistrationScreen extends StatefulWidget {
@@ -10,6 +12,16 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   final _formKey = GlobalKey<FormState>();
   DateTime? _selectedDate;
   String? _gender;
+  String? _username;
+  String? _password;
+  String? _namaLengkap;
+  String? _gambar = 'default_image_path';  // Placeholder for image path
+  String? _tempatLahir;
+  String? _alamatLengkap;
+  String? _agama;
+  String? _jenisPekerjaan;
+  int? _noTelepon;
+  int? _noRekening;
 
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
@@ -18,17 +30,43 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       firstDate: DateTime(1900),
       lastDate: DateTime(2101),
     );
-    if (picked != null && picked != _selectedDate)
+    if (picked != null && picked != _selectedDate) {
       setState(() {
         _selectedDate = picked;
       });
+    }
+  }
+
+  void _submitForm() async {
+    if (_formKey.currentState!.validate()) {
+      _formKey.currentState!.save();
+
+      final newUser = Register(
+        username: _username!,
+        password: _password!,
+        namaLengkap: _namaLengkap!,
+        gambar: _gambar!,
+        tempatLahir: _tempatLahir!,
+        tanggalLahir: _selectedDate!,
+        alamatLengkap: _alamatLengkap!,
+        agama: _agama!,
+        jenisPekerjaan: _jenisPekerjaan!,
+        jenisKelamin: _gender!,
+        noTelepon: _noTelepon!,
+        noRekening: _noRekening!,
+      );
+
+      final dbHelper = DatabaseHelper.instance;
+      await dbHelper.insertRegister(newUser);
+
+      Navigator.pop(context);
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor:
-          Color(0xFFECF5F6), // Menambahkan properti backgroundColor
+      backgroundColor: Color(0xFFECF5F6),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -89,348 +127,62 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   key: _formKey,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Text(
-                        'Nama Lengkap',
-                        style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black,
-                            fontFamily: 'Ubuntu'),
+                    children: [
+                      _buildTextField(
+                        label: 'Username',
+                        onSave: (value) => _username = value,
                       ),
-                      SizedBox(height: 5),
-                      TextFormField(
-                        decoration: InputDecoration(
-                          hintText: 'tulis nama lengkap anda',
-                          hintStyle: TextStyle(
-                              fontStyle: FontStyle.italic,
-                              fontWeight: FontWeight.w300,
-                              fontFamily: 'Ubuntu'),
-                          filled: true,
-                          fillColor: Colors.white,
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(7.0),
-                            borderSide: BorderSide(color: Colors.white),
-                          ),
-                        ),
-                        style: TextStyle(
-                            color: Colors.black, fontFamily: 'Ubuntu'),
-                      ),
-                      SizedBox(height: 15),
-                      Text(
-                        'Tempat Lahir',
-                        style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black,
-                            fontFamily: 'Ubuntu'),
-                      ),
-                      SizedBox(height: 5),
-                      TextFormField(
-                        decoration: InputDecoration(
-                          hintText: 'tempat lahir',
-                          hintStyle: TextStyle(
-                              fontStyle: FontStyle.italic,
-                              fontWeight: FontWeight.w300,
-                              fontFamily: 'Ubuntu'),
-                          filled: true,
-                          fillColor: Colors.white,
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(7.0),
-                            borderSide: BorderSide(color: Colors.white),
-                          ),
-                        ),
-                        style: TextStyle(
-                            color: Colors.black, fontFamily: 'Ubuntu'),
-                      ),
-                      SizedBox(height: 15),
-                      Text(
-                        'Tanggal Lahir',
-                        style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black,
-                            fontFamily: 'Ubuntu'),
-                      ),
-                      SizedBox(height: 5),
-                      InkWell(
-                        onTap: () => _selectDate(context),
-                        child: InputDecorator(
-                          decoration: InputDecoration(
-                            filled: true,
-                            fillColor: Colors.white,
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(7.0),
-                              borderSide: BorderSide(color: Colors.white),
-                            ),
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                _selectedDate == null
-                                    ? ''
-                                    : "${_selectedDate!.toLocal()}"
-                                        .split(' ')[0],
-                                style: TextStyle(
-                                    color: Colors.black, fontFamily: 'Ubuntu'),
-                              ),
-                              Icon(Icons.calendar_today),
-                            ],
-                          ),
-                        ),
-                      ),
-                      SizedBox(height: 15),
-                      Text(
-                        'Alamat Lengkap',
-                        style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black,
-                            fontFamily: 'Ubuntu'),
-                      ),
-                      SizedBox(height: 5),
-                      TextFormField(
-                        maxLines: 3,
-                        decoration: InputDecoration(
-                          hintText: 'alamat sesuai KTP',
-                          hintStyle: TextStyle(
-                              fontStyle: FontStyle.italic,
-                              fontWeight: FontWeight.w300,
-                              fontFamily: 'Ubuntu'),
-                          filled: true,
-                          fillColor: Colors.white,
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(7.0),
-                            borderSide: BorderSide(color: Colors.white),
-                          ),
-                        ),
-                        style: TextStyle(
-                            color: Colors.black, fontFamily: 'Ubuntu'),
-                      ),
-                      SizedBox(height: 15),
-                      Text(
-                        'Agama',
-                        style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black,
-                            fontFamily: 'Ubuntu'),
-                      ),
-                      SizedBox(height: 5),
-                      TextFormField(
-                        decoration: InputDecoration(
-                          hintText: 'agama',
-                          hintStyle: TextStyle(
-                              fontStyle: FontStyle.italic,
-                              fontWeight: FontWeight.w300,
-                              fontFamily: 'Ubuntu'),
-                          filled: true,
-                          fillColor: Colors.white,
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(7.0),
-                            borderSide: BorderSide(color: Colors.white),
-                          ),
-                        ),
-                        style: TextStyle(
-                            color: Colors.black, fontFamily: 'Ubuntu'),
-                      ),
-                      SizedBox(height: 15),
-                      Text(
-                        'Jenis Pekerjaan',
-                        style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black,
-                            fontFamily: 'Ubuntu'),
-                      ),
-                      SizedBox(height: 5),
-                      TextFormField(
-                        decoration: InputDecoration(
-                          hintText: 'jenis pekerjaan',
-                          hintStyle: TextStyle(
-                              fontStyle: FontStyle.italic,
-                              fontWeight: FontWeight.w300,
-                              fontFamily: 'Ubuntu'),
-                          filled: true,
-                          fillColor: Colors.white,
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(7.0),
-                            borderSide: BorderSide(color: Colors.white),
-                          ),
-                        ),
-                        style: TextStyle(
-                            color: Colors.black, fontFamily: 'Ubuntu'),
-                      ),
-                      SizedBox(height: 15),
-                      Text(
-                        'Jenis Kelamin',
-                        style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black,
-                            fontFamily: 'Ubuntu'),
-                      ),
-                      Column(
-                        children: <Widget>[
-                          RadioListTile<String>(
-                            title: const Text('Pria'),
-                            value: 'Pria',
-                            groupValue: _gender,
-                            onChanged: (String? value) {
-                              setState(() {
-                                _gender = value;
-                              });
-                            },
-                          ),
-                          RadioListTile<String>(
-                            title: const Text('Wanita'),
-                            value: 'Wanita',
-                            groupValue: _gender,
-                            onChanged: (String? value) {
-                              setState(() {
-                                _gender = value;
-                              });
-                            },
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: 15),
-                      Text(
-                        'Nomor Telepon',
-                        style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black,
-                            fontFamily: 'Ubuntu'),
-                      ),
-                      SizedBox(height: 5),
-                      TextFormField(
-                        decoration: InputDecoration(
-                          hintText: '+62...',
-                          hintStyle: TextStyle(
-                              fontStyle: FontStyle.italic,
-                              fontWeight: FontWeight.w300,
-                              fontFamily: 'Ubuntu'),
-                          filled: true,
-                          fillColor: Colors.white,
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(7.0),
-                            borderSide: BorderSide(color: Colors.white),
-                          ),
-                        ),
-                        keyboardType: TextInputType.phone,
-                        style: TextStyle(
-                            color: Colors.black, fontFamily: 'Ubuntu'),
-                      ),
-                      SizedBox(height: 15),
-                      Text(
-                        'Nomor Rekening',
-                        style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black,
-                            fontFamily: 'Ubuntu'),
-                      ),
-                      SizedBox(height: 5),
-                      TextFormField(
-                        decoration: InputDecoration(
-                          hintText: 'nomor rekening',
-                          hintStyle: TextStyle(
-                              fontStyle: FontStyle.italic,
-                              fontWeight: FontWeight.w300,
-                              fontFamily: 'Ubuntu'),
-                          filled: true,
-                          fillColor: Colors.white,
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(7.0),
-                            borderSide: BorderSide(color: Colors.white),
-                          ),
-                        ),
-                        keyboardType: TextInputType.number,
-                        style: TextStyle(
-                            color: Colors.black, fontFamily: 'Ubuntu'),
-                      ),
-                      SizedBox(height: 15),
-                      Text(
-                        'Username',
-                        style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black,
-                            fontFamily: 'Ubuntu'),
-                      ),
-                      SizedBox(height: 5),
-                      TextFormField(
-                        decoration: InputDecoration(
-                          hintText: 'buat username akun',
-                          hintStyle: TextStyle(
-                              fontStyle: FontStyle.italic,
-                              fontWeight: FontWeight.w300,
-                              fontFamily: 'Ubuntu'),
-                          filled: true,
-                          fillColor: Colors.white,
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(7.0),
-                            borderSide: BorderSide(color: Colors.white),
-                          ),
-                        ),
-                        style: TextStyle(
-                            color: Colors.black, fontFamily: 'Ubuntu'),
-                      ),
-                      SizedBox(height: 15),
-                      Text(
-                        'Password',
-                        style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black,
-                            fontFamily: 'Ubuntu'),
-                      ),
-                      SizedBox(height: 5),
-                      TextFormField(
-                        decoration: InputDecoration(
-                          hintText: 'buat password yang aman',
-                          hintStyle: TextStyle(
-                              fontStyle: FontStyle.italic,
-                              fontWeight: FontWeight.w300,
-                              fontFamily: 'Ubuntu'),
-                          filled: true,
-                          fillColor: Colors.white,
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(7.0),
-                            borderSide: BorderSide(color: Colors.white),
-                          ),
-                        ),
+                      _buildTextField(
+                        label: 'Password',
+                        onSave: (value) => _password = value,
                         obscureText: true,
-                        style: TextStyle(
-                            color: Colors.black, fontFamily: 'Ubuntu'),
+                      ),
+                      _buildTextField(
+                        label: 'Nama Lengkap',
+                        onSave: (value) => _namaLengkap = value,
+                      ),
+                      _buildTextField(
+                        label: 'Tempat Lahir',
+                        onSave: (value) => _tempatLahir = value,
+                      ),
+                      _buildDateField(
+                        hint: 'Tanggal Lahir',
+                        selectedDate: _selectedDate,
+                        onSelect: (date) => setState(() {
+                          _selectedDate = date;
+                        }),
+                      ),
+                      _buildTextField(
+                        label: 'Alamat Lengkap',
+                        onSave: (value) => _alamatLengkap = value,
+                      ),
+                      _buildTextField(
+                        label: 'Agama',
+                        onSave: (value) => _agama = value,
+                      ),
+                      _buildTextField(
+                        label: 'Jenis Pekerjaan',
+                        onSave: (value) => _jenisPekerjaan = value,
+                      ),
+                      _buildGenderField(),
+                      _buildTextField(
+                        label: 'No. Telepon',
+                        keyboardType: TextInputType.phone,
+                        onSave: (value) => _noTelepon = int.parse(value!),
+                      ),
+                      _buildTextField(
+                        label: 'No. Rekening',
+                        keyboardType: TextInputType.number,
+                        onSave: (value) => _noRekening = int.parse(value!),
+                      ),
+                      SizedBox(height: 20),
+                      Center(
+                        child: ElevatedButton(
+                          onPressed: _submitForm,
+                          child: Text('Masuk'),
+                        ),
                       ),
                     ],
-                  ),
-                ),
-              ),
-              SizedBox(height: 41),
-              SizedBox(
-                width: double.infinity,
-                child: ElevatedButton(
-                  onPressed: () {
-                    if (_formKey.currentState!.validate()) {
-                      // Process data
-                    }
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Color(0xFF2F5061),
-                    padding: EdgeInsets.symmetric(vertical: 15.0),
-                  ),
-                  child: Text(
-                    'DAFTAR AKUN',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18,
-                      fontFamily: 'Ubuntu',
-                    ),
                   ),
                 ),
               ),
@@ -438,6 +190,148 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           ),
         ),
       ),
+    );
+  }
+
+  Widget _buildTextField({
+    required String label,
+    required FormFieldSetter<String> onSave,
+    bool obscureText = false,
+    TextInputType keyboardType = TextInputType.text,
+  }) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          label,
+          style: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+            color: Colors.black,
+            fontFamily: 'Ubuntu',
+          ),
+        ),
+        TextFormField(
+          onSaved: onSave,
+          validator: (value) {
+            if (value == null || value.isEmpty) {
+              return '$label tidak boleh kosong';
+            }
+            return null;
+          },
+          obscureText: obscureText,
+          keyboardType: keyboardType,
+          decoration: InputDecoration(
+            filled: true,
+            fillColor: Colors.white,
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(7.0),
+              borderSide: BorderSide(color: Colors.white),
+            ),
+          ),
+        ),
+        SizedBox(height: 15),
+      ],
+    );
+  }
+
+  Widget _buildDateField({
+    required String hint,
+    required DateTime? selectedDate,
+    required ValueChanged<DateTime> onSelect,
+  }) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          hint,
+          style: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+            color: Colors.black,
+            fontFamily: 'Ubuntu',
+          ),
+        ),
+        GestureDetector(
+          onTap: () async {
+            DateTime? picked = await showDatePicker(
+              context: context,
+              initialDate: DateTime.now(),
+              firstDate: DateTime(1900),
+              lastDate: DateTime(2101),
+            );
+            if (picked != null) {
+              onSelect(picked);
+            }
+          },
+          child: InputDecorator(
+            decoration: InputDecoration(
+              filled: true,
+              fillColor: Colors.white,
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(7.0),
+                borderSide: BorderSide(color: Colors.white),
+              ),
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  selectedDate == null
+                      ? hint
+                      : DateFormat('dd-MM-yyyy').format(selectedDate),
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontFamily: 'Ubuntu',
+                  ),
+                ),
+                Icon(Icons.calendar_today),
+              ],
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildGenderField() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          'Jenis Kelamin',
+          style: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+            color: Colors.black,
+            fontFamily: 'Ubuntu',
+          ),
+        ),
+        Column(
+          children: <Widget>[
+            RadioListTile<String>(
+              title: const Text('Pria'),
+              value: 'Pria',
+              groupValue: _gender,
+              onChanged: (String? value) {
+                setState(() {
+                  _gender = value;
+                });
+              },
+            ),
+            RadioListTile<String>(
+              title: const Text('Wanita'),
+              value: 'Wanita',
+              groupValue: _gender,
+              onChanged: (String? value) {
+                setState(() {
+                  _gender = value;
+                });
+              },
+            ),
+          ],
+        ),
+      ],
     );
   }
 }
