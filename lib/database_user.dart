@@ -3,11 +3,11 @@ import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:intl/intl.dart';
 
-class DatabaseHelper {
-  static final DatabaseHelper instance = DatabaseHelper._init();
+class DatabaseUser {
+  static final DatabaseUser instance = DatabaseUser._init();
   static Database? _database;
 
-  DatabaseHelper._init();
+  DatabaseUser._init();
 
   Future<Database> get database async {
     if (_database != null) return _database!;
