@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'database_helper.dart';
+import 'database_user.dart';
+// seharusnya dibawah ini ada import database_admin + database_superAdmin
 import 'register.dart';
+import 'user-home.dart'; // Import UserHome
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -15,17 +17,26 @@ class _LoginScreenState extends State<LoginScreen> {
   void _submitForm() async {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
-      final dbHelper = DatabaseHelper.instance;
-      final registers = await dbHelper.getRegisters();
+      final dbUser = DatabaseUser.instance;
+      // seharusnya ada final dbAdmin = DatabaseAdmin.instance;
+      // seharusnya ada final dbSuperAdmin = DatabaseSuperAdmin.instance;
+      final registers = await dbUser.getRegisters();
       try {
+        // seharusnya setelah kodingan final user = registers.firstWhere( ada perkondisian buat admin dan super admin
+        // tapi bingung perkondisian if else nya gimana
         final user = registers.firstWhere(
           (register) =>
               register.username == _username && register.password == _password,
           orElse: () => throw Exception('User not found'),
         );
         // Process login with `user`
-        // Navigate to another screen, for example
-        Navigator.pushReplacementNamed(context, '/home', arguments: user);
+        // Navigate to user home screen
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+              builder: (context) =>
+                  UserHome()), // Ganti UserHomeScreen menjadi UserHome
+        );
       } catch (e) {
         // Display an error message if user is not found
         showDialog(
