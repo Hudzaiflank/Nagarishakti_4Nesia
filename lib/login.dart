@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'database_helper.dart';
 import 'register.dart';
+import 'user-home.dart'; // Import UserHome
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -24,8 +25,13 @@ class _LoginScreenState extends State<LoginScreen> {
           orElse: () => throw Exception('User not found'),
         );
         // Process login with `user`
-        // Navigate to another screen, for example
-        Navigator.pushReplacementNamed(context, '/home', arguments: user);
+        // Navigate to user home screen
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+              builder: (context) =>
+                  UserHome()), // Ganti UserHomeScreen menjadi UserHome
+        );
       } catch (e) {
         // Display an error message if user is not found
         showDialog(

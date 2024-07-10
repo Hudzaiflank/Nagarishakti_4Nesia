@@ -15,7 +15,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   String? _username;
   String? _password;
   String? _namaLengkap;
-  String? _gambar = 'default_image_path';  // Placeholder for image path
+  String? _gambar = 'default_image_path'; // Placeholder for image path
   String? _tempatLahir;
   String? _alamatLengkap;
   String? _agama;
@@ -130,19 +130,23 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     children: [
                       _buildTextField(
                         label: 'Username',
+                        hint: 'buat username akun',
                         onSave: (value) => _username = value,
                       ),
                       _buildTextField(
                         label: 'Password',
+                        hint: 'buat password yang aman',
                         onSave: (value) => _password = value,
                         obscureText: true,
                       ),
                       _buildTextField(
                         label: 'Nama Lengkap',
+                        hint: 'tulis nama lengkap anda',
                         onSave: (value) => _namaLengkap = value,
                       ),
                       _buildTextField(
                         label: 'Tempat Lahir',
+                        hint: 'tempat lahir',
                         onSave: (value) => _tempatLahir = value,
                       ),
                       _buildDateField(
@@ -154,32 +158,50 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                       ),
                       _buildTextField(
                         label: 'Alamat Lengkap',
+                        hint: 'alamat sesuai KTP',
                         onSave: (value) => _alamatLengkap = value,
                       ),
                       _buildTextField(
                         label: 'Agama',
+                        hint: 'agama',
                         onSave: (value) => _agama = value,
                       ),
                       _buildTextField(
                         label: 'Jenis Pekerjaan',
+                        hint: 'jenis pekerjaan',
                         onSave: (value) => _jenisPekerjaan = value,
                       ),
                       _buildGenderField(),
                       _buildTextField(
                         label: 'No. Telepon',
+                        hint: '+62...',
                         keyboardType: TextInputType.phone,
                         onSave: (value) => _noTelepon = int.parse(value!),
                       ),
                       _buildTextField(
                         label: 'No. Rekening',
+                        hint: 'nomor rekening',
                         keyboardType: TextInputType.number,
                         onSave: (value) => _noRekening = int.parse(value!),
                       ),
-                      SizedBox(height: 20),
-                      Center(
+                      SizedBox(height: 41),
+                      SizedBox(
+                        width: double.infinity,
                         child: ElevatedButton(
                           onPressed: _submitForm,
-                          child: Text('Masuk'),
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Color(0xFF2F5061),
+                            padding: EdgeInsets.symmetric(vertical: 15.0),
+                          ),
+                          child: Text(
+                            'MASUK',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 18,
+                              fontFamily: 'Ubuntu',
+                            ),
+                          ),
                         ),
                       ),
                     ],
@@ -195,6 +217,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
   Widget _buildTextField({
     required String label,
+    required String hint,
     required FormFieldSetter<String> onSave,
     bool obscureText = false,
     TextInputType keyboardType = TextInputType.text,
@@ -211,6 +234,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
             fontFamily: 'Ubuntu',
           ),
         ),
+        SizedBox(height: 5),
         TextFormField(
           onSaved: onSave,
           validator: (value) {
@@ -222,6 +246,12 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           obscureText: obscureText,
           keyboardType: keyboardType,
           decoration: InputDecoration(
+            hintText: hint,
+            hintStyle: TextStyle(
+              fontStyle: FontStyle.italic,
+              fontWeight: FontWeight.w300,
+              fontFamily: 'Ubuntu',
+            ),
             filled: true,
             fillColor: Colors.white,
             border: OutlineInputBorder(
@@ -252,6 +282,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
             fontFamily: 'Ubuntu',
           ),
         ),
+        SizedBox(height: 5),
         GestureDetector(
           onTap: () async {
             DateTime? picked = await showDatePicker(
@@ -290,6 +321,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
             ),
           ),
         ),
+        SizedBox(height: 15),
       ],
     );
   }
@@ -307,30 +339,42 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
             fontFamily: 'Ubuntu',
           ),
         ),
-        Column(
-          children: <Widget>[
-            RadioListTile<String>(
-              title: const Text('Pria'),
-              value: 'Pria',
-              groupValue: _gender,
-              onChanged: (String? value) {
-                setState(() {
-                  _gender = value;
-                });
-              },
+        SizedBox(height: 5),
+        Row(
+          children: [
+            Expanded(
+              child: ListTile(
+                title: const Text('Laki-Laki',
+                    style: TextStyle(fontFamily: 'Ubuntu')),
+                leading: Radio<String>(
+                  value: 'Laki-Laki',
+                  groupValue: _gender,
+                  onChanged: (String? value) {
+                    setState(() {
+                      _gender = value;
+                    });
+                  },
+                ),
+              ),
             ),
-            RadioListTile<String>(
-              title: const Text('Wanita'),
-              value: 'Wanita',
-              groupValue: _gender,
-              onChanged: (String? value) {
-                setState(() {
-                  _gender = value;
-                });
-              },
+            Expanded(
+              child: ListTile(
+                title: const Text('Perempuan',
+                    style: TextStyle(fontFamily: 'Ubuntu')),
+                leading: Radio<String>(
+                  value: 'Perempuan',
+                  groupValue: _gender,
+                  onChanged: (String? value) {
+                    setState(() {
+                      _gender = value;
+                    });
+                  },
+                ),
+              ),
             ),
           ],
         ),
+        SizedBox(height: 15),
       ],
     );
   }
