@@ -1,7 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 
-class AdminHomeScreen extends StatelessWidget {
+class AdminHome extends StatelessWidget {
   final List<String> imageList = [
     'assets/contoh-gambar.png',
     'assets/contoh-gambar.png',

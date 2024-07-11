@@ -27,7 +27,7 @@ class DatabaseAdmin {
 
   Future _createDB(Database db, int version) async {
     await db.execute('''
-      CREATE TABLE registers(
+      CREATE TABLE registersAdmin(
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         username TEXT NOT NULL,
         password TEXT NOT NULL,
@@ -36,11 +36,12 @@ class DatabaseAdmin {
         alamat_instansi TEXT NOT NULL,
         no_telepon INTEGER NOT NULL,
         email TEXT NOT NULL,
+        user_type TEXT NOT NULL // Add this line
       )
     ''');
   }
 
-  Future<void> insertRegisterAdmin (RegisterAdmin registerAdmin) async {
+  Future<void> insertRegisterAdmin(RegisterAdmin registerAdmin) async {
     final db = await instance.database;
     await db.insert(
       'registersAdmin',
@@ -70,16 +71,18 @@ class RegisterAdmin {
   final String alamatInstansi;
   final int noTelepon;
   final String email;
+  final String userType; // Add this line
 
   RegisterAdmin({
     this.id,
-    required this.username,
-    required this.password,
-    required this.gambar,
-    required this.namaInstansi,
-    required this.alamatInstansi,
-    required this.noTelepon,
-    required this.email,
+    this.username = "admin1",
+    this.password = "admin1mantap",
+    this.gambar = "defaultAdminImage.png",
+    this.namaInstansi = "Dinas Pariwisata Kota Bandung",
+    this.alamatInstansi = "Jl. Asia Afrika",
+    this.noTelepon = 0227271724,
+    this.email = "disbudpar@bandung",
+    this.userType = "admin", // And this line
   });
 
   Map<String, Object?> toMap() {
@@ -92,6 +95,7 @@ class RegisterAdmin {
       'alamat_instansi': alamatInstansi,
       'no_telepon': noTelepon,
       'email': email,
+      'user_type': userType, // And this line
     };
   }
 
@@ -105,11 +109,12 @@ class RegisterAdmin {
       alamatInstansi: map['alamat_lengkap'] as String,
       noTelepon: map['no_telepon'] as int,
       email: map['email'] as String,
+      userType: map['user_type'] as String, // And this line
     );
   }
 
   @override
   String toString() {
-    return 'Register{id: $id, username: $username, password: $password, gambar: $gambar, namaInstansi: $namaInstansi, alamatLengkap: $alamatInstansi, noTelepon: $noTelepon, email: $email}';
+    return 'RegisterAdmin{id: $id, username: $username, password: $password, gambar: $gambar, namaInstansi: $namaInstansi, alamatLengkap: $alamatInstansi, noTelepon: $noTelepon, email: $email, userType: $userType}'; // Update this line
   }
 }
