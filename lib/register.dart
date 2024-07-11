@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'database_helper.dart';
+import 'database_user.dart';
 import 'login.dart';
 
 class RegistrationScreen extends StatefulWidget {
@@ -56,8 +56,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         noRekening: _noRekening!,
       );
 
-      final dbHelper = DatabaseHelper.instance;
-      await dbHelper.insertRegister(newUser);
+      final dbUser = DatabaseUser.instance;
+      await dbUser.insertRegister(newUser);
 
       Navigator.pop(context);
     }
