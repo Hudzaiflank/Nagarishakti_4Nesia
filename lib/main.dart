@@ -3,7 +3,7 @@ import 'login.dart';
 import 'register.dart';
 import 'database_user.dart';
 import 'admin-home.dart';
-// import 'SuperAdmin-home.dart';
+import 'SuperAdmin-home.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: RegistrationScreen(), // Ubah menjadi widget dari admin-home.dart
+      home: RegistrationScreen(),
       routes: {
         '/register': (context) => RegistrationScreen(),
       },
