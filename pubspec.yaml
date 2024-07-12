@@ -30,6 +30,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  image_picker: ^0.8.4+8
 
   # Add the intl package
   intl: ^0.17.0
@@ -77,6 +78,9 @@ flutter:
     - assets/user-home/timeline-card.png
     - assets/user-home/transportation-card.png
     - assets/user-home/admin-profile.png
+    - assets/profile-edit/rectangle-1.png
+    - assets/profile-edit/rectangle-2.png
+    - assets/profile-edit/rectangle-3.png
 
   #   - images/a_dot_ham.jpeg
 

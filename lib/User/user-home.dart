@@ -1,5 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'user-profile.dart';
 
 class UserHome extends StatelessWidget {
   final List<String> imageList = [
@@ -42,10 +43,19 @@ class UserHome extends StatelessWidget {
                     ),
                   ),
                   SizedBox(width: 10), //
-                  CircleAvatar(
-                    radius: 22,
-                    backgroundImage:
-                        AssetImage('assets/user-home/profile-logo.png'),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => EditUserProfile()),
+                      );
+                    },
+                    child: CircleAvatar(
+                      radius: 22,
+                      backgroundImage:
+                          AssetImage('assets/user-home/profile-logo.png'),
+                    ),
                   ),
                 ],
               ),

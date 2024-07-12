@@ -4,6 +4,7 @@ import 'register.dart';
 import 'database_user.dart';
 import 'database_admin.dart';
 import 'database_superAdmin.dart';
+import 'User/user-home.dart';
 import 'admin-home.dart';
 import 'SuperAdmin-home.dart';
 
@@ -22,7 +23,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: RegistrationScreen(),
+      home: UserHome(),
       routes: {
         '/register': (context) => RegistrationScreen(),
       },

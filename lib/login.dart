@@ -4,7 +4,7 @@ import 'database_user.dart';
 import 'database_admin.dart';
 import 'database_superAdmin.dart';
 import 'register.dart';
-import 'user-home.dart'; // Import UserHome
+import 'User/user-home.dart'; // Import UserHome
 import 'admin-home.dart';
 import 'SuperAdmin-home.dart';
 
@@ -30,7 +30,8 @@ class _LoginScreenState extends State<LoginScreen> {
         // Check for regular user
         final userRegisters = await dbUser.getRegisters();
         final userExists = userRegisters.any(
-          (register) => register.username == _username && register.password == _password,
+          (register) =>
+              register.username == _username && register.password == _password,
         );
 
         if (userExists) {
@@ -45,14 +46,16 @@ class _LoginScreenState extends State<LoginScreen> {
         // Check for admin
         final adminRegisters = await dbAdmin.getRegistersAdmin();
         final adminExists = adminRegisters.any(
-          (register) => register.username == _username && register.password == _password,
+          (register) =>
+              register.username == _username && register.password == _password,
         );
 
         if (adminExists) {
           // Navigate to admin home screen
           Navigator.pushReplacement(
             context,
-            MaterialPageRoute(builder: (context) => AdminHome()), // Adjust this as needed
+            MaterialPageRoute(
+                builder: (context) => AdminHome()), // Adjust this as needed
           );
           return;
         }
@@ -60,21 +63,23 @@ class _LoginScreenState extends State<LoginScreen> {
         // Check for super admin
         final superAdminRegisters = await dbSuperAdmin.getRegistersSuperAdmin();
         final superAdminExists = superAdminRegisters.any(
-          (register) => register.username == _username && register.password == _password,
+          (register) =>
+              register.username == _username && register.password == _password,
         );
 
         if (superAdminExists) {
           // Navigate to super admin home screen
           Navigator.pushReplacement(
             context,
-            MaterialPageRoute(builder: (context) => SuperAdminHome()), // Adjust this as needed
+            MaterialPageRoute(
+                builder: (context) =>
+                    SuperAdminHome()), // Adjust this as needed
           );
           return;
         }
 
         // If no user, admin, or super admin is found
         throw Exception('User not found');
-        
       } catch (e) {
         // Display an error message if user is not found
         showDialog(
