@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'database_user.dart';
 // seharusnya dibawah ini ada import database_admin + database_superAdmin
+import 'database_admin.dart';
+import 'database_superAdmin.dart';
 import 'register.dart';
 import 'user-home.dart'; // Import UserHome
+import 'admin-home.dart';
+import 'SuperAdmin-home.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -17,26 +21,60 @@ class _LoginScreenState extends State<LoginScreen> {
   void _submitForm() async {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
+
       final dbUser = DatabaseUser.instance;
-      // seharusnya ada final dbAdmin = DatabaseAdmin.instance;
-      // seharusnya ada final dbSuperAdmin = DatabaseSuperAdmin.instance;
-      final registers = await dbUser.getRegisters();
+      final dbAdmin = DatabaseAdmin.instance;
+      final dbSuperAdmin = DatabaseSuperAdmin.instance;
+
       try {
-        // seharusnya setelah kodingan final user = registers.firstWhere( ada perkondisian buat admin dan super admin
-        // tapi bingung perkondisian if else nya gimana
-        final user = registers.firstWhere(
-          (register) =>
-              register.username == _username && register.password == _password,
-          orElse: () => throw Exception('User not found'),
+        // Check for regular user
+        final userRegisters = await dbUser.getRegisters();
+        final userExists = userRegisters.any(
+          (register) => register.username == _username && register.password == _password,
         );
-        // Process login with `user`
-        // Navigate to user home screen
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-              builder: (context) =>
-                  UserHome()), // Ganti UserHomeScreen menjadi UserHome
+
+        if (userExists) {
+          // Navigate to user home screen
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => UserHome()),
+          );
+          return;
+        }
+
+        // Check for admin
+        final adminRegisters = await dbAdmin.getRegistersAdmin();
+        final adminExists = adminRegisters.any(
+          (register) => register.username == _username && register.password == _password,
         );
+
+        if (adminExists) {
+          // Navigate to admin home screen
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => AdminHome()), // Adjust this as needed
+          );
+          return;
+        }
+
+        // Check for super admin
+        final superAdminRegisters = await dbSuperAdmin.getRegistersSuperAdmin();
+        final superAdminExists = superAdminRegisters.any(
+          (register) => register.username == _username && register.password == _password,
+        );
+
+        if (superAdminExists) {
+          // Navigate to super admin home screen
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => SuperAdminHome()), // Adjust this as needed
+          );
+          return;
+        }
+
+        // If no user, admin, or super admin is found
+        throw Exception('User not found');
+        
       } catch (e) {
         // Display an error message if user is not found
         showDialog(

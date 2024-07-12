@@ -27,11 +27,12 @@ class DatabaseSuperAdmin {
 
   Future _createDB(Database db, int version) async {
     await db.execute('''
-      CREATE TABLE registerSuperAdmins(
+      CREATE TABLE registersSuperAdmin(
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         username TEXT NOT NULL,
         password TEXT NOT NULL,
         gambar TEXT NOT NULL,
+        user_type TEXT NOT NULL // Add this line
       )
     ''');
   }
@@ -39,7 +40,7 @@ class DatabaseSuperAdmin {
   Future<void> insertRegisterSuperAdmin(RegisterSuperAdmin registerSuperAdmin) async {
     final db = await instance.database;
     await db.insert(
-      'registerSuperAdmins',
+      'registersSuperAdmin',
       registerSuperAdmin.toMap(),
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
@@ -47,7 +48,7 @@ class DatabaseSuperAdmin {
 
   Future<List<RegisterSuperAdmin>> getRegistersSuperAdmin() async {
     final db = await instance.database;
-    final result = await db.query('registerAdmins');
+    final result = await db.query('registersSuperAdmin');
     return result.map((json) => RegisterSuperAdmin.fromMap(json)).toList();
   }
 
@@ -62,12 +63,14 @@ class RegisterSuperAdmin {
   final String username;
   final String password;
   final String gambar;
+  final String userType; // Add this line
 
   RegisterSuperAdmin({
     this.id,
-    this.username = "admin1",
-    this.password = "admin1debest",
+    this.username = "superadmin1",
+    this.password = "superadmin1mantap",
     this.gambar = "defaultSuperAdminImage.png",
+    this.userType = "superAdmin", // And this line
   });
 
   Map<String, Object?> toMap() {
@@ -76,6 +79,7 @@ class RegisterSuperAdmin {
       'username': username,
       'password': password,
       'gambar': gambar,
+      'user_type': userType, // And this line
     };
   }
 
@@ -85,11 +89,12 @@ class RegisterSuperAdmin {
       username: map['username'] as String,
       password: map['password'] as String,
       gambar: map['gambar'] as String,
+      userType: map['user_type'] as String, // And this line
     );
   }
 
   @override
   String toString() {
-    return 'RegisterAdmin{id: $id, username: $username, password: $password, gambar: $gambar}';
+    return 'RegisterSuperAdmin{id: $id, username: $username, password: $password, gambar: $gambar, userType: $userType}'; // Update this line
   }
 }
