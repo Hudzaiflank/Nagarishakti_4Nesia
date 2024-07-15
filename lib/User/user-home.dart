@@ -1,6 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'user-profile.dart';
+import 'user-Timeline-Festival.dart'; // Import the new file
 
 class UserHome extends StatelessWidget {
   final List<String> imageList = [
@@ -42,7 +43,7 @@ class UserHome extends StatelessWidget {
                       ),
                     ),
                   ),
-                  SizedBox(width: 10), //
+                  SizedBox(width: 10),
                   GestureDetector(
                     onTap: () {
                       Navigator.push(
@@ -303,24 +304,33 @@ class UserHome extends StatelessWidget {
                           ),
                         ),
                         Divider(height: 1),
-                        ListTile(
-                          leading: Container(
-                            width: 30,
-                            child: Image.asset(
-                                'assets/user-home/timeline-card.png',
-                                height: 30),
-                          ),
-                          title: Text(
-                            'Timeline Acara Dan Festival',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontFamily: 'Ubuntu',
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => UserTimelineFestival()),
+                            );
+                          },
+                          child: ListTile(
+                            leading: Container(
+                              width: 30,
+                              child: Image.asset(
+                                  'assets/user-home/timeline-card.png',
+                                  height: 30),
                             ),
-                          ),
-                          subtitle: Text(
-                            'Lihat Acara dan Festival yang akan datang',
-                            style: TextStyle(fontFamily: 'Ubuntu'),
-                            textAlign: TextAlign.justify,
+                            title: Text(
+                              'Timeline Acara Dan Festival',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontFamily: 'Ubuntu',
+                              ),
+                            ),
+                            subtitle: Text(
+                              'Lihat Acara dan Festival yang akan datang',
+                              style: TextStyle(fontFamily: 'Ubuntu'),
+                              textAlign: TextAlign.justify,
+                            ),
                           ),
                         ),
                         Divider(height: 1),
