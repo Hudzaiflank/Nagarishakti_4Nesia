@@ -41,6 +41,7 @@ dependencies:
   cupertino_icons: ^1.0.6
   sqflite: ^2.3.3+1
   path: ^1.9.0
+  http: ^1.2.1
 
 dev_dependencies:
   flutter_test:
@@ -81,6 +82,7 @@ flutter:
     - assets/profile-edit/rectangle-1.png
     - assets/profile-edit/rectangle-2.png
     - assets/profile-edit/rectangle-3.png
+    - assets/sample.json
 
   #   - images/a_dot_ham.jpeg
 

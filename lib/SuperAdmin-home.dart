@@ -1,10 +1,47 @@
 import 'package:flutter/material.dart';
+import 'database_integrasi.dart';
 
-class SuperAdminHome extends StatelessWidget {
+class SuperAdminHome extends StatefulWidget {
+  @override
+  _SuperAdminHomeState createState() => _SuperAdminHomeState();
+}
+
+class _SuperAdminHomeState extends State<SuperAdminHome> {
   final List<String> cities = [
     'Kota Sukabumi',
     'Kabupaten Bandung',
   ];
+
+  final _formKey = GlobalKey<FormState>();
+  final TextEditingController _linkApiController = TextEditingController();
+  String? _selectedCity;
+
+  void _addIntegration() async {
+    // Manual validation
+    if (_linkApiController.text.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Please enter a link API')),
+      );
+      return;
+    }
+
+    if (_selectedCity == null || _selectedCity!.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Please select a city')),
+      );
+      return;
+    }
+
+    final newIntegration = Integration(
+      linkAPI: _linkApiController.text,
+      namaDaerah: _selectedCity!,
+    );
+
+    final dbIntegrasi = DatabaseIntegration.instance;
+    await dbIntegrasi.insertIntegration(newIntegration);
+
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -242,6 +279,7 @@ class SuperAdminHome extends StatelessWidget {
                     ),
                     SizedBox(height: 10),
                     TextField(
+                      controller: _linkApiController,
                       decoration: InputDecoration(
                         hintText: 'link api',
                         hintStyle: TextStyle(
@@ -283,6 +321,12 @@ class SuperAdminHome extends StatelessWidget {
                         fillColor: Colors.white,
                         filled: true,
                       ),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please select a city';
+                        }
+                        return null;
+                      },  
                     ),
                     SizedBox(height: 20),
                     ElevatedButton(
