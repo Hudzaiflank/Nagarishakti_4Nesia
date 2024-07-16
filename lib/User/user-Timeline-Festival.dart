@@ -10,8 +10,7 @@ class UserTimelineFestival extends StatelessWidget {
           Column(
             children: [
               Container(
-                padding: EdgeInsets.only(
-                    top: 10, bottom: 20), // Adjusted to cover the status bar
+                padding: EdgeInsets.only(top: 10, bottom: 20),
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.only(

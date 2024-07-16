@@ -1,7 +1,8 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'user-profile.dart';
-import 'user-Timeline-Festival.dart'; // Import the new file
+import 'Profile/user-profile.dart';
+import 'user-Timeline-Festival.dart';
+import 'Destination/user-Destination-page.dart';
 
 class UserHome extends StatelessWidget {
   final List<String> imageList = [
@@ -283,24 +284,33 @@ class UserHome extends StatelessWidget {
                     ),
                     child: Column(
                       children: [
-                        ListTile(
-                          leading: Container(
-                            width: 30,
-                            child: Image.asset(
-                                'assets/user-home/destination-card.png',
-                                height: 30),
-                          ),
-                          title: Text(
-                            'Daftar Destinasi Wisata',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontFamily: 'Ubuntu',
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => UserDestinationPage()),
+                            );
+                          },
+                          child: ListTile(
+                            leading: Container(
+                              width: 30,
+                              child: Image.asset(
+                                  'assets/user-home/destination-card.png',
+                                  height: 30),
                             ),
-                          ),
-                          subtitle: Text(
-                            'List Destinasi Wisata di daerah Anda!',
-                            style: TextStyle(fontFamily: 'Ubuntu'),
-                            textAlign: TextAlign.justify,
+                            title: Text(
+                              'Daftar Destinasi Wisata',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontFamily: 'Ubuntu',
+                              ),
+                            ),
+                            subtitle: Text(
+                              'List Destinasi Wisata di daerah Anda!',
+                              style: TextStyle(fontFamily: 'Ubuntu'),
+                              textAlign: TextAlign.justify,
+                            ),
                           ),
                         ),
                         Divider(height: 1),

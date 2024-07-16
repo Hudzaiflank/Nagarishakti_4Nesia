@@ -31,7 +31,6 @@ dependencies:
   flutter:
     sdk: flutter
   image_picker: ^0.8.4+8
-
   # Add the intl package
   intl: ^0.17.0
   carousel_slider: ^4.0.0
