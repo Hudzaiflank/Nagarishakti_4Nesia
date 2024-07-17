@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'Profile/user-profile.dart';
 import 'user-Timeline-Festival.dart';
 import 'Destination/user-Destination-page.dart';
+import 'user-transportation-page.dart';
 
 class UserHome extends StatelessWidget {
   final List<String> imageList = [
@@ -344,24 +345,34 @@ class UserHome extends StatelessWidget {
                           ),
                         ),
                         Divider(height: 1),
-                        ListTile(
-                          leading: Container(
-                            width: 30,
-                            child: Image.asset(
-                                'assets/user-home/transportation-card.png',
-                                height: 30),
-                          ),
-                          title: Text(
-                            'Informasi Transportasi dan Akomodasi',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontFamily: 'Ubuntu',
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      UserTransportationPage()),
+                            );
+                          },
+                          child: ListTile(
+                            leading: Container(
+                              width: 30,
+                              child: Image.asset(
+                                  'assets/user-home/transportation-card.png',
+                                  height: 30),
                             ),
-                          ),
-                          subtitle: Text(
-                            'Temukan Transportasi yang tepat ke Tempat Wisata tujuan!',
-                            style: TextStyle(fontFamily: 'Ubuntu'),
-                            textAlign: TextAlign.justify,
+                            title: Text(
+                              'Informasi Transportasi dan Akomodasi',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontFamily: 'Ubuntu',
+                              ),
+                            ),
+                            subtitle: Text(
+                              'Informasi tentang sarana transportasi dan akomodasi di daerah Anda',
+                              style: TextStyle(fontFamily: 'Ubuntu'),
+                              textAlign: TextAlign.justify,
+                            ),
                           ),
                         ),
                       ],
