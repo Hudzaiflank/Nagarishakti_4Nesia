@@ -151,9 +151,7 @@ class UserDestinationPage extends StatelessWidget {
       onTap: () {
         Navigator.push(
           context,
-          MaterialPageRoute(
-              builder: (context) =>
-                  UserDetailDestinationPage()), // Adjust this to your detail page
+          MaterialPageRoute(builder: (context) => UserDetailDestinationPage()),
         );
       },
       child: Padding(
@@ -176,7 +174,7 @@ class UserDestinationPage extends StatelessWidget {
             children: [
               ClipRRect(
                 borderRadius: BorderRadius.all(
-                    Radius.circular(7.0)), // Updated to 7px for all corners
+                    Radius.circular(7.0)), // ini biar semua 7px si pinggirnya
                 child: Image.asset(
                   imagePath,
                   height: 120,
