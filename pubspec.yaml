@@ -83,6 +83,7 @@ flutter:
     - assets/profile-edit/rectangle-3.png
     - assets/sample.json
     - assets/download-icon.png
+    - assets/upload-icon.png
 
   #   - images/a_dot_ham.jpeg
 

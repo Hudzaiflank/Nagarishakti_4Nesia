@@ -4,8 +4,8 @@ import 'Profile/user-profile.dart';
 import 'user-Timeline-Festival.dart';
 import 'Destination/user-Destination-page.dart';
 import 'user-transportation-page.dart';
-import 'user-ktp-page.dart';
-import 'user-kk-page.dart';
+import 'Profile/user-ktp-page.dart';
+import 'Profile/user-kk-page.dart';
 
 class UserHome extends StatelessWidget {
   final List<String> imageList = [
