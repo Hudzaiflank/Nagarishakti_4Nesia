@@ -4,8 +4,8 @@ import 'Profile/user-profile.dart';
 import 'user-Timeline-Festival.dart';
 import 'Destination/user-Destination-page.dart';
 import 'user-transportation-page.dart';
-import 'Profile/user-ktp-page.dart';
-import 'Profile/user-kk-page.dart';
+import 'Layanan-Kependudukan/user-ktp-page.dart';
+import 'Layanan-Kependudukan/user-kk-page.dart';
 
 class UserHome extends StatelessWidget {
   final List<String> imageList = [
@@ -50,11 +50,16 @@ class UserHome extends StatelessWidget {
                   SizedBox(width: 10),
                   GestureDetector(
                     onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => EditUserProfile()),
-                      );
+                      bool isLoggedIn = checkUserLoginStatus(); // Implement this method as needed.
+                      if (!isLoggedIn) {
+                        Navigator.pushReplacementNamed(context, '/register');
+                      } else {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => EditUserProfile()),
+                        );
+                      }
                     },
                     child: CircleAvatar(
                       radius: 22,
@@ -926,4 +931,9 @@ class UserHome extends StatelessWidget {
       ),
     );
   }
+
+  bool checkUserLoginStatus() {
+    return false;
+  }
+
 }

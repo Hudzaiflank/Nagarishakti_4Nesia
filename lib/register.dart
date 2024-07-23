@@ -99,7 +99,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => LoginScreen()),
+                                  builder: (context) => LoginScreen()
+                              ),
                             );
                           },
                           child: Text(
