@@ -314,36 +314,63 @@ class UserKtpPage extends StatelessWidget {
   Widget _buildUploadField() {
     return Padding(
       padding: const EdgeInsets.only(bottom: 16.0),
-      child: Container(
-        height: 100,
-        decoration: BoxDecoration(
-          color: Color(0xFFE0E5E7),
-          borderRadius: BorderRadius.circular(7),
-        ),
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Image.asset('assets/upload-icon.png', width: 30, height: 30),
-              SizedBox(height: 8.0),
-              Container(
-                padding: EdgeInsets.symmetric(vertical: 4.0, horizontal: 8.0),
-                decoration: BoxDecoration(
-                  color: Color(0xFFE2DED0),
-                  borderRadius: BorderRadius.circular(7),
-                ),
-                child: Text(
-                  'Pilih gambar atau dokumen',
-                  style: TextStyle(
-                    fontFamily: 'Ubuntu',
-                    fontStyle: FontStyle.italic,
-                    color: Colors.black54,
+      child: Stack(
+        clipBehavior: Clip.none,
+        children: [
+          Container(
+            height: 100,
+            decoration: BoxDecoration(
+              color: Color(0xFFE0E5E7),
+              borderRadius: BorderRadius.circular(7),
+            ),
+            child: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Image.asset(
+                    'assets/upload-icon.png',
+                    height: 30,
+                    width: 30,
                   ),
-                ),
+                  SizedBox(height: 8),
+                  Container(
+                    padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                    decoration: BoxDecoration(
+                      color: Color(0xFFE2DED0),
+                      borderRadius: BorderRadius.circular(4),
+                    ),
+                    child: Text(
+                      'Pilih gambar atau dokumen',
+                      style: TextStyle(
+                        fontFamily: 'Ubuntu',
+                        color: Colors.black54,
+                      ),
+                    ),
+                  ),
+                ],
               ),
-            ],
+            ),
           ),
-        ),
+          Positioned(
+            top: -10, // Negative value to make it float
+            right: -10, // Negative value to make it float
+            child: Container(
+              width: 24,
+              height: 24,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: Color(0xFF4F4E49),
+              ),
+              child: IconButton(
+                padding: EdgeInsets.zero,
+                icon: Icon(Icons.close, color: Colors.white, size: 16),
+                onPressed: () {
+                  // Handle the close button action
+                },
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
