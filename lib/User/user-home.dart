@@ -1,5 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'Profile/user-profile.dart';
 import 'user-Timeline-Festival.dart';
 import 'Destination/user-Destination-page.dart';
@@ -7,7 +8,12 @@ import 'user-transportation-page.dart';
 import 'Layanan-Kependudukan/user-ktp-page.dart';
 import 'Layanan-Kependudukan/user-kk-page.dart';
 
-class UserHome extends StatelessWidget {
+class UserHome extends StatefulWidget {
+  @override
+  _UserHomeState createState() => _UserHomeState();
+}
+
+class _UserHomeState extends State<UserHome> {
   final List<String> imageList = [
     'assets/contoh-gambar.png',
     'assets/contoh-gambar.png',
@@ -15,6 +21,26 @@ class UserHome extends StatelessWidget {
     'assets/contoh-gambar.png',
     'assets/contoh-gambar.png',
   ];
+
+  bool isLoggedIn = false;
+  String username = '';
+
+  @override
+  void initState() {
+    super.initState();
+    checkUserLoginStatus();
+  }
+
+  void checkUserLoginStatus() async {
+    final prefs = await SharedPreferences.getInstance();
+    bool loggedIn = prefs.getBool('isLoggedIn') ?? false;
+    String? loggedInUsername = prefs.getString('loggedInUsername');
+
+    setState(() {
+      isLoggedIn = loggedIn;
+      username = loggedInUsername ?? 'Guest';
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +63,7 @@ class UserHome extends StatelessWidget {
                     child: Align(
                       alignment: Alignment.centerRight,
                       child: Text(
-                        'BUDI WIJAYA',
+                        username,
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontFamily: 'Ubuntu',
@@ -50,8 +76,6 @@ class UserHome extends StatelessWidget {
                   SizedBox(width: 10),
                   GestureDetector(
                     onTap: () {
-                      bool isLoggedIn =
-                          checkUserLoginStatus(); // Implement this method as needed.
                       if (!isLoggedIn) {
                         Navigator.pushReplacementNamed(context, '/register');
                       } else {
@@ -931,9 +955,5 @@ class UserHome extends StatelessWidget {
         ),
       ),
     );
-  }
-
-  bool checkUserLoginStatus() {
-    return false;
   }
 }

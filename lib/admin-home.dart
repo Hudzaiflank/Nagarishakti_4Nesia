@@ -1,7 +1,14 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'User/Profile/user-profile.dart';
 
-class AdminHome extends StatelessWidget {
+class AdminHome extends StatefulWidget {
+  @override
+  _AdminHomeState createState() => _AdminHomeState();
+}
+
+class _AdminHomeState extends State<AdminHome> {
   final List<String> imageList = [
     'assets/contoh-gambar.png',
     'assets/contoh-gambar.png',
@@ -9,6 +16,26 @@ class AdminHome extends StatelessWidget {
     'assets/contoh-gambar.png',
     'assets/contoh-gambar.png',
   ];
+
+  bool isLoggedIn = false;
+  String username = '';
+
+  @override
+  void initState() {
+    super.initState();
+    checkUserLoginStatus();
+  }
+
+  void checkUserLoginStatus() async {
+    final prefs = await SharedPreferences.getInstance();
+    bool loggedIn = prefs.getBool('isLoggedIn') ?? false;
+    String? loggedInUsername = prefs.getString('loggedInUsername');
+
+    setState(() {
+      isLoggedIn = loggedIn;
+      username = loggedInUsername ?? 'Guest';
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +58,7 @@ class AdminHome extends StatelessWidget {
                     child: Align(
                       alignment: Alignment.centerRight,
                       child: Text(
-                        'RINA PERMATA',
+                        username,
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontFamily: 'Roboto',
@@ -42,10 +69,23 @@ class AdminHome extends StatelessWidget {
                     ),
                   ),
                   SizedBox(width: 10), //
-                  CircleAvatar(
-                    radius: 22,
-                    backgroundImage:
-                        AssetImage('assets/user-home/admin-profile.png'),
+                  GestureDetector(
+                    onTap: () {
+                      if (!isLoggedIn) {
+                        Navigator.pushReplacementNamed(context, '/register');
+                      } else {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => EditUserProfile()),
+                        );
+                      }
+                    },
+                    child: CircleAvatar(
+                      radius: 22,
+                      backgroundImage:
+                          AssetImage('assets/user-home/admin-profile.png'),
+                    ),
                   ),
                 ],
               ),

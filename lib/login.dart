@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'database_user.dart';
-// seharusnya dibawah ini ada import database_admin + database_superAdmin
 import 'database_admin.dart';
 import 'database_superAdmin.dart';
 import 'register.dart';
-import 'User/user-home.dart'; // Import UserHome
+import 'User/user-home.dart'; 
 import 'admin-home.dart';
 import 'SuperAdmin-home.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -15,8 +15,8 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
-  String? _username;
-  String? _password;
+  String _username = '';
+  String _password = '';
 
   void _submitForm() async {
     if (_formKey.currentState!.validate()) {
@@ -35,6 +35,11 @@ class _LoginScreenState extends State<LoginScreen> {
         );
 
         if (userExists) {
+          // Save login status
+          final prefs = await SharedPreferences.getInstance();
+          await prefs.setBool('isLoggedIn', true);
+          await prefs.setString('loggedInUsername', _username);
+
           // Navigate to user home screen
           Navigator.pushReplacement(
             context,
@@ -51,6 +56,11 @@ class _LoginScreenState extends State<LoginScreen> {
         );
 
         if (adminExists) {
+          // Save login status
+          final prefs = await SharedPreferences.getInstance();
+          await prefs.setBool('isLoggedIn', true);
+          await prefs.setString('loggedInUsername', _username);
+
           // Navigate to admin home screen
           Navigator.pushReplacement(
             context,
@@ -68,6 +78,10 @@ class _LoginScreenState extends State<LoginScreen> {
         );
 
         if (superAdminExists) {
+          // Save login status
+          final prefs = await SharedPreferences.getInstance();
+          await prefs.setBool('isLoggedIn', true);
+
           // Navigate to super admin home screen
           Navigator.pushReplacement(
             context,
@@ -197,7 +211,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               return null;
                             },
                             onSaved: (value) {
-                              _username = value;
+                              _username = value!;
                             },
                           ),
                           SizedBox(height: 15),
@@ -235,7 +249,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               return null;
                             },
                             onSaved: (value) {
-                              _password = value;
+                              _password = value!;
                             },
                           ),
                         ],
