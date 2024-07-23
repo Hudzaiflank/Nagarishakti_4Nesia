@@ -50,7 +50,8 @@ class UserHome extends StatelessWidget {
                   SizedBox(width: 10),
                   GestureDetector(
                     onTap: () {
-                      bool isLoggedIn = checkUserLoginStatus(); // Implement this method as needed.
+                      bool isLoggedIn =
+                          checkUserLoginStatus(); // Implement this method as needed.
                       if (!isLoggedIn) {
                         Navigator.pushReplacementNamed(context, '/register');
                       } else {
@@ -169,7 +170,7 @@ class UserHome extends StatelessWidget {
                                         decoration: BoxDecoration(
                                           color: Color(0xFF4297A0),
                                           borderRadius:
-                                              BorderRadius.circular(12.0),
+                                              BorderRadius.circular(7.0),
                                           border: Border.all(
                                               color: Colors.white, width: 2),
                                         ),
@@ -935,5 +936,4 @@ class UserHome extends StatelessWidget {
   bool checkUserLoginStatus() {
     return false;
   }
-
 }
