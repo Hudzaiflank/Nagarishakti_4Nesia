@@ -1,6 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/gestures.dart';
+import 'package:flutter/services.dart';
 
-class UserKtpPage extends StatelessWidget {
+class UserKtpPage extends StatefulWidget {
+  @override
+  _UserKtpPageState createState() => _UserKtpPageState();
+}
+
+class _UserKtpPageState extends State<UserKtpPage> {
+  String selectedReason = 'Telah berusia 17 tahun';
+  String selectedGender = 'Pria';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -63,7 +73,7 @@ class UserKtpPage extends StatelessWidget {
                 children: [
                   _buildSubTitle('Alasan Pembuatan'),
                   _buildDropdownField(
-                      context, ['Telah berusia 17 tahun', 'Lainnya']),
+                      context, ['Telah berusia 17 tahun', 'KTP hilang/rusak']),
                 ],
               ),
             ),
@@ -160,8 +170,14 @@ class UserKtpPage extends StatelessWidget {
                   SizedBox(height: 16.0),
                   _buildSubTitle('Kartu Keluarga'),
                   _buildUploadField(),
-                  _buildSubTitle('Surat Pengantar Desa/Kelurahan'),
-                  _buildUploadField(),
+                  if (selectedReason == 'Telah berusia 17 tahun') ...[
+                    _buildSubTitle('Surat Pengantar Desa/Kelurahan'),
+                    _buildUploadField(),
+                  ] else if (selectedReason == 'KTP hilang/rusak') ...[
+                    _buildSubTitleWithItalic('KTP Lama', ' atau',
+                        '\nSurat Kehilangan dari Kepolisian'),
+                    _buildUploadField()
+                  ],
                 ],
               ),
             ),
@@ -242,6 +258,12 @@ class UserKtpPage extends StatelessWidget {
                         );
                       },
                     );
+                    if (date != null) {
+                      setState(() {
+                        // Display selected date in the text field
+                        // Format date as per requirement
+                      });
+                    }
                   }
                 : null,
             decoration: InputDecoration(
@@ -274,6 +296,9 @@ class UserKtpPage extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.only(bottom: 16.0),
           child: DropdownButtonFormField(
+            value: items.contains(selectedReason) ? selectedReason : null,
+            isDense: true,
+            isExpanded: true,
             decoration: InputDecoration(
               fillColor: backgroundColor,
               filled: true,
@@ -286,12 +311,19 @@ class UserKtpPage extends StatelessWidget {
                 .map((label) => DropdownMenuItem(
                       child: Text(
                         label,
-                        style: TextStyle(color: Colors.black54),
+                        style: TextStyle(
+                          color: Colors.black54,
+                          overflow: TextOverflow.ellipsis,
+                        ),
                       ),
                       value: label,
                     ))
                 .toList(),
-            onChanged: (value) {},
+            onChanged: (value) {
+              setState(() {
+                selectedReason = value as String;
+              });
+            },
             dropdownColor: Colors.white,
           ),
         ),
@@ -305,8 +337,12 @@ class UserKtpPage extends StatelessWidget {
       child: RadioListTile(
         title: Text(title, style: TextStyle(fontFamily: 'Ubuntu')),
         value: title,
-        groupValue: groupValue,
-        onChanged: (value) {},
+        groupValue: selectedGender,
+        onChanged: (value) {
+          setState(() {
+            selectedGender = value as String;
+          });
+        },
       ),
     );
   }
@@ -371,6 +407,32 @@ class UserKtpPage extends StatelessWidget {
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  Widget _buildSubTitleWithItalic(String part1, String part2, String part3) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      child: RichText(
+        text: TextSpan(
+          style: TextStyle(
+            fontFamily: 'Ubuntu',
+            fontWeight: FontWeight.bold,
+            color: Colors.black,
+          ),
+          children: <TextSpan>[
+            TextSpan(text: part1),
+            TextSpan(
+              text: part2,
+              style: TextStyle(
+                fontWeight: FontWeight.normal,
+                fontStyle: FontStyle.italic,
+              ),
+            ),
+            TextSpan(text: part3),
+          ],
+        ),
       ),
     );
   }
