@@ -10,13 +10,15 @@ class DatabaseAdmin {
 
   Future<Database> get database async {
     if (_database != null) return _database!;
-    _database = await _initDB('registAdmin_database.db');
+    _database = await _initDB('registersAdmin.db');
     return _database!;
   }
 
   Future<Database> _initDB(String filePath) async {
     final dbPath = await getDatabasesPath();
     final path = join(dbPath, filePath);
+
+    print('Database path: $path');
 
     return await openDatabase(
       path,
@@ -35,8 +37,7 @@ class DatabaseAdmin {
         nama_instansi TEXT NOT NULL,
         alamat_instansi TEXT NOT NULL,
         no_telepon INTEGER NOT NULL,
-        email TEXT NOT NULL,
-        user_type TEXT NOT NULL // Add this line
+        email TEXT NOT NULL
       )
     ''');
   }
@@ -71,18 +72,16 @@ class RegisterAdmin {
   final String alamatInstansi;
   final int noTelepon;
   final String email;
-  final String userType; // Add this line
 
   RegisterAdmin({
     this.id,
-    this.username = "admin1",
-    this.password = "admin1mantap",
-    this.gambar = "defaultAdminImage.png",
-    this.namaInstansi = "Dinas Pariwisata Kota Bandung",
-    this.alamatInstansi = "Jl. Asia Afrika",
-    this.noTelepon = 0227271724,
-    this.email = "disbudpar@bandung",
-    this.userType = "admin", // And this line
+    required this.username,
+    required this.password,
+    required this.gambar,
+    required this.namaInstansi,
+    required this.alamatInstansi,
+    required this.noTelepon,
+    required this.email,
   });
 
   Map<String, Object?> toMap() {
@@ -95,7 +94,6 @@ class RegisterAdmin {
       'alamat_instansi': alamatInstansi,
       'no_telepon': noTelepon,
       'email': email,
-      'user_type': userType, // And this line
     };
   }
 
@@ -106,15 +104,14 @@ class RegisterAdmin {
       password: map['password'] as String,
       gambar: map['gambar'] as String,
       namaInstansi: map['nama_instansi'] as String,
-      alamatInstansi: map['alamat_lengkap'] as String,
+      alamatInstansi: map['alamat_instansi'] as String,
       noTelepon: map['no_telepon'] as int,
       email: map['email'] as String,
-      userType: map['user_type'] as String, // And this line
     );
   }
 
   @override
   String toString() {
-    return 'RegisterAdmin{id: $id, username: $username, password: $password, gambar: $gambar, namaInstansi: $namaInstansi, alamatLengkap: $alamatInstansi, noTelepon: $noTelepon, email: $email, userType: $userType}'; // Update this line
+    return 'RegisterAdmin{id: $id, username: $username, password: $password, gambar: $gambar, namaInstansi: $namaInstansi, alamatInstansi: $alamatInstansi, noTelepon: $noTelepon, email: $email}';
   }
 }

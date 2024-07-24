@@ -1,7 +1,76 @@
 import 'package:flutter/material.dart';
 import 'edit-user-profile.dart'; // Tambahkan import ini
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:intl/intl.dart';
+import '/database_user.dart';
 
-class EditUserProfile extends StatelessWidget {
+class EditUserProfile extends StatefulWidget {
+  @override
+  _EditUserProfileState createState() => _EditUserProfileState();
+}
+
+class _EditUserProfileState extends State<EditUserProfile> {
+  String _username = '';
+  // String _password = '';
+  String _namaLengkap = '';
+  String _tempatLahir = '';
+  DateTime _tanggalLahir = DateTime(2000, 2, 29);
+  String _alamatLengkap = '';
+  String _agama = '';
+  String _jenisPekerjaan = '';
+  String _jenisKelamin = '';
+  int _noTelepon = 0;
+  int _noRekening = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadUserInfo();
+  }
+
+  Future<void> _loadUserInfo() async {
+    final prefs = await SharedPreferences.getInstance();
+    final username = prefs.getString('loggedInUsername') ?? '';
+
+    if (username.isNotEmpty) {
+      final dbUser = DatabaseUser.instance;
+      final registers = await dbUser.getRegisters(); // Fetch all registers
+
+      // Mencari user berdasarkan username
+      final user = registers.firstWhere(
+        (register) => register.username == username,
+        orElse: () => Register(
+          username: 'N/A',
+          password: 'N/A',
+          gambar: 'N/A',
+          namaLengkap: 'N/A',
+          tempatLahir: 'N/A',
+          tanggalLahir: DateTime(2000, 2, 29),
+          alamatLengkap: 'N/A',
+          agama: 'N/A',
+          jenisPekerjaan: 'N/A',
+          jenisKelamin: 'N/A',
+          noTelepon: 0,
+          noRekening: 0,
+        ),
+      );
+
+      setState(() {
+        _username = user.username;
+        // _password = user.password;
+        _namaLengkap = user.namaLengkap;
+        _tempatLahir = user.tempatLahir;
+        _tanggalLahir = user.tanggalLahir;
+        _alamatLengkap = user.alamatLengkap;
+        _agama = user.agama;
+        _jenisPekerjaan = user.jenisPekerjaan;
+        _jenisKelamin = user.jenisKelamin;
+        _noTelepon = user.noTelepon;
+        _noRekening = user.noRekening;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -57,7 +126,7 @@ class EditUserProfile extends StatelessWidget {
                         ),
                         SizedBox(height: 17),
                         Text(
-                          'BUDI WIJAYA',
+                          _namaLengkap.isNotEmpty ? _namaLengkap : 'N/A',
                           style: TextStyle(
                             fontFamily: 'Roboto',
                             fontWeight: FontWeight.bold,
@@ -66,7 +135,7 @@ class EditUserProfile extends StatelessWidget {
                         ),
                         SizedBox(height: 7),
                         Text(
-                          '3518112408070003',
+                          _username.isNotEmpty ? _username : 'N/A',
                           style: TextStyle(
                             fontFamily: 'Roboto',
                             fontSize: 16,
@@ -97,16 +166,17 @@ class EditUserProfile extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          buildInfoRow('Username', 'budywjy_'),
-                          buildInfoRow(
-                              'Tempat Tanggal Lahir', 'Sukabumi, 23 Juli 1977'),
-                          buildInfoRow('Alamat',
-                              'Jl. Veteran II, Selabatu,\nKec. Cikole, Sukabumi'),
-                          buildInfoRow('Agama', 'Islam'),
-                          buildInfoRow('Jenis Pekerjaan', 'Karyawan Swasta'),
-                          buildInfoRow('Jenis Kelamin', 'Pria'),
-                          buildInfoRow('No Telepon', '081236484878'),
-                          buildInfoRow('No Rekening', '13122349826'),
+                          buildInfoRow('Username', _username),
+                          // buildInfoRow('Password', _password),
+                          buildInfoRow('Nama Lengkap', _namaLengkap),
+                          buildInfoRow('Tempat Lahir', _tempatLahir),
+                          buildInfoRow('Tanggal Lahir', DateFormat('yyyy-MM-dd').format(_tanggalLahir)),
+                          buildInfoRow('Alamat Lengkap', _alamatLengkap),
+                          buildInfoRow('Agama', _agama),
+                          buildInfoRow('Jenis Pekerjaan', _jenisPekerjaan),
+                          buildInfoRow('Jenis Kelamin', _jenisKelamin),
+                          buildInfoRow('No Telepon', _noTelepon.toString()),
+                          buildInfoRow('No Rekening', _noRekening.toString()),
                         ],
                       ),
                     ),

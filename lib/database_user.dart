@@ -55,6 +55,16 @@ class DatabaseUser {
     );
   }
 
+  Future<void> updateRegister(Register register) async {
+  final db = await instance.database;
+  await db.update(
+    'registers',
+    register.toMap(),
+    where: 'username = ?',
+    whereArgs: [register.username],
+  );
+}
+
   Future<List<Register>> getRegisters() async {
     final db = await instance.database;
     final result = await db.query('registers');

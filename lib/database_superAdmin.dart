@@ -10,13 +10,15 @@ class DatabaseSuperAdmin {
 
   Future<Database> get database async {
     if (_database != null) return _database!;
-    _database = await _initDB('registSuperAdmin_database.db');
+    _database = await _initDB('registersSuperAdmin.db');
     return _database!;
   }
 
   Future<Database> _initDB(String filePath) async {
     final dbPath = await getDatabasesPath();
     final path = join(dbPath, filePath);
+
+    print('Database path: $path');
 
     return await openDatabase(
       path,
@@ -31,8 +33,7 @@ class DatabaseSuperAdmin {
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         username TEXT NOT NULL,
         password TEXT NOT NULL,
-        gambar TEXT NOT NULL,
-        user_type TEXT NOT NULL // Add this line
+        gambar TEXT NOT NULL
       )
     ''');
   }
@@ -63,14 +64,12 @@ class RegisterSuperAdmin {
   final String username;
   final String password;
   final String gambar;
-  final String userType; // Add this line
 
   RegisterSuperAdmin({
     this.id,
-    this.username = "superadmin1",
-    this.password = "superadmin1mantap",
-    this.gambar = "defaultSuperAdminImage.png",
-    this.userType = "superAdmin", // And this line
+    required this.username,
+    required this.password,
+    required this.gambar,
   });
 
   Map<String, Object?> toMap() {
@@ -79,7 +78,6 @@ class RegisterSuperAdmin {
       'username': username,
       'password': password,
       'gambar': gambar,
-      'user_type': userType, // And this line
     };
   }
 
@@ -89,12 +87,11 @@ class RegisterSuperAdmin {
       username: map['username'] as String,
       password: map['password'] as String,
       gambar: map['gambar'] as String,
-      userType: map['user_type'] as String, // And this line
     );
   }
 
   @override
   String toString() {
-    return 'RegisterSuperAdmin{id: $id, username: $username, password: $password, gambar: $gambar, userType: $userType}'; // Update this line
+    return 'RegisterSuperAdmin{id: $id, username: $username, password: $password, gambar: $gambar}';
   }
 }
