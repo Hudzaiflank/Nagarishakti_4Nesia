@@ -9,6 +9,8 @@ import 'Layanan-Kependudukan/user-ktp-page.dart';
 import 'Layanan-Kependudukan/user-kk-page.dart';
 
 class UserHome extends StatefulWidget {
+  const UserHome({super.key});
+
   @override
   _UserHomeState createState() => _UserHomeState();
 }
@@ -45,14 +47,14 @@ class _UserHomeState extends State<UserHome> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFE3EFF1),
+      backgroundColor: const Color(0xFFE3EFF1),
       body: SingleChildScrollView(
         child: Column(
           children: [
             // Header
             Container(
-              padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
-              decoration: BoxDecoration(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
+              decoration: const BoxDecoration(
                 color: Color(0xFF4297A0),
               ),
               child: Row(
@@ -64,7 +66,7 @@ class _UserHomeState extends State<UserHome> {
                       alignment: Alignment.centerRight,
                       child: Text(
                         username,
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontWeight: FontWeight.bold,
                           fontFamily: 'Ubuntu',
                           color: Colors.black,
@@ -73,7 +75,7 @@ class _UserHomeState extends State<UserHome> {
                       ),
                     ),
                   ),
-                  SizedBox(width: 10),
+                  const SizedBox(width: 10),
                   GestureDetector(
                     onTap: () {
                       if (!isLoggedIn) {
@@ -82,11 +84,11 @@ class _UserHomeState extends State<UserHome> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => EditUserProfile()),
+                              builder: (context) => const EditUserProfile()),
                         );
                       }
                     },
-                    child: CircleAvatar(
+                    child: const CircleAvatar(
                       radius: 22,
                       backgroundImage:
                           AssetImage('assets/user-home/profile-logo.png'),
@@ -95,11 +97,11 @@ class _UserHomeState extends State<UserHome> {
                 ],
               ),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
 
             // Carousel Slider
             Container(
-              margin: EdgeInsets.symmetric(horizontal: 16.0),
+              margin: const EdgeInsets.symmetric(horizontal: 16.0),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(7.0),
               ),
@@ -114,7 +116,7 @@ class _UserHomeState extends State<UserHome> {
                     builder: (BuildContext context) {
                       return Container(
                         width: MediaQuery.of(context).size.width,
-                        margin: EdgeInsets.symmetric(horizontal: 5.0),
+                        margin: const EdgeInsets.symmetric(horizontal: 5.0),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(7.0),
                           image: DecorationImage(
@@ -128,20 +130,20 @@ class _UserHomeState extends State<UserHome> {
                 }).toList(),
               ),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
 
             // Layanan Kependudukan
             Container(
-              margin: EdgeInsets.symmetric(horizontal: 16.0, vertical: 5.0),
-              padding: EdgeInsets.all(0.0),
+              margin: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 5.0),
+              padding: const EdgeInsets.all(0.0),
               decoration: BoxDecoration(
-                color: Color(0xFF327178),
+                color: const Color(0xFF327178),
                 borderRadius: BorderRadius.circular(7.0),
               ),
               child: Column(
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 14.0),
+                  const Padding(
+                    padding: EdgeInsets.symmetric(vertical: 14.0),
                     child: Text(
                       'LAYANAN KEPENDUDUKAN',
                       textAlign: TextAlign.center,
@@ -155,25 +157,25 @@ class _UserHomeState extends State<UserHome> {
                   ),
                   Container(
                     decoration: BoxDecoration(
-                      color: Color(0xFFFCFCFA),
+                      color: const Color(0xFFFCFCFA),
                       borderRadius: BorderRadius.circular(7.0),
                     ),
                     child: Column(
                       children: [
                         ListTile(
-                          leading: Container(
+                          leading: SizedBox(
                             width: 30,
                             child: Image.asset('assets/user-home/id-card.png',
                                 height: 30),
                           ),
-                          title: Text(
+                          title: const Text(
                             'Pembuatan KTP dan KK',
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontFamily: 'Ubuntu',
                             ),
                           ),
-                          subtitle: Text(
+                          subtitle: const Text(
                             'Pembuatan KTP Baru dan Perbaruan Kartu Keluarga Baru',
                             style: TextStyle(fontFamily: 'Ubuntu'),
                             textAlign: TextAlign.justify,
@@ -184,21 +186,21 @@ class _UserHomeState extends State<UserHome> {
                               builder: (BuildContext context) {
                                 return AlertDialog(
                                   backgroundColor: Colors.transparent,
-                                  contentPadding: EdgeInsets.all(0),
+                                  contentPadding: const EdgeInsets.all(0),
                                   content: Column(
                                     mainAxisSize: MainAxisSize.min,
                                     children: [
                                       Container(
                                         width: double.infinity,
-                                        padding: EdgeInsets.all(10),
+                                        padding: const EdgeInsets.all(10),
                                         decoration: BoxDecoration(
-                                          color: Color(0xFF4297A0),
+                                          color: const Color(0xFF4297A0),
                                           borderRadius:
                                               BorderRadius.circular(7.0),
                                           border: Border.all(
                                               color: Colors.white, width: 2),
                                         ),
-                                        child: Center(
+                                        child: const Center(
                                           child: Text(
                                             'Pilih yang Akan Diajukan',
                                             style: TextStyle(
@@ -210,7 +212,7 @@ class _UserHomeState extends State<UserHome> {
                                           ),
                                         ),
                                       ),
-                                      SizedBox(height: 10),
+                                      const SizedBox(height: 10),
                                       GestureDetector(
                                         onTap: () {
                                           Navigator.push(
@@ -222,9 +224,9 @@ class _UserHomeState extends State<UserHome> {
                                         },
                                         child: Container(
                                           width: double.infinity,
-                                          padding: EdgeInsets.only(top: 10),
+                                          padding: const EdgeInsets.only(top: 10),
                                           decoration: BoxDecoration(
-                                            color: Color(0xFFFCFCFA),
+                                            color: const Color(0xFFFCFCFA),
                                             borderRadius:
                                                 BorderRadius.circular(15.0),
                                           ),
@@ -232,7 +234,7 @@ class _UserHomeState extends State<UserHome> {
                                             crossAxisAlignment:
                                                 CrossAxisAlignment.center,
                                             children: [
-                                              Text(
+                                              const Text(
                                                 'KTP',
                                                 style: TextStyle(
                                                   fontFamily: 'Ubuntu',
@@ -241,8 +243,8 @@ class _UserHomeState extends State<UserHome> {
                                                 ),
                                                 textAlign: TextAlign.center,
                                               ),
-                                              SizedBox(height: 5),
-                                              Text(
+                                              const SizedBox(height: 5),
+                                              const Text(
                                                 'Kartu Tanda Penduduk',
                                                 style: TextStyle(
                                                   fontFamily: 'Ubuntu',
@@ -250,16 +252,16 @@ class _UserHomeState extends State<UserHome> {
                                                 ),
                                                 textAlign: TextAlign.center,
                                               ),
-                                              SizedBox(height: 10),
+                                              const SizedBox(height: 10),
                                               Container(
                                                 width: double.infinity,
                                                 decoration: BoxDecoration(
-                                                  color: Color(0xFF233C49),
+                                                  color: const Color(0xFF233C49),
                                                   borderRadius:
                                                       BorderRadius.circular(
                                                           10.0),
                                                 ),
-                                                padding: EdgeInsets.all(10),
+                                                padding: const EdgeInsets.all(10),
                                                 child: Column(
                                                   crossAxisAlignment:
                                                       CrossAxisAlignment
@@ -270,7 +272,7 @@ class _UserHomeState extends State<UserHome> {
                                                           .symmetric(
                                                           vertical: 2.0),
                                                       child: RichText(
-                                                        text: TextSpan(
+                                                        text: const TextSpan(
                                                           text: 'Siapkan',
                                                           style: TextStyle(
                                                             fontFamily:
@@ -283,8 +285,8 @@ class _UserHomeState extends State<UserHome> {
                                                             TextAlign.justify,
                                                       ),
                                                     ),
-                                                    Padding(
-                                                      padding: const EdgeInsets
+                                                    const Padding(
+                                                      padding: EdgeInsets
                                                           .symmetric(
                                                           vertical: 2.0),
                                                       child: Text(
@@ -298,8 +300,8 @@ class _UserHomeState extends State<UserHome> {
                                                             TextAlign.justify,
                                                       ),
                                                     ),
-                                                    Padding(
-                                                      padding: const EdgeInsets
+                                                    const Padding(
+                                                      padding: EdgeInsets
                                                           .symmetric(
                                                           vertical: 2.0),
                                                       child: Text(
@@ -320,7 +322,7 @@ class _UserHomeState extends State<UserHome> {
                                           ),
                                         ),
                                       ),
-                                      SizedBox(height: 10),
+                                      const SizedBox(height: 10),
                                       GestureDetector(
                                         onTap: () {
                                           Navigator.push(
@@ -332,9 +334,9 @@ class _UserHomeState extends State<UserHome> {
                                         },
                                         child: Container(
                                           width: double.infinity,
-                                          padding: EdgeInsets.only(top: 10),
+                                          padding: const EdgeInsets.only(top: 10),
                                           decoration: BoxDecoration(
-                                            color: Color(0xFFFCFCFA),
+                                            color: const Color(0xFFFCFCFA),
                                             borderRadius:
                                                 BorderRadius.circular(15.0),
                                           ),
@@ -342,7 +344,7 @@ class _UserHomeState extends State<UserHome> {
                                             crossAxisAlignment:
                                                 CrossAxisAlignment.center,
                                             children: [
-                                              Text(
+                                              const Text(
                                                 'KK',
                                                 style: TextStyle(
                                                   fontFamily: 'Ubuntu',
@@ -351,8 +353,8 @@ class _UserHomeState extends State<UserHome> {
                                                 ),
                                                 textAlign: TextAlign.center,
                                               ),
-                                              SizedBox(height: 5),
-                                              Text(
+                                              const SizedBox(height: 5),
+                                              const Text(
                                                 'Kartu Keluarga',
                                                 style: TextStyle(
                                                   fontFamily: 'Ubuntu',
@@ -360,16 +362,16 @@ class _UserHomeState extends State<UserHome> {
                                                 ),
                                                 textAlign: TextAlign.center,
                                               ),
-                                              SizedBox(height: 10),
+                                              const SizedBox(height: 10),
                                               Container(
                                                 width: double.infinity,
                                                 decoration: BoxDecoration(
-                                                  color: Color(0xFF233C49),
+                                                  color: const Color(0xFF233C49),
                                                   borderRadius:
                                                       BorderRadius.circular(
                                                           10.0),
                                                 ),
-                                                padding: EdgeInsets.all(10),
+                                                padding: const EdgeInsets.all(10),
                                                 child: Column(
                                                   crossAxisAlignment:
                                                       CrossAxisAlignment
@@ -380,7 +382,7 @@ class _UserHomeState extends State<UserHome> {
                                                           .symmetric(
                                                           vertical: 2.0),
                                                       child: RichText(
-                                                        text: TextSpan(
+                                                        text: const TextSpan(
                                                           text: 'Siapkan',
                                                           style: TextStyle(
                                                             fontFamily:
@@ -393,8 +395,8 @@ class _UserHomeState extends State<UserHome> {
                                                             TextAlign.justify,
                                                       ),
                                                     ),
-                                                    Padding(
-                                                      padding: const EdgeInsets
+                                                    const Padding(
+                                                      padding: EdgeInsets
                                                           .symmetric(
                                                           vertical: 2.0),
                                                       child: Text(
@@ -408,8 +410,8 @@ class _UserHomeState extends State<UserHome> {
                                                             TextAlign.justify,
                                                       ),
                                                     ),
-                                                    Padding(
-                                                      padding: const EdgeInsets
+                                                    const Padding(
+                                                      padding: EdgeInsets
                                                           .symmetric(
                                                           vertical: 2.0),
                                                       child: Text(
@@ -423,8 +425,8 @@ class _UserHomeState extends State<UserHome> {
                                                             TextAlign.justify,
                                                       ),
                                                     ),
-                                                    Padding(
-                                                      padding: const EdgeInsets
+                                                    const Padding(
+                                                      padding: EdgeInsets
                                                           .symmetric(
                                                           vertical: 2.0),
                                                       child: Text(
@@ -438,8 +440,8 @@ class _UserHomeState extends State<UserHome> {
                                                             TextAlign.justify,
                                                       ),
                                                     ),
-                                                    Padding(
-                                                      padding: const EdgeInsets
+                                                    const Padding(
+                                                      padding: EdgeInsets
                                                           .symmetric(
                                                           vertical: 2.0),
                                                       child: Text(
@@ -453,8 +455,8 @@ class _UserHomeState extends State<UserHome> {
                                                             TextAlign.justify,
                                                       ),
                                                     ),
-                                                    Padding(
-                                                      padding: const EdgeInsets
+                                                    const Padding(
+                                                      padding: EdgeInsets
                                                           .symmetric(
                                                           vertical: 2.0),
                                                       child: Text(
@@ -475,7 +477,7 @@ class _UserHomeState extends State<UserHome> {
                                           ),
                                         ),
                                       ),
-                                      SizedBox(height: 10),
+                                      const SizedBox(height: 10),
                                       ElevatedButton.icon(
                                         onPressed: () {
                                           // nanti handle download pdf nya disini borr
@@ -485,20 +487,20 @@ class _UserHomeState extends State<UserHome> {
                                           height: 24,
                                           child: Image.asset(
                                             'assets/download-icon.png',
-                                            color: Color(0xFF233C49),
+                                            color: const Color(0xFF233C49),
                                           ),
                                         ),
-                                        label: Text(
+                                        label: const Text(
                                           'Unduh Formulir F-1.02',
                                           style: TextStyle(
                                               color: Color(0xFF233C49)),
                                         ),
                                         style: ElevatedButton.styleFrom(
-                                          backgroundColor: Color(0xFFAAA79C),
+                                          backgroundColor: const Color(0xFFAAA79C),
                                           shape: RoundedRectangleBorder(
                                             borderRadius:
                                                 BorderRadius.circular(12.0),
-                                            side: BorderSide(
+                                            side: const BorderSide(
                                                 color: Colors.white, width: 2),
                                           ),
                                         ),
@@ -510,43 +512,43 @@ class _UserHomeState extends State<UserHome> {
                             );
                           },
                         ),
-                        Divider(height: 1),
+                        const Divider(height: 1),
                         ListTile(
-                          leading: Container(
+                          leading: SizedBox(
                             width: 30,
                             child: Image.asset(
                                 'assets/user-home/registration-card.png',
                                 height: 30),
                           ),
-                          title: Text(
+                          title: const Text(
                             'Pembaruan Data Kependudukan',
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontFamily: 'Ubuntu',
                             ),
                           ),
-                          subtitle: Text(
+                          subtitle: const Text(
                             'Untuk perpindahan domisili',
                             style: TextStyle(fontFamily: 'Ubuntu'),
                             textAlign: TextAlign.justify,
                           ),
                         ),
-                        Divider(height: 1),
+                        const Divider(height: 1),
                         ListTile(
-                          leading: Container(
+                          leading: SizedBox(
                             width: 30,
                             child: Image.asset(
                                 'assets/user-home/application-card.png',
                                 height: 30),
                           ),
-                          title: Text(
+                          title: const Text(
                             'Pendaftaran AKTA Kelahiran dan Kematian',
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontFamily: 'Ubuntu',
                             ),
                           ),
-                          subtitle: Text(
+                          subtitle: const Text(
                             'Untuk membuat surat kelahiran dan kematian',
                             style: TextStyle(fontFamily: 'Ubuntu'),
                             textAlign: TextAlign.justify,
@@ -558,20 +560,20 @@ class _UserHomeState extends State<UserHome> {
                 ],
               ),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
 
             // Pengaduan Masyarakat
             Container(
-              margin: EdgeInsets.symmetric(horizontal: 16.0, vertical: 5.0),
-              padding: EdgeInsets.all(0.0),
+              margin: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 5.0),
+              padding: const EdgeInsets.all(0.0),
               decoration: BoxDecoration(
-                color: Color(0xFF327178),
+                color: const Color(0xFF327178),
                 borderRadius: BorderRadius.circular(7.0),
               ),
               child: Column(
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 12.0),
+                  const Padding(
+                    padding: EdgeInsets.symmetric(vertical: 12.0),
                     child: Text(
                       'PENGADUAN MASYARAKAT',
                       textAlign: TextAlign.center,
@@ -585,26 +587,26 @@ class _UserHomeState extends State<UserHome> {
                   ),
                   Container(
                     decoration: BoxDecoration(
-                      color: Color(0xFFF8F6F3),
+                      color: const Color(0xFFF8F6F3),
                       borderRadius: BorderRadius.circular(7.0),
                     ),
                     child: Column(
                       children: [
                         ListTile(
-                          leading: Container(
+                          leading: SizedBox(
                             width: 30,
                             child: Image.asset(
                                 'assets/user-home/complaint-card.png',
                                 height: 30),
                           ),
-                          title: Text(
+                          title: const Text(
                             'Pengaduan Masyarakat',
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontFamily: 'Ubuntu',
                             ),
                           ),
-                          subtitle: Text(
+                          subtitle: const Text(
                             'Tulis aduan Anda tentang Infrastruktur atau fasilitas lain kepada Pemerintah',
                             style: TextStyle(fontFamily: 'Ubuntu'),
                             textAlign: TextAlign.justify,
@@ -616,20 +618,20 @@ class _UserHomeState extends State<UserHome> {
                 ],
               ),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
 
             // Informasi Pariwisata
             Container(
-              margin: EdgeInsets.symmetric(horizontal: 16.0, vertical: 5.0),
-              padding: EdgeInsets.all(0.0),
+              margin: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 5.0),
+              padding: const EdgeInsets.all(0.0),
               decoration: BoxDecoration(
-                color: Color(0xFF327178),
+                color: const Color(0xFF327178),
                 borderRadius: BorderRadius.circular(7.0),
               ),
               child: Column(
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 12.0),
+                  const Padding(
+                    padding: EdgeInsets.symmetric(vertical: 12.0),
                     child: Text(
                       'INFORMASI PARIWISATA',
                       textAlign: TextAlign.center,
@@ -643,7 +645,7 @@ class _UserHomeState extends State<UserHome> {
                   ),
                   Container(
                     decoration: BoxDecoration(
-                      color: Color(0xFFF8F6F3),
+                      color: const Color(0xFFF8F6F3),
                       borderRadius: BorderRadius.circular(7.0),
                     ),
                     child: Column(
@@ -657,27 +659,27 @@ class _UserHomeState extends State<UserHome> {
                             );
                           },
                           child: ListTile(
-                            leading: Container(
+                            leading: SizedBox(
                               width: 30,
                               child: Image.asset(
                                   'assets/user-home/destination-card.png',
                                   height: 30),
                             ),
-                            title: Text(
+                            title: const Text(
                               'Daftar Destinasi Wisata',
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontFamily: 'Ubuntu',
                               ),
                             ),
-                            subtitle: Text(
+                            subtitle: const Text(
                               'List Destinasi Wisata di daerah Anda!',
                               style: TextStyle(fontFamily: 'Ubuntu'),
                               textAlign: TextAlign.justify,
                             ),
                           ),
                         ),
-                        Divider(height: 1),
+                        const Divider(height: 1),
                         GestureDetector(
                           onTap: () {
                             Navigator.push(
@@ -687,27 +689,27 @@ class _UserHomeState extends State<UserHome> {
                             );
                           },
                           child: ListTile(
-                            leading: Container(
+                            leading: SizedBox(
                               width: 30,
                               child: Image.asset(
                                   'assets/user-home/timeline-card.png',
                                   height: 30),
                             ),
-                            title: Text(
+                            title: const Text(
                               'Timeline Acara Dan Festival',
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontFamily: 'Ubuntu',
                               ),
                             ),
-                            subtitle: Text(
+                            subtitle: const Text(
                               'Lihat Acara dan Festival yang akan datang',
                               style: TextStyle(fontFamily: 'Ubuntu'),
                               textAlign: TextAlign.justify,
                             ),
                           ),
                         ),
-                        Divider(height: 1),
+                        const Divider(height: 1),
                         GestureDetector(
                           onTap: () {
                             Navigator.push(
@@ -718,20 +720,20 @@ class _UserHomeState extends State<UserHome> {
                             );
                           },
                           child: ListTile(
-                            leading: Container(
+                            leading: SizedBox(
                               width: 30,
                               child: Image.asset(
                                   'assets/user-home/transportation-card.png',
                                   height: 30),
                             ),
-                            title: Text(
+                            title: const Text(
                               'Informasi Transportasi dan Akomodasi',
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontFamily: 'Ubuntu',
                               ),
                             ),
-                            subtitle: Text(
+                            subtitle: const Text(
                               'Informasi tentang sarana transportasi dan akomodasi di daerah Anda',
                               style: TextStyle(fontFamily: 'Ubuntu'),
                               textAlign: TextAlign.justify,
@@ -744,21 +746,21 @@ class _UserHomeState extends State<UserHome> {
                 ],
               ),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
 
             // Informasi Publik
             Container(
-              margin: EdgeInsets.symmetric(horizontal: 16.0, vertical: 5.0),
-              padding: EdgeInsets.all(0.0),
+              margin: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 5.0),
+              padding: const EdgeInsets.all(0.0),
               decoration: BoxDecoration(
-                color: Color(0xFF327178),
+                color: const Color(0xFF327178),
                 borderRadius: BorderRadius.circular(7.0),
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 12.0),
+                  const Padding(
+                    padding: EdgeInsets.symmetric(vertical: 12.0),
                     child: Text(
                       'INFORMASI PUBLIK',
                       textAlign: TextAlign.center,
@@ -772,13 +774,13 @@ class _UserHomeState extends State<UserHome> {
                   ),
                   Container(
                     decoration: BoxDecoration(
-                      color: Color(0xFFF8F6F3),
+                      color: const Color(0xFFF8F6F3),
                       borderRadius: BorderRadius.circular(7.0),
                     ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Padding(
+                        const Padding(
                           padding: EdgeInsets.all(10.0),
                           child: Text(
                             'Baca Berita Terkini di Daerah Anda',
@@ -789,13 +791,13 @@ class _UserHomeState extends State<UserHome> {
                           ),
                         ),
                         Container(
-                          margin: EdgeInsets.symmetric(vertical: 10.0),
+                          margin: const EdgeInsets.symmetric(vertical: 10.0),
                           child: SingleChildScrollView(
                             scrollDirection: Axis.horizontal,
                             child: Row(
                               children: List.generate(4, (index) {
                                 return Container(
-                                  margin: EdgeInsets.symmetric(horizontal: 5.0),
+                                  margin: const EdgeInsets.symmetric(horizontal: 5.0),
                                   width: 150,
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(7.0),
@@ -806,7 +808,7 @@ class _UserHomeState extends State<UserHome> {
                                         CrossAxisAlignment.start,
                                     children: [
                                       ClipRRect(
-                                        borderRadius: BorderRadius.vertical(
+                                        borderRadius: const BorderRadius.vertical(
                                           top: Radius.circular(7.0),
                                         ),
                                         child: Image.asset(
@@ -817,10 +819,10 @@ class _UserHomeState extends State<UserHome> {
                                         ),
                                       ),
                                       Padding(
-                                        padding: EdgeInsets.all(8.0),
+                                        padding: const EdgeInsets.all(8.0),
                                         child: Text(
                                           'Judul Berita $index',
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                             fontWeight: FontWeight.bold,
                                             fontFamily: 'Ubuntu',
                                           ),
@@ -833,7 +835,7 @@ class _UserHomeState extends State<UserHome> {
                             ),
                           ),
                         ),
-                        Align(
+                        const Align(
                           alignment: Alignment.centerRight,
                           child: Padding(
                             padding: EdgeInsets.only(right: 10.0),
@@ -846,22 +848,22 @@ class _UserHomeState extends State<UserHome> {
                             ),
                           ),
                         ),
-                        SizedBox(height: 10),
+                        const SizedBox(height: 10),
                         Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 40.0),
+                              padding: const EdgeInsets.symmetric(horizontal: 40.0),
                               child: ElevatedButton(
                                 onPressed: () {},
                                 style: ElevatedButton.styleFrom(
-                                  backgroundColor: Color(0xFFAAA79C),
+                                  backgroundColor: const Color(0xFFAAA79C),
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(7.0),
                                   ),
-                                  minimumSize: Size(double.infinity, 50),
+                                  minimumSize: const Size(double.infinity, 50),
                                 ),
-                                child: Text(
+                                child: const Text(
                                   'Akses Dokumen Publik',
                                   style: TextStyle(
                                     color: Colors.black,
@@ -870,19 +872,19 @@ class _UserHomeState extends State<UserHome> {
                                 ),
                               ),
                             ),
-                            SizedBox(height: 10),
+                            const SizedBox(height: 10),
                             Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 40.0),
+                              padding: const EdgeInsets.symmetric(horizontal: 40.0),
                               child: ElevatedButton(
                                 onPressed: () {},
                                 style: ElevatedButton.styleFrom(
-                                  backgroundColor: Color(0xFFAAA79C),
+                                  backgroundColor: const Color(0xFFAAA79C),
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(7.0),
                                   ),
-                                  minimumSize: Size(double.infinity, 50),
+                                  minimumSize: const Size(double.infinity, 50),
                                 ),
-                                child: Text(
+                                child: const Text(
                                   'Agenda Pemerintah Daerah',
                                   style: TextStyle(
                                     color: Colors.black,
@@ -919,14 +921,14 @@ class _UserHomeState extends State<UserHome> {
           color: Colors.white,
           borderRadius: BorderRadius.circular(10.0),
         ),
-        padding: EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Center(
               child: Text(
                 title,
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.bold,
                   fontFamily: 'Ubuntu',
@@ -936,17 +938,17 @@ class _UserHomeState extends State<UserHome> {
             Center(
               child: Text(
                 subtitle,
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 16,
                   fontFamily: 'Ubuntu',
                 ),
               ),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             for (var item in items)
               Text(
                 '• $item',
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 14,
                   fontFamily: 'Ubuntu',
                 ),

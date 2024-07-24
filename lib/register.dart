@@ -4,6 +4,8 @@ import 'database_user.dart';
 import 'login.dart';
 
 class RegistrationScreen extends StatefulWidget {
+  const RegistrationScreen({super.key});
+
   @override
   _RegistrationScreenState createState() => _RegistrationScreenState();
 }
@@ -15,7 +17,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   String? _username;
   String? _password;
   String? _namaLengkap;
-  String? _gambar = 'default_image_path'; // Placeholder for image path
+  final String _gambar = 'default_image_path'; // Placeholder for image path
   String? _tempatLahir;
   String? _alamatLengkap;
   String? _agama;
@@ -45,7 +47,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         username: _username!,
         password: _password!,
         namaLengkap: _namaLengkap!,
-        gambar: _gambar!,
+        gambar: _gambar,
         tempatLahir: _tempatLahir!,
         tanggalLahir: _selectedDate!,
         alamatLengkap: _alamatLengkap!,
@@ -66,20 +68,20 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFECF5F6),
+      backgroundColor: const Color(0xFFECF5F6),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(height: 40),
+              const SizedBox(height: 40),
               Center(
                 child: Column(
                   children: [
                     Image.asset('assets/icon.png', height: 100),
-                    SizedBox(height: 10),
-                    Text(
+                    const SizedBox(height: 10),
+                    const Text(
                       'REGISTRASI AKUN',
                       style: TextStyle(
                         fontFamily: 'Ubuntu',
@@ -87,23 +89,23 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text('Sudah memiliki akun?',
+                        const Text('Sudah memiliki akun?',
                             style: TextStyle(fontFamily: 'Ubuntu')),
-                        SizedBox(width: 5),
+                        const SizedBox(width: 5),
                         GestureDetector(
                           onTap: () {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => LoginScreen()
+                                  builder: (context) => const LoginScreen()
                               ),
                             );
                           },
-                          child: Text(
+                          child: const Text(
                             'klik disini',
                             style: TextStyle(
                               color: Colors.red,
@@ -116,13 +118,13 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   ],
                 ),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               Container(
-                padding: EdgeInsets.all(16.0),
+                padding: const EdgeInsets.all(16.0),
                 decoration: BoxDecoration(
-                  color: Color(0xFF4297A0),
+                  color: const Color(0xFF4297A0),
                   borderRadius: BorderRadius.circular(7.0),
-                  border: Border.all(color: Color(0xFF4297A0)),
+                  border: Border.all(color: const Color(0xFF4297A0)),
                 ),
                 child: Form(
                   key: _formKey,
@@ -185,16 +187,16 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                         keyboardType: TextInputType.number,
                         onSave: (value) => _noRekening = int.parse(value!),
                       ),
-                      SizedBox(height: 41),
+                      const SizedBox(height: 41),
                       SizedBox(
                         width: double.infinity,
                         child: ElevatedButton(
                           onPressed: _submitForm,
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: Color(0xFF2F5061),
-                            padding: EdgeInsets.symmetric(vertical: 15.0),
+                            backgroundColor: const Color(0xFF2F5061),
+                            padding: const EdgeInsets.symmetric(vertical: 15.0),
                           ),
-                          child: Text(
+                          child: const Text(
                             'MASUK',
                             style: TextStyle(
                               color: Colors.white,
@@ -228,14 +230,14 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       children: [
         Text(
           label,
-          style: TextStyle(
+          style: const TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.bold,
             color: Colors.black,
             fontFamily: 'Ubuntu',
           ),
         ),
-        SizedBox(height: 5),
+        const SizedBox(height: 5),
         TextFormField(
           onSaved: onSave,
           validator: (value) {
@@ -248,7 +250,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           keyboardType: keyboardType,
           decoration: InputDecoration(
             hintText: hint,
-            hintStyle: TextStyle(
+            hintStyle: const TextStyle(
               fontStyle: FontStyle.italic,
               fontWeight: FontWeight.w300,
               fontFamily: 'Ubuntu',
@@ -257,11 +259,11 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
             fillColor: Colors.white,
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(7.0),
-              borderSide: BorderSide(color: Colors.white),
+              borderSide: const BorderSide(color: Colors.white),
             ),
           ),
         ),
-        SizedBox(height: 15),
+        const SizedBox(height: 15),
       ],
     );
   }
@@ -276,14 +278,14 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       children: [
         Text(
           hint,
-          style: TextStyle(
+          style: const TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.bold,
             color: Colors.black,
             fontFamily: 'Ubuntu',
           ),
         ),
-        SizedBox(height: 5),
+        const SizedBox(height: 5),
         GestureDetector(
           onTap: () async {
             DateTime? picked = await showDatePicker(
@@ -302,7 +304,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
               fillColor: Colors.white,
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(7.0),
-                borderSide: BorderSide(color: Colors.white),
+                borderSide: const BorderSide(color: Colors.white),
               ),
             ),
             child: Row(
@@ -312,17 +314,17 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   selectedDate == null
                       ? hint
                       : DateFormat('dd-MM-yyyy').format(selectedDate),
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Colors.black,
                     fontFamily: 'Ubuntu',
                   ),
                 ),
-                Icon(Icons.calendar_today),
+                const Icon(Icons.calendar_today),
               ],
             ),
           ),
         ),
-        SizedBox(height: 15),
+        const SizedBox(height: 15),
       ],
     );
   }
@@ -331,7 +333,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
+        const Text(
           'Jenis Kelamin',
           style: TextStyle(
             fontSize: 18,
@@ -340,7 +342,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
             fontFamily: 'Ubuntu',
           ),
         ),
-        SizedBox(height: 5),
+        const SizedBox(height: 5),
         Row(
           children: [
             Expanded(
@@ -375,7 +377,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
             ),
           ],
         ),
-        SizedBox(height: 15),
+        const SizedBox(height: 15),
       ],
     );
   }
