@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/gestures.dart';
+import 'package:flutter/services.dart';
+import '../user-home.dart';
 
 class UserKkPage extends StatefulWidget {
   @override
@@ -73,8 +76,12 @@ class _UserKkPageState extends State<UserKkPage> {
                     context,
                     [
                       'KK hilang/rusak',
-                      'KK Baru (membentuk KK baru)',
-                      'KK Baru (Pergantian Kepala Keluarga)'
+                      'KK Baru (membentuk Keluarga baru)',
+                      'KK Baru (Pergantian Kepala Keluarga)',
+                      'KK Baru (Pindah Datang)',
+                      'KK Baru (Pindah WNI dari luar negeri)',
+                      'KK Baru (Rentan Adminduk)',
+                      'KK Perubahan (Peristiwa penting)'
                     ],
                   ),
                 ],
@@ -95,6 +102,7 @@ class _UserKkPageState extends State<UserKkPage> {
                       'DATA PEMOHON',
                       style: TextStyle(
                         fontFamily: 'Ubuntu',
+                        fontSize: 20,
                         fontWeight: FontWeight.bold,
                         color: Color(0xFF233C49),
                         decoration: TextDecoration.underline,
@@ -112,16 +120,19 @@ class _UserKkPageState extends State<UserKkPage> {
                     context: context,
                     label: 'Nomor Induk Kependudukan',
                     hint: 'nomor induk kependudukan',
+                    isNumber: true,
                   ),
                   _buildTextField(
                     context: context,
                     label: 'Nomor Kartu Keluarga',
                     hint: 'nomor kartu keluarga',
+                    isNumber: true,
                   ),
                   _buildTextField(
                     context: context,
                     label: 'Nomor Handphone',
                     hint: 'nomor handphone',
+                    isNumber: true,
                   ),
                   _buildTextField(
                     context: context,
@@ -168,7 +179,7 @@ class _UserKkPageState extends State<UserKkPage> {
                     ),
                     _buildUploadField(),
                   ] else if (selectedReason ==
-                      'KK Baru (membentuk KK baru)') ...[
+                      'KK Baru (membentuk Keluarga baru)') ...[
                     _buildSubTitleWithNormal(
                       'Buku nikah/kutipan akta perkawinan',
                       ' atau ',
@@ -177,7 +188,40 @@ class _UserKkPageState extends State<UserKkPage> {
                       'Surat Pernyataan Tanggung Jawab Mutlak (SPTJM) perkawinan/perceraian belum tercatat',
                     ),
                     _buildUploadField(),
-                  ],
+                  ] else if (selectedReason ==
+                      'KK Baru (Pergantian Kepala Keluarga)') ...[
+                    _buildSubTitle('Kartu Keluarga Lama'),
+                    _buildUploadField(),
+                    _buildSubTitle('Surat Keterangan Kematian Kepala Keluarga'),
+                    _buildUploadField(),
+                  ] else if (selectedReason == 'KK Baru (Pindah Datang)') ...[
+                    _boxBuild(context),
+                    _buildSubTitle('Surat Keterangan Pindah Datang (SKPD)'),
+                    _buildUploadField(),
+                    _buildSubTitle('Kartu Keluarga Lama'),
+                    _buildUploadField(),
+                  ] else if (selectedReason ==
+                      'KK Baru (Pindah WNI dari luar negeri)') ...[
+                    _buildSubTitle(
+                        'Surat Keterangan Pindah Luar Negeri (SKPLN)'),
+                    _buildUploadField(),
+                  ] else if (selectedReason == 'KK Baru (Rentan Adminduk)') ...[
+                    _buildSubTitle('Surat Pengantar RT dan RW'),
+                    _buildUploadField(),
+                    _buildSubTitle(
+                        'Surat Pernyataan Tidak Memiliki Dokumen Kependudukan'),
+                    _buildUploadField(),
+                  ] else if (selectedReason ==
+                      'KK Perubahan (Peristiwa penting)') ...[
+                    _buildSubTitle('Kartu Keluarga Lama'),
+                    _buildUploadField(),
+                    _textJustify(
+                      'Bukti Perubahan Peristiwa Kependudukan dan Peristiwa Penting ',
+                      '\nContoh: Kelahiran, Perkawinan, Pembatalan Perkawinan, Perceraian, Pembatalan Perceraian, Kematian, Pengangkatan Anak, Pengakuan Anak, Pengesahan Anak, Perubahan Nama, Perubahan Status Kewarganegaraan, Pembetulan Akta dan Pembatalan Akta',
+                    ), // ini itu udh beda widget, makanya mending disatuin pake widget sebelumnya apa gimana ya
+                    _buildUploadField(),
+                  ] else if (selectedReason == '')
+                    ...[],
                   _buildSubTitle('Dokumen Tambahan'),
                   _buildUploadField(),
                 ],
@@ -248,11 +292,13 @@ class _UserKkPageState extends State<UserKkPage> {
     );
   }
 
-  Widget _buildTextField(
-      {required BuildContext context,
-      required String label,
-      required String hint,
-      bool isDateField = false}) {
+  Widget _buildTextField({
+    required BuildContext context,
+    required String label,
+    required String hint,
+    bool isDateField = false,
+    bool isNumber = false,
+  }) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -289,6 +335,9 @@ class _UserKkPageState extends State<UserKkPage> {
                     // Handle the selected date
                   }
                 : null,
+            keyboardType: isNumber ? TextInputType.number : TextInputType.text,
+            inputFormatters:
+                isNumber ? [FilteringTextInputFormatter.digitsOnly] : [],
             decoration: InputDecoration(
               hintText: hint,
               hintStyle: TextStyle(
@@ -320,6 +369,8 @@ class _UserKkPageState extends State<UserKkPage> {
           padding: const EdgeInsets.only(bottom: 16.0),
           child: DropdownButtonFormField(
             value: selectedReason,
+            isDense: true,
+            isExpanded: true,
             decoration: InputDecoration(
               fillColor: backgroundColor,
               filled: true,
@@ -332,7 +383,10 @@ class _UserKkPageState extends State<UserKkPage> {
                 .map((label) => DropdownMenuItem(
                       child: Text(
                         label,
-                        style: TextStyle(color: Colors.black54),
+                        style: TextStyle(
+                          color: Colors.black54,
+                          overflow: TextOverflow.ellipsis,
+                        ),
                       ),
                       value: label,
                     ))
@@ -413,20 +467,33 @@ class _UserKkPageState extends State<UserKkPage> {
     );
   }
 
-  // Widget _buildJustifiedText(String text) {
-  //   return Padding(
-  //     padding: const EdgeInsets.symmetric(vertical: 8.0),
-  //     child: Text(
-  //       text,
-  //       textAlign: TextAlign.justify,
-  //       style: TextStyle(
-  //         fontFamily: 'Ubuntu',
-  //         fontWeight: FontWeight.bold,
-  //         color: Colors.black,
-  //       ),
-  //     ),
-  //   );
-  // }
+  Widget _textJustify(String part1, String part2) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      child: RichText(
+        textAlign: TextAlign.justify,
+        text: TextSpan(
+          style: TextStyle(
+            fontFamily: 'Ubuntu',
+            fontWeight: FontWeight.bold,
+            color: Colors.black,
+            height: 1.6,
+          ),
+          children: <TextSpan>[
+            TextSpan(text: part1),
+            TextSpan(
+              text: part2,
+              style: TextStyle(
+                fontWeight: FontWeight.normal,
+                fontStyle: FontStyle.normal,
+                height: 1.5,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 
   Widget _buildSubTitleWithNormal(
       String part1, String part2, String part3, String part4, String part5) {
@@ -459,6 +526,45 @@ class _UserKkPageState extends State<UserKkPage> {
             TextSpan(text: part5),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget _boxBuild(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 9.0),
+      decoration: BoxDecoration(
+        color: Color(0xFF2F5061),
+        borderRadius: BorderRadius.circular(7.0),
+      ),
+      child: RichText(
+        text: TextSpan(
+          text:
+              'Silakan isi formulir perpindahan kependudukan terlebih dahulu untuk mendapatkan surat keterangan pindah sebagai syarat kelengkapan pembuatan KK baru ',
+          style: TextStyle(
+            fontFamily: 'Ubuntu',
+            fontWeight: FontWeight.w100,
+            color: Colors.white,
+            height: 1.5,
+          ),
+          children: <TextSpan>[
+            TextSpan(
+              text: 'di sini.',
+              style: TextStyle(
+                color: Color(0xFFE57F84),
+                fontWeight: FontWeight.w300,
+              ),
+              recognizer: TapGestureRecognizer()
+                ..onTap = () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => UserHome()),
+                  );
+                },
+            ),
+          ],
+        ),
+        textAlign: TextAlign.justify,
       ),
     );
   }
