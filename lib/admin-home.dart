@@ -4,6 +4,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'User/Profile/user-profile.dart';
 
 class AdminHome extends StatefulWidget {
+  const AdminHome({super.key});
+
   @override
   _AdminHomeState createState() => _AdminHomeState();
 }
@@ -40,14 +42,14 @@ class _AdminHomeState extends State<AdminHome> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFE3EFF1),
+      backgroundColor: const Color(0xFFE3EFF1),
       body: SingleChildScrollView(
         child: Column(
           children: [
             // Header
             Container(
-              padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
-              decoration: BoxDecoration(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
+              decoration: const BoxDecoration(
                 color: Color(0xFF4297A0),
               ),
               child: Row(
@@ -59,7 +61,7 @@ class _AdminHomeState extends State<AdminHome> {
                       alignment: Alignment.centerRight,
                       child: Text(
                         username,
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontWeight: FontWeight.bold,
                           fontFamily: 'Roboto',
                           color: Colors.white,
@@ -68,7 +70,7 @@ class _AdminHomeState extends State<AdminHome> {
                       ),
                     ),
                   ),
-                  SizedBox(width: 10), //
+                  const SizedBox(width: 10), //
                   GestureDetector(
                     onTap: () {
                       if (!isLoggedIn) {
@@ -77,11 +79,11 @@ class _AdminHomeState extends State<AdminHome> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => EditUserProfile()),
+                              builder: (context) => const EditUserProfile()),
                         );
                       }
                     },
-                    child: CircleAvatar(
+                    child: const CircleAvatar(
                       radius: 22,
                       backgroundImage:
                           AssetImage('assets/user-home/admin-profile.png'),
@@ -90,11 +92,11 @@ class _AdminHomeState extends State<AdminHome> {
                 ],
               ),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
 
             // Carousel Slider
             Container(
-              margin: EdgeInsets.symmetric(horizontal: 16.0),
+              margin: const EdgeInsets.symmetric(horizontal: 16.0),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(7.0),
               ),
@@ -109,7 +111,7 @@ class _AdminHomeState extends State<AdminHome> {
                     builder: (BuildContext context) {
                       return Container(
                         width: MediaQuery.of(context).size.width,
-                        margin: EdgeInsets.symmetric(horizontal: 5.0),
+                        margin: const EdgeInsets.symmetric(horizontal: 5.0),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(7.0),
                           image: DecorationImage(
@@ -123,20 +125,20 @@ class _AdminHomeState extends State<AdminHome> {
                 }).toList(),
               ),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
 
             // Layanan Kependudukan
             Container(
-              margin: EdgeInsets.symmetric(horizontal: 16.0, vertical: 5.0),
-              padding: EdgeInsets.all(0.0),
+              margin: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 5.0),
+              padding: const EdgeInsets.all(0.0),
               decoration: BoxDecoration(
-                color: Color(0xFF327178),
+                color: const Color(0xFF327178),
                 borderRadius: BorderRadius.circular(7.0),
               ),
               child: Column(
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 14.0),
+                  const Padding(
+                    padding: EdgeInsets.symmetric(vertical: 14.0),
                     child: Text(
                       'LAYANAN KEPENDUDUKAN',
                       textAlign: TextAlign.center,
@@ -150,67 +152,67 @@ class _AdminHomeState extends State<AdminHome> {
                   ),
                   Container(
                     decoration: BoxDecoration(
-                      color: Color(0xFFF8F6F3),
+                      color: const Color(0xFFF8F6F3),
                       borderRadius: BorderRadius.circular(7.0),
                     ),
                     child: Column(
                       children: [
                         ListTile(
-                          leading: Container(
+                          leading: SizedBox(
                             width: 30,
                             child: Image.asset('assets/user-home/id-card.png',
                                 height: 30),
                           ),
-                          title: Text(
+                          title: const Text(
                             'Pembuatan KTP dan KK',
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontFamily: 'Ubuntu',
                             ),
                           ),
-                          subtitle: Text(
+                          subtitle: const Text(
                             'Pembuatan KTP Baru dan Perbaruan Kartu Keluarga Baru',
                             style: TextStyle(fontFamily: 'Ubuntu'),
                             textAlign: TextAlign.justify,
                           ),
                         ),
-                        Divider(height: 1),
+                        const Divider(height: 1),
                         ListTile(
-                          leading: Container(
+                          leading: SizedBox(
                             width: 30,
                             child: Image.asset(
                                 'assets/user-home/registration-card.png',
                                 height: 30),
                           ),
-                          title: Text(
+                          title: const Text(
                             'Pembaruan Data Kependudukan',
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontFamily: 'Ubuntu',
                             ),
                           ),
-                          subtitle: Text(
+                          subtitle: const Text(
                             'Untuk perpindahan domisili',
                             style: TextStyle(fontFamily: 'Ubuntu'),
                             textAlign: TextAlign.justify,
                           ),
                         ),
-                        Divider(height: 1),
+                        const Divider(height: 1),
                         ListTile(
-                          leading: Container(
+                          leading: SizedBox(
                             width: 30,
                             child: Image.asset(
                                 'assets/user-home/application-card.png',
                                 height: 30),
                           ),
-                          title: Text(
+                          title: const Text(
                             'Pendaftaran AKTA Kelahiran dan Kematian',
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontFamily: 'Ubuntu',
                             ),
                           ),
-                          subtitle: Text(
+                          subtitle: const Text(
                             'Untuk membuat surat kelahiran dan kematian',
                             style: TextStyle(fontFamily: 'Ubuntu'),
                             textAlign: TextAlign.justify,
@@ -222,20 +224,20 @@ class _AdminHomeState extends State<AdminHome> {
                 ],
               ),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
 
             // Pengaduan Masyarakat
             Container(
-              margin: EdgeInsets.symmetric(horizontal: 16.0, vertical: 5.0),
-              padding: EdgeInsets.all(0.0),
+              margin: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 5.0),
+              padding: const EdgeInsets.all(0.0),
               decoration: BoxDecoration(
-                color: Color(0xFF327178),
+                color: const Color(0xFF327178),
                 borderRadius: BorderRadius.circular(7.0),
               ),
               child: Column(
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 12.0),
+                  const Padding(
+                    padding: EdgeInsets.symmetric(vertical: 12.0),
                     child: Text(
                       'PENGADUAN MASYARAKAT',
                       textAlign: TextAlign.center,
@@ -249,26 +251,26 @@ class _AdminHomeState extends State<AdminHome> {
                   ),
                   Container(
                     decoration: BoxDecoration(
-                      color: Color(0xFFF8F6F3),
+                      color: const Color(0xFFF8F6F3),
                       borderRadius: BorderRadius.circular(7.0),
                     ),
                     child: Column(
                       children: [
                         ListTile(
-                          leading: Container(
+                          leading: SizedBox(
                             width: 30,
                             child: Image.asset(
                                 'assets/user-home/complaint-card.png',
                                 height: 30),
                           ),
-                          title: Text(
+                          title: const Text(
                             'Pengaduan Masyarakat',
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontFamily: 'Ubuntu',
                             ),
                           ),
-                          subtitle: Text(
+                          subtitle: const Text(
                             'Lihat semua data aduan dari masyarakat terhadap pemerintah daerah Anda!',
                             style: TextStyle(fontFamily: 'Ubuntu'),
                             textAlign: TextAlign.justify,
@@ -280,20 +282,20 @@ class _AdminHomeState extends State<AdminHome> {
                 ],
               ),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
 
             // Informasi Pariwisata
             Container(
-              margin: EdgeInsets.symmetric(horizontal: 16.0, vertical: 5.0),
-              padding: EdgeInsets.all(0.0),
+              margin: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 5.0),
+              padding: const EdgeInsets.all(0.0),
               decoration: BoxDecoration(
-                color: Color(0xFF327178),
+                color: const Color(0xFF327178),
                 borderRadius: BorderRadius.circular(7.0),
               ),
               child: Column(
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 12.0),
+                  const Padding(
+                    padding: EdgeInsets.symmetric(vertical: 12.0),
                     child: Text(
                       'INFORMASI PARIWISATA',
                       textAlign: TextAlign.center,
@@ -307,68 +309,68 @@ class _AdminHomeState extends State<AdminHome> {
                   ),
                   Container(
                     decoration: BoxDecoration(
-                      color: Color(0xFFF8F6F3),
+                      color: const Color(0xFFF8F6F3),
                       borderRadius: BorderRadius.circular(7.0),
                     ),
                     child: Column(
                       children: [
                         ListTile(
-                          leading: Container(
+                          leading: SizedBox(
                             width: 30,
                             child: Image.asset(
                                 'assets/user-home/destination-card.png',
                                 height: 30),
                           ),
-                          title: Text(
+                          title: const Text(
                             'Daftar Destinasi Wisata',
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontFamily: 'Ubuntu',
                             ),
                           ),
-                          subtitle: Text(
+                          subtitle: const Text(
                             'List Destinasi Wisata di daerah Anda!',
                             style: TextStyle(fontFamily: 'Ubuntu'),
                             textAlign: TextAlign.justify,
                           ),
                         ),
-                        Divider(height: 1),
+                        const Divider(height: 1),
                         ListTile(
-                          leading: Container(
+                          leading: SizedBox(
                             width: 30,
                             child: Image.asset(
                                 'assets/user-home/timeline-card.png',
                                 height: 30),
                           ),
-                          title: Text(
+                          title: const Text(
                             'Timeline Acara Dan Festival',
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontFamily: 'Ubuntu',
                             ),
                           ),
-                          subtitle: Text(
+                          subtitle: const Text(
                             'Lihat Acara dan Festival yang akan datang',
                             style: TextStyle(fontFamily: 'Ubuntu'),
                             textAlign: TextAlign.justify,
                           ),
                         ),
-                        Divider(height: 1),
+                        const Divider(height: 1),
                         ListTile(
-                          leading: Container(
+                          leading: SizedBox(
                             width: 30,
                             child: Image.asset(
                                 'assets/user-home/transportation-card.png',
                                 height: 30),
                           ),
-                          title: Text(
+                          title: const Text(
                             'Informasi Transportasi dan Akomodasi',
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontFamily: 'Ubuntu',
                             ),
                           ),
-                          subtitle: Text(
+                          subtitle: const Text(
                             'Temukan Transportasi yang tepat ke Tempat Wisata tujuan!',
                             style: TextStyle(fontFamily: 'Ubuntu'),
                             textAlign: TextAlign.justify,
@@ -380,21 +382,21 @@ class _AdminHomeState extends State<AdminHome> {
                 ],
               ),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
 
             // Informasi Publik
             Container(
-              margin: EdgeInsets.symmetric(horizontal: 16.0, vertical: 5.0),
-              padding: EdgeInsets.all(0.0),
+              margin: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 5.0),
+              padding: const EdgeInsets.all(0.0),
               decoration: BoxDecoration(
-                color: Color(0xFF327178),
+                color: const Color(0xFF327178),
                 borderRadius: BorderRadius.circular(7.0),
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 12.0),
+                  const Padding(
+                    padding: EdgeInsets.symmetric(vertical: 12.0),
                     child: Text(
                       'INFORMASI PUBLIK',
                       textAlign: TextAlign.center,
@@ -408,13 +410,13 @@ class _AdminHomeState extends State<AdminHome> {
                   ),
                   Container(
                     decoration: BoxDecoration(
-                      color: Color(0xFFF8F6F3),
+                      color: const Color(0xFFF8F6F3),
                       borderRadius: BorderRadius.circular(7.0),
                     ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Padding(
+                        const Padding(
                           padding: EdgeInsets.all(10.0),
                           child: Text(
                             'Baca Berita Terkini di Daerah Anda',
@@ -425,13 +427,13 @@ class _AdminHomeState extends State<AdminHome> {
                           ),
                         ),
                         Container(
-                          margin: EdgeInsets.symmetric(vertical: 10.0),
+                          margin: const EdgeInsets.symmetric(vertical: 10.0),
                           child: SingleChildScrollView(
                             scrollDirection: Axis.horizontal,
                             child: Row(
                               children: List.generate(4, (index) {
                                 return Container(
-                                  margin: EdgeInsets.symmetric(horizontal: 5.0),
+                                  margin: const EdgeInsets.symmetric(horizontal: 5.0),
                                   width: 150,
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(7.0),
@@ -442,7 +444,7 @@ class _AdminHomeState extends State<AdminHome> {
                                         CrossAxisAlignment.start,
                                     children: [
                                       ClipRRect(
-                                        borderRadius: BorderRadius.vertical(
+                                        borderRadius: const BorderRadius.vertical(
                                           top: Radius.circular(7.0),
                                         ),
                                         child: Image.asset(
@@ -453,10 +455,10 @@ class _AdminHomeState extends State<AdminHome> {
                                         ),
                                       ),
                                       Padding(
-                                        padding: EdgeInsets.all(8.0),
+                                        padding: const EdgeInsets.all(8.0),
                                         child: Text(
                                           'Judul Berita $index',
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                             fontWeight: FontWeight.bold,
                                             fontFamily: 'Ubuntu',
                                           ),
@@ -469,7 +471,7 @@ class _AdminHomeState extends State<AdminHome> {
                             ),
                           ),
                         ),
-                        Align(
+                        const Align(
                           alignment: Alignment.centerRight,
                           child: Padding(
                             padding: EdgeInsets.only(right: 10.0),
@@ -482,22 +484,22 @@ class _AdminHomeState extends State<AdminHome> {
                             ),
                           ),
                         ),
-                        SizedBox(height: 10),
+                        const SizedBox(height: 10),
                         Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 40.0),
+                              padding: const EdgeInsets.symmetric(horizontal: 40.0),
                               child: ElevatedButton(
                                 onPressed: () {},
                                 style: ElevatedButton.styleFrom(
-                                  backgroundColor: Color(0xFFAAA79C),
+                                  backgroundColor: const Color(0xFFAAA79C),
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(7.0),
                                   ),
-                                  minimumSize: Size(double.infinity, 50),
+                                  minimumSize: const Size(double.infinity, 50),
                                 ),
-                                child: Text(
+                                child: const Text(
                                   'Akses Dokumen Publik',
                                   style: TextStyle(
                                     color: Colors.black,
@@ -506,19 +508,19 @@ class _AdminHomeState extends State<AdminHome> {
                                 ),
                               ),
                             ),
-                            SizedBox(height: 10),
+                            const SizedBox(height: 10),
                             Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 40.0),
+                              padding: const EdgeInsets.symmetric(horizontal: 40.0),
                               child: ElevatedButton(
                                 onPressed: () {},
                                 style: ElevatedButton.styleFrom(
-                                  backgroundColor: Color(0xFFAAA79C),
+                                  backgroundColor: const Color(0xFFAAA79C),
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(7.0),
                                   ),
-                                  minimumSize: Size(double.infinity, 50),
+                                  minimumSize: const Size(double.infinity, 50),
                                 ),
-                                child: Text(
+                                child: const Text(
                                   'Agenda Pemerintah Daerah',
                                   style: TextStyle(
                                     color: Colors.black,

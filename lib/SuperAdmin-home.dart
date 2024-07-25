@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'database_integrasi.dart';
 
 class SuperAdminHome extends StatefulWidget {
+  const SuperAdminHome({super.key});
+
   @override
   _SuperAdminHomeState createState() => _SuperAdminHomeState();
 }
@@ -20,14 +22,14 @@ class _SuperAdminHomeState extends State<SuperAdminHome> {
     // Manual validation
     if (_linkApiController.text.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Please enter a link API')),
+        const SnackBar(content: Text('Please enter a link API')),
       );
       return;
     }
 
     if (_selectedCity == null || _selectedCity!.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Please select a city')),
+        const SnackBar(content: Text('Please select a city')),
       );
       return;
     }
@@ -46,15 +48,15 @@ class _SuperAdminHomeState extends State<SuperAdminHome> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFE3EFF1),
+      backgroundColor: const Color(0xFFE3EFF1),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
             children: [
-              SizedBox(height: 40),
+              const SizedBox(height: 40),
               // Judul
-              Text(
+              const Text(
                 'HALO SUPER ADMIN',
                 textAlign: TextAlign.center,
                 style: TextStyle(
@@ -63,18 +65,18 @@ class _SuperAdminHomeState extends State<SuperAdminHome> {
                   fontSize: 24,
                 ),
               ),
-              SizedBox(height: 25), // Jarak ke container di bawahnya
+              const SizedBox(height: 25), // Jarak ke container di bawahnya
 
               // Container Integrasi Layanan Daerah
               Container(
-                padding: EdgeInsets.all(16.0),
+                padding: const EdgeInsets.all(16.0),
                 decoration: BoxDecoration(
-                  color: Color(0xFF4297A0),
+                  color: const Color(0xFF4297A0),
                   borderRadius: BorderRadius.circular(7.0),
                 ),
                 child: Column(
                   children: [
-                    Text(
+                    const Text(
                       'INTEGRASI LAYANAN DAERAH',
                       textAlign: TextAlign.center,
                       style: TextStyle(
@@ -84,19 +86,19 @@ class _SuperAdminHomeState extends State<SuperAdminHome> {
                         fontSize: 18,
                       ),
                     ),
-                    SizedBox(height: 15), // Jarak ke container di bawahnya
+                    const SizedBox(height: 15), // Jarak ke container di bawahnya
                     Container(
                       padding:
-                          EdgeInsets.only(left: 8.0, right: 8.0, bottom: 20.0),
+                          const EdgeInsets.only(left: 8.0, right: 8.0, bottom: 20.0),
                       decoration: BoxDecoration(
-                        color: Color(0xFFE2DED0),
+                        color: const Color(0xFFE2DED0),
                         borderRadius: BorderRadius.circular(2.0),
                       ),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          SizedBox(height: 15),
-                          Center(
+                          const SizedBox(height: 15),
+                          const Center(
                             child: Text(
                               'SYARAT DAN KETENTUAN',
                               style: TextStyle(
@@ -108,12 +110,12 @@ class _SuperAdminHomeState extends State<SuperAdminHome> {
                               ),
                             ),
                           ),
-                          SizedBox(height: 15),
+                          const SizedBox(height: 15),
                           Padding(
                             padding:
                                 const EdgeInsets.symmetric(horizontal: 10.0),
                             child: RichText(
-                              text: TextSpan(
+                              text: const TextSpan(
                                 text: 'Pastikan lagi data di dalam API telah ',
                                 style: TextStyle(
                                   fontFamily: 'Ubuntu',
@@ -135,15 +137,15 @@ class _SuperAdminHomeState extends State<SuperAdminHome> {
                               textAlign: TextAlign.justify,
                             ),
                           ),
-                          SizedBox(height: 10),
-                          Padding(
+                          const SizedBox(height: 10),
+                          const Padding(
                             padding:
-                                const EdgeInsets.symmetric(horizontal: 20.0),
+                                EdgeInsets.symmetric(horizontal: 20.0),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Padding(
-                                  padding: const EdgeInsets.only(bottom: 5.0),
+                                  padding: EdgeInsets.only(bottom: 5.0),
                                   child: Row(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
@@ -157,7 +159,7 @@ class _SuperAdminHomeState extends State<SuperAdminHome> {
                                   ),
                                 ),
                                 Padding(
-                                  padding: const EdgeInsets.only(bottom: 5.0),
+                                  padding: EdgeInsets.only(bottom: 5.0),
                                   child: Row(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
@@ -172,7 +174,7 @@ class _SuperAdminHomeState extends State<SuperAdminHome> {
                                   ),
                                 ),
                                 Padding(
-                                  padding: const EdgeInsets.only(bottom: 5.0),
+                                  padding: EdgeInsets.only(bottom: 5.0),
                                   child: Row(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
@@ -187,7 +189,7 @@ class _SuperAdminHomeState extends State<SuperAdminHome> {
                                   ),
                                 ),
                                 Padding(
-                                  padding: const EdgeInsets.only(bottom: 5.0),
+                                  padding: EdgeInsets.only(bottom: 5.0),
                                   child: Row(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
@@ -202,7 +204,7 @@ class _SuperAdminHomeState extends State<SuperAdminHome> {
                                   ),
                                 ),
                                 Padding(
-                                  padding: const EdgeInsets.only(bottom: 5.0),
+                                  padding: EdgeInsets.only(bottom: 5.0),
                                   child: Row(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
@@ -217,7 +219,7 @@ class _SuperAdminHomeState extends State<SuperAdminHome> {
                                   ),
                                 ),
                                 Padding(
-                                  padding: const EdgeInsets.only(bottom: 5.0),
+                                  padding: EdgeInsets.only(bottom: 5.0),
                                   child: Row(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
@@ -232,7 +234,7 @@ class _SuperAdminHomeState extends State<SuperAdminHome> {
                                   ),
                                 ),
                                 Padding(
-                                  padding: const EdgeInsets.only(bottom: 5.0),
+                                  padding: EdgeInsets.only(bottom: 5.0),
                                   child: Row(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
@@ -247,7 +249,7 @@ class _SuperAdminHomeState extends State<SuperAdminHome> {
                                   ),
                                 ),
                                 Padding(
-                                  padding: const EdgeInsets.only(bottom: 5.0),
+                                  padding: EdgeInsets.only(bottom: 5.0),
                                   child: Row(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
@@ -267,8 +269,8 @@ class _SuperAdminHomeState extends State<SuperAdminHome> {
                         ],
                       ),
                     ),
-                    SizedBox(height: 20),
-                    Text(
+                    const SizedBox(height: 20),
+                    const Text(
                       'INPUT API',
                       textAlign: TextAlign.center,
                       style: TextStyle(
@@ -277,12 +279,12 @@ class _SuperAdminHomeState extends State<SuperAdminHome> {
                         fontSize: 16,
                       ),
                     ),
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
                     TextField(
                       controller: _linkApiController,
                       decoration: InputDecoration(
                         hintText: 'link api',
-                        hintStyle: TextStyle(
+                        hintStyle: const TextStyle(
                           fontStyle: FontStyle.italic,
                           color: Colors.black,
                         ),
@@ -293,8 +295,8 @@ class _SuperAdminHomeState extends State<SuperAdminHome> {
                         filled: true,
                       ),
                     ),
-                    SizedBox(height: 20),
-                    Text(
+                    const SizedBox(height: 20),
+                    const Text(
                       'DAERAH',
                       textAlign: TextAlign.center,
                       style: TextStyle(
@@ -303,7 +305,7 @@ class _SuperAdminHomeState extends State<SuperAdminHome> {
                         fontSize: 16,
                       ),
                     ),
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
                     DropdownButtonFormField<String>(
                       items: cities.map((String city) {
                         return DropdownMenuItem<String>(
@@ -314,7 +316,7 @@ class _SuperAdminHomeState extends State<SuperAdminHome> {
                       onChanged: (String? newValue) {},
                       decoration: InputDecoration(
                         hintText: 'Pilih Daerah',
-                        hintStyle: TextStyle(color: Colors.black),
+                        hintStyle: const TextStyle(color: Colors.black),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(7.0),
                         ),
@@ -328,17 +330,17 @@ class _SuperAdminHomeState extends State<SuperAdminHome> {
                         return null;
                       },  
                     ),
-                    SizedBox(height: 20),
+                    const SizedBox(height: 20),
                     ElevatedButton(
                       onPressed: () {},
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Color(0xFFE2DED0),
+                        backgroundColor: const Color(0xFFE2DED0),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(20.0),
                         ),
-                        padding: EdgeInsets.symmetric(horizontal: 40.0),
+                        padding: const EdgeInsets.symmetric(horizontal: 40.0),
                       ),
-                      child: Text(
+                      child: const Text(
                         'TAMBAH',
                         style: TextStyle(
                           fontFamily: 'Ubuntu',
@@ -350,18 +352,18 @@ class _SuperAdminHomeState extends State<SuperAdminHome> {
                   ],
                 ),
               ),
-              SizedBox(height: 25), // Jarak ke container di bawahnya
+              const SizedBox(height: 25), // Jarak ke container di bawahnya
 
               // Container API Daerah yang Terhubung
               Container(
-                padding: EdgeInsets.all(16.0),
+                padding: const EdgeInsets.all(16.0),
                 decoration: BoxDecoration(
-                  color: Color(0xFF2F5061),
+                  color: const Color(0xFF2F5061),
                   borderRadius: BorderRadius.circular(7.0),
                 ),
                 child: Column(
                   children: [
-                    Text(
+                    const Text(
                       'API DAERAH YANG TELAH TERHUBUNG',
                       textAlign: TextAlign.center,
                       style: TextStyle(
@@ -371,22 +373,22 @@ class _SuperAdminHomeState extends State<SuperAdminHome> {
                         fontSize: 18,
                       ),
                     ),
-                    SizedBox(height: 5), // Jarak ke atas
-                    Divider(color: Colors.white),
-                    SizedBox(height: 5), // Jarak ke bawah
+                    const SizedBox(height: 5), // Jarak ke atas
+                    const Divider(color: Colors.white),
+                    const SizedBox(height: 5), // Jarak ke bawah
                     ...cities.map((city) {
                       return Text(
                         city,
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontFamily: 'Ubuntu',
                           color: Colors.white,
                         ),
                       );
-                    }).toList(),
-                    SizedBox(
+                    }),
+                    const SizedBox(
                         height:
                             60), // Jarak dari tulisan terakhir ke "to be continued"
-                    Text(
+                    const Text(
                       'to be continued',
                       style: TextStyle(
                         fontFamily: 'Ubuntu',
@@ -397,7 +399,7 @@ class _SuperAdminHomeState extends State<SuperAdminHome> {
                   ],
                 ),
               ),
-              SizedBox(height: 30), // Jarak ke bawah
+              const SizedBox(height: 30), // Jarak ke bawah
             ],
           ),
         ),

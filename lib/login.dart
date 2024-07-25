@@ -9,6 +9,8 @@ import 'SuperAdmin-home.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginScreen extends StatefulWidget {
+  const LoginScreen({super.key});
+
   @override
   _LoginScreenState createState() => _LoginScreenState();
 }
@@ -43,7 +45,7 @@ class _LoginScreenState extends State<LoginScreen> {
           // Navigate to user home screen
           Navigator.pushReplacement(
             context,
-            MaterialPageRoute(builder: (context) => UserHome()),
+            MaterialPageRoute(builder: (context) => const UserHome()),
           );
           return;
         }
@@ -65,7 +67,7 @@ class _LoginScreenState extends State<LoginScreen> {
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(
-                builder: (context) => AdminHome()), // Adjust this as needed
+                builder: (context) => const AdminHome()), // Adjust this as needed
           );
           return;
         }
@@ -87,7 +89,7 @@ class _LoginScreenState extends State<LoginScreen> {
             context,
             MaterialPageRoute(
                 builder: (context) =>
-                    SuperAdminHome()), // Adjust this as needed
+                    const SuperAdminHome()), // Adjust this as needed
           );
           return;
         }
@@ -99,14 +101,14 @@ class _LoginScreenState extends State<LoginScreen> {
         showDialog(
           context: context,
           builder: (context) => AlertDialog(
-            title: Text('Login Failed'),
-            content: Text('Invalid username or password'),
+            title: const Text('Login Failed'),
+            content: const Text('Invalid username or password'),
             actions: [
               TextButton(
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
-                child: Text('OK'),
+                child: const Text('OK'),
               ),
             ],
           ),
@@ -118,7 +120,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFF4297A0),
+      backgroundColor: const Color(0xFF4297A0),
       body: Center(
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(16.0),
@@ -128,14 +130,14 @@ class _LoginScreenState extends State<LoginScreen> {
               Container(
                 padding: const EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 40.0),
                 decoration: BoxDecoration(
-                  color: Color(0xFFF9FCFC),
+                  color: const Color(0xFFF9FCFC),
                   borderRadius: BorderRadius.circular(10.0),
                 ),
                 child: Column(
                   children: [
                     Image.asset('assets/icon.png', height: 100),
-                    SizedBox(height: 10),
-                    Text(
+                    const SizedBox(height: 10),
+                    const Text(
                       'MASUK AKUN',
                       style: TextStyle(
                         fontSize: 24,
@@ -143,26 +145,26 @@ class _LoginScreenState extends State<LoginScreen> {
                         fontFamily: 'Ubuntu',
                       ),
                     ),
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text(
+                        const Text(
                           'Belum memiliki akun?',
                           style: TextStyle(
                             fontFamily: 'Ubuntu',
                           ),
                         ),
-                        SizedBox(width: 5),
+                        const SizedBox(width: 5),
                         GestureDetector(
                           onTap: () {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => RegistrationScreen()),
+                                  builder: (context) => const RegistrationScreen()),
                             );
                           },
-                          child: Text(
+                          child: const Text(
                             'daftar disini',
                             style: TextStyle(
                               color: Colors.red,
@@ -172,13 +174,13 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                       ],
                     ),
-                    SizedBox(height: 43),
+                    const SizedBox(height: 43),
                     Form(
                       key: _formKey,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          Text(
+                          const Text(
                             'Username',
                             style: TextStyle(
                               fontSize: 18,
@@ -186,23 +188,23 @@ class _LoginScreenState extends State<LoginScreen> {
                               fontFamily: 'Ubuntu',
                             ),
                           ),
-                          SizedBox(height: 5),
+                          const SizedBox(height: 5),
                           TextFormField(
                             decoration: InputDecoration(
                               hintText: 'masukkan username',
-                              hintStyle: TextStyle(
+                              hintStyle: const TextStyle(
                                   fontStyle: FontStyle.italic,
                                   fontWeight: FontWeight.w300,
                                   fontFamily: 'Ubuntu'),
                               filled: true,
-                              fillColor: Color(0xFFE0E5E7),
+                              fillColor: const Color(0xFFE0E5E7),
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(7.0),
                                 borderSide:
-                                    BorderSide(color: Color(0xFFE0E5E7)),
+                                    const BorderSide(color: Color(0xFFE0E5E7)),
                               ),
                             ),
-                            style: TextStyle(
+                            style: const TextStyle(
                                 color: Colors.black, fontFamily: 'Ubuntu'),
                             validator: (value) {
                               if (value == null || value.isEmpty) {
@@ -214,8 +216,8 @@ class _LoginScreenState extends State<LoginScreen> {
                               _username = value!;
                             },
                           ),
-                          SizedBox(height: 15),
-                          Text(
+                          const SizedBox(height: 15),
+                          const Text(
                             'Password',
                             style: TextStyle(
                               fontSize: 18,
@@ -223,24 +225,24 @@ class _LoginScreenState extends State<LoginScreen> {
                               fontFamily: 'Ubuntu',
                             ),
                           ),
-                          SizedBox(height: 5),
+                          const SizedBox(height: 5),
                           TextFormField(
                             decoration: InputDecoration(
                               hintText: 'masukkan password',
-                              hintStyle: TextStyle(
+                              hintStyle: const TextStyle(
                                   fontStyle: FontStyle.italic,
                                   fontWeight: FontWeight.w300,
                                   fontFamily: 'Ubuntu'),
                               filled: true,
-                              fillColor: Color(0xFFE0E5E7),
+                              fillColor: const Color(0xFFE0E5E7),
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(7.0),
                                 borderSide:
-                                    BorderSide(color: Color(0xFFE0E5E7)),
+                                    const BorderSide(color: Color(0xFFE0E5E7)),
                               ),
                             ),
                             obscureText: true,
-                            style: TextStyle(
+                            style: const TextStyle(
                                 color: Colors.black, fontFamily: 'Ubuntu'),
                             validator: (value) {
                               if (value == null || value.isEmpty) {
@@ -258,17 +260,17 @@ class _LoginScreenState extends State<LoginScreen> {
                   ],
                 ),
               ),
-              SizedBox(height: 35),
+              const SizedBox(height: 35),
               SizedBox(
                 height: 45,
                 width: 280,
                 child: ElevatedButton(
                   onPressed: _submitForm,
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Color(0xFF2F5061),
-                    padding: EdgeInsets.symmetric(vertical: 10.0),
+                    backgroundColor: const Color(0xFF2F5061),
+                    padding: const EdgeInsets.symmetric(vertical: 10.0),
                   ),
-                  child: Text(
+                  child: const Text(
                     'MASUK',
                     style: TextStyle(
                       color: Colors.white,
@@ -279,7 +281,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ),
               ),
-              SizedBox(height: 56),
+              const SizedBox(height: 56),
             ],
           ),
         ),

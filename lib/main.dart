@@ -19,7 +19,7 @@ void main() async {
   // Insert initial data
   await _insertInitialData();
 
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 Future<void> _insertInitialData() async {
@@ -74,6 +74,8 @@ Future<void> _insertInitialData() async {
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -81,9 +83,10 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: UserHome(),
+      home: const UserHome(),
       routes: {
-        '/register': (context) => RegistrationScreen(),
+        '/register': (context) => const RegistrationScreen(),
+        '/login': (context) => const LoginScreen(),
       },
     );
   }

@@ -5,6 +5,8 @@ import 'package:intl/intl.dart';
 import '/database_user.dart';
 
 class EditUserProfile extends StatefulWidget {
+  const EditUserProfile({super.key});
+
   @override
   _EditUserProfileState createState() => _EditUserProfileState();
 }
@@ -71,13 +73,20 @@ class _EditUserProfileState extends State<EditUserProfile> {
     }
   }
 
+  Future<void> _logout() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool('isLoggedIn', false);
+    await prefs.remove('loggedInUsername');
+    Navigator.pushReplacementNamed(context, '/login');
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Stack(
         children: <Widget>[
           Container(
-            color: Color(0xFFECF5F6), // Background color
+            color: const Color(0xFFECF5F6), // Background color
           ),
           Positioned(
             top: 0,
@@ -111,32 +120,32 @@ class _EditUserProfileState extends State<EditUserProfile> {
                 expandedHeight: 280.0,
                 floating: false,
                 pinned: true,
-                backgroundColor: Color(0xFFECF5F6),
+                backgroundColor: const Color(0xFFECF5F6),
                 flexibleSpace: FlexibleSpaceBar(
                   background: Padding(
-                    padding: EdgeInsets.only(top: 88),
+                    padding: const EdgeInsets.only(top: 88),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        CircleAvatar(
+                        const CircleAvatar(
                           radius: 60,
                           backgroundImage:
                               AssetImage('assets/user-home/profile-logo.png'),
                           backgroundColor: Colors.transparent,
                         ),
-                        SizedBox(height: 17),
+                        const SizedBox(height: 17),
                         Text(
                           _namaLengkap.isNotEmpty ? _namaLengkap : 'N/A',
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontFamily: 'Roboto',
                             fontWeight: FontWeight.bold,
                             fontSize: 24,
                           ),
                         ),
-                        SizedBox(height: 7),
+                        const SizedBox(height: 7),
                         Text(
                           _username.isNotEmpty ? _username : 'N/A',
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontFamily: 'Roboto',
                             fontSize: 16,
                           ),
@@ -146,7 +155,7 @@ class _EditUserProfileState extends State<EditUserProfile> {
                   ),
                 ),
                 leading: IconButton(
-                  icon: Icon(Icons.arrow_back),
+                  icon: const Icon(Icons.arrow_back),
                   onPressed: () {
                     Navigator.pop(context);
                   },
@@ -155,12 +164,12 @@ class _EditUserProfileState extends State<EditUserProfile> {
               SliverList(
                 delegate: SliverChildListDelegate(
                   [
-                    SizedBox(height: 20),
+                    const SizedBox(height: 20),
                     Container(
-                      padding: EdgeInsets.fromLTRB(20, 24, 20, 50),
-                      margin: EdgeInsets.symmetric(horizontal: 20),
+                      padding: const EdgeInsets.fromLTRB(20, 24, 20, 50),
+                      margin: const EdgeInsets.symmetric(horizontal: 20),
                       decoration: BoxDecoration(
-                        color: Color(0xFF4297A0),
+                        color: const Color(0xFF4297A0),
                         borderRadius: BorderRadius.circular(7),
                       ),
                       child: Column(
@@ -180,26 +189,26 @@ class _EditUserProfileState extends State<EditUserProfile> {
                         ],
                       ),
                     ),
-                    SizedBox(height: 22),
+                    const SizedBox(height: 22),
                     Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 100),
+                      padding: const EdgeInsets.symmetric(horizontal: 100),
                       child: ElevatedButton(
                         onPressed: () {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => EditUserProfilePage()),
+                                builder: (context) => const EditUserProfilePage()),
                           );
                         },
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: Color(0xFFC6B79B),
+                          backgroundColor: const Color(0xFFC6B79B),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(4),
                           ),
                           padding:
-                              EdgeInsets.symmetric(horizontal: 12, vertical: 5),
+                              const EdgeInsets.symmetric(horizontal: 12, vertical: 5),
                         ),
-                        child: Text(
+                        child: const Text(
                           'UBAH PROFIL',
                           style: TextStyle(
                             fontFamily: 'Ubuntu',
@@ -209,20 +218,20 @@ class _EditUserProfileState extends State<EditUserProfile> {
                         ),
                       ),
                     ),
-                    SizedBox(height: 50),
+                    const SizedBox(height: 50),
                     Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 110),
+                      padding: const EdgeInsets.symmetric(horizontal: 110),
                       child: ElevatedButton(
-                        onPressed: () {},
+                        onPressed: _logout,
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: Color(0xFF2F5061),
+                          backgroundColor: const Color(0xFF2F5061),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(20),
                           ),
                           padding:
-                              EdgeInsets.symmetric(horizontal: 40, vertical: 5),
+                              const EdgeInsets.symmetric(horizontal: 40, vertical: 5),
                         ),
-                        child: Text(
+                        child: const Text(
                           'KELUAR',
                           style: TextStyle(
                             fontFamily: 'Ubuntu',
@@ -232,7 +241,7 @@ class _EditUserProfileState extends State<EditUserProfile> {
                         ),
                       ),
                     ),
-                    SizedBox(height: 40),
+                    const SizedBox(height: 40),
                   ],
                 ),
               ),
@@ -249,18 +258,18 @@ class _EditUserProfileState extends State<EditUserProfile> {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
+          SizedBox(
             width: 150,
             child: Text(
-              '$label',
-              style: TextStyle(
+              label,
+              style: const TextStyle(
                 fontFamily: 'Ubuntu',
                 fontWeight: FontWeight.bold,
                 color: Colors.white,
               ),
             ),
           ),
-          Text(
+          const Text(
             ':',
             style: TextStyle(
               fontFamily: 'Ubuntu',
@@ -268,12 +277,12 @@ class _EditUserProfileState extends State<EditUserProfile> {
               color: Colors.white,
             ),
           ),
-          SizedBox(width: 5),
+          const SizedBox(width: 5),
           Expanded(
             child: Text(
               value,
               textAlign: TextAlign.justify,
-              style: TextStyle(
+              style: const TextStyle(
                 fontFamily: 'Ubuntu',
                 fontWeight: FontWeight.w300,
                 color: Colors.white,
