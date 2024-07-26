@@ -5,8 +5,10 @@ import 'Profile/user-profile.dart';
 import 'user-Timeline-Festival.dart';
 import 'Destination/user-Destination-page.dart';
 import 'user-transportation-page.dart';
-import 'Layanan-Kependudukan/user-ktp-page.dart';
-import 'Layanan-Kependudukan/user-kk-page.dart';
+import './Layanan-Kependudukan/Pembuatan-ktp-kk/user-ktp-page.dart';
+import './Layanan-Kependudukan/Pembuatan-ktp-kk/user-kk-page.dart';
+import './Layanan-Kependudukan/Pendaftaran-AktaLahir-kematian/Akta-lahir.dart';
+import './Layanan-Kependudukan/Pendaftaran-AktaLahir-kematian/Surat-kematian.dart';
 
 class UserHome extends StatefulWidget {
   const UserHome({super.key});
@@ -53,7 +55,8 @@ class _UserHomeState extends State<UserHome> {
           children: [
             // Header
             Container(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
               decoration: const BoxDecoration(
                 color: Color(0xFF4297A0),
               ),
@@ -134,7 +137,8 @@ class _UserHomeState extends State<UserHome> {
 
             // Layanan Kependudukan
             Container(
-              margin: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 5.0),
+              margin:
+                  const EdgeInsets.symmetric(horizontal: 16.0, vertical: 5.0),
               padding: const EdgeInsets.all(0.0),
               decoration: BoxDecoration(
                 color: const Color(0xFF327178),
@@ -224,7 +228,8 @@ class _UserHomeState extends State<UserHome> {
                                         },
                                         child: Container(
                                           width: double.infinity,
-                                          padding: const EdgeInsets.only(top: 10),
+                                          padding:
+                                              const EdgeInsets.only(top: 10),
                                           decoration: BoxDecoration(
                                             color: const Color(0xFFFCFCFA),
                                             borderRadius:
@@ -256,12 +261,14 @@ class _UserHomeState extends State<UserHome> {
                                               Container(
                                                 width: double.infinity,
                                                 decoration: BoxDecoration(
-                                                  color: const Color(0xFF233C49),
+                                                  color:
+                                                      const Color(0xFF233C49),
                                                   borderRadius:
                                                       BorderRadius.circular(
                                                           10.0),
                                                 ),
-                                                padding: const EdgeInsets.all(10),
+                                                padding:
+                                                    const EdgeInsets.all(10),
                                                 child: Column(
                                                   crossAxisAlignment:
                                                       CrossAxisAlignment
@@ -286,9 +293,9 @@ class _UserHomeState extends State<UserHome> {
                                                       ),
                                                     ),
                                                     const Padding(
-                                                      padding: EdgeInsets
-                                                          .symmetric(
-                                                          vertical: 2.0),
+                                                      padding:
+                                                          EdgeInsets.symmetric(
+                                                              vertical: 2.0),
                                                       child: Text(
                                                         '• Kartu Keluarga',
                                                         style: TextStyle(
@@ -301,9 +308,9 @@ class _UserHomeState extends State<UserHome> {
                                                       ),
                                                     ),
                                                     const Padding(
-                                                      padding: EdgeInsets
-                                                          .symmetric(
-                                                          vertical: 2.0),
+                                                      padding:
+                                                          EdgeInsets.symmetric(
+                                                              vertical: 2.0),
                                                       child: Text(
                                                         '• Surat pengantar (jika baru)',
                                                         style: TextStyle(
@@ -334,7 +341,8 @@ class _UserHomeState extends State<UserHome> {
                                         },
                                         child: Container(
                                           width: double.infinity,
-                                          padding: const EdgeInsets.only(top: 10),
+                                          padding:
+                                              const EdgeInsets.only(top: 10),
                                           decoration: BoxDecoration(
                                             color: const Color(0xFFFCFCFA),
                                             borderRadius:
@@ -366,12 +374,14 @@ class _UserHomeState extends State<UserHome> {
                                               Container(
                                                 width: double.infinity,
                                                 decoration: BoxDecoration(
-                                                  color: const Color(0xFF233C49),
+                                                  color:
+                                                      const Color(0xFF233C49),
                                                   borderRadius:
                                                       BorderRadius.circular(
                                                           10.0),
                                                 ),
-                                                padding: const EdgeInsets.all(10),
+                                                padding:
+                                                    const EdgeInsets.all(10),
                                                 child: Column(
                                                   crossAxisAlignment:
                                                       CrossAxisAlignment
@@ -396,9 +406,9 @@ class _UserHomeState extends State<UserHome> {
                                                       ),
                                                     ),
                                                     const Padding(
-                                                      padding: EdgeInsets
-                                                          .symmetric(
-                                                          vertical: 2.0),
+                                                      padding:
+                                                          EdgeInsets.symmetric(
+                                                              vertical: 2.0),
                                                       child: Text(
                                                         '• Isian F-1.02 (unduh di bawah)',
                                                         style: TextStyle(
@@ -411,9 +421,9 @@ class _UserHomeState extends State<UserHome> {
                                                       ),
                                                     ),
                                                     const Padding(
-                                                      padding: EdgeInsets
-                                                          .symmetric(
-                                                          vertical: 2.0),
+                                                      padding:
+                                                          EdgeInsets.symmetric(
+                                                              vertical: 2.0),
                                                       child: Text(
                                                         '• Kartu Keluarga lama',
                                                         style: TextStyle(
@@ -426,9 +436,9 @@ class _UserHomeState extends State<UserHome> {
                                                       ),
                                                     ),
                                                     const Padding(
-                                                      padding: EdgeInsets
-                                                          .symmetric(
-                                                          vertical: 2.0),
+                                                      padding:
+                                                          EdgeInsets.symmetric(
+                                                              vertical: 2.0),
                                                       child: Text(
                                                         '• KTP-el',
                                                         style: TextStyle(
@@ -441,9 +451,9 @@ class _UserHomeState extends State<UserHome> {
                                                       ),
                                                     ),
                                                     const Padding(
-                                                      padding: EdgeInsets
-                                                          .symmetric(
-                                                          vertical: 2.0),
+                                                      padding:
+                                                          EdgeInsets.symmetric(
+                                                              vertical: 2.0),
                                                       child: Text(
                                                         '• Surat kehilangan (jika hilang)',
                                                         style: TextStyle(
@@ -456,9 +466,9 @@ class _UserHomeState extends State<UserHome> {
                                                       ),
                                                     ),
                                                     const Padding(
-                                                      padding: EdgeInsets
-                                                          .symmetric(
-                                                          vertical: 2.0),
+                                                      padding:
+                                                          EdgeInsets.symmetric(
+                                                              vertical: 2.0),
                                                       child: Text(
                                                         '• Kartu izin tinggal tetap (OA)',
                                                         style: TextStyle(
@@ -496,7 +506,8 @@ class _UserHomeState extends State<UserHome> {
                                               color: Color(0xFF233C49)),
                                         ),
                                         style: ElevatedButton.styleFrom(
-                                          backgroundColor: const Color(0xFFAAA79C),
+                                          backgroundColor:
+                                              const Color(0xFFAAA79C),
                                           shape: RoundedRectangleBorder(
                                             borderRadius:
                                                 BorderRadius.circular(12.0),
@@ -553,6 +564,437 @@ class _UserHomeState extends State<UserHome> {
                             style: TextStyle(fontFamily: 'Ubuntu'),
                             textAlign: TextAlign.justify,
                           ),
+                          onTap: () {
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  backgroundColor: Colors.transparent,
+                                  contentPadding: const EdgeInsets.all(0),
+                                  content: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Container(
+                                        width: double.infinity,
+                                        padding: const EdgeInsets.all(10),
+                                        decoration: BoxDecoration(
+                                          color: const Color(0xFF4297A0),
+                                          borderRadius:
+                                              BorderRadius.circular(7.0),
+                                          border: Border.all(
+                                              color: Colors.white, width: 2),
+                                        ),
+                                        child: const Center(
+                                          child: Text(
+                                            'Pilih yang Akan Diajukan',
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                              fontFamily: 'Ubuntu',
+                                              fontSize: 16,
+                                            ),
+                                            textAlign: TextAlign.center,
+                                          ),
+                                        ),
+                                      ),
+                                      const SizedBox(height: 10),
+                                      GestureDetector(
+                                        onTap: () {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    AktaLahir()),
+                                          );
+                                        },
+                                        child: Container(
+                                          width: double.infinity,
+                                          padding:
+                                              const EdgeInsets.only(top: 10),
+                                          decoration: BoxDecoration(
+                                            color: const Color(0xFFFCFCFA),
+                                            borderRadius:
+                                                BorderRadius.circular(15.0),
+                                          ),
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
+                                            children: [
+                                              const Padding(
+                                                padding: EdgeInsets.symmetric(
+                                                    vertical: 15.0),
+                                                child: Text(
+                                                  'Akta Kelahiran',
+                                                  style: TextStyle(
+                                                    fontFamily: 'Ubuntu',
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 23,
+                                                  ),
+                                                  textAlign: TextAlign.center,
+                                                ),
+                                              ),
+                                              Container(
+                                                width: double.infinity,
+                                                decoration: BoxDecoration(
+                                                  color:
+                                                      const Color(0xFF233C49),
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          10.0),
+                                                ),
+                                                padding:
+                                                    const EdgeInsets.all(10),
+                                                child: Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    const Padding(
+                                                      padding:
+                                                          EdgeInsets.symmetric(
+                                                              vertical: 2.0),
+                                                      child: Text(
+                                                        'Siapkan',
+                                                        style: TextStyle(
+                                                          fontFamily: 'Ubuntu',
+                                                          fontSize: 14,
+                                                          color: Colors.white,
+                                                        ),
+                                                        textAlign:
+                                                            TextAlign.justify,
+                                                      ),
+                                                    ),
+                                                    Row(
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
+                                                      children: const [
+                                                        Text(
+                                                          '• ',
+                                                          style: TextStyle(
+                                                            fontFamily:
+                                                                'Ubuntu',
+                                                            fontSize: 14,
+                                                            color: Colors.white,
+                                                          ),
+                                                        ),
+                                                        Expanded(
+                                                          child: Text(
+                                                            'surat keterangan kelahiran dari RS/Puskesmas/dokter/bidan',
+                                                            style: TextStyle(
+                                                              fontFamily:
+                                                                  'Ubuntu',
+                                                              fontSize: 14,
+                                                              color:
+                                                                  Colors.white,
+                                                            ),
+                                                            textAlign: TextAlign
+                                                                .justify,
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    const SizedBox(height: 2),
+                                                    Row(
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
+                                                      children: const [
+                                                        Text(
+                                                          '• ',
+                                                          style: TextStyle(
+                                                            fontFamily:
+                                                                'Ubuntu',
+                                                            fontSize: 14,
+                                                            color: Colors.white,
+                                                          ),
+                                                        ),
+                                                        Expanded(
+                                                          child: Text(
+                                                            'Buku Nikah Orang Tua atau SPTJM kebenaran sebagai pasangan suami istri dengan 2 saksi',
+                                                            style: TextStyle(
+                                                              fontFamily:
+                                                                  'Ubuntu',
+                                                              fontSize: 14,
+                                                              color:
+                                                                  Colors.white,
+                                                            ),
+                                                            textAlign: TextAlign
+                                                                .justify,
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    const SizedBox(height: 2),
+                                                    Row(
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
+                                                      children: const [
+                                                        Text(
+                                                          '• ',
+                                                          style: TextStyle(
+                                                            fontFamily:
+                                                                'Ubuntu',
+                                                            fontSize: 14,
+                                                            color: Colors.white,
+                                                          ),
+                                                        ),
+                                                        Expanded(
+                                                          child: Text(
+                                                            'KK asli orang tua',
+                                                            style: TextStyle(
+                                                              fontFamily:
+                                                                  'Ubuntu',
+                                                              fontSize: 14,
+                                                              color:
+                                                                  Colors.white,
+                                                            ),
+                                                            textAlign: TextAlign
+                                                                .justify,
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    const SizedBox(height: 2),
+                                                    Row(
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
+                                                      children: const [
+                                                        Text(
+                                                          '• ',
+                                                          style: TextStyle(
+                                                            fontFamily:
+                                                                'Ubuntu',
+                                                            fontSize: 14,
+                                                            color: Colors.white,
+                                                          ),
+                                                        ),
+                                                        Expanded(
+                                                          child: Text(
+                                                            'KTP orang tua (ayah dan ibu)',
+                                                            style: TextStyle(
+                                                              fontFamily:
+                                                                  'Ubuntu',
+                                                              fontSize: 14,
+                                                              color:
+                                                                  Colors.white,
+                                                            ),
+                                                            textAlign: TextAlign
+                                                                .justify,
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                      const SizedBox(height: 10),
+                                      GestureDetector(
+                                        onTap: () {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    SuratKematian()),
+                                          );
+                                        },
+                                        child: Container(
+                                          width: double.infinity,
+                                          padding:
+                                              const EdgeInsets.only(top: 10),
+                                          decoration: BoxDecoration(
+                                            color: const Color(0xFFFCFCFA),
+                                            borderRadius:
+                                                BorderRadius.circular(15.0),
+                                          ),
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
+                                            children: [
+                                              const Padding(
+                                                padding: EdgeInsets.symmetric(
+                                                    vertical: 15.0),
+                                                child: Text(
+                                                  'SURAT KEMATIAN',
+                                                  style: TextStyle(
+                                                    fontFamily: 'Ubuntu',
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 23,
+                                                  ),
+                                                  textAlign: TextAlign.center,
+                                                ),
+                                              ),
+                                              Container(
+                                                width: double.infinity,
+                                                decoration: BoxDecoration(
+                                                  color:
+                                                      const Color(0xFF233C49),
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          10.0),
+                                                ),
+                                                padding:
+                                                    const EdgeInsets.all(10),
+                                                child: Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    const Padding(
+                                                      padding:
+                                                          EdgeInsets.symmetric(
+                                                              vertical: 2.0),
+                                                      child: Text(
+                                                        'Siapkan',
+                                                        style: TextStyle(
+                                                          fontFamily: 'Ubuntu',
+                                                          fontSize: 14,
+                                                          color: Colors.white,
+                                                        ),
+                                                        textAlign:
+                                                            TextAlign.justify,
+                                                      ),
+                                                    ),
+                                                    Row(
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
+                                                      children: const [
+                                                        Text(
+                                                          '• ',
+                                                          style: TextStyle(
+                                                            fontFamily:
+                                                                'Ubuntu',
+                                                            fontSize: 14,
+                                                            color: Colors.white,
+                                                          ),
+                                                        ),
+                                                        Expanded(
+                                                          child: Text(
+                                                            'Surat keterangan Kematian dari Dokter jika meninggal di Rumah Sakit, atau dari Kepala Desa/Kelurahan jika meninggal di Rumah',
+                                                            style: TextStyle(
+                                                              fontFamily:
+                                                                  'Ubuntu',
+                                                              fontSize: 14,
+                                                              color:
+                                                                  Colors.white,
+                                                            ),
+                                                            textAlign: TextAlign
+                                                                .justify,
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    const SizedBox(height: 2),
+                                                    Row(
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
+                                                      children: const [
+                                                        Text(
+                                                          '• ',
+                                                          style: TextStyle(
+                                                            fontFamily:
+                                                                'Ubuntu',
+                                                            fontSize: 14,
+                                                            color: Colors.white,
+                                                          ),
+                                                        ),
+                                                        Expanded(
+                                                          child: Text(
+                                                            'KTP pemohon / pelapor kematian',
+                                                            style: TextStyle(
+                                                              fontFamily:
+                                                                  'Ubuntu',
+                                                              fontSize: 14,
+                                                              color:
+                                                                  Colors.white,
+                                                            ),
+                                                            textAlign: TextAlign
+                                                                .justify,
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    const SizedBox(height: 2),
+                                                    Row(
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
+                                                      children: const [
+                                                        Text(
+                                                          '• ',
+                                                          style: TextStyle(
+                                                            fontFamily:
+                                                                'Ubuntu',
+                                                            fontSize: 14,
+                                                            color: Colors.white,
+                                                          ),
+                                                        ),
+                                                        Expanded(
+                                                          child: Text(
+                                                            'KTP yang meninggal/surat keterangan domisili (jika tidak ada KTP)',
+                                                            style: TextStyle(
+                                                              fontFamily:
+                                                                  'Ubuntu',
+                                                              fontSize: 14,
+                                                              color:
+                                                                  Colors.white,
+                                                            ),
+                                                            textAlign: TextAlign
+                                                                .justify,
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    const SizedBox(height: 2),
+                                                    Row(
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
+                                                      children: const [
+                                                        Text(
+                                                          '• ',
+                                                          style: TextStyle(
+                                                            fontFamily:
+                                                                'Ubuntu',
+                                                            fontSize: 14,
+                                                            color: Colors.white,
+                                                          ),
+                                                        ),
+                                                        Expanded(
+                                                          child: Text(
+                                                            'KK asli (masih dengan almarhum)',
+                                                            style: TextStyle(
+                                                              fontFamily:
+                                                                  'Ubuntu',
+                                                              fontSize: 14,
+                                                              color:
+                                                                  Colors.white,
+                                                            ),
+                                                            textAlign: TextAlign
+                                                                .justify,
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                      const SizedBox(height: 10),
+                                    ],
+                                  ),
+                                );
+                              },
+                            );
+                          },
                         ),
                       ],
                     ),
@@ -564,7 +1006,8 @@ class _UserHomeState extends State<UserHome> {
 
             // Pengaduan Masyarakat
             Container(
-              margin: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 5.0),
+              margin:
+                  const EdgeInsets.symmetric(horizontal: 16.0, vertical: 5.0),
               padding: const EdgeInsets.all(0.0),
               decoration: BoxDecoration(
                 color: const Color(0xFF327178),
@@ -622,7 +1065,8 @@ class _UserHomeState extends State<UserHome> {
 
             // Informasi Pariwisata
             Container(
-              margin: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 5.0),
+              margin:
+                  const EdgeInsets.symmetric(horizontal: 16.0, vertical: 5.0),
               padding: const EdgeInsets.all(0.0),
               decoration: BoxDecoration(
                 color: const Color(0xFF327178),
@@ -750,7 +1194,8 @@ class _UserHomeState extends State<UserHome> {
 
             // Informasi Publik
             Container(
-              margin: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 5.0),
+              margin:
+                  const EdgeInsets.symmetric(horizontal: 16.0, vertical: 5.0),
               padding: const EdgeInsets.all(0.0),
               decoration: BoxDecoration(
                 color: const Color(0xFF327178),
@@ -797,7 +1242,8 @@ class _UserHomeState extends State<UserHome> {
                             child: Row(
                               children: List.generate(4, (index) {
                                 return Container(
-                                  margin: const EdgeInsets.symmetric(horizontal: 5.0),
+                                  margin: const EdgeInsets.symmetric(
+                                      horizontal: 5.0),
                                   width: 150,
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(7.0),
@@ -808,7 +1254,8 @@ class _UserHomeState extends State<UserHome> {
                                         CrossAxisAlignment.start,
                                     children: [
                                       ClipRRect(
-                                        borderRadius: const BorderRadius.vertical(
+                                        borderRadius:
+                                            const BorderRadius.vertical(
                                           top: Radius.circular(7.0),
                                         ),
                                         child: Image.asset(
@@ -853,7 +1300,8 @@ class _UserHomeState extends State<UserHome> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 40.0),
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 40.0),
                               child: ElevatedButton(
                                 onPressed: () {},
                                 style: ElevatedButton.styleFrom(
@@ -874,7 +1322,8 @@ class _UserHomeState extends State<UserHome> {
                             ),
                             const SizedBox(height: 10),
                             Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 40.0),
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 40.0),
                               child: ElevatedButton(
                                 onPressed: () {},
                                 style: ElevatedButton.styleFrom(
