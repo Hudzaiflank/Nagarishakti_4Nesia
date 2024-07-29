@@ -17,19 +17,6 @@ class UserDetailDestinationPage extends StatelessWidget {
                 fit: BoxFit.cover,
               ),
             ),
-            Positioned(
-              top: 40.0,
-              left: 16.0,
-              child: CircleAvatar(
-                backgroundColor: Color(0xFFE2DED0),
-                child: IconButton(
-                  icon: Icon(Icons.arrow_back, color: Colors.black),
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                ),
-              ),
-            ),
             SingleChildScrollView(
               child: Padding(
                 padding: const EdgeInsets.only(top: 300.0),

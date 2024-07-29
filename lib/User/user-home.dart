@@ -1204,16 +1204,17 @@ class _UserHomeState extends State<UserHome> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Padding(
-                    padding: EdgeInsets.symmetric(vertical: 12.0),
-                    child: Text(
-                      'INFORMASI PUBLIK',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontFamily: 'Ubuntu',
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18,
+                  Center(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 12.0),
+                      child: Text(
+                        'INFORMASI PUBLIK',
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontFamily: 'Ubuntu',
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18,
+                        ),
                       ),
                     ),
                   ),
