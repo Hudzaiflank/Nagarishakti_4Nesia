@@ -1,15 +1,78 @@
 import 'package:flutter/material.dart';
 import 'user-DetailDestination-page.dart';
+import '/Database/database_destinasi.dart';
 
-class UserDestinationPage extends StatelessWidget {
+class UserDestinationPage extends StatefulWidget {
+  const UserDestinationPage({super.key});
+
+  @override
+  _UserDestinationPageState createState() => _UserDestinationPageState();
+}
+
+class _UserDestinationPageState extends State<UserDestinationPage> {
+  final TextEditingController _searchController = TextEditingController();
+  String _searchQuery = '';
+  List<Destinasi> _destinations = [];
+  List<Destinasi> _uniqueDestinations = [];
+  List<Destinasi> _bookmarkedDestinations = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _loadDestinationsFromDB();
+  }
+
+  Future<void> _loadDestinationsFromDB() async {
+    final DatabaseDestinasi db = DatabaseDestinasi.instance;
+    final List<Destinasi> destinations = await db.getDestinasi();
+    setState(() {
+      _destinations = destinations;
+      _uniqueDestinations = _getUniqueDestinations(destinations);
+      _bookmarkedDestinations = destinations.where((dest) => dest.bookmark).toList();
+    });
+  }
+
+  List<Destinasi> _getUniqueDestinations(List<Destinasi> destinations) {
+    final uniqueKeys = <String>{};
+    return destinations.where((dest) {
+      final key = '${dest.title}_${dest.location}_${dest.savedBy}';
+      if (uniqueKeys.contains(key)) {
+        return false;
+      } else {
+        uniqueKeys.add(key);
+        return true;
+      }
+    }).toList();
+  }
+
+  Future<void> _updateBookmark(Destinasi destination) async {
+    final DatabaseDestinasi db = DatabaseDestinasi.instance;
+    destination.bookmark = !destination.bookmark;
+    await db.updateDestinasi(destination);
+    setState(() {
+      if (destination.bookmark) {
+        _bookmarkedDestinations.add(destination);
+      } else {
+        _bookmarkedDestinations.removeWhere((dest) => dest.id == destination.id);
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    List<Destinasi> filteredDestinations = _uniqueDestinations.where((destination) {
+      final query = _searchQuery.toLowerCase();
+      return destination.title.toLowerCase().contains(query) ||
+          destination.location.toLowerCase().contains(query) ||
+          destination.savedBy.toLowerCase().contains(query);
+    }).toList();
+
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(120.0),
+        preferredSize: const Size.fromHeight(120.0),
         child: Container(
-          padding: EdgeInsets.only(top: 35),
-          decoration: BoxDecoration(
+          padding: const EdgeInsets.only(top: 35),
+          decoration: const BoxDecoration(
             color: Color(0xFF3AB3B1),
             borderRadius: BorderRadius.vertical(bottom: Radius.circular(7.0)),
           ),
@@ -21,13 +84,13 @@ class UserDestinationPage extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Container(
-                      margin: EdgeInsets.only(right: 10.0),
-                      decoration: BoxDecoration(
+                      margin: const EdgeInsets.only(right: 10.0),
+                      decoration: const BoxDecoration(
                         color: Color(0xFFE2DED0),
                         shape: BoxShape.circle,
                       ),
                       child: IconButton(
-                        icon: Icon(Icons.arrow_back, color: Colors.black),
+                        icon: const Icon(Icons.arrow_back, color: Colors.black),
                         onPressed: () {
                           Navigator.pop(context);
                         },
@@ -36,18 +99,18 @@ class UserDestinationPage extends StatelessWidget {
                   ],
                 ),
               ),
-              Text(
+              const Text(
                 'DESTINASI PARIWISATA',
                 style: TextStyle(
                   fontFamily: 'Ubuntu',
-                  fontSize: 20,
+                  fontSize: 22,
                   color: Colors.white,
                   fontWeight: FontWeight.bold,
                 ),
                 textAlign: TextAlign.center,
               ),
-              SizedBox(height: 4),
-              Row(
+              const SizedBox(height: 4),
+              const Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Icon(Icons.location_pin, size: 16, color: Color(0xFFA53525)),
@@ -71,179 +134,109 @@ class UserDestinationPage extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: TextField(
+              controller: _searchController,
               decoration: InputDecoration(
-                contentPadding:
-                    EdgeInsets.symmetric(vertical: 10, horizontal: 16),
+                contentPadding: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
                 filled: true,
-                fillColor: Color(0xFFE2DED0),
+                fillColor: const Color(0xFFE2DED0),
                 hintText: 'Cari destinasi wisata',
-                hintStyle: TextStyle(
+                hintStyle: const TextStyle(
                     color: Color(0xFF8E98A8),
                     fontStyle: FontStyle.italic,
                     fontFamily: 'Ubuntu'),
-                prefixIcon: Padding(
-                  padding: const EdgeInsets.only(left: 16.0, right: 10.0),
+                prefixIcon: const Padding(
+                  padding: EdgeInsets.only(left: 16.0, right: 12.0),
                   child: Icon(Icons.search, color: Color(0xFF8E98A8)),
                 ),
-                prefixIconConstraints: BoxConstraints(
-                  minWidth: 0,
-                  minHeight: 0,
-                ),
                 border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(50.0),
+                  borderRadius: BorderRadius.circular(30.0),
                   borderSide: BorderSide.none,
                 ),
               ),
+              onChanged: (query) {
+                setState(() {
+                  _searchQuery = query;
+                });
+              },
             ),
           ),
           Expanded(
-            child: ListView(
-              children: [
-                destinationItem(
-                  context,
-                  imagePath: 'assets/contoh-gambar.png',
-                  title: 'CURUG PARIGI',
-                  location: 'Jl. Pangkalan 5, Bantar Gebang',
-                  savedBy: 'Disimpan oleh 372 orang',
-                  backgroundColor: Color(0xFF8C8C8C),
-                ),
-                destinationItem(
-                  context,
-                  imagePath: 'assets/contoh-gambar.png',
-                  title: 'DELTAMAS HILL',
-                  location: 'Hegarmukti, Cikarang Pusat',
-                  savedBy: 'Disimpan oleh 124 orang',
-                  backgroundColor: Color(0xFF5D5855),
-                ),
-                destinationItem(
-                  context,
-                  imagePath: 'assets/contoh-gambar.png',
-                  title: 'DANAU MARAKASH',
-                  location: 'Marakash, Kebalen, Babelan',
-                  savedBy: 'Disimpan oleh 256 orang',
-                  backgroundColor: Color(0xFF62B8B1),
-                ),
-                destinationItem(
-                  context,
-                  imagePath: 'assets/contoh-gambar.png',
-                  title: 'HUTAN KOTA',
-                  location: 'Jl. Jend. Ahmad Yani, Bekasi',
-                  savedBy: 'Disimpan oleh 398 orang',
-                  backgroundColor: Color(0xFF60A39C),
-                ),
-              ],
+            child: ListView.builder(
+              itemCount: filteredDestinations.length,
+              itemBuilder: (context, index) {
+                final destination = filteredDestinations[index];
+                return Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 16.0),
+                  child: Card(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15.0),
+                    ),
+                    child: Container(
+                      color: Color(destination.backgroundColor),
+                      child: ListTile(
+                        contentPadding: const EdgeInsets.all(10.0),
+                        leading: CircleAvatar(
+                          backgroundImage: AssetImage(destination.imagePath),
+                        ),
+                        title: Text(
+                          destination.title,
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        subtitle: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              children: [
+                                const Icon(Icons.location_pin, size: 16, color: Colors.red),
+                                const SizedBox(width: 4),
+                                Text(
+                                  destination.location,
+                                  style: const TextStyle(color: Colors.white),
+                                ),
+                              ],
+                            ),
+                            Row(
+                              children: [
+                                const Icon(Icons.bookmark, size: 16, color: Colors.red),
+                                const SizedBox(width: 4),
+                                Text(
+                                  destination.savedBy,
+                                  style: const TextStyle(color: Colors.white),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                        trailing: IconButton(
+                          icon: Icon(
+                            destination.bookmark ? Icons.bookmark : Icons.bookmark_border,
+                            color: destination.bookmark ? Colors.white : Colors.white,
+                          ),
+                          onPressed: () {
+                            _updateBookmark(destination);
+                          },
+                        ),
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => UserDetailDestinationPage(
+                                destination: destination,
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                  ),
+                );
+              },
             ),
           ),
         ],
-      ),
-    );
-  }
-
-  Widget destinationItem(
-    BuildContext context, {
-    required String imagePath,
-    required String title,
-    required String location,
-    required String savedBy,
-    required Color backgroundColor,
-  }) {
-    return GestureDetector(
-      onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => UserDetailDestinationPage()),
-        );
-      },
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-        child: Container(
-          height: 120,
-          decoration: BoxDecoration(
-            color: backgroundColor,
-            borderRadius: BorderRadius.circular(12.0),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.grey.withOpacity(0.5),
-                spreadRadius: 1,
-                blurRadius: 5,
-                offset: Offset(0, 3),
-              ),
-            ],
-          ),
-          child: Row(
-            children: [
-              ClipRRect(
-                borderRadius: BorderRadius.all(
-                    Radius.circular(7.0)), // ini biar semua 7px si pinggirnya
-                child: Image.asset(
-                  imagePath,
-                  height: 120,
-                  width: 140,
-                  fit: BoxFit.cover,
-                ),
-              ),
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        title,
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                          fontFamily: 'Ubuntu',
-                        ),
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                      SizedBox(height: 4),
-                      Row(
-                        children: [
-                          Icon(Icons.location_pin,
-                              size: 16, color: Colors.white),
-                          SizedBox(width: 4),
-                          Expanded(
-                            child: Text(
-                              location,
-                              style: TextStyle(
-                                  color: Colors.white, fontFamily: 'Ubuntu'),
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: 4),
-                      Row(
-                        children: [
-                          Icon(Icons.bookmark,
-                              size: 16, color: Colors.white), // Added save icon
-                          SizedBox(width: 4),
-                          Expanded(
-                            child: Text(
-                              savedBy,
-                              style: TextStyle(
-                                  color: Colors.white, fontFamily: 'Ubuntu'),
-                              overflow:
-                                  TextOverflow.ellipsis, // Handle text overflow
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              IconButton(
-                icon:
-                    Icon(Icons.bookmark_border, color: Colors.white, size: 16),
-                onPressed: () {},
-              ),
-            ],
-          ),
-        ),
       ),
     );
   }

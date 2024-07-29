@@ -44,6 +44,8 @@ dependencies:
   path: ^1.9.0
   http: ^1.2.1
   shared_preferences: ^2.2.3
+  path_provider: ^2.1.3
+  json_annotation: ^4.9.0
 
 dev_dependencies:
   flutter_test:
@@ -84,9 +86,9 @@ flutter:
     - assets/profile-edit/rectangle-1.png
     - assets/profile-edit/rectangle-2.png
     - assets/profile-edit/rectangle-3.png
-    - assets/sample.json
     - assets/download-icon.png
     - assets/upload-icon.png
+    - assets/API/destinasi.json
 
   #   - images/a_dot_ham.jpeg
 
