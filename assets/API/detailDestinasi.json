@@ -3,19 +3,19 @@
         {
             "deskripsi": "Curug Parigi sering disebut sebagai mini Niagara karena bentuknya yang melengkung. Curug Parigi ini menawarkan suasana sejuk dan pemandangan alam yang indah, cocok untuk wisata alam dan fotografi.",
             "gambar": "assets/contoh-gambar.png",
-            "fasilitas": "Spot Foto",
+            "fasilitas": "Spot Foto, Tempat Parkir, Gazebo, Toilet, Tempat Makan",
             "hargaTiket": "Mobil Rp10.000, motor Rp5.000, dan sepeda Rp2.000."
         },
         {
             "deskripsi": "Deltamas Hill menawarkan suasana tenang dan sejuk serta pemandangan matahari terbenam yang spektakuler. Sehingga Deltamas Hill cocok sebagai tempat untuk untuk melepas penat dan bersantai serta berfoto-foto yang Instagramable.",
             "gambar": "assets/contoh-gambar.png",
-            "fasilitas": "Hegarmukti, Cikarang Pusat",
+            "fasilitas": "Spot Foto, Tempat Parkir, Tempat Makan, Jogging Track",
             "hargaTiket": "Gratis"
         },
         {
             "deskripsi": "Danau Marakash memiliki pemandangan malam yang indah dan disertai cahaya lampu hias serta atraksi malam seperti komidi putar. Oleh karena itu, Danau Marakash ramai dikunjungi pengunjung bersama keluarganya.",
             "gambar": "assets/contoh-gambar.png",
-            "fasilitas": "Tempat Parkir, Toilet & Kamar Mandi, Rumah Makan, Mushola, Kolam Renang",
+            "fasilitas": "Tempat Parkir, Toilet & Kamar Mandi, Tempat Makan, Mushola, Kolam Renang",
             "hargaTiket": "Rp5.000"
         },
         {

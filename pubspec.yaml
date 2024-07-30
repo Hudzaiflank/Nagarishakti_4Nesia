@@ -89,6 +89,7 @@ flutter:
     - assets/download-icon.png
     - assets/upload-icon.png
     - assets/API/destinasi.json
+    - assets/API/detailDestinasi.json
 
   #   - images/a_dot_ham.jpeg
 

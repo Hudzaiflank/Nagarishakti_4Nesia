@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'user-DetailDestination-page.dart';
 import '/Database/database_destinasi.dart';
+import '/Database/database_detailDestinasi.dart'; // Impor database detail destinasi
 
 class UserDestinationPage extends StatefulWidget {
   const UserDestinationPage({super.key});
@@ -56,6 +57,35 @@ class _UserDestinationPageState extends State<UserDestinationPage> {
         _bookmarkedDestinations.removeWhere((dest) => dest.id == destination.id);
       }
     });
+  }
+
+  Future<void> _navigateToDetail(Destinasi destination) async {
+    final DatabaseDetailDestinasi dbDetail = DatabaseDetailDestinasi.instance;
+    if (destination.id != null) {
+      final List<DetailDestinasi> detailDestinasiList = await dbDetail.getDetailDestinasi(destination.id!);
+
+      if (detailDestinasiList.isNotEmpty) {
+        final DetailDestinasi detaildestinasi = detailDestinasiList.first;
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => UserDetailDestinationPage(
+              destination: destination,
+              detaildestinasi: detaildestinasi,
+            ),
+          ),
+        );
+      } else {
+        // Handle the case when no detail is found
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Detail destinasi tidak ditemukan')),
+        );
+      }
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('ID destinasi tidak valid')),
+      );
+    }
   }
 
   @override
@@ -220,14 +250,7 @@ class _UserDestinationPageState extends State<UserDestinationPage> {
                           },
                         ),
                         onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => UserDetailDestinationPage(
-                                destination: destination,
-                              ),
-                            ),
-                          );
+                          _navigateToDetail(destination);
                         },
                       ),
                     ),

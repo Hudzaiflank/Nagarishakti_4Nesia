@@ -31,12 +31,10 @@ class DatabaseDetailDestinasi {
     await db.execute('''
       CREATE TABLE detailDestinasi(
         id INTEGER PRIMARY KEY AUTOINCREMENT,
-        title TEXT NOT NULL,
-        location TEXT NOT NULL,
-        imagePath TEXT NOT NULL,
-        backgroundColor INTEGER NOT NULL,
-        savedBy TEXT NOT NULL,
-        bookmark BOOLEAN NOT NULL
+        deskripsi TEXT NOT NULL,
+        gambar TEXT NOT NULL,
+        fasilitas TEXT NOT NULL,
+        hargaTiket TEXT NOT NULL
       )
     ''');
   }
@@ -48,30 +46,34 @@ class DatabaseDetailDestinasi {
       detaildestinasi.toMap(),
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
-    print('Inserted Destination: ${detaildestinasi.title} with color: ${detaildestinasi.backgroundColor}');
+    print('Inserted Destination: ${detaildestinasi.deskripsi}');
   }
 
-  Future<List<DetailDestinasi>> getDestinasi() async {
+  Future<List<DetailDestinasi>> getDetailDestinasi(int id) async {
     final db = await instance.database;
-    final result = await db.query('destinasi');
-    List<DetailDestinasi> destinations = result.map((json) => DetailDestinasi.fromMap(json)).toList();
+    final result = await db.query(
+      'detailDestinasi',
+      where: 'id = ?',
+      whereArgs: [id],
+    );
+    List<DetailDestinasi> detailDestinations = result.map((json) => DetailDestinasi.fromMap(json)).toList();
 
-    destinations.forEach((detaildestinasi) {
-      print('Fetched Destination: ${detaildestinasi.title} with color: ${detaildestinasi.backgroundColor}');
+    detailDestinations.forEach((detaildestinasi) {
+      print('Fetched Destination: ${detaildestinasi.deskripsi}');
     });
 
-    return destinations;
+    return detailDestinations;
   }
 
   Future<void> updateDetailDestinasi(DetailDestinasi detaildestinasi) async {
     final db = await instance.database;
     await db.update(
-      'destinasi',
+      'detailDestinasi',
       detaildestinasi.toMap(),
       where: 'id = ?',
       whereArgs: [detaildestinasi.id],
     );
-    print('Updated Destination: ${detaildestinasi.title} with color: ${detaildestinasi.backgroundColor}');
+    print('Updated Destination: ${detaildestinasi.deskripsi}');
   }
 
   Future close() async {
@@ -82,44 +84,36 @@ class DatabaseDetailDestinasi {
 
 class DetailDestinasi {
   final int? id;
-  final String title;
-  final String location;
-  final String imagePath;
-  final int backgroundColor; // Changed to int
-  final String savedBy;
-  bool bookmark;
+  final String deskripsi;
+  final String gambar;
+  final String fasilitas;
+  final String hargaTiket;
 
   DetailDestinasi({
     this.id,
-    required this.title,
-    required this.location,
-    required this.imagePath,
-    required this.backgroundColor, // Changed to int
-    required this.savedBy,
-    required this.bookmark,
+    required this.deskripsi,
+    required this.gambar,
+    required this.fasilitas,
+    required this.hargaTiket,
   });
 
   Map<String, Object?> toMap() {
     return {
       'id': id,
-      'title': title,
-      'location': location,
-      'imagePath': imagePath,
-      'backgroundColor': backgroundColor, // Save as integer
-      'savedBy': savedBy,
-      'bookmark': bookmark ? 1 : 0,
+      'deskripsi': deskripsi,
+      'gambar': gambar,
+      'fasilitas': fasilitas,
+      'hargaTiket': hargaTiket,
     };
   }
 
   static DetailDestinasi fromMap(Map<String, Object?> map) {
     return DetailDestinasi(
       id: map['id'] as int?,
-      title: map['title'] as String,
-      location: map['location'] as String,
-      imagePath: map['imagePath'] as String,
-      backgroundColor: map['backgroundColor'] as int, // Read as integer
-      savedBy: map['savedBy'] as String,
-      bookmark: (map['bookmark'] as int) == 1,
+      deskripsi: map['deskripsi'] as String,
+      gambar: map['gambar'] as String,
+      fasilitas: map['fasilitas'] as String,
+      hargaTiket: map['hargaTiket'] as String,
     );
   }
 }

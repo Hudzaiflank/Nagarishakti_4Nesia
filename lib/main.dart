@@ -30,7 +30,7 @@ void main() async {
   // Load Destination from json
   await loadDestinationsFromJson();
 
-  // Load Destination from json
+  // Load Detail Destination from json
   await loadDetailDestinationsFromJson();
 
   runApp(const MyApp());
@@ -135,41 +135,24 @@ Future<void> loadDetailDestinationsFromJson() async {
     final String response = await rootBundle.loadString('assets/API/detailDestinasi.json');
     final Map<String, dynamic> jsonData = json.decode(response);
 
-    if (jsonData.containsKey('destinasi')) {
-      final List<dynamic> data = jsonData['destinasi'];
-      final DatabaseDestinasi db = DatabaseDestinasi.instance;
+    if (jsonData.containsKey('detailDestinasi')) {
+      final List<dynamic> data = jsonData['detailDestinasi'];
+      final DatabaseDetailDestinasi db = DatabaseDetailDestinasi.instance;
 
-      for (var destination in data) {
-        String colorString = destination['backgroundColor'];
-        
-        // Remove the "0x" prefix if it exists
-        if (colorString.startsWith('0x')) {
-          colorString = colorString.substring(2);
-        }
-        
-        // Ensure the colorString is in ARGB format
-        if (colorString.length == 6) {
-          colorString = 'FF' + colorString; // Add alpha channel
-        }
-
-        // Convert the colorString to int
-        int color = int.parse(colorString, radix: 16);
-
-        final destinasi = Destinasi(
-          title: destination['title'],
-          location: destination['location'],
-          imagePath: destination['imagePath'],
-          backgroundColor: color, // Store as integer
-          savedBy: destination['savedBy'],
-          bookmark: destination['bookmark'],
+      for (var detaildestination in data) {
+        final detaildestinasi = DetailDestinasi(
+          deskripsi: detaildestination['deskripsi'],
+          gambar: detaildestination['gambar'],
+          fasilitas: detaildestination['fasilitas'],
+          hargaTiket: detaildestination['hargaTiket'],
         );
-        await db.insertDestinasi(destinasi);
+        await db.insertDetailDestinasi(detaildestinasi);
       }
     } else {
-      print('Key "destinasi" not found in JSON');
+      print('Key "detailDestinasi" not found in JSON');
     }
   } catch (e) {
-    print('Error loading destinations from JSON: $e');
+    print('Error loading detail destinations from JSON: $e');
   }
 }
 
@@ -179,14 +162,14 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Registration App',
+      title: 'Registration & Login',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
       home: const UserHome(),
       routes: {
-        '/register': (context) => const RegistrationScreen(),
         '/login': (context) => const LoginScreen(),
+        '/register': (context) => const RegistrationScreen(),
       },
     );
   }
