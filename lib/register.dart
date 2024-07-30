@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'database_user.dart';
+import '/Database/database_user.dart';
 import 'login.dart';
 
 class RegistrationScreen extends StatefulWidget {

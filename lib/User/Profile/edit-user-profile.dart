@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:intl/intl.dart';
-import '/database_user.dart';
+import '/Database/database_user.dart';
 import 'dart:io';
 
 class EditUserProfilePage extends StatefulWidget {
@@ -257,7 +257,7 @@ class _EditUserProfilePageState extends State<EditUserProfilePage> {
                                       await dbUser.updateRegister(updatedRegister);
 
                                       ScaffoldMessenger.of(context).showSnackBar(
-                                        SnackBar(content: Text('Data berhasil diubah')),
+                                        const SnackBar(content: Text('Data berhasil diubah')),
                                       );
 
                                       Navigator.pop(context);
@@ -315,9 +315,9 @@ class _EditUserProfilePageState extends State<EditUserProfilePage> {
           child: CircleAvatar(
             radius: 60,
             backgroundColor: Colors.grey[300],
-            backgroundImage: _image != null ? FileImage(_image!) : AssetImage('assets/user-home/profile-logo.png') as ImageProvider<Object>,
+            backgroundImage: _image != null ? FileImage(_image!) : const AssetImage('assets/user-home/profile-logo.png') as ImageProvider<Object>,
             child: IconButton(
-              icon: Icon(Icons.camera_alt, color: Colors.white),
+              icon: const Icon(Icons.camera_alt, color: Colors.white),
               onPressed: () {
                 _showImagePickerOptions(context);
               },
