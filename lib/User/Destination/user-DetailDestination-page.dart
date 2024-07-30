@@ -33,6 +33,7 @@ class _UserDetailDestinationPageState extends State<UserDetailDestinationPage> {
                 fit: BoxFit.cover,
               ),
             ),
+
             Positioned(
               top: 40.0,
               left: 16.0,
@@ -46,6 +47,8 @@ class _UserDetailDestinationPageState extends State<UserDetailDestinationPage> {
                 ),
               ),
             ),
+
+
             SingleChildScrollView(
               child: Padding(
                 padding: const EdgeInsets.only(top: 300.0),

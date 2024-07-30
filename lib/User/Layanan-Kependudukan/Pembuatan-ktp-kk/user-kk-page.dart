@@ -177,7 +177,143 @@ class _UserKkPageState extends State<UserKkPage> {
                       ' atau ',
                       'Surat Kehilangan dari Kepolisian',
                     ),
-                    _buildUploadField(),
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 16.0),
+                      child: Stack(
+                        clipBehavior: Clip.none,
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              // ini buat handle upload document nya thin
+                            },
+                            child: Container(
+                              height: 100,
+                              decoration: BoxDecoration(
+                                color: Color(0xFFE0E5E7),
+                                borderRadius: BorderRadius.circular(7),
+                              ),
+                              child: Center(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Image.asset(
+                                      'assets/upload-icon.png',
+                                      height: 30,
+                                      width: 30,
+                                    ),
+                                    SizedBox(height: 8),
+                                    Container(
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: 8, vertical: 4),
+                                      decoration: BoxDecoration(
+                                        color: Color(0xFFE2DED0),
+                                        borderRadius: BorderRadius.circular(4),
+                                      ),
+                                      child: Text(
+                                        'Pilih gambar atau dokumen',
+                                        style: TextStyle(
+                                          fontFamily: 'Ubuntu',
+                                          color: Colors.black54,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                          Positioned(
+                            top: -10,
+                            right: -10,
+                            child: Container(
+                              width: 24,
+                              height: 24,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: Color(0xFF4F4E49),
+                              ),
+                              child: IconButton(
+                                padding: EdgeInsets.zero,
+                                icon: Icon(Icons.close,
+                                    color: Colors.white, size: 16),
+                                onPressed: () {
+                                  // ini nanti buat remove nya thinnn mas broo
+                                },
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    _buildSubTitle('Dokumen Tambahan'),
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 16.0),
+                      child: Stack(
+                        clipBehavior: Clip.none,
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              // ini buat handle upload document nya thin
+                            },
+                            child: Container(
+                              height: 100,
+                              decoration: BoxDecoration(
+                                color: Color(0xFFE0E5E7),
+                                borderRadius: BorderRadius.circular(7),
+                              ),
+                              child: Center(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Image.asset(
+                                      'assets/upload-icon.png',
+                                      height: 30,
+                                      width: 30,
+                                    ),
+                                    SizedBox(height: 8),
+                                    Container(
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: 8, vertical: 4),
+                                      decoration: BoxDecoration(
+                                        color: Color(0xFFE2DED0),
+                                        borderRadius: BorderRadius.circular(4),
+                                      ),
+                                      child: Text(
+                                        'Pilih gambar atau dokumen',
+                                        style: TextStyle(
+                                          fontFamily: 'Ubuntu',
+                                          color: Colors.black54,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                          Positioned(
+                            top: -10,
+                            right: -10,
+                            child: Container(
+                              width: 24,
+                              height: 24,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: Color(0xFF4F4E49),
+                              ),
+                              child: IconButton(
+                                padding: EdgeInsets.zero,
+                                icon: Icon(Icons.close,
+                                    color: Colors.white, size: 16),
+                                onPressed: () {
+                                  // ini nanti buat remove nya thinnn mas broo
+                                },
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                   ] else if (selectedReason ==
                       'KK Baru (membentuk Keluarga baru)') ...[
                     _buildSubTitleWithNormal(
@@ -187,43 +323,1124 @@ class _UserKkPageState extends State<UserKkPage> {
                       ' atau ',
                       'Surat Pernyataan Tanggung Jawab Mutlak (SPTJM) perkawinan/perceraian belum tercatat',
                     ),
-                    _buildUploadField(),
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 16.0),
+                      child: Stack(
+                        clipBehavior: Clip.none,
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              // ini buat handle upload document nya thin
+                            },
+                            child: Container(
+                              height: 100,
+                              decoration: BoxDecoration(
+                                color: Color(0xFFE0E5E7),
+                                borderRadius: BorderRadius.circular(7),
+                              ),
+                              child: Center(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Image.asset(
+                                      'assets/upload-icon.png',
+                                      height: 30,
+                                      width: 30,
+                                    ),
+                                    SizedBox(height: 8),
+                                    Container(
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: 8, vertical: 4),
+                                      decoration: BoxDecoration(
+                                        color: Color(0xFFE2DED0),
+                                        borderRadius: BorderRadius.circular(4),
+                                      ),
+                                      child: Text(
+                                        'Pilih gambar atau dokumen',
+                                        style: TextStyle(
+                                          fontFamily: 'Ubuntu',
+                                          color: Colors.black54,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                          Positioned(
+                            top: -10,
+                            right: -10,
+                            child: Container(
+                              width: 24,
+                              height: 24,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: Color(0xFF4F4E49),
+                              ),
+                              child: IconButton(
+                                padding: EdgeInsets.zero,
+                                icon: Icon(Icons.close,
+                                    color: Colors.white, size: 16),
+                                onPressed: () {
+                                  // ini nanti buat remove nya thinnn mas broo
+                                },
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    _buildSubTitle('Dokumen Tambahan'),
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 16.0),
+                      child: Stack(
+                        clipBehavior: Clip.none,
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              // ini buat handle upload document nya thin
+                            },
+                            child: Container(
+                              height: 100,
+                              decoration: BoxDecoration(
+                                color: Color(0xFFE0E5E7),
+                                borderRadius: BorderRadius.circular(7),
+                              ),
+                              child: Center(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Image.asset(
+                                      'assets/upload-icon.png',
+                                      height: 30,
+                                      width: 30,
+                                    ),
+                                    SizedBox(height: 8),
+                                    Container(
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: 8, vertical: 4),
+                                      decoration: BoxDecoration(
+                                        color: Color(0xFFE2DED0),
+                                        borderRadius: BorderRadius.circular(4),
+                                      ),
+                                      child: Text(
+                                        'Pilih gambar atau dokumen',
+                                        style: TextStyle(
+                                          fontFamily: 'Ubuntu',
+                                          color: Colors.black54,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                          Positioned(
+                            top: -10,
+                            right: -10,
+                            child: Container(
+                              width: 24,
+                              height: 24,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: Color(0xFF4F4E49),
+                              ),
+                              child: IconButton(
+                                padding: EdgeInsets.zero,
+                                icon: Icon(Icons.close,
+                                    color: Colors.white, size: 16),
+                                onPressed: () {
+                                  // ini nanti buat remove nya thinnn mas broo
+                                },
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                   ] else if (selectedReason ==
                       'KK Baru (Pergantian Kepala Keluarga)') ...[
                     _buildSubTitle('Kartu Keluarga Lama'),
-                    _buildUploadField(),
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 16.0),
+                      child: Stack(
+                        clipBehavior: Clip.none,
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              // ini buat handle upload document nya thin
+                            },
+                            child: Container(
+                              height: 100,
+                              decoration: BoxDecoration(
+                                color: Color(0xFFE0E5E7),
+                                borderRadius: BorderRadius.circular(7),
+                              ),
+                              child: Center(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Image.asset(
+                                      'assets/upload-icon.png',
+                                      height: 30,
+                                      width: 30,
+                                    ),
+                                    SizedBox(height: 8),
+                                    Container(
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: 8, vertical: 4),
+                                      decoration: BoxDecoration(
+                                        color: Color(0xFFE2DED0),
+                                        borderRadius: BorderRadius.circular(4),
+                                      ),
+                                      child: Text(
+                                        'Pilih gambar atau dokumen',
+                                        style: TextStyle(
+                                          fontFamily: 'Ubuntu',
+                                          color: Colors.black54,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                          Positioned(
+                            top: -10,
+                            right: -10,
+                            child: Container(
+                              width: 24,
+                              height: 24,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: Color(0xFF4F4E49),
+                              ),
+                              child: IconButton(
+                                padding: EdgeInsets.zero,
+                                icon: Icon(Icons.close,
+                                    color: Colors.white, size: 16),
+                                onPressed: () {
+                                  // ini nanti buat remove nya thinnn mas broo
+                                },
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                     _buildSubTitle('Surat Keterangan Kematian Kepala Keluarga'),
-                    _buildUploadField(),
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 16.0),
+                      child: Stack(
+                        clipBehavior: Clip.none,
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              // ini buat handle upload document nya thin
+                            },
+                            child: Container(
+                              height: 100,
+                              decoration: BoxDecoration(
+                                color: Color(0xFFE0E5E7),
+                                borderRadius: BorderRadius.circular(7),
+                              ),
+                              child: Center(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Image.asset(
+                                      'assets/upload-icon.png',
+                                      height: 30,
+                                      width: 30,
+                                    ),
+                                    SizedBox(height: 8),
+                                    Container(
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: 8, vertical: 4),
+                                      decoration: BoxDecoration(
+                                        color: Color(0xFFE2DED0),
+                                        borderRadius: BorderRadius.circular(4),
+                                      ),
+                                      child: Text(
+                                        'Pilih gambar atau dokumen',
+                                        style: TextStyle(
+                                          fontFamily: 'Ubuntu',
+                                          color: Colors.black54,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                          Positioned(
+                            top: -10,
+                            right: -10,
+                            child: Container(
+                              width: 24,
+                              height: 24,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: Color(0xFF4F4E49),
+                              ),
+                              child: IconButton(
+                                padding: EdgeInsets.zero,
+                                icon: Icon(Icons.close,
+                                    color: Colors.white, size: 16),
+                                onPressed: () {
+                                  // ini nanti buat remove nya thinnn mas broo
+                                },
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    _buildSubTitle('Dokumen Tambahan'),
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 16.0),
+                      child: Stack(
+                        clipBehavior: Clip.none,
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              // ini buat handle upload document nya thin
+                            },
+                            child: Container(
+                              height: 100,
+                              decoration: BoxDecoration(
+                                color: Color(0xFFE0E5E7),
+                                borderRadius: BorderRadius.circular(7),
+                              ),
+                              child: Center(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Image.asset(
+                                      'assets/upload-icon.png',
+                                      height: 30,
+                                      width: 30,
+                                    ),
+                                    SizedBox(height: 8),
+                                    Container(
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: 8, vertical: 4),
+                                      decoration: BoxDecoration(
+                                        color: Color(0xFFE2DED0),
+                                        borderRadius: BorderRadius.circular(4),
+                                      ),
+                                      child: Text(
+                                        'Pilih gambar atau dokumen',
+                                        style: TextStyle(
+                                          fontFamily: 'Ubuntu',
+                                          color: Colors.black54,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                          Positioned(
+                            top: -10,
+                            right: -10,
+                            child: Container(
+                              width: 24,
+                              height: 24,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: Color(0xFF4F4E49),
+                              ),
+                              child: IconButton(
+                                padding: EdgeInsets.zero,
+                                icon: Icon(Icons.close,
+                                    color: Colors.white, size: 16),
+                                onPressed: () {
+                                  // ini nanti buat remove nya thinnn mas broo
+                                },
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                   ] else if (selectedReason == 'KK Baru (Pindah Datang)') ...[
                     _boxBuild(context),
                     _buildSubTitle('Surat Keterangan Pindah Datang (SKPD)'),
-                    _buildUploadField(),
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 16.0),
+                      child: Stack(
+                        clipBehavior: Clip.none,
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              // ini buat handle upload document nya thin
+                            },
+                            child: Container(
+                              height: 100,
+                              decoration: BoxDecoration(
+                                color: Color(0xFFE0E5E7),
+                                borderRadius: BorderRadius.circular(7),
+                              ),
+                              child: Center(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Image.asset(
+                                      'assets/upload-icon.png',
+                                      height: 30,
+                                      width: 30,
+                                    ),
+                                    SizedBox(height: 8),
+                                    Container(
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: 8, vertical: 4),
+                                      decoration: BoxDecoration(
+                                        color: Color(0xFFE2DED0),
+                                        borderRadius: BorderRadius.circular(4),
+                                      ),
+                                      child: Text(
+                                        'Pilih gambar atau dokumen',
+                                        style: TextStyle(
+                                          fontFamily: 'Ubuntu',
+                                          color: Colors.black54,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                          Positioned(
+                            top: -10,
+                            right: -10,
+                            child: Container(
+                              width: 24,
+                              height: 24,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: Color(0xFF4F4E49),
+                              ),
+                              child: IconButton(
+                                padding: EdgeInsets.zero,
+                                icon: Icon(Icons.close,
+                                    color: Colors.white, size: 16),
+                                onPressed: () {
+                                  // ini nanti buat remove nya thinnn mas broo
+                                },
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                     _buildSubTitle('Kartu Keluarga Lama'),
-                    _buildUploadField(),
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 16.0),
+                      child: Stack(
+                        clipBehavior: Clip.none,
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              // ini buat handle upload document nya thin
+                            },
+                            child: Container(
+                              height: 100,
+                              decoration: BoxDecoration(
+                                color: Color(0xFFE0E5E7),
+                                borderRadius: BorderRadius.circular(7),
+                              ),
+                              child: Center(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Image.asset(
+                                      'assets/upload-icon.png',
+                                      height: 30,
+                                      width: 30,
+                                    ),
+                                    SizedBox(height: 8),
+                                    Container(
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: 8, vertical: 4),
+                                      decoration: BoxDecoration(
+                                        color: Color(0xFFE2DED0),
+                                        borderRadius: BorderRadius.circular(4),
+                                      ),
+                                      child: Text(
+                                        'Pilih gambar atau dokumen',
+                                        style: TextStyle(
+                                          fontFamily: 'Ubuntu',
+                                          color: Colors.black54,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                          Positioned(
+                            top: -10,
+                            right: -10,
+                            child: Container(
+                              width: 24,
+                              height: 24,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: Color(0xFF4F4E49),
+                              ),
+                              child: IconButton(
+                                padding: EdgeInsets.zero,
+                                icon: Icon(Icons.close,
+                                    color: Colors.white, size: 16),
+                                onPressed: () {
+                                  // ini nanti buat remove nya thinnn mas broo
+                                },
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    _buildSubTitle('Dokumen Tambahan'),
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 16.0),
+                      child: Stack(
+                        clipBehavior: Clip.none,
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              // ini buat handle upload document nya thin
+                            },
+                            child: Container(
+                              height: 100,
+                              decoration: BoxDecoration(
+                                color: Color(0xFFE0E5E7),
+                                borderRadius: BorderRadius.circular(7),
+                              ),
+                              child: Center(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Image.asset(
+                                      'assets/upload-icon.png',
+                                      height: 30,
+                                      width: 30,
+                                    ),
+                                    SizedBox(height: 8),
+                                    Container(
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: 8, vertical: 4),
+                                      decoration: BoxDecoration(
+                                        color: Color(0xFFE2DED0),
+                                        borderRadius: BorderRadius.circular(4),
+                                      ),
+                                      child: Text(
+                                        'Pilih gambar atau dokumen',
+                                        style: TextStyle(
+                                          fontFamily: 'Ubuntu',
+                                          color: Colors.black54,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                          Positioned(
+                            top: -10,
+                            right: -10,
+                            child: Container(
+                              width: 24,
+                              height: 24,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: Color(0xFF4F4E49),
+                              ),
+                              child: IconButton(
+                                padding: EdgeInsets.zero,
+                                icon: Icon(Icons.close,
+                                    color: Colors.white, size: 16),
+                                onPressed: () {
+                                  // ini nanti buat remove nya thinnn mas broo
+                                },
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                   ] else if (selectedReason ==
                       'KK Baru (Pindah WNI dari luar negeri)') ...[
                     _buildSubTitle(
                         'Surat Keterangan Pindah Luar Negeri (SKPLN)'),
-                    _buildUploadField(),
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 16.0),
+                      child: Stack(
+                        clipBehavior: Clip.none,
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              // ini buat handle upload document nya thin
+                            },
+                            child: Container(
+                              height: 100,
+                              decoration: BoxDecoration(
+                                color: Color(0xFFE0E5E7),
+                                borderRadius: BorderRadius.circular(7),
+                              ),
+                              child: Center(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Image.asset(
+                                      'assets/upload-icon.png',
+                                      height: 30,
+                                      width: 30,
+                                    ),
+                                    SizedBox(height: 8),
+                                    Container(
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: 8, vertical: 4),
+                                      decoration: BoxDecoration(
+                                        color: Color(0xFFE2DED0),
+                                        borderRadius: BorderRadius.circular(4),
+                                      ),
+                                      child: Text(
+                                        'Pilih gambar atau dokumen',
+                                        style: TextStyle(
+                                          fontFamily: 'Ubuntu',
+                                          color: Colors.black54,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                          Positioned(
+                            top: -10,
+                            right: -10,
+                            child: Container(
+                              width: 24,
+                              height: 24,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: Color(0xFF4F4E49),
+                              ),
+                              child: IconButton(
+                                padding: EdgeInsets.zero,
+                                icon: Icon(Icons.close,
+                                    color: Colors.white, size: 16),
+                                onPressed: () {
+                                  // ini nanti buat remove nya thinnn mas broo
+                                },
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    _buildSubTitle('Dokumen Tambahan'),
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 16.0),
+                      child: Stack(
+                        clipBehavior: Clip.none,
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              // ini buat handle upload document nya thin
+                            },
+                            child: Container(
+                              height: 100,
+                              decoration: BoxDecoration(
+                                color: Color(0xFFE0E5E7),
+                                borderRadius: BorderRadius.circular(7),
+                              ),
+                              child: Center(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Image.asset(
+                                      'assets/upload-icon.png',
+                                      height: 30,
+                                      width: 30,
+                                    ),
+                                    SizedBox(height: 8),
+                                    Container(
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: 8, vertical: 4),
+                                      decoration: BoxDecoration(
+                                        color: Color(0xFFE2DED0),
+                                        borderRadius: BorderRadius.circular(4),
+                                      ),
+                                      child: Text(
+                                        'Pilih gambar atau dokumen',
+                                        style: TextStyle(
+                                          fontFamily: 'Ubuntu',
+                                          color: Colors.black54,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                          Positioned(
+                            top: -10,
+                            right: -10,
+                            child: Container(
+                              width: 24,
+                              height: 24,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: Color(0xFF4F4E49),
+                              ),
+                              child: IconButton(
+                                padding: EdgeInsets.zero,
+                                icon: Icon(Icons.close,
+                                    color: Colors.white, size: 16),
+                                onPressed: () {
+                                  // ini nanti buat remove nya thinnn mas broo
+                                },
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                   ] else if (selectedReason == 'KK Baru (Rentan Adminduk)') ...[
                     _buildSubTitle('Surat Pengantar RT dan RW'),
-                    _buildUploadField(),
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 16.0),
+                      child: Stack(
+                        clipBehavior: Clip.none,
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              // ini buat handle upload document nya thin
+                            },
+                            child: Container(
+                              height: 100,
+                              decoration: BoxDecoration(
+                                color: Color(0xFFE0E5E7),
+                                borderRadius: BorderRadius.circular(7),
+                              ),
+                              child: Center(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Image.asset(
+                                      'assets/upload-icon.png',
+                                      height: 30,
+                                      width: 30,
+                                    ),
+                                    SizedBox(height: 8),
+                                    Container(
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: 8, vertical: 4),
+                                      decoration: BoxDecoration(
+                                        color: Color(0xFFE2DED0),
+                                        borderRadius: BorderRadius.circular(4),
+                                      ),
+                                      child: Text(
+                                        'Pilih gambar atau dokumen',
+                                        style: TextStyle(
+                                          fontFamily: 'Ubuntu',
+                                          color: Colors.black54,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                          Positioned(
+                            top: -10,
+                            right: -10,
+                            child: Container(
+                              width: 24,
+                              height: 24,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: Color(0xFF4F4E49),
+                              ),
+                              child: IconButton(
+                                padding: EdgeInsets.zero,
+                                icon: Icon(Icons.close,
+                                    color: Colors.white, size: 16),
+                                onPressed: () {
+                                  // ini nanti buat remove nya thinnn mas broo
+                                },
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                     _buildSubTitle(
                         'Surat Pernyataan Tidak Memiliki Dokumen Kependudukan'),
-                    _buildUploadField(),
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 16.0),
+                      child: Stack(
+                        clipBehavior: Clip.none,
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              // ini buat handle upload document nya thin
+                            },
+                            child: Container(
+                              height: 100,
+                              decoration: BoxDecoration(
+                                color: Color(0xFFE0E5E7),
+                                borderRadius: BorderRadius.circular(7),
+                              ),
+                              child: Center(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Image.asset(
+                                      'assets/upload-icon.png',
+                                      height: 30,
+                                      width: 30,
+                                    ),
+                                    SizedBox(height: 8),
+                                    Container(
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: 8, vertical: 4),
+                                      decoration: BoxDecoration(
+                                        color: Color(0xFFE2DED0),
+                                        borderRadius: BorderRadius.circular(4),
+                                      ),
+                                      child: Text(
+                                        'Pilih gambar atau dokumen',
+                                        style: TextStyle(
+                                          fontFamily: 'Ubuntu',
+                                          color: Colors.black54,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                          Positioned(
+                            top: -10,
+                            right: -10,
+                            child: Container(
+                              width: 24,
+                              height: 24,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: Color(0xFF4F4E49),
+                              ),
+                              child: IconButton(
+                                padding: EdgeInsets.zero,
+                                icon: Icon(Icons.close,
+                                    color: Colors.white, size: 16),
+                                onPressed: () {
+                                  // ini nanti buat remove nya thinnn mas broo
+                                },
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    _buildSubTitle('Dokumen Tambahan'),
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 16.0),
+                      child: Stack(
+                        clipBehavior: Clip.none,
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              // ini buat handle upload document nya thin
+                            },
+                            child: Container(
+                              height: 100,
+                              decoration: BoxDecoration(
+                                color: Color(0xFFE0E5E7),
+                                borderRadius: BorderRadius.circular(7),
+                              ),
+                              child: Center(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Image.asset(
+                                      'assets/upload-icon.png',
+                                      height: 30,
+                                      width: 30,
+                                    ),
+                                    SizedBox(height: 8),
+                                    Container(
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: 8, vertical: 4),
+                                      decoration: BoxDecoration(
+                                        color: Color(0xFFE2DED0),
+                                        borderRadius: BorderRadius.circular(4),
+                                      ),
+                                      child: Text(
+                                        'Pilih gambar atau dokumen',
+                                        style: TextStyle(
+                                          fontFamily: 'Ubuntu',
+                                          color: Colors.black54,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                          Positioned(
+                            top: -10,
+                            right: -10,
+                            child: Container(
+                              width: 24,
+                              height: 24,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: Color(0xFF4F4E49),
+                              ),
+                              child: IconButton(
+                                padding: EdgeInsets.zero,
+                                icon: Icon(Icons.close,
+                                    color: Colors.white, size: 16),
+                                onPressed: () {
+                                  // ini nanti buat remove nya thinnn mas broo
+                                },
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                   ] else if (selectedReason ==
                       'KK Perubahan (Peristiwa penting)') ...[
                     _buildSubTitle('Kartu Keluarga Lama'),
-                    _buildUploadField(),
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 16.0),
+                      child: Stack(
+                        clipBehavior: Clip.none,
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              // ini buat handle upload document nya thin
+                            },
+                            child: Container(
+                              height: 100,
+                              decoration: BoxDecoration(
+                                color: Color(0xFFE0E5E7),
+                                borderRadius: BorderRadius.circular(7),
+                              ),
+                              child: Center(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Image.asset(
+                                      'assets/upload-icon.png',
+                                      height: 30,
+                                      width: 30,
+                                    ),
+                                    SizedBox(height: 8),
+                                    Container(
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: 8, vertical: 4),
+                                      decoration: BoxDecoration(
+                                        color: Color(0xFFE2DED0),
+                                        borderRadius: BorderRadius.circular(4),
+                                      ),
+                                      child: Text(
+                                        'Pilih gambar atau dokumen',
+                                        style: TextStyle(
+                                          fontFamily: 'Ubuntu',
+                                          color: Colors.black54,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                          Positioned(
+                            top: -10,
+                            right: -10,
+                            child: Container(
+                              width: 24,
+                              height: 24,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: Color(0xFF4F4E49),
+                              ),
+                              child: IconButton(
+                                padding: EdgeInsets.zero,
+                                icon: Icon(Icons.close,
+                                    color: Colors.white, size: 16),
+                                onPressed: () {
+                                  // ini nanti buat remove nya thinnn mas broo
+                                },
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                     _textJustify(
                       'Bukti Perubahan Peristiwa Kependudukan dan Peristiwa Penting ',
                       '\nContoh: Kelahiran, Perkawinan, Pembatalan Perkawinan, Perceraian, Pembatalan Perceraian, Kematian, Pengangkatan Anak, Pengakuan Anak, Pengesahan Anak, Perubahan Nama, Perubahan Status Kewarganegaraan, Pembetulan Akta dan Pembatalan Akta',
-                    ), // ini itu udh beda widget, makanya mending disatuin pake widget sebelumnya apa gimana ya
-                    _buildUploadField(),
-                  ] else if (selectedReason == '')
-                    ...[],
-                  _buildSubTitle('Dokumen Tambahan'),
-                  _buildUploadField(),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 16.0),
+                      child: Stack(
+                        clipBehavior: Clip.none,
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              // ini buat handle upload document nya thin
+                            },
+                            child: Container(
+                              height: 100,
+                              decoration: BoxDecoration(
+                                color: Color(0xFFE0E5E7),
+                                borderRadius: BorderRadius.circular(7),
+                              ),
+                              child: Center(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Image.asset(
+                                      'assets/upload-icon.png',
+                                      height: 30,
+                                      width: 30,
+                                    ),
+                                    SizedBox(height: 8),
+                                    Container(
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: 8, vertical: 4),
+                                      decoration: BoxDecoration(
+                                        color: Color(0xFFE2DED0),
+                                        borderRadius: BorderRadius.circular(4),
+                                      ),
+                                      child: Text(
+                                        'Pilih gambar atau dokumen',
+                                        style: TextStyle(
+                                          fontFamily: 'Ubuntu',
+                                          color: Colors.black54,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                          Positioned(
+                            top: -10,
+                            right: -10,
+                            child: Container(
+                              width: 24,
+                              height: 24,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: Color(0xFF4F4E49),
+                              ),
+                              child: IconButton(
+                                padding: EdgeInsets.zero,
+                                icon: Icon(Icons.close,
+                                    color: Colors.white, size: 16),
+                                onPressed: () {
+                                  // ini nanti buat remove nya thinnn mas broo
+                                },
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    _buildSubTitle('Dokumen Tambahan'),
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 16.0),
+                      child: Stack(
+                        clipBehavior: Clip.none,
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              // ini buat handle upload document nya thin
+                            },
+                            child: Container(
+                              height: 100,
+                              decoration: BoxDecoration(
+                                color: Color(0xFFE0E5E7),
+                                borderRadius: BorderRadius.circular(7),
+                              ),
+                              child: Center(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Image.asset(
+                                      'assets/upload-icon.png',
+                                      height: 30,
+                                      width: 30,
+                                    ),
+                                    SizedBox(height: 8),
+                                    Container(
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: 8, vertical: 4),
+                                      decoration: BoxDecoration(
+                                        color: Color(0xFFE2DED0),
+                                        borderRadius: BorderRadius.circular(4),
+                                      ),
+                                      child: Text(
+                                        'Pilih gambar atau dokumen',
+                                        style: TextStyle(
+                                          fontFamily: 'Ubuntu',
+                                          color: Colors.black54,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                          Positioned(
+                            top: -10,
+                            right: -10,
+                            child: Container(
+                              width: 24,
+                              height: 24,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: Color(0xFF4F4E49),
+                              ),
+                              child: IconButton(
+                                padding: EdgeInsets.zero,
+                                icon: Icon(Icons.close,
+                                    color: Colors.white, size: 16),
+                                onPressed: () {
+                                  // ini nanti buat remove nya thinnn mas broo
+                                },
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
                 ],
               ),
             ),
@@ -400,70 +1617,6 @@ class _UserKkPageState extends State<UserKkPage> {
           ),
         ),
       ],
-    );
-  }
-
-  Widget _buildUploadField() {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 16.0),
-      child: Stack(
-        clipBehavior: Clip.none,
-        children: [
-          Container(
-            height: 100,
-            decoration: BoxDecoration(
-              color: Color(0xFFE0E5E7),
-              borderRadius: BorderRadius.circular(7),
-            ),
-            child: Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Image.asset(
-                    'assets/upload-icon.png',
-                    height: 30,
-                    width: 30,
-                  ),
-                  SizedBox(height: 8),
-                  Container(
-                    padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                    decoration: BoxDecoration(
-                      color: Color(0xFFE2DED0),
-                      borderRadius: BorderRadius.circular(4),
-                    ),
-                    child: Text(
-                      'Pilih gambar atau dokumen',
-                      style: TextStyle(
-                        fontFamily: 'Ubuntu',
-                        color: Colors.black54,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          Positioned(
-            top: -10,
-            right: -10,
-            child: Container(
-              width: 24,
-              height: 24,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: Color(0xFF4F4E49),
-              ),
-              child: IconButton(
-                padding: EdgeInsets.zero,
-                icon: Icon(Icons.close, color: Colors.white, size: 16),
-                onPressed: () {
-                  // ini nanti buat remove nya thinnn mas broo
-                },
-              ),
-            ),
-          ),
-        ],
-      ),
     );
   }
 
