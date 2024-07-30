@@ -56,9 +56,9 @@ class DatabaseDestinasi {
     final result = await db.query('destinasi');
     List<Destinasi> destinations = result.map((json) => Destinasi.fromMap(json)).toList();
 
-    destinations.forEach((destinasi) {
+    for (var destinasi in destinations) {
       print('Fetched Destination: ${destinasi.title} with color: ${destinasi.backgroundColor}');
-    });
+    }
 
     return destinations;
   }

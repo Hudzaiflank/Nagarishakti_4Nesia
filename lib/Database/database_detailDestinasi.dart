@@ -37,6 +37,7 @@ class DatabaseDetailDestinasi {
         hargaTiket TEXT NOT NULL
       )
     ''');
+    print('Table detailDestinasi created');
   }
 
   Future<void> insertDetailDestinasi(DetailDestinasi detaildestinasi) async {
@@ -46,7 +47,6 @@ class DatabaseDetailDestinasi {
       detaildestinasi.toMap(),
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
-    print('Inserted Destination: ${detaildestinasi.deskripsi}');
   }
 
   Future<List<DetailDestinasi>> getDetailDestinasi(int id) async {
@@ -56,12 +56,14 @@ class DatabaseDetailDestinasi {
       where: 'id = ?',
       whereArgs: [id],
     );
+
+    if (result.isNotEmpty) {
+      print('Fetched Destination with id $id: ${result.first['deskripsi']}');
+    } else {
+      print('No Destination found with id $id');
+    }
+
     List<DetailDestinasi> detailDestinations = result.map((json) => DetailDestinasi.fromMap(json)).toList();
-
-    detailDestinations.forEach((detaildestinasi) {
-      print('Fetched Destination: ${detaildestinasi.deskripsi}');
-    });
-
     return detailDestinations;
   }
 
@@ -76,9 +78,25 @@ class DatabaseDetailDestinasi {
     print('Updated Destination: ${detaildestinasi.deskripsi}');
   }
 
+  Future<void> checkTableSchema() async {
+    final db = await instance.database;
+    final result = await db.rawQuery('PRAGMA table_info(detailDestinasi);');
+    for (var row in result) {
+      print(row);
+    }
+  }
+
+  Future<void> deleteDatabaseFile() async {
+    final dbPath = await getDatabasesPath();
+    final path = join(dbPath, 'detailDestinasi.db');
+    await databaseFactory.deleteDatabase(path);
+    print('Database deleted');
+  }
+
   Future close() async {
     final db = await instance.database;
     db.close();
+    print('Database closed');
   }
 }
 

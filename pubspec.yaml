@@ -90,6 +90,7 @@ flutter:
     - assets/upload-icon.png
     - assets/API/destinasi.json
     - assets/API/detailDestinasi.json
+    - assets/API/acara.json
 
   #   - images/a_dot_ham.jpeg
 
