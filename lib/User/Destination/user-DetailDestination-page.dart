@@ -5,8 +5,8 @@ class UserDetailDestinationPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
-        // Handle back button press here, if needed
-        return true; // Return true if the route can be popped
+        // Handle back button press here, if need it, but actually we dont need that
+        return true; // Return true if the route can be popped, guess what, it cant return anything at all
       },
       child: Scaffold(
         body: Stack(
@@ -15,6 +15,19 @@ class UserDetailDestinationPage extends StatelessWidget {
               child: Image.asset(
                 'assets/contoh-gambar.png',
                 fit: BoxFit.cover,
+              ),
+            ),
+            Positioned(
+              top: 40.0,
+              left: 16.0,
+              child: CircleAvatar(
+                backgroundColor: Color(0xFFE2DED0),
+                child: IconButton(
+                  icon: Icon(Icons.arrow_back, color: Colors.black),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
               ),
             ),
             SingleChildScrollView(
