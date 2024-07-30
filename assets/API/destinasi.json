@@ -1,0 +1,36 @@
+{
+    "destinasi" : [
+        {
+            "imagePath": "assets/contoh-gambar.png",
+            "title": "CURUG PARIGI",
+            "location": "Jl. Pangkalan 5, Bantar Gebang",
+            "savedBy": "Disimpan oleh 372 orang",
+            "backgroundColor": "0xFF60A39C",
+            "bookmark": false
+        },
+        {
+            "imagePath": "assets/contoh-gambar.png",
+            "title": "DELTAMAS HILL",
+            "location": "Hegarmukti, Cikarang Pusat",
+            "savedBy": "Disimpan oleh 124 orang",
+            "backgroundColor": "0xFF60A39C",
+            "bookmark": false
+        },
+        {
+            "imagePath": "assets/contoh-gambar.png",
+            "title": "DANAU MARAKASH",
+            "location": "Marakash, Kebalen, Babelan",
+            "savedBy": "Disimpan oleh 256 orang",
+            "backgroundColor": "0xFF60A39C",
+            "bookmark": false
+        },
+        {
+            "imagePath": "assets/contoh-gambar.png",
+            "title": "HUTAN KOTA",
+            "location": "Jl. Jend. Ahmad Yani, Bekasi",
+            "savedBy": "Disimpan oleh 398 orang",
+            "backgroundColor": "0xFF60A39C",
+            "bookmark": false
+        }
+    ]
+}

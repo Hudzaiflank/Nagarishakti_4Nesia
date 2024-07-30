@@ -1,19 +1,40 @@
 import 'package:flutter/material.dart';
+import 'user-Destination-page.dart';
+import '/Database/database_destinasi.dart';
+import '/Database/database_detailDestinasi.dart';
 
-class UserDetailDestinationPage extends StatelessWidget {
+class UserDetailDestinationPage extends StatefulWidget {
+  final Destinasi destination;
+  final DetailDestinasi detaildestinasi;
+
+  const UserDetailDestinationPage({super.key, required this.destination, required this.detaildestinasi});
+
+  @override
+  _UserDetailDestinationPageState createState() => _UserDetailDestinationPageState();
+}
+
+class _UserDetailDestinationPageState extends State<UserDetailDestinationPage> {
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
+
         // Handle back button press here, if need it, but actually we dont need that
         return true; // Return true if the route can be popped, guess what, it cant return anything at all
+
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => const UserDestinationPage()),
+        );
+        return false; 
+
       },
       child: Scaffold(
         body: Stack(
           children: [
             Positioned.fill(
               child: Image.asset(
-                'assets/contoh-gambar.png',
+                widget.detaildestinasi.gambar,
                 fit: BoxFit.cover,
               ),
             ),
@@ -21,6 +42,7 @@ class UserDetailDestinationPage extends StatelessWidget {
               top: 40.0,
               left: 16.0,
               child: CircleAvatar(
+
                 backgroundColor: Color(0xFFE2DED0),
                 child: IconButton(
                   icon: Icon(Icons.arrow_back, color: Colors.black),
@@ -30,12 +52,13 @@ class UserDetailDestinationPage extends StatelessWidget {
                 ),
               ),
             ),
+
             SingleChildScrollView(
               child: Padding(
                 padding: const EdgeInsets.only(top: 300.0),
                 child: Container(
                   padding: const EdgeInsets.all(16.0),
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                     color: Color(0xFFFCFCFA),
                     borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(15.0),
@@ -49,39 +72,40 @@ class UserDetailDestinationPage extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            'CURUG PARIGI',
-                            style: TextStyle(
+                            widget.destination.title,
+                            style: const TextStyle(
                               fontSize: 24,
                               fontWeight: FontWeight.bold,
                               fontFamily: 'Ubuntu',
                             ),
                           ),
                           Icon(
-                            Icons.bookmark_border,
-                            color: Color(0xFF979797),
+                            widget.destination.bookmark ? Icons.bookmark : Icons.bookmark_border,
+                            color: widget.destination.bookmark ? Colors.white : const Color(0xFF979797),
                           ),
                         ],
                       ),
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Icon(
+                          const Icon(
                             Icons.location_on,
                             color: Colors.red,
                             size: 24,
                           ),
-                          SizedBox(width: 8.0),
+                          const SizedBox(width: 8.0),
                           Expanded(
                             child: Text(
-                              'Jl. Pangkalan 5, Cikiwul, Bantargebang Bekasi',
-                              style: TextStyle(
-                                  color: Colors.grey, fontFamily: 'Ubuntu'),
+                              widget.destination.location,
+                              style: const TextStyle(
+                                color: Colors.grey, fontFamily: 'Ubuntu'
+                              ),
                             ),
                           ),
                         ],
                       ),
-                      SizedBox(height: 16.0),
-                      Text(
+                      const SizedBox(height: 16.0),
+                      const Text(
                         'Deskripsi',
                         style: TextStyle(
                           fontSize: 18,
@@ -90,15 +114,14 @@ class UserDetailDestinationPage extends StatelessWidget {
                           color: Color(0xFF285B60),
                         ),
                       ),
-                      SizedBox(height: 8.0),
+                      const SizedBox(height: 8.0),
                       Text(
-                        'Curug Parigi sering disebut sebagai mini Niagara karena bentuknya yang melengkung. Tempat ini menawarkan suasana sejuk dan pemandangan alam yang indah, cocok untuk wisata alam dan fotografi.',
-                        style:
-                            TextStyle(color: Colors.grey, fontFamily: 'Ubuntu'),
+                        widget.detaildestinasi.deskripsi,
+                        style: const TextStyle(color: Colors.grey, fontFamily: 'Ubuntu'),
                         textAlign: TextAlign.justify,
                       ),
-                      SizedBox(height: 16.0),
-                      Text(
+                      const SizedBox(height: 16.0),
+                      const Text(
                         'Gambar dan Peta Wisata',
                         style: TextStyle(
                           fontSize: 18,
@@ -107,26 +130,26 @@ class UserDetailDestinationPage extends StatelessWidget {
                           color: Color(0xFF285B60),
                         ),
                       ),
-                      SizedBox(height: 8.0),
-                      Container(
+                      const SizedBox(height: 8.0),
+                      SizedBox(
                         height: 150,
                         child: ListView.builder(
                           scrollDirection: Axis.horizontal,
                           itemCount: 5,
                           itemBuilder: (context, index) {
                             return Container(
-                              margin: EdgeInsets.symmetric(horizontal: 4.0),
+                              margin: const EdgeInsets.symmetric(horizontal: 4.0),
                               width: 200,
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(8.0),
-                                child: Image.asset('assets/contoh-gambar.png'),
+                                child: Image.asset(widget.detaildestinasi.gambar),
                               ),
                             );
                           },
                         ),
                       ),
-                      SizedBox(height: 16.0),
-                      Text(
+                      const SizedBox(height: 16.0),
+                      const Text(
                         'Fasilitas',
                         style: TextStyle(
                           fontSize: 18,
@@ -135,64 +158,22 @@ class UserDetailDestinationPage extends StatelessWidget {
                           color: Color(0xFF285B60),
                         ),
                       ),
-                      SizedBox(height: 8.0),
+                      const SizedBox(height: 8.0),
                       Container(
                         padding: const EdgeInsets.symmetric(
                             vertical: 11.0, horizontal: 7.0),
                         decoration: BoxDecoration(
-                          color: Color(0xFFF6F5F0),
+                          color: const Color(0xFFF6F5F0),
                           borderRadius: BorderRadius.circular(8.0),
                         ),
-                        child: RichText(
-                          text: TextSpan(
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontFamily: 'Ubuntu',
-                                height: 1.7),
-                            children: [
-                              TextSpan(
-                                text: '• ',
-                                style: TextStyle(fontWeight: FontWeight.bold),
-                              ),
-                              TextSpan(
-                                text: 'Area Parkir: ',
-                                style: TextStyle(fontWeight: FontWeight.bold),
-                              ),
-                              TextSpan(
-                                text:
-                                    'Tersedia lahan parkir sederhana untuk kendaraan pribadi.\n',
-                              ),
-                              TextSpan(
-                                text: '• ',
-                                style: TextStyle(fontWeight: FontWeight.bold),
-                              ),
-                              TextSpan(
-                                text: 'Kuliner: ',
-                                style: TextStyle(fontWeight: FontWeight.bold),
-                              ),
-                              TextSpan(
-                                text:
-                                    'Meskipun pilihannya terbatas, pengunjung dapat menikmati makanan ringan yang dijual di warung sekitar air terjun.\n',
-                              ),
-                              TextSpan(
-                                text: '• ',
-                                style: TextStyle(fontWeight: FontWeight.bold),
-                              ),
-                              TextSpan(
-                                text: 'Toilet Umum: ',
-                                style: TextStyle(fontWeight: FontWeight.bold),
-                              ),
-                              TextSpan(
-                                text:
-                                    'Ada fasilitas toilet umum yang bisa digunakan pengunjung.',
-                              ),
-                            ],
-                          ),
+                        child: Text(
+                          widget.detaildestinasi.fasilitas,
+                          style: const TextStyle(color: Colors.black, fontFamily: 'Ubuntu', height: 1.7),
                           textAlign: TextAlign.justify,
                         ),
                       ),
-                      SizedBox(height: 16.0),
-                      Text(
+                      const SizedBox(height: 16.0),
+                      const Text(
                         'Harga Tiket',
                         style: TextStyle(
                           fontSize: 18,
@@ -201,18 +182,18 @@ class UserDetailDestinationPage extends StatelessWidget {
                           color: Color(0xFF285B60),
                         ),
                       ),
-                      SizedBox(height: 8.0),
+                      const SizedBox(height: 8.0),
                       Container(
-                        padding: EdgeInsets.symmetric(
+                        padding: const EdgeInsets.symmetric(
                             vertical: 11.0, horizontal: 7.0),
                         decoration: BoxDecoration(
-                          color: Color(0xFFF6F5F0),
+                          color: const Color(0xFFF6F5F0),
                           borderRadius: BorderRadius.circular(8.0),
                         ),
                         width: double.infinity,
                         child: Text(
-                          'Gratis',
-                          style: TextStyle(
+                          widget.detaildestinasi.hargaTiket,
+                          style: const TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.bold,
                             fontFamily: 'Ubuntu',

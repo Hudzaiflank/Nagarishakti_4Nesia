@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'database_user.dart';
-import 'database_admin.dart';
-import 'database_superAdmin.dart';
+import '/Database/database_user.dart';
+import '/Database/database_admin.dart';
+import '/Database/database_superAdmin.dart';
 import 'register.dart';
 import 'User/user-home.dart'; 
 import 'admin-home.dart';

@@ -74,7 +74,7 @@ class _AdminHomeState extends State<AdminHome> {
                   GestureDetector(
                     onTap: () {
                       if (!isLoggedIn) {
-                        Navigator.pushReplacementNamed(context, '/register');
+                        Navigator.pushReplacementNamed(context, '/login');
                       } else {
                         Navigator.push(
                           context,

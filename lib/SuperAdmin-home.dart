@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'database_integrasi.dart';
+import '/Database/database_integrasi.dart';
 
 class SuperAdminHome extends StatefulWidget {
   const SuperAdminHome({super.key});
