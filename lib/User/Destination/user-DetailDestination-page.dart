@@ -18,11 +18,16 @@ class _UserDetailDestinationPageState extends State<UserDetailDestinationPage> {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
+
+        // Handle back button press here, if need it, but actually we dont need that
+        return true; // Return true if the route can be popped, guess what, it cant return anything at all
+
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (context) => const UserDestinationPage()),
         );
         return false; 
+
       },
       child: Scaffold(
         body: Stack(
@@ -37,15 +42,17 @@ class _UserDetailDestinationPageState extends State<UserDetailDestinationPage> {
               top: 40.0,
               left: 16.0,
               child: CircleAvatar(
-                backgroundColor: const Color(0xFFE2DED0),
+
+                backgroundColor: Color(0xFFE2DED0),
                 child: IconButton(
-                  icon: const Icon(Icons.arrow_back, color: Colors.black),
+                  icon: Icon(Icons.arrow_back, color: Colors.black),
                   onPressed: () {
-                    Navigator.pop(context);
+                    Navigator.of(context).pop();
                   },
                 ),
               ),
             ),
+
             SingleChildScrollView(
               child: Padding(
                 padding: const EdgeInsets.only(top: 300.0),
