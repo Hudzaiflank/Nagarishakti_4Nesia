@@ -14,8 +14,8 @@ class _UserTransportationPageState extends State<UserTransportationPage> {
 
   @override
   Widget build(BuildContext context) {
-    List<Transportation> transportations = [
-      Transportation(
+    List<Transportasi> transportations = [
+      Transportasi(
         id: 1,
         gambar: 'assets/contoh-gambar.png',
         nama: 'Angkutan Kota (Angkot)',
@@ -26,7 +26,7 @@ class _UserTransportationPageState extends State<UserTransportationPage> {
         fasilitas: 'Tempat Duduk: Kapasitas tempat duduk bervariasi, biasanya mampu menampung sekitar 10-12 penumpang.\nKeamanan Angkot di Bekasi: biasanya sederhana, tapi ada beberapa angkot yang sudah menyediakan AC dan beberapa fasilitas tambahan.',
         tambahan: '• Jangkauan Luas: Angkot menjangkau berbagai wilayah di Bekasi, termasuk area-area yang mungkin tidak dilalui oleh transportasi umum lain.\n• Fleksibilitas: Angkot lebih fleksibel dalam mengatur rute dan waktu operasionalnya, memberikan fleksibilitas bagi penumpang.\n• Biaya Relatif Rendah: Angkot umumnya lebih terjangkau dibandingkan dengan beberapa moda transportasi lainnya, sehingga mengurangi pengeluaran bagi pengguna yang rutin.',
       ),
-      Transportation(
+      Transportasi(
         id: 2,
         gambar: 'assets/icon.png',
         nama: 'Trans Patriot Bekasi (BISKITA)',
@@ -34,7 +34,7 @@ class _UserTransportationPageState extends State<UserTransportationPage> {
         rute: 'Rute 1: Summarecon Mall Bekasi - Vida Bantar Gebang\nRute kembali: Pasar Alam Vida - Summarecon Mall Bekasi',
         jamOperasional: 'Setiap hari dari pukul 05.00 hingga 21.00 WIB.\nHeadway (Waktu Tunggu): Sekitar 10 menit antar bus, memastikan frekuensi yang tinggi dan mengurangi waktu tunggu penumpang.',
         tarif: 'Selama masa uji coba, layanan ini gratis. Penumpang hanya perlu melakukan tap kartu pembayaran elektronik seperti E-money, Flazz, atau Brizzi di pintu masuk bus.',
-        fasilitas: 'Fasilitas di Dalam Bus: • AC untuk kenyamanan penumpang.\n• Kursi yang nyaman dan cukup untuk penumpang.\n• Ruang untuk berdiri dengan pegangan tangan yang aman.\n• Informasi rute dan pemberhentian melalui layar di dalam bus.\n\nFasilitas di Halte: • Tempat duduk yang cukup nyaman.\n• Informasi rute dan bus yang jelas.\n• Pengawasan keamanan melalui CCTV.',
+        fasilitas: 'Fasilitas di Dalam Bus:\n• AC untuk kenyamanan penumpang.\n• Kursi yang nyaman dan cukup untuk penumpang.\n• Ruang untuk berdiri dengan pegangan tangan yang aman.\n• Informasi rute dan pemberhentian melalui layar di dalam bus.\nFasilitas di Halte:\n• Tempat duduk yang cukup nyaman.\n• Informasi rute dan bus yang jelas.\n• Pengawasan keamanan melalui CCTV.',
         tambahan: 'KRL Commuter Line: Terhubung di Stasiun Bekasi dan Stasiun Kranji.\nLRT: Terhubung di Stasiun LRT Bekasi Barat, memudahkan akses ke wilayah Jabodetabek.\nAngkot dan Bus Kota: Menghubungkan berbagai titik di dalam dan luar Bekasi.',
       ),
     ];
@@ -76,7 +76,7 @@ class _UserTransportationPageState extends State<UserTransportationPage> {
                           fontWeight: FontWeight.bold,
                           fontFamily: 'Ubuntu',
                           color: Colors.black,
-                          fontSize: 18,
+                          fontSize: 22,
                         ),
                         textAlign: TextAlign.center,
                       ),
@@ -93,7 +93,7 @@ class _UserTransportationPageState extends State<UserTransportationPage> {
                             style: TextStyle(
                               fontFamily: 'Ubuntu',
                               color: Colors.red,
-                              fontSize: 14,
+                              fontSize: 15,
                             ),
                           ),
                         ],
@@ -158,7 +158,7 @@ class _UserTransportationPageState extends State<UserTransportationPage> {
     );
   }
 
-  Widget buildTransportationInfo(Transportation transportation) {
+  Widget buildTransportationInfo(Transportasi transportation) {
     return Container(
       padding: EdgeInsets.all(16.0),
       decoration: BoxDecoration(
@@ -174,6 +174,7 @@ class _UserTransportationPageState extends State<UserTransportationPage> {
               fontWeight: FontWeight.bold,
               fontFamily: 'Ubuntu',
               fontSize: 18,
+              color: Color(0xFF2F5061),
             ),
             textAlign: TextAlign.center,
           ),
@@ -184,33 +185,77 @@ class _UserTransportationPageState extends State<UserTransportationPage> {
               fontFamily: 'Ubuntu',
               fontSize: 14,
               height: 1.5,
+              color: Colors.black,
             ),
             textAlign: TextAlign.justify,
           ),
           SizedBox(height: 16),
-          buildInfoSection('Rute', transportation.rute, boldText: ['Rute 1:', 'Rute kembali:']),
-          buildInfoSection('Jam Operasional', transportation.jamOperasional, boldText: ['Biasanya:', 'Headway (Waktu Tunggu):']),
-          buildInfoSection('Tarif', transportation.tarif, boldText: ['Bervariasi tergantung pada jarak perjalanan,', 'Selama masa uji coba, layanan ini gratis.']),
-          buildInfoSection('Fasilitas', transportation.fasilitas, boldText: ['Fasilitas di Dalam Bus:', 'Fasilitas di Halte:', 'Tempat Duduk:', 'Keamanan Angkot di Bekasi:']),
-          buildInfoSection('Kelebihan', transportation.tambahan, boldText: ['• Jangkauan Luas:', '• Fleksibilitas:', '• Biaya Relatif Rendah:', 'KRL Commuter Line:', 'LRT:', 'Angkot dan Bus Kota:']),
+          buildInfoSection('Rute', transportation.rute, boldText: ['K01:', 'K02:', 'K03:', 'K04:', 'K05:', 'Rute 1:', 'Rute kembali:'], withDecoration: true), 
+          buildInfoSection('Jam Operasional', transportation.jamOperasional, boldText: ['Biasanya:', 'Setiap hari dari pukul 05.00 hingga 21.00 WIB.', 'Headway (Waktu Tunggu):'], withDecoration: true),
+          buildInfoSection('Tarif', transportation.tarif, boldText: ['Bervariasi tergantung pada jarak perjalanan,', 'Selama masa uji coba, layanan ini gratis.'], withDecoration: true),
+          buildInfoSection('Fasilitas', transportation.fasilitas, boldText: ['Tempat Duduk:', 'Keamanan Angkot di Bekasi:', 'Fasilitas di Dalam Bus:', 'Fasilitas di Halte:'], withDecoration: true),
+          buildInfoSection('Kelebihan', transportation.tambahan, boldText: ['• Jangkauan Luas:', '• Fleksibilitas:', '• Biaya Relatif Rendah:', 'KRL Commuter Line:', 'LRT:', 'Angkot dan Bus Kota:'], withDecoration: true),
         ],
       ),
     );
   }
 
-  Widget buildInfoSection(String title, String content, {List<String> boldText = const []}) {
-    List<TextSpan> textSpans = [];
-
+  Widget buildInfoSection(String title, String content, {List<String> boldText = const [], bool withDecoration = false}) {
+    List<InlineSpan> textSpans = [];
+    
     content.split('\n').forEach((line) {
-      bool isBold = boldText.any((bold) => line.contains(bold));
+      // Split the line into segments based on boldText keywords
+      List<TextSpan> lineSpans = [];
+      int start = 0;
+
+      // Iterate through each keyword to apply bold styling
+      boldText.forEach((keyword) {
+        final index = line.indexOf(keyword, start);
+        if (index != -1) {
+          // Add text before the keyword as normal text
+          if (index > start) {
+            lineSpans.add(TextSpan(
+              text: line.substring(start, index),
+              style: TextStyle(
+                fontWeight: FontWeight.normal,
+                fontFamily: 'Ubuntu',
+                fontSize: 14,
+                color: Colors.black,
+              ),
+            ));
+          }
+          // Add the keyword as bold text
+          lineSpans.add(TextSpan(
+            text: line.substring(index, index + keyword.length),
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontFamily: 'Ubuntu',
+              fontSize: 14,
+              color: Colors.black,
+            ),
+          ));
+          start = index + keyword.length;
+        }
+      });
+
+      // Add any remaining text after the last keyword
+      if (start < line.length) {
+        lineSpans.add(TextSpan(
+          text: line.substring(start),
+          style: TextStyle(
+            fontWeight: FontWeight.normal,
+            fontFamily: 'Ubuntu',
+            fontSize: 14,
+            color: Colors.black,
+          ),
+        ));
+      }
+
+      // Add lineSpans to textSpans, ensuring new lines are handled correctly
       textSpans.add(TextSpan(
-        text: line + '\n',
-        style: TextStyle(
-          fontWeight: isBold ? FontWeight.bold : FontWeight.normal,
-          fontFamily: 'Ubuntu',
-          fontSize: 14,
-        ),
+        children: lineSpans,
       ));
+      textSpans.add(TextSpan(text: '\n')); // Ensure each line is followed by a newline
     });
 
     return Column(
@@ -223,12 +268,20 @@ class _UserTransportationPageState extends State<UserTransportationPage> {
             fontWeight: FontWeight.bold,
             fontFamily: 'Ubuntu',
             fontSize: 16,
+            color: Color(0xFF2F5061),
           ),
         ),
         SizedBox(height: 8),
-        RichText(
-          text: TextSpan(
-            children: textSpans,
+        Container(
+          padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+          decoration: withDecoration ? BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(4.0),
+          ) : null,
+          child: RichText(
+            text: TextSpan(
+              children: textSpans,
+            ),
           ),
         ),
       ],
