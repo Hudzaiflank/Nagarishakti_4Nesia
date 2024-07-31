@@ -85,7 +85,7 @@ class Destinasi {
   final String title;
   final String location;
   final String imagePath;
-  final int backgroundColor; // Changed to int
+  final int backgroundColor; 
   final String savedBy;
   bool bookmark;
 
@@ -94,7 +94,7 @@ class Destinasi {
     required this.title,
     required this.location,
     required this.imagePath,
-    required this.backgroundColor, // Changed to int
+    required this.backgroundColor, 
     required this.savedBy,
     required this.bookmark,
   });
@@ -105,7 +105,7 @@ class Destinasi {
       'title': title,
       'location': location,
       'imagePath': imagePath,
-      'backgroundColor': backgroundColor, // Save as integer
+      'backgroundColor': backgroundColor, 
       'savedBy': savedBy,
       'bookmark': bookmark ? 1 : 0,
     };
@@ -117,7 +117,7 @@ class Destinasi {
       title: map['title'] as String,
       location: map['location'] as String,
       imagePath: map['imagePath'] as String,
-      backgroundColor: map['backgroundColor'] as int, // Read as integer
+      backgroundColor: map['backgroundColor'] as int, 
       savedBy: map['savedBy'] as String,
       bookmark: (map['bookmark'] as int) == 1,
     );

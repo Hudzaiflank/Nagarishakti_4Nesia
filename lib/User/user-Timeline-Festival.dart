@@ -24,7 +24,6 @@ class _UserTimelineFestivalState extends State<UserTimelineFestival> {
   Future<void> _loadEventsFromDB() async {
     final DatabaseAcara db = DatabaseAcara.instance;
     final List<Acara> events = await db.getAcara();
-    print("Events loaded: ${events.length}");
     setState(() {
       _events = events;
       _uniqueEvents = _getUniqueEvents(events);
@@ -67,15 +66,13 @@ class _UserTimelineFestivalState extends State<UserTimelineFestival> {
           event.date.toLowerCase().contains(query);
     }).toList();
 
-    print("Filtered events: ${filteredEvents.length}");
-
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(120.0),
         child: Container(
-          padding: const EdgeInsets.only(top: 35),
+          padding: const EdgeInsets.only(top: 20.0, bottom: 16.0),
           decoration: const BoxDecoration(
-            color: Color(0xFF3AB3B1),
+            color: Color(0xFFC4DFE2),
             borderRadius: BorderRadius.vertical(bottom: Radius.circular(7.0)),
           ),
           child: Column(
@@ -250,9 +247,12 @@ class _UserTimelineFestivalState extends State<UserTimelineFestival> {
                               ),
                               Padding(
                                 padding: const EdgeInsets.only(right: 10),
-                                child: Icon(
-                                  event.notification ? Icons.notifications : Icons.notifications_off,
-                                  color: Colors.white, size: 24), // Increased size
+                                child: IconButton(
+                                  icon: Icon(
+                                    event.notification ? Icons.notifications : Icons.notifications_off,
+                                    color: Colors.white, size: 24), // Increased size
+                                  onPressed: () => _updateNotification(event),
+                                ),
                               ),
                             ],
                           ),

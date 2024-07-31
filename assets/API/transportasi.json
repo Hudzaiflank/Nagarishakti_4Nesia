@@ -1,0 +1,26 @@
+{
+    "transportasi" : [
+        {
+            "id": 1,
+            "nama": "Angkutan Kota (Angkot)",
+            "gambar": "assets/contoh-gambar.png",
+            "deskripsi": "Angkutan kota (angkot) adalah salah satu moda transportasi utama di Bekasi yang menyediakan layanan transportasi yang luas dan menjangkau berbagai area di kota. Berikut adalah beberapa informasi rinci mengenai angkutan kota di Bekasi:",
+            "rute": "K01: Terminal Bekasi - Pondok Gede - Pasar Rebo\n K02: Terminal Bekasi - Bulak Kapal - Cikarang\n K03: Harapan Indah - Bekasi Timur\n K04: Terminal Bekasi - Cibitung - Ujung Harapan\n K05: Summarecon Bekasi - Kalimalang - Jatiasih",
+            "jamOperasional": "Angkot di Bekasi beroperasi dari pagi hingga malam, dengan jam operasional yang bervariasi tergantung pada rute dan hari.\n Biasanya: 05.00 WIB s.d. 22.00 WIB",
+            "tarif": "Bervariasi tergantung pada jarak perjalanan, biasanya berkisar antara Rp 4.000 hingga Rp 10.000 per perjalanan.",
+            "fasilitas": "Tempat Duduk: Kapasitas tempat duduk bervariasi, biasanya mampu menampung sekitar 10-12 penumpang.\n Keamanan Angkot di Bekasi: biasanya sederhana, tapi ada beberapa angkot yang sudah menyediakan AC dan beberapa fasilitas tambahan.",
+            "tambahan": "Kelebihan\n Jangkauan Luas: Angkot menjangkau berbagai wilayah di Bekasi, termasuk area-area yang mungkin tidak dilalui oleh transportasi umum lain.\n • Fleksibilitas: Angkot lebih fleksibel dalam mengatur rute dan waktu operasionalnya, memberikan fleksibilitas bagi penumpang.\n • Biaya Relatif Rendah: Angkot umumnya lebih terjangkau dibandingkan dengan beberapa moda transportasi lainnya, sehingga mengurangi pengeluaran bagi pengguna yang rutin."
+        },
+        {
+            "id": 2,
+            "nama": "Trans Patriot Bekasi (BISKITA)",
+            "gambar": "assets/icon.png",
+            "deskripsi": "Trans Patriot adalah layanan transportasi umum bus di Kota Bekasi yang beroperasi sejak Maret 2024. Inisiatif ini adalah bagian dari upaya pemerintah untuk meningkatkan kualitas transportasi umum dan mengurangi kemacetan di kota. BISKITA menjadi pilihan ideal bagi Anda yang ingin berkeliling kota dengan mudah.",
+            "rute": "Rute 1: Summarecon Mall Bekasi - Vida Bantar Gebang\n Rute kembali: Pasar Alam Vida - Summarecon Mall Bekasi",
+            "jamOperasional": "Setiap hari dari pukul 05.00 hingga 21.00 WIB.\n Headway (Waktu Tunggu): Sekitar 10 menit antar bus, memastikan frekuensi yang tinggi dan mengurangi waktu tunggu penumpang.",
+            "tarif": "Selama masa uji coba, layanan ini gratis. Penumpang hanya perlu melakukan tap kartu pembayaran elektronik seperti E-money, Flazz, atau Brizzi di pintu masuk bus.",
+            "fasilitas": "Fasilitas di Dalam Bus:\n • AC untuk kenyamanan penumpang.\n • Kursi yang nyaman dan cukup untuk penumpang.\n • Ruang untuk berdiri dengan pegangan tangan yang aman.\n • Informasi rute dan pemberhentian melalui layar di dalam bus.\n\n Fasilitas di Halte:\n • Tempat duduk yang cukup nyaman.\n • Informasi rute dan bus yang jelas.\n • Pengawasan keamanan melalui CCTV.",
+            "tambahan": "Konektivitas\n KRL Commuter Line: Terhubung di Stasiun Bekasi dan Stasiun Kranji.\n LRT: Terhubung di Stasiun LRT Bekasi Barat, memudahkan akses ke wilayah Jabodetabek.\n Angkot dan Bus Kota: Menghubungkan berbagai titik di dalam dan luar Bekasi."
+        }
+    ]
+}

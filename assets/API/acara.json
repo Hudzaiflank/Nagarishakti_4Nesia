@@ -6,7 +6,7 @@
             "date": "04 Juli 2024",
             "location": "Situ Rawa Gede, Rawalumbu",
             "decription": "Festival tahunan yang diadakan di Situ Rawa Gede untuk mempromosikan kebersihan dan potensi wisata. Acara ini melibatkan kegiatan seni budaya dan dialog interaktif.",
-            "notification": true
+            "notification": false
         },
         {
             "image": "assets/contoh-gambar.png",
@@ -14,7 +14,7 @@
             "date": "6-7 Maret 2024",
             "location": "Lapangan Plaza Pemkot Bekasi",
             "decription": "Menampilkan lomba makanan etnik, penampilan musik, pesona batik Bekasi, dan talkshow.",
-            "notification": true
+            "notification": false
         },
         {
             "image": "assets/contoh-gambar.png",
@@ -22,7 +22,7 @@
             "date": "21 Mei 2023",
             "location": "Mustikajaya, Bekasi",
             "decription": "Festival tradisional yang menampilkan adu bedug dan dondang, sebuah kesenian khas daerah setempat.",
-            "notification": true
+            "notification": false
         }
     ]
 }

@@ -91,6 +91,7 @@ flutter:
     - assets/API/destinasi.json
     - assets/API/detailDestinasi.json
     - assets/API/acara.json
+    - assets/API/transportasi.json
 
   #   - images/a_dot_ham.jpeg
 
