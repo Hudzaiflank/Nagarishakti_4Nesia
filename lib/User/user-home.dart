@@ -9,6 +9,7 @@ import './Layanan-Kependudukan/Pembuatan-ktp-kk/user-ktp-page.dart';
 import './Layanan-Kependudukan/Pembuatan-ktp-kk/user-kk-page.dart';
 import './Layanan-Kependudukan/Pendaftaran-AktaLahir-kematian/Akta-lahir.dart';
 import './Layanan-Kependudukan/Pendaftaran-AktaLahir-kematian/Surat-kematian.dart';
+import './Layanan-Kependudukan/Pembaruan-data/perpindahan-kependudukan.dart';
 
 class UserHome extends StatefulWidget {
   const UserHome({super.key});
@@ -528,8 +529,9 @@ class _UserHomeState extends State<UserHome> {
                           leading: SizedBox(
                             width: 30,
                             child: Image.asset(
-                                'assets/user-home/registration-card.png',
-                                height: 30),
+                              'assets/user-home/registration-card.png',
+                              height: 30,
+                            ),
                           ),
                           title: const Text(
                             'Pembaruan Data Kependudukan',
@@ -543,6 +545,14 @@ class _UserHomeState extends State<UserHome> {
                             style: TextStyle(fontFamily: 'Ubuntu'),
                             textAlign: TextAlign.justify,
                           ),
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => PerpindahanKependudukan(),
+                              ),
+                            );
+                          },
                         ),
                         const Divider(height: 1),
                         ListTile(
