@@ -17,7 +17,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   String? _username;
   String? _password;
   String? _namaLengkap;
-  final String _gambar = 'default_image_path'; // Placeholder for image path
+  final String _gambar = 'assets/user-home/profile-logo.png'; 
   String? _tempatLahir;
   String? _alamatLengkap;
   String? _agama;

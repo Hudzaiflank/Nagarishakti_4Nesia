@@ -242,7 +242,7 @@ class _UserDestinationPageState extends State<UserDestinationPage> {
                         ),
                         trailing: IconButton(
                           icon: Icon(
-                            destination.bookmark ? Icons.bookmark : Icons.bookmark_border,
+                            destination.bookmark ? Icons.bookmark : Icons.bookmark_outline,
                             color: destination.bookmark ? Colors.white : Colors.white,
                           ),
                           onPressed: () {
