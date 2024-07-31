@@ -7,10 +7,12 @@ class UserDetailDestinationPage extends StatefulWidget {
   final Destinasi destination;
   final DetailDestinasi detaildestinasi;
 
-  const UserDetailDestinationPage({super.key, required this.destination, required this.detaildestinasi});
+  const UserDetailDestinationPage(
+      {super.key, required this.destination, required this.detaildestinasi});
 
   @override
-  _UserDetailDestinationPageState createState() => _UserDetailDestinationPageState();
+  _UserDetailDestinationPageState createState() =>
+      _UserDetailDestinationPageState();
 }
 
 class _UserDetailDestinationPageState extends State<UserDetailDestinationPage> {
@@ -18,16 +20,8 @@ class _UserDetailDestinationPageState extends State<UserDetailDestinationPage> {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
-
-        // Handle back button press here, if need it, but actually we dont need that
-        return true; // Return true if the route can be popped, guess what, it cant return anything at all
-
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => const UserDestinationPage()),
-        );
-        return false; 
-
+        // Handle back button press here, if we need it, but actually we dont need that
+        return true; // Return true if the route can be popped, guess what, it cant return anything at all :D
       },
       child: Scaffold(
         body: Stack(
@@ -42,7 +36,6 @@ class _UserDetailDestinationPageState extends State<UserDetailDestinationPage> {
               top: 40.0,
               left: 16.0,
               child: CircleAvatar(
-
                 backgroundColor: Color(0xFFE2DED0),
                 child: IconButton(
                   icon: Icon(Icons.arrow_back, color: Colors.black),
@@ -52,7 +45,6 @@ class _UserDetailDestinationPageState extends State<UserDetailDestinationPage> {
                 ),
               ),
             ),
-
             SingleChildScrollView(
               child: Padding(
                 padding: const EdgeInsets.only(top: 300.0),
@@ -80,8 +72,12 @@ class _UserDetailDestinationPageState extends State<UserDetailDestinationPage> {
                             ),
                           ),
                           Icon(
-                            widget.destination.bookmark ? Icons.bookmark : Icons.bookmark_border,
-                            color: widget.destination.bookmark ? Colors.white : const Color(0xFF979797),
+                            widget.destination.bookmark
+                                ? Icons.bookmark
+                                : Icons.bookmark_border,
+                            color: widget.destination.bookmark
+                                ? Colors.white
+                                : const Color(0xFF979797),
                           ),
                         ],
                       ),
@@ -98,8 +94,7 @@ class _UserDetailDestinationPageState extends State<UserDetailDestinationPage> {
                             child: Text(
                               widget.destination.location,
                               style: const TextStyle(
-                                color: Colors.grey, fontFamily: 'Ubuntu'
-                              ),
+                                  color: Colors.grey, fontFamily: 'Ubuntu'),
                             ),
                           ),
                         ],
@@ -117,7 +112,8 @@ class _UserDetailDestinationPageState extends State<UserDetailDestinationPage> {
                       const SizedBox(height: 8.0),
                       Text(
                         widget.detaildestinasi.deskripsi,
-                        style: const TextStyle(color: Colors.grey, fontFamily: 'Ubuntu'),
+                        style: const TextStyle(
+                            color: Colors.grey, fontFamily: 'Ubuntu'),
                         textAlign: TextAlign.justify,
                       ),
                       const SizedBox(height: 16.0),
@@ -138,11 +134,13 @@ class _UserDetailDestinationPageState extends State<UserDetailDestinationPage> {
                           itemCount: 5,
                           itemBuilder: (context, index) {
                             return Container(
-                              margin: const EdgeInsets.symmetric(horizontal: 4.0),
+                              margin:
+                                  const EdgeInsets.symmetric(horizontal: 4.0),
                               width: 200,
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(8.0),
-                                child: Image.asset(widget.detaildestinasi.gambar),
+                                child:
+                                    Image.asset(widget.detaildestinasi.gambar),
                               ),
                             );
                           },
@@ -168,7 +166,10 @@ class _UserDetailDestinationPageState extends State<UserDetailDestinationPage> {
                         ),
                         child: Text(
                           widget.detaildestinasi.fasilitas,
-                          style: const TextStyle(color: Colors.black, fontFamily: 'Ubuntu', height: 1.7),
+                          style: const TextStyle(
+                              color: Colors.black,
+                              fontFamily: 'Ubuntu',
+                              height: 1.7),
                           textAlign: TextAlign.justify,
                         ),
                       ),
