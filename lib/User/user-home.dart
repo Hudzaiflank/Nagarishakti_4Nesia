@@ -10,6 +10,7 @@ import './Layanan-Kependudukan/Pembuatan-ktp-kk/user-kk-page.dart';
 import './Layanan-Kependudukan/Pendaftaran-AktaLahir-kematian/Akta-lahir.dart';
 import './Layanan-Kependudukan/Pendaftaran-AktaLahir-kematian/Surat-kematian.dart';
 import './Layanan-Kependudukan/Pembaruan-data/perpindahan-kependudukan.dart';
+import 'Informasi-publik/news-page.dart';
 
 class UserHome extends StatefulWidget {
   const UserHome({super.key});
@@ -1293,15 +1294,25 @@ class _UserHomeState extends State<UserHome> {
                             ),
                           ),
                         ),
-                        const Align(
-                          alignment: Alignment.centerRight,
-                          child: Padding(
-                            padding: EdgeInsets.only(right: 10.0),
-                            child: Text(
-                              'Baca selengkapnya',
-                              style: TextStyle(
-                                color: Colors.red,
-                                fontFamily: 'Ubuntu',
+                        GestureDetector(
+                          onTap: () {
+                            // Navigasi ke halaman news-page.dart saat diklik
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => NewsPage()),
+                            );
+                          },
+                          child: Align(
+                            alignment: Alignment.centerRight,
+                            child: Padding(
+                              padding: EdgeInsets.only(right: 10.0),
+                              child: Text(
+                                'Baca selengkapnya',
+                                style: TextStyle(
+                                  color: Colors.red,
+                                  fontFamily: 'Ubuntu',
+                                ),
                               ),
                             ),
                           ),
