@@ -10,6 +10,7 @@ import '/Database/database_destinasi.dart';
 import '/Database/database_detailDestinasi.dart';
 import '/Database/database_acara.dart';
 import '/Database/database_transportasi.dart';
+import '/Database/database_ktp.dart';
 import 'User/user-home.dart';
 import 'admin-home.dart';
 import 'SuperAdmin-home.dart';
@@ -29,6 +30,7 @@ void main() async {
   await DatabaseDetailDestinasi.instance.database;
   await DatabaseAcara.instance.database;
   await DatabaseTransportasi.instance.database;
+  await DatabaseKtp.instance.database;
 
   // Check table schema
   await DatabaseDetailDestinasi.instance.checkTableSchema();

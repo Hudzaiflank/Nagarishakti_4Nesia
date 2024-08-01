@@ -1,15 +1,73 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/services.dart';
+import '/Database/database_ktp.dart';
+import 'package:file_picker/file_picker.dart';
 
 class UserKtpPage extends StatefulWidget {
+  const UserKtpPage({super.key});
+
   @override
   _UserKtpPageState createState() => _UserKtpPageState();
 }
 
 class _UserKtpPageState extends State<UserKtpPage> {
-  String selectedReason = 'Telah berusia 17 tahun';
-  String selectedGender = 'Pria';
+  final _formKey = GlobalKey<FormState>();
+  String? _alasanPembuatan;
+  int? _nik;
+  String? _namaLengkap;
+  String? _tempatLahir;
+  DateTime? _selectedDate;
+  String? _jenisKelamin;
+  String? _alamatLengkap;
+  String? _agama;
+  String? _jenisPekerjaan;
+  String? _statusPerkawinan;
+  File? _kartuKeluarga;
+  File? _suratPengantar;
+  File? _buktiKehilangan;
+
+  Future<void> _selectDate(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(1900),
+      lastDate: DateTime(2101),
+    );
+    if (picked != null && picked != _selectedDate) {
+      setState(() {
+        _selectedDate = picked;
+      });
+    }
+  }
+
+  void _submitForm() async {
+    if (_formKey.currentState!.validate()) {
+      _formKey.currentState!.save();
+
+      final newKtp = Ktp(
+        alasanPembuatan: _alasanPembuatan!,
+        nik: _nik!,
+        namaLengkap: _namaLengkap!,
+        tempatLahir: _tempatLahir!,
+        tanggalLahir: _selectedDate!,
+        alamatLengkap: _alamatLengkap!,
+        agama: _agama!,
+        jenisPekerjaan: _jenisPekerjaan!,
+        jenisKelamin: _jenisKelamin!,
+        statusPerkawinan: _statusPerkawinan!,
+        kartuKeluarga: _kartuKeluarga!,
+        suratPengantar: _suratPengantar!,
+        buktiKehilangan: _buktiKehilangan!,
+      );
+
+      final dbKtp = DatabaseKtp.instance;
+      await dbKtp.insertKtp(newKtp);
+
+      Navigator.pop(context);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -91,22 +149,26 @@ class _UserKtpPageState extends State<UserKtpPage> {
                     context: context,
                     label: 'NIK',
                     hint: 'nomor induk kependudukan',
+                    onSave: (value) => _nik = value,
                   ),
                   _buildTextField(
                     context: context,
                     label: 'Nama Lengkap',
                     hint: 'nama lengkap huruf kapital',
+                    onSave: (value) => _namaLengkap = value,
                   ),
                   _buildTextField(
                     context: context,
                     label: 'Tempat Lahir',
                     hint: 'tempat lahir',
+                    onSave: (value) => _tempatLahir = value,
                   ),
                   _buildTextField(
                     context: context,
                     label: 'Tanggal Lahir',
                     hint: 'BB-HH-TTTT',
-                    isDateField: true,
+                    isDateField: true, 
+                    onSave: (value) => _selectedDate = value,
                   ),
                   _buildSubTitle('Jenis Kelamin'),
                   _buildRadioButton('Pria', 'Jenis Kelamin'),
@@ -115,16 +177,19 @@ class _UserKtpPageState extends State<UserKtpPage> {
                     context: context,
                     label: 'Alamat Lengkap',
                     hint: 'alamat sesuai KTP',
+                    onSave: (value) => _alamatLengkap = value,
                   ),
                   _buildTextField(
                     context: context,
                     label: 'Agama',
                     hint: 'agama',
+                    onSave: (value) => _agama = value,
                   ),
                   _buildTextField(
                     context: context,
                     label: 'Jenis Pekerjaan',
                     hint: 'jenis pekerjaan',
+                    onSave: (value) => _jenisPekerjaan = value,
                   ),
                   _buildDropdownField(
                       context,
@@ -177,6 +242,12 @@ class _UserKtpPageState extends State<UserKtpPage> {
                         GestureDetector(
                           onTap: () {
                             // ini buat handle upload document nya thin
+                            FilePickerResult? result = await FilePicker.platform.pickFiles();
+                            if (result != null) {
+                              File _kartuKeluarga = File(result.files.single.path!);
+                            } else {
+                              // User canceled the picker
+                            }
                           },
                           child: Container(
                             height: 100,
@@ -230,6 +301,9 @@ class _UserKtpPageState extends State<UserKtpPage> {
                                   color: Colors.white, size: 16),
                               onPressed: () {
                                 // ini nanti buat remove nya thinnn mas broo
+                                setState(() {
+                                  _kartuKeluarga = null;
+                                });
                               },
                             ),
                           ),
@@ -237,7 +311,7 @@ class _UserKtpPageState extends State<UserKtpPage> {
                       ],
                     ),
                   ),
-                  if (selectedReason == 'Telah berusia 17 tahun') ...[
+                  if (_alasanPembuatan == 'Telah berusia 17 tahun') ...[
                     _buildSubTitle('Surat Pengantar Desa/Kelurahan'),
                     Padding(
                       padding: const EdgeInsets.only(bottom: 16.0),
@@ -247,6 +321,12 @@ class _UserKtpPageState extends State<UserKtpPage> {
                           GestureDetector(
                             onTap: () {
                               // ini buat handle upload document nya thin
+                              FilePickerResult? result = await FilePicker.platform.pickFiles();
+                              if (result != null) {
+                                File _suratPengantar = File(result.files.single.path!);
+                              } else {
+                                // User canceled the picker
+                              }
                             },
                             child: Container(
                               height: 100,
@@ -300,6 +380,9 @@ class _UserKtpPageState extends State<UserKtpPage> {
                                     color: Colors.white, size: 16),
                                 onPressed: () {
                                   // ini nanti buat remove nya thinnn mas broo
+                                  setState(() {
+                                    _suratPengantar = null;
+                                  });
                                 },
                               ),
                             ),
@@ -307,7 +390,7 @@ class _UserKtpPageState extends State<UserKtpPage> {
                         ],
                       ),
                     ),
-                  ] else if (selectedReason == 'KTP hilang/rusak') ...[
+                  ] else if (_alasanPembuatan == 'KTP hilang/rusak') ...[
                     _buildSubTitleWithItalic('KTP Lama', ' atau',
                         '\nSurat Kehilangan dari Kepolisian'),
                     Padding(
@@ -318,6 +401,12 @@ class _UserKtpPageState extends State<UserKtpPage> {
                           GestureDetector(
                             onTap: () {
                               // ini buat handle upload document nya thin
+                              FilePickerResult? result = await FilePicker.platform.pickFiles();
+                              if (result != null) {
+                                File _buktiKehilangan = File(result.files.single.path!);
+                              } else {
+                                // User canceled the picker
+                              }
                             },
                             child: Container(
                               height: 100,
@@ -371,6 +460,9 @@ class _UserKtpPageState extends State<UserKtpPage> {
                                     color: Colors.white, size: 16),
                                 onPressed: () {
                                   // ini nanti buat remove nya thinnn mas broo
+                                  setState(() {
+                                    _buktiKehilangan = null;
+                                  });
                                 },
                               ),
                             ),
@@ -425,7 +517,7 @@ class _UserKtpPageState extends State<UserKtpPage> {
       {required BuildContext context,
       required String label,
       required String hint,
-      bool isDateField = false}) {
+      bool isDateField = false, required Function(dynamic value) onSave}) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -497,7 +589,7 @@ class _UserKtpPageState extends State<UserKtpPage> {
         Padding(
           padding: const EdgeInsets.only(bottom: 16.0),
           child: DropdownButtonFormField(
-            value: items.contains(selectedReason) ? selectedReason : null,
+            value: items.contains(_alasanPembuatan) ? _alasanPembuatan : null,
             isDense: true,
             isExpanded: true,
             decoration: InputDecoration(
@@ -522,7 +614,7 @@ class _UserKtpPageState extends State<UserKtpPage> {
                 .toList(),
             onChanged: (value) {
               setState(() {
-                selectedReason = value as String;
+                _alasanPembuatan = value as String;
               });
             },
             dropdownColor: Colors.white,
@@ -538,10 +630,10 @@ class _UserKtpPageState extends State<UserKtpPage> {
       child: RadioListTile(
         title: Text(title, style: TextStyle(fontFamily: 'Ubuntu')),
         value: title,
-        groupValue: selectedGender,
+        groupValue: _jenisKelamin,
         onChanged: (value) {
           setState(() {
-            selectedGender = value as String;
+            _jenisKelamin = value as String;
           });
         },
       ),
