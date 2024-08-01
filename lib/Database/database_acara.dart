@@ -48,12 +48,17 @@ class DatabaseAcara {
       acara.toMap(),
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
+    print('Inserted Acara: ${acara.title}');
   }
 
   Future<List<Acara>> getAcara() async {
     final db = await instance.database;
     final result = await db.query('acara');
-    return result.map((json) => Acara.fromMap(json)).toList();
+    List<Acara> events = result.map((json) => Acara.fromMap(json)).toList();
+    for (var acara in events) {
+      print('Fetched Acara: ${acara.title}');
+    }
+    return events;
   }
 
   Future<void> updateAcara(Acara acara) async {
@@ -64,6 +69,7 @@ class DatabaseAcara {
       where: 'id = ?',
       whereArgs: [acara.id],
     );
+    print('Updated Acara: ${acara.title}');
   }
 
   Future close() async {
@@ -91,7 +97,7 @@ class Acara {
     required this.notification,
   });
 
-  Map<String, dynamic> toMap() {
+  Map<String, Object?> toMap() {
     return {
       'id': id,
       'title': title,
@@ -99,19 +105,19 @@ class Acara {
       'image': image,
       'date': date,
       'description': description,
-      'notification': notification ? 1 : 0, // store as integer
+      'notification': notification ? 1 : 0, 
     };
   }
 
-  factory Acara.fromMap(Map<String, dynamic> map) {
+  static Acara fromMap(Map<String, Object?> map) {
     return Acara(
-      id: map['id'],
-      title: map['title'],
-      location: map['location'],
-      image: map['image'],
-      date: map['date'],
-      description: map['description'],
-      notification: map['notification'] == 1, // convert integer to boolean
+      id: map['id'] as int?,
+      title: map['title'] as String,
+      location: map['location'] as String,
+      image: map['image'] as String,
+      date: map['date'] as String,
+      description: map['description'] as String,
+      notification: (map['notification'] as int) == 1
     );
   }
 }

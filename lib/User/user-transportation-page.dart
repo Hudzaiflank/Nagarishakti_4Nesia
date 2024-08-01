@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import '/Database/database_transportasi.dart';
 
 class UserTransportationPage extends StatefulWidget {
+  const UserTransportationPage({super.key});
+
   @override
   _UserTransportationPageState createState() => _UserTransportationPageState();
 }
@@ -11,6 +14,31 @@ class _UserTransportationPageState extends State<UserTransportationPage> {
 
   @override
   Widget build(BuildContext context) {
+    List<Transportasi> transportations = [
+      Transportasi(
+        id: 1,
+        gambar: 'assets/contoh-gambar.png',
+        nama: 'Angkutan Kota (Angkot)',
+        deskripsi: 'Angkutan kota (angkot) adalah salah satu moda transportasi utama di Bekasi yang menyediakan layanan transportasi yang luas dan menjangkau berbagai area di kota. Berikut adalah beberapa informasi rinci mengenai angkutan kota di Bekasi:',
+        rute: 'K01: Terminal Bekasi - Pondok Gede - Pasar Rebo\nK02: Terminal Bekasi - Bulak Kapal - Cikarang\nK03: Harapan Indah - Bekasi Timur\nK04: Terminal Bekasi - Cibitung - Ujung Harapan\nK05: Summarecon Bekasi - Kalimalang - Jatiasih',
+        jamOperasional: 'Angkot di Bekasi beroperasi dari pagi hingga malam, dengan jam operasional yang bervariasi tergantung pada rute dan hari.\nBiasanya: 05.00 WIB s.d. 22.00 WIB',
+        tarif: 'Bervariasi tergantung pada jarak perjalanan, biasanya berkisar antara Rp 4.000 hingga Rp 10.000 per perjalanan.',
+        fasilitas: 'Tempat Duduk: Kapasitas tempat duduk bervariasi, biasanya mampu menampung sekitar 10-12 penumpang.\nKeamanan Angkot di Bekasi: biasanya sederhana, tapi ada beberapa angkot yang sudah menyediakan AC dan beberapa fasilitas tambahan.',
+        tambahan: '• Jangkauan Luas: Angkot menjangkau berbagai wilayah di Bekasi, termasuk area-area yang mungkin tidak dilalui oleh transportasi umum lain.\n• Fleksibilitas: Angkot lebih fleksibel dalam mengatur rute dan waktu operasionalnya, memberikan fleksibilitas bagi penumpang.\n• Biaya Relatif Rendah: Angkot umumnya lebih terjangkau dibandingkan dengan beberapa moda transportasi lainnya, sehingga mengurangi pengeluaran bagi pengguna yang rutin.',
+      ),
+      Transportasi(
+        id: 2,
+        gambar: 'assets/icon.png',
+        nama: 'Trans Patriot Bekasi (BISKITA)',
+        deskripsi: 'Trans Patriot adalah layanan transportasi umum bus di Kota Bekasi yang beroperasi sejak Maret 2024. Inisiatif ini adalah bagian dari upaya pemerintah untuk meningkatkan kualitas transportasi umum dan mengurangi kemacetan di kota. BISKITA menjadi pilihan ideal bagi Anda yang ingin berkeliling kota dengan mudah.',
+        rute: 'Rute 1: Summarecon Mall Bekasi - Vida Bantar Gebang\nRute kembali: Pasar Alam Vida - Summarecon Mall Bekasi',
+        jamOperasional: 'Setiap hari dari pukul 05.00 hingga 21.00 WIB.\nHeadway (Waktu Tunggu): Sekitar 10 menit antar bus, memastikan frekuensi yang tinggi dan mengurangi waktu tunggu penumpang.',
+        tarif: 'Selama masa uji coba, layanan ini gratis. Penumpang hanya perlu melakukan tap kartu pembayaran elektronik seperti E-money, Flazz, atau Brizzi di pintu masuk bus.',
+        fasilitas: 'Fasilitas di Dalam Bus:\n• AC untuk kenyamanan penumpang.\n• Kursi yang nyaman dan cukup untuk penumpang.\n• Ruang untuk berdiri dengan pegangan tangan yang aman.\n• Informasi rute dan pemberhentian melalui layar di dalam bus.\nFasilitas di Halte:\n• Tempat duduk yang cukup nyaman.\n• Informasi rute dan bus yang jelas.\n• Pengawasan keamanan melalui CCTV.',
+        tambahan: 'KRL Commuter Line: Terhubung di Stasiun Bekasi dan Stasiun Kranji.\nLRT: Terhubung di Stasiun LRT Bekasi Barat, memudahkan akses ke wilayah Jabodetabek.\nAngkot dan Bus Kota: Menghubungkan berbagai titik di dalam dan luar Bekasi.',
+      ),
+    ];
+
     return Scaffold(
       backgroundColor: Color(0xFFE3EFF1),
       body: SingleChildScrollView(
@@ -48,7 +76,7 @@ class _UserTransportationPageState extends State<UserTransportationPage> {
                           fontWeight: FontWeight.bold,
                           fontFamily: 'Ubuntu',
                           color: Colors.black,
-                          fontSize: 18,
+                          fontSize: 22,
                         ),
                         textAlign: TextAlign.center,
                       ),
@@ -65,7 +93,7 @@ class _UserTransportationPageState extends State<UserTransportationPage> {
                             style: TextStyle(
                               fontFamily: 'Ubuntu',
                               color: Colors.red,
-                              fontSize: 14,
+                              fontSize: 15,
                             ),
                           ),
                         ],
@@ -85,20 +113,19 @@ class _UserTransportationPageState extends State<UserTransportationPage> {
                       height: 200.0,
                       autoPlay: false,
                       enlargeCenterPage: true,
+                      onPageChanged: (index, reason) {
+                        setState(() {
+                          showNewContent = index == 1;
+                        });
+                      },
                     ),
-                    items: [
-                      'assets/contoh-gambar.png',
-                      'assets/icon.png',
-                      'assets/contoh-gambar.png',
-                      'assets/contoh-gambar.png',
-                      'assets/contoh-gambar.png',
-                    ].map((i) {
+                    items: transportations.map((transportation) {
                       return Builder(
                         builder: (BuildContext context) {
                           return GestureDetector(
                             onTap: () {
                               setState(() {
-                                showNewContent = i == 'assets/icon.png';
+                                showNewContent = transportation.id == 2;
                               });
                             },
                             child: Container(
@@ -110,7 +137,7 @@ class _UserTransportationPageState extends State<UserTransportationPage> {
                               ),
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(7.0),
-                                child: Image.asset(i, fit: BoxFit.cover),
+                                child: Image.asset(transportation.gambar, fit: BoxFit.cover),
                               ),
                             ),
                           );
@@ -120,171 +147,8 @@ class _UserTransportationPageState extends State<UserTransportationPage> {
                   ),
                   SizedBox(height: 16),
                   showNewContent
-                      ? Container(
-                          padding: EdgeInsets.all(16.0),
-                          decoration: BoxDecoration(
-                            color: Color(0xFFE2DED0),
-                            borderRadius: BorderRadius.circular(7.0),
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.stretch,
-                            children: [
-                              Text(
-                                'Angkutan Kota (Angkot)',
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontFamily: 'Ubuntu',
-                                  fontSize: 18,
-                                ),
-                                textAlign: TextAlign.center,
-                              ),
-                              SizedBox(height: 10),
-                              Text(
-                                'Angkutan kota (angkot) adalah salah satu moda transportasi utama di Bekasi yang menyediakan layanan transportasi yang luas dan menjangkau berbagai area di kota. Berikut adalah beberapa informasi rinci mengenai angkutan kota di Bekasi:',
-                                style: TextStyle(
-                                  fontFamily: 'Ubuntu',
-                                  fontSize: 14,
-                                  height: 1.5,
-                                ),
-                                textAlign: TextAlign.justify,
-                              ),
-                              SizedBox(height: 16),
-                              buildInfoSection(
-                                'Rute',
-                                'K01: Terminal Bekasi - Pondok Gede - Pasar Rebo\n'
-                                    'K02: Terminal Bekasi - Bulak Kapal - Cikarang\n'
-                                    'K03: Harapan Indah - Bekasi Timur\n'
-                                    'K04: Terminal Bekasi - Cibitung - Ujung Harapan\n'
-                                    'K05: Summarecon Bekasi - Kalimalang - Jatiasih',
-                                boldText: [
-                                  'K01:',
-                                  'K02:',
-                                  'K03:',
-                                  'K04:',
-                                  'K05:'
-                                ],
-                              ),
-                              buildInfoSection(
-                                'Jam Operasional',
-                                'Angkot di Bekasi beroperasi dari pagi hingga malam, dengan jam operasional yang bervariasi tergantung pada rute dan hari.\n'
-                                    'Biasanya: 05.00 WIB s.d. 22.00 WIB',
-                                boldText: ['Biasanya:'],
-                              ),
-                              buildInfoSection(
-                                'Tarif',
-                                'Bervariasi tergantung pada jarak perjalanan, biasanya berkisar antara Rp 4.000 hingga Rp 10.000 per perjalanan.',
-                                boldText: [
-                                  'Bervariasi tergantung pada jarak perjalanan,'
-                                ],
-                              ),
-                              buildInfoSection(
-                                'Fasilitas',
-                                'Tempat Duduk: Kapasitas tempat duduk bervariasi, biasanya mampu menampung sekitar 10-12 penumpang.\n'
-                                    'Keamanan Angkot di Bekasi: biasanya sederhana, tapi ada beberapa angkot yang sudah menyediakan AC dan beberapa fasilitas tambahan.',
-                                boldText: [
-                                  'Tempat Duduk:',
-                                  'Keamanan Angkot di Bekasi:'
-                                ],
-                              ),
-                              buildInfoSection(
-                                'Kelebihan',
-                                '• Jangkauan Luas: Angkot menjangkau berbagai wilayah di Bekasi, termasuk area-area yang mungkin tidak dilalui oleh transportasi umum lain.\n'
-                                    '• Fleksibilitas: Angkot lebih fleksibel dalam mengatur rute dan waktu operasionalnya, memberikan fleksibilitas bagi penumpang.\n'
-                                    '• Biaya Relatif Rendah: Angkot umumnya lebih terjangkau dibandingkan dengan beberapa moda transportasi lainnya, sehingga mengurangi pengeluaran bagi pengguna yang rutin.',
-                                boldText: [
-                                  '• Jangkauan Luas:',
-                                  '• Fleksibilitas:',
-                                  '• Biaya Relatif Rendah:'
-                                ],
-                              ),
-                            ],
-                          ),
-                        )
-                      : Container(
-                          padding: EdgeInsets.all(16.0),
-                          decoration: BoxDecoration(
-                            color: Color(0xFFE2DED0),
-                            borderRadius: BorderRadius.circular(7.0),
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.stretch,
-                            children: [
-                              Text(
-                                'Trans Patriot Bekasi (BISKITA)',
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontFamily: 'Ubuntu',
-                                  fontSize: 18,
-                                ),
-                                textAlign: TextAlign.center,
-                              ),
-                              SizedBox(height: 10),
-                              Text(
-                                'Trans Patriot adalah layanan transportasi umum bus di Kota Bekasi yang beroperasi sejak Maret 2024. '
-                                'Inisiatif ini adalah bagian dari upaya pemerintah untuk meningkatkan kualitas transportasi umum '
-                                'dan mengurangi kemacetan di kota. BISKITA menjadi pilihan ideal bagi Anda yang ingin berkeliling kota dengan mudah.',
-                                style: TextStyle(
-                                  fontFamily: 'Ubuntu',
-                                  fontSize: 14,
-                                  height: 1.5,
-                                ),
-                                textAlign: TextAlign.justify,
-                              ),
-                              SizedBox(height: 16),
-                              buildInfoSection(
-                                'Rute',
-                                'Rute 1: Summarecon Mall Bekasi - Vida Bantar Gebang\n'
-                                    'Rute kembali: Pasar Alam Vida - Summarecon Mall Bekasi',
-                                boldText: ['Rute 1:', 'Rute kembali:'],
-                              ),
-                              buildInfoSection(
-                                'Jam Operasional',
-                                'Setiap hari dari pukul 05.00 hingga 21.00 WIB.\n'
-                                    'Headway (Waktu Tunggu): Sekitar 10 menit antar bus, memastikan frekuensi yang tinggi '
-                                    'dan mengurangi waktu tunggu penumpang.',
-                                boldText: [
-                                  'Setiap hari dari pukul 05.00 hingga 21.00 WIB.',
-                                  'Headway (Waktu Tunggu):'
-                                ],
-                              ),
-                              buildInfoSection(
-                                'Tarif',
-                                'Selama masa uji coba, layanan ini gratis. '
-                                    'Penumpang hanya perlu melakukan tap kartu pembayaran elektronik seperti E-money, Flazz, '
-                                    'atau Brizzi di pintu masuk bus.',
-                                boldText: [
-                                  'Selama masa uji coba, layanan ini gratis.'
-                                ],
-                              ),
-                              buildInfoSection(
-                                'Fasilitas di Dalam Bus:',
-                                '• AC untuk kenyamanan penumpang.\n'
-                                    '• Kursi yang nyaman dan cukup untuk penumpang.\n'
-                                    '• Ruang untuk berdiri dengan pegangan tangan yang aman.\n'
-                                    '• Informasi rute dan pemberhentian melalui layar di dalam bus.\n\n'
-                                    'Fasilitas di Halte:\n'
-                                    '• Tempat duduk yang cukup nyaman.\n'
-                                    '• Informasi rute dan bus yang jelas.\n'
-                                    '• Pengawasan keamanan melalui CCTV.',
-                                boldText: [
-                                  'Fasilitas di Dalam Bus:',
-                                  'Fasilitas di Halte:'
-                                ],
-                              ),
-                              buildInfoSection(
-                                'Konektivitas',
-                                'KRL Commuter Line: Terhubung di Stasiun Bekasi dan Stasiun Kranji.\n'
-                                    'LRT: Terhubung di Stasiun LRT Bekasi Barat, memudahkan akses ke wilayah Jabodetabek.\n'
-                                    'Angkot dan Bus Kota: Menghubungkan berbagai titik di dalam dan luar Bekasi.',
-                                boldText: [
-                                  'KRL Commuter Line:',
-                                  'LRT:',
-                                  'Angkot dan Bus Kota:'
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
+                      ? buildTransportationInfo(transportations[1])
+                      : buildTransportationInfo(transportations[0]),
                 ],
               ),
             ),
@@ -294,108 +158,133 @@ class _UserTransportationPageState extends State<UserTransportationPage> {
     );
   }
 
-  Widget buildInfoSection(String title, String content,
-      {List<String>? boldText}) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 16.0),
-      child: Stack(
+  Widget buildTransportationInfo(Transportasi transportation) {
+    return Container(
+      padding: EdgeInsets.all(16.0),
+      decoration: BoxDecoration(
+        color: Color(0xFFE2DED0),
+        borderRadius: BorderRadius.circular(7.0),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Container(
-            padding: EdgeInsets.all(8.0),
-            margin: EdgeInsets.only(top: 16.0),
-            decoration: BoxDecoration(
-              color: Color(0xFFF6F5F0),
-              borderRadius: BorderRadius.circular(4.0),
+          Text(
+            transportation.nama,
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontFamily: 'Ubuntu',
+              fontSize: 18,
+              color: Color(0xFF2F5061),
             ),
-            child: RichText(
-              text: TextSpan(
-                children: _buildTextSpans(content, boldText),
-                style: TextStyle(
-                  fontFamily: 'Ubuntu',
-                  fontSize: 14,
-                  color: Colors.black,
-                  height: 1.5,
-                ),
-              ),
-              textAlign: TextAlign.justify,
-            ),
+            textAlign: TextAlign.center,
           ),
-          Positioned(
-            left: 16,
-            top: 0,
-            child: Container(
-              padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
-              decoration: BoxDecoration(
-                color: Color(0xFF2F5061),
-                borderRadius: BorderRadius.circular(4.0),
-              ),
-              child: Text(
-                title,
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontFamily: 'Ubuntu',
-                  fontSize: 14,
-                  color: Colors.white,
-                ),
-              ),
+          SizedBox(height: 10),
+          Text(
+            transportation.deskripsi,
+            style: TextStyle(
+              fontFamily: 'Ubuntu',
+              fontSize: 14,
+              height: 1.5,
+              color: Colors.black,
             ),
+            textAlign: TextAlign.justify,
           ),
+          SizedBox(height: 16),
+          buildInfoSection('Rute', transportation.rute, boldText: ['K01:', 'K02:', 'K03:', 'K04:', 'K05:', 'Rute 1:', 'Rute kembali:'], withDecoration: true), 
+          buildInfoSection('Jam Operasional', transportation.jamOperasional, boldText: ['Biasanya:', 'Setiap hari dari pukul 05.00 hingga 21.00 WIB.', 'Headway (Waktu Tunggu):'], withDecoration: true),
+          buildInfoSection('Tarif', transportation.tarif, boldText: ['Bervariasi tergantung pada jarak perjalanan,', 'Selama masa uji coba, layanan ini gratis.'], withDecoration: true),
+          buildInfoSection('Fasilitas', transportation.fasilitas, boldText: ['Tempat Duduk:', 'Keamanan Angkot di Bekasi:', 'Fasilitas di Dalam Bus:', 'Fasilitas di Halte:'], withDecoration: true),
+          buildInfoSection('Kelebihan', transportation.tambahan, boldText: ['• Jangkauan Luas:', '• Fleksibilitas:', '• Biaya Relatif Rendah:', 'KRL Commuter Line:', 'LRT:', 'Angkot dan Bus Kota:'], withDecoration: true),
         ],
       ),
     );
   }
 
-  List<TextSpan> _buildTextSpans(String content, List<String>? boldText) {
-    List<TextSpan> spans = [];
-    List<String> parts = content.split('\n');
-    for (String part in parts) {
-      if (boldText != null) {
-        bool isBold = false;
-        for (String bold in boldText) {
-          if (part.contains(bold)) {
-            spans.add(TextSpan(
-              text: bold,
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ));
-            spans.add(TextSpan(
-              text: part.replaceFirst(bold, ''),
-            ));
-            spans.add(TextSpan(text: '\n'));
-            isBold = true;
-            break;
-          }
-        }
-        if (!isBold) {
-          spans.add(TextSpan(text: part));
-          spans.add(TextSpan(text: '\n'));
-        }
-      } else {
-        spans.add(TextSpan(text: part));
-        spans.add(TextSpan(text: '\n'));
-      }
-    }
-    return spans;
-  }
+  Widget buildInfoSection(String title, String content, {List<String> boldText = const [], bool withDecoration = false}) {
+    List<InlineSpan> textSpans = [];
+    
+    content.split('\n').forEach((line) {
+      // Split the line into segments based on boldText keywords
+      List<TextSpan> lineSpans = [];
+      int start = 0;
 
-  List<InlineSpan> _buildCustomBulletList(List<String> items) {
-    return items
-        .map((item) => WidgetSpan(
-              alignment: PlaceholderAlignment.baseline,
-              baseline: TextBaseline.alphabetic,
-              child: Padding(
-                padding: EdgeInsets.only(bottom: 4.0),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text("• "),
-                    Expanded(
-                      child: Text(item,
-                          style: TextStyle(fontSize: 14, height: 1.5)),
-                    ),
-                  ],
-                ),
+      // Iterate through each keyword to apply bold styling
+      boldText.forEach((keyword) {
+        final index = line.indexOf(keyword, start);
+        if (index != -1) {
+          // Add text before the keyword as normal text
+          if (index > start) {
+            lineSpans.add(TextSpan(
+              text: line.substring(start, index),
+              style: TextStyle(
+                fontWeight: FontWeight.normal,
+                fontFamily: 'Ubuntu',
+                fontSize: 14,
+                color: Colors.black,
               ),
-            ))
-        .toList();
+            ));
+          }
+          // Add the keyword as bold text
+          lineSpans.add(TextSpan(
+            text: line.substring(index, index + keyword.length),
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontFamily: 'Ubuntu',
+              fontSize: 14,
+              color: Colors.black,
+            ),
+          ));
+          start = index + keyword.length;
+        }
+      });
+
+      // Add any remaining text after the last keyword
+      if (start < line.length) {
+        lineSpans.add(TextSpan(
+          text: line.substring(start),
+          style: TextStyle(
+            fontWeight: FontWeight.normal,
+            fontFamily: 'Ubuntu',
+            fontSize: 14,
+            color: Colors.black,
+          ),
+        ));
+      }
+
+      // Add lineSpans to textSpans, ensuring new lines are handled correctly
+      textSpans.add(TextSpan(
+        children: lineSpans,
+      ));
+      textSpans.add(TextSpan(text: '\n')); // Ensure each line is followed by a newline
+    });
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        SizedBox(height: 16),
+        Text(
+          title,
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontFamily: 'Ubuntu',
+            fontSize: 16,
+            color: Color(0xFF2F5061),
+          ),
+        ),
+        SizedBox(height: 8),
+        Container(
+          padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+          decoration: withDecoration ? BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(4.0),
+          ) : null,
+          child: RichText(
+            text: TextSpan(
+              children: textSpans,
+            ),
+          ),
+        ),
+      ],
+    );
   }
 }

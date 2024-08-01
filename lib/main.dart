@@ -9,12 +9,14 @@ import '/Database/database_superAdmin.dart';
 import '/Database/database_destinasi.dart';
 import '/Database/database_detailDestinasi.dart';
 import '/Database/database_acara.dart';
+import '/Database/database_transportasi.dart';
 import 'User/user-home.dart';
 import 'admin-home.dart';
 import 'SuperAdmin-home.dart';
 import 'User/Destination/user-Destination-page.dart';
 import 'User/Destination/user-DetailDestination-page.dart';
 import 'User/user-Timeline-Festival.dart';
+import 'User/user-transportation-page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -26,6 +28,7 @@ void main() async {
   await DatabaseDestinasi.instance.database;
   await DatabaseDetailDestinasi.instance.database;
   await DatabaseAcara.instance.database;
+  await DatabaseTransportasi.instance.database;
 
   // Check table schema
   await DatabaseDetailDestinasi.instance.checkTableSchema();
@@ -39,8 +42,11 @@ void main() async {
   // Load Detail Destination from json
   await loadDetailDestinationsFromJson();
 
-  // Load events from JSON
+  // Load Event from JSON
   await loadAcaraFromJson();
+
+  // Load Transportation from JSON
+  await loadTransportasiFromJson();
 
   runApp(const MyApp());
 }
@@ -115,7 +121,7 @@ Future<void> loadDestinationsFromJson() async {
         
         // Ensure the colorString is in ARGB format
         if (colorString.length == 6) {
-          colorString = 'FF$colorString'; // Add alpha channel
+          colorString = 'FF$colorString';
         }
 
         // Convert the colorString to int
@@ -125,7 +131,7 @@ Future<void> loadDestinationsFromJson() async {
           title: destination['title'],
           location: destination['location'],
           imagePath: destination['imagePath'],
-          backgroundColor: color, // Store as integer
+          backgroundColor: color,
           savedBy: destination['savedBy'],
           bookmark: destination['bookmark'],
         );
@@ -190,6 +196,37 @@ Future<void> loadAcaraFromJson() async {
     }
   } catch (e) {
     print('Error loading events from JSON: $e');
+  }
+}
+
+Future<void> loadTransportasiFromJson() async {
+  try {
+    final String response = await rootBundle.loadString('assets/API/transportasi.json');
+    final Map<String, dynamic> jsonData = json.decode(response);
+
+    if (jsonData.containsKey('transportasi')) {
+      final List<dynamic> data = jsonData['transportasi'];
+      final DatabaseTransportasi db = DatabaseTransportasi.instance;
+
+      for (var transportation in data) {
+        final transportasi = Transportasi(
+          id: transportation['id'] ?? 0, 
+          gambar: transportation['gambar'],
+          nama: transportation['nama'],
+          deskripsi: transportation['deskripsi'],
+          rute: transportation['rute'],
+          jamOperasional: transportation['jamOperasional'],
+          tarif: transportation['tarif'],
+          fasilitas: transportation['fasilitas'],
+          tambahan: transportation['tambahan'],
+        );
+        await db.insertTransportasi(transportasi);
+      }
+    } else {
+      print('Key "transportasi" not found in JSON');
+    }
+  } catch (e) {
+    print('Error loading transportations from JSON: $e');
   }
 }
 
