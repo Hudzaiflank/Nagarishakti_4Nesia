@@ -125,6 +125,7 @@ class Ktp {
       'agama': agama,
       'jenis_pekerjaan': jenisPekerjaan,
       'statusPerkawinan': statusPerkawinan,
+      'kartuKeluarga': kartuKeluarga,
       'suratPengantar': suratPengantar,
       'buktiKehilangan': buktiKehilangan,
     };
@@ -143,6 +144,7 @@ class Ktp {
       agama: map['agama'] as String,
       jenisPekerjaan: map['jenisPekerjaan'] as String,
       statusPerkawinan: map['statusPerkawinan'] as String,
+      kartuKeluarga: map['kartuKeluarga'] as File,
       suratPengantar: map['suratPengantar'] as File,
       buktiKehilangan: map['buktiKehilangan'] as File,
     );
@@ -150,6 +152,6 @@ class Ktp {
 
   @override
   String toString() {
-    return 'Ktp{id: $id, alasanPembuatan: $alasanPembuatan, nik: $nik, namaLengkap: $namaLengkap, tempatLahir: $tempatLahir, tanggalLahir: $tanggalLahir, jenisKelamin: $jenisKelamin, alamatLengkap: $alamatLengkap, agama: $agama, jenisPekerjaan: $jenisPekerjaan, statusPerkawinan: $statusPerkawinan, suratPengantar: $suratPengantar, buktiKehilangan: $buktiKehilangan}';
+    return 'Ktp{id: $id, alasanPembuatan: $alasanPembuatan, nik: $nik, namaLengkap: $namaLengkap, tempatLahir: $tempatLahir, tanggalLahir: $tanggalLahir, jenisKelamin: $jenisKelamin, alamatLengkap: $alamatLengkap, agama: $agama, jenisPekerjaan: $jenisPekerjaan, statusPerkawinan: $statusPerkawinan, kartuKeluarga: $kartuKeluarga, suratPengantar: $suratPengantar, buktiKehilangan: $buktiKehilangan}';
   }
 }
