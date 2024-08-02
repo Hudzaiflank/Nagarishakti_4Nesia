@@ -88,6 +88,7 @@ flutter:
     - assets/profile-edit/rectangle-2.png
     - assets/profile-edit/rectangle-3.png
     - assets/download-icon.png
+    - assets/download-pdf.png
     - assets/upload-icon.png
     - assets/API/destinasi.json
     - assets/API/detailDestinasi.json

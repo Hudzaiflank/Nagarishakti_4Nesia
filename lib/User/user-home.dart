@@ -10,7 +10,8 @@ import './Layanan-Kependudukan/Pembuatan-ktp-kk/user-kk-page.dart';
 import './Layanan-Kependudukan/Pendaftaran-AktaLahir-kematian/Akta-lahir.dart';
 import './Layanan-Kependudukan/Pendaftaran-AktaLahir-kematian/Surat-kematian.dart';
 import './Layanan-Kependudukan/Pembaruan-data/perpindahan-kependudukan.dart';
-import 'Informasi-publik/news-page.dart';
+import 'Informasi-publik/berita/news-page.dart';
+import 'Informasi-publik/Dokumen-publik/Public-Document.dart';
 
 class UserHome extends StatefulWidget {
   const UserHome({super.key});
@@ -1325,7 +1326,15 @@ class _UserHomeState extends State<UserHome> {
                               padding:
                                   const EdgeInsets.symmetric(horizontal: 40.0),
                               child: ElevatedButton(
-                                onPressed: () {},
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          PublicDocumentPage(),
+                                    ),
+                                  );
+                                },
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor: const Color(0xFFAAA79C),
                                   shape: RoundedRectangleBorder(
