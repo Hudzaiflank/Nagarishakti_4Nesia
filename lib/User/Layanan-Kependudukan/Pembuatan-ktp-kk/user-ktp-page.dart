@@ -1,15 +1,89 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/services.dart';
+import '/Database/database_ktp.dart';
+import 'package:file_picker/file_picker.dart';
 
 class UserKtpPage extends StatefulWidget {
+  const UserKtpPage({super.key});
+
   @override
   _UserKtpPageState createState() => _UserKtpPageState();
 }
 
 class _UserKtpPageState extends State<UserKtpPage> {
-  String selectedReason = 'Telah berusia 17 tahun';
-  String selectedGender = 'Pria';
+  final _formKey = GlobalKey<FormState>();
+  String? _alasanPembuatan;
+  int? _nik;
+  String? _namaLengkap;
+  String? _tempatLahir;
+  DateTime? _selectedDate;
+  String? _jenisKelamin;
+  String? _alamatLengkap;
+  String? _agama;
+  String? _jenisPekerjaan;
+  String? _statusPerkawinan;
+  File? _kartuKeluarga;
+  File? _suratPengantar;
+  File? _buktiKehilangan;
+
+  Future<void> _selectDate(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(1900),
+      lastDate: DateTime(2101),
+    );
+    if (picked != null && picked != _selectedDate) {
+      setState(() {
+        _selectedDate = picked;
+      });
+    }
+  }
+
+  Future<void> _pickFile(Function(File) onFilePicked) async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles();
+    if (result != null) {
+      File file = File(result.files.single.path!);
+      setState(() {
+        onFilePicked(file);
+      });
+    }
+  }
+
+  void _removeFile(Function() onFileRemoved) {
+    setState(() {
+      onFileRemoved();
+    });
+  }
+
+  void _submitForm() async {
+    if (_formKey.currentState!.validate()) {
+      _formKey.currentState!.save();
+
+      final newKtp = Ktp(
+        alasanPembuatan: _alasanPembuatan!,
+        nik: _nik!,
+        namaLengkap: _namaLengkap!,
+        tempatLahir: _tempatLahir!,
+        tanggalLahir: _selectedDate!,
+        alamatLengkap: _alamatLengkap!,
+        agama: _agama!,
+        jenisPekerjaan: _jenisPekerjaan!,
+        jenisKelamin: _jenisKelamin!,
+        statusPerkawinan: _statusPerkawinan!,
+        kartuKeluarga: _kartuKeluarga!,
+        suratPengantar: _suratPengantar!,
+        buktiKehilangan: _buktiKehilangan!,
+      );
+
+      final dbKtp = DatabaseKtp.instance;
+      await dbKtp.insertKtp(newKtp);
+
+      Navigator.pop(context);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -73,7 +147,10 @@ class _UserKtpPageState extends State<UserKtpPage> {
                 children: [
                   _buildSubTitle('Alasan Pembuatan'),
                   _buildDropdownField(
-                      context, ['Telah berusia 17 tahun', 'KTP hilang/rusak']),
+                      context, 
+                      ['Telah berusia 17 tahun', 'KTP hilang/rusak'],
+                      onSave: (value) => _alasanPembuatan = value,
+                  ),
                 ],
               ),
             ),
@@ -91,40 +168,96 @@ class _UserKtpPageState extends State<UserKtpPage> {
                     context: context,
                     label: 'NIK',
                     hint: 'nomor induk kependudukan',
+                    onSave: (value) => _nik = int.tryParse(value!),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'NIK tidak boleh kosong';
+                      }
+                      return null;
+                    },
                   ),
                   _buildTextField(
                     context: context,
                     label: 'Nama Lengkap',
                     hint: 'nama lengkap huruf kapital',
+                    onSave: (value) => _namaLengkap = value,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Nama Lengkap tidak boleh kosong';
+                      }
+                      return null;
+                    },
                   ),
                   _buildTextField(
                     context: context,
                     label: 'Tempat Lahir',
                     hint: 'tempat lahir',
+                    onSave: (value) => _tempatLahir = value,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Tempat Lahir tidak boleh kosong';
+                      }
+                      return null;
+                    },
                   ),
                   _buildTextField(
                     context: context,
                     label: 'Tanggal Lahir',
-                    hint: 'BB-HH-TTTT',
+                    hint: 'TTTT-BB-HH',
                     isDateField: true,
+                    selectedDate: _selectedDate,
+                    onSelect: (date) {
+                      setState(() {
+                        _selectedDate = date;
+                      });
+                    },
+                    onSave: (value) => null,
+                    validator: (value) {
+                      if (_selectedDate == null) {
+                        return 'Tanggal Lahir tidak boleh kosong';
+                      }
+                      return null;
+                    },
                   ),
-                  _buildSubTitle('Jenis Kelamin'),
-                  _buildRadioButton('Pria', 'Jenis Kelamin'),
-                  _buildRadioButton('Wanita', 'Jenis Kelamin'),
+                  _buildRadioButtonGroup(
+                    label: 'Jenis Kelamin',
+                    onSave: (value) => _jenisKelamin = value,
+                  ),
                   _buildTextField(
                     context: context,
                     label: 'Alamat Lengkap',
                     hint: 'alamat sesuai KTP',
+                    onSave: (value) => _alamatLengkap = value,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Alamat Lengkap tidak boleh kosong';
+                      }
+                      return null;
+                    },
                   ),
                   _buildTextField(
                     context: context,
                     label: 'Agama',
                     hint: 'agama',
+                    onSave: (value) => _agama = value,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Agama tidak boleh kosong';
+                      }
+                      return null;
+                    },
                   ),
                   _buildTextField(
                     context: context,
                     label: 'Jenis Pekerjaan',
                     hint: 'jenis pekerjaan',
+                    onSave: (value) => _jenisPekerjaan = value,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Jenis Pekerjaan tidak boleh kosong';
+                      }
+                      return null;
+                    },
                   ),
                   _buildDropdownField(
                       context,
@@ -135,7 +268,9 @@ class _UserKtpPageState extends State<UserKtpPage> {
                         'Cerai mati'
                       ],
                       label: 'Status Perkawinan',
-                      backgroundColor: Color(0xFFE0E5E7)),
+                      onSave: (value) => _statusPerkawinan = value,
+                      backgroundColor: Color(0xFFE0E5E7),
+                  ),
                 ],
               ),
             ),
@@ -175,8 +310,11 @@ class _UserKtpPageState extends State<UserKtpPage> {
                       clipBehavior: Clip.none,
                       children: [
                         GestureDetector(
-                          onTap: () {
+                          onTap: () async {
                             // ini buat handle upload document nya thin
+                            await _pickFile((file) {
+                              _kartuKeluarga = file;
+                            });
                           },
                           child: Container(
                             height: 100,
@@ -230,6 +368,9 @@ class _UserKtpPageState extends State<UserKtpPage> {
                                   color: Colors.white, size: 16),
                               onPressed: () {
                                 // ini nanti buat remove nya thinnn mas broo
+                                _removeFile(() {
+                                  _kartuKeluarga = null;
+                                });
                               },
                             ),
                           ),
@@ -237,7 +378,7 @@ class _UserKtpPageState extends State<UserKtpPage> {
                       ],
                     ),
                   ),
-                  if (selectedReason == 'Telah berusia 17 tahun') ...[
+                  if (_alasanPembuatan == 'Telah berusia 17 tahun') ...[
                     _buildSubTitle('Surat Pengantar Desa/Kelurahan'),
                     Padding(
                       padding: const EdgeInsets.only(bottom: 16.0),
@@ -245,8 +386,11 @@ class _UserKtpPageState extends State<UserKtpPage> {
                         clipBehavior: Clip.none,
                         children: [
                           GestureDetector(
-                            onTap: () {
+                            onTap: () async {
                               // ini buat handle upload document nya thin
+                              await _pickFile((file) {
+                                _suratPengantar = file;
+                              });
                             },
                             child: Container(
                               height: 100,
@@ -300,6 +444,9 @@ class _UserKtpPageState extends State<UserKtpPage> {
                                     color: Colors.white, size: 16),
                                 onPressed: () {
                                   // ini nanti buat remove nya thinnn mas broo
+                                  _removeFile(() {
+                                    _suratPengantar = null;
+                                  });
                                 },
                               ),
                             ),
@@ -307,7 +454,7 @@ class _UserKtpPageState extends State<UserKtpPage> {
                         ],
                       ),
                     ),
-                  ] else if (selectedReason == 'KTP hilang/rusak') ...[
+                  ] else if (_alasanPembuatan == 'KTP hilang/rusak') ...[
                     _buildSubTitleWithItalic('KTP Lama', ' atau',
                         '\nSurat Kehilangan dari Kepolisian'),
                     Padding(
@@ -316,8 +463,11 @@ class _UserKtpPageState extends State<UserKtpPage> {
                         clipBehavior: Clip.none,
                         children: [
                           GestureDetector(
-                            onTap: () {
+                            onTap: () async {
                               // ini buat handle upload document nya thin
+                              await _pickFile((file) {
+                                _suratPengantar = file;
+                              });
                             },
                             child: Container(
                               height: 100,
@@ -371,6 +521,9 @@ class _UserKtpPageState extends State<UserKtpPage> {
                                     color: Colors.white, size: 16),
                                 onPressed: () {
                                   // ini nanti buat remove nya thinnn mas broo
+                                  _removeFile(() {
+                                    _buktiKehilangan = null;
+                                  });
                                 },
                               ),
                             ),
@@ -389,9 +542,7 @@ class _UserKtpPageState extends State<UserKtpPage> {
                   backgroundColor: Color(0xFFCDC2AE),
                   padding: EdgeInsets.symmetric(horizontal: 40),
                 ),
-                onPressed: () {
-                  // ini buat handle si file nya borrrr
-                },
+                onPressed: _submitForm,
                 child: Text(
                   'Ajukan',
                   style: TextStyle(
@@ -421,18 +572,23 @@ class _UserKtpPageState extends State<UserKtpPage> {
     );
   }
 
-  Widget _buildTextField(
-      {required BuildContext context,
-      required String label,
-      required String hint,
-      bool isDateField = false}) {
+  Widget _buildTextField({
+    required BuildContext context,
+    required String label,
+    required String hint,
+    required FormFieldSetter<String> onSave,
+    required FormFieldValidator<String> validator,
+    bool isDateField = false,
+    DateTime? selectedDate,
+    ValueChanged<DateTime>? onSelect,
+  }) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         _buildSubTitle(label),
         Padding(
           padding: const EdgeInsets.only(bottom: 16.0),
-          child: TextField(
+          child: TextFormField(
             readOnly: isDateField,
             onTap: isDateField
                 ? () async {
@@ -459,11 +615,8 @@ class _UserKtpPageState extends State<UserKtpPage> {
                         );
                       },
                     );
-                    if (date != null) {
-                      setState(() {
-                        // Display selected date in the text field
-                        // Format date as per requirement
-                      });
+                    if (date != null && onSelect != null) {
+                      onSelect(date);
                     }
                   }
                 : null,
@@ -482,6 +635,12 @@ class _UserKtpPageState extends State<UserKtpPage> {
               ),
               suffixIcon: isDateField ? Icon(Icons.calendar_today) : null,
             ),
+            validator: validator,
+            onSaved: onSave,
+            controller: isDateField && selectedDate != null
+                ? TextEditingController(
+                    text: "${selectedDate.toLocal()}".split(' ')[0])
+                : null,
           ),
         ),
       ],
@@ -489,15 +648,15 @@ class _UserKtpPageState extends State<UserKtpPage> {
   }
 
   Widget _buildDropdownField(BuildContext context, List<String> items,
-      {String? label, Color backgroundColor = Colors.white}) {
+      {String? label, Color backgroundColor = Colors.white, Function(String?)? onSave}) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         if (label != null) _buildSubTitle(label),
         Padding(
           padding: const EdgeInsets.only(bottom: 16.0),
-          child: DropdownButtonFormField(
-            value: items.contains(selectedReason) ? selectedReason : null,
+          child: DropdownButtonFormField<String>(
+            value: items.contains(_alasanPembuatan) ? _alasanPembuatan : items.contains(_statusPerkawinan) ? _statusPerkawinan : null,
             isDense: true,
             isExpanded: true,
             decoration: InputDecoration(
@@ -509,7 +668,8 @@ class _UserKtpPageState extends State<UserKtpPage> {
               ),
             ),
             items: items
-                .map((label) => DropdownMenuItem(
+                .map((label) => DropdownMenuItem<String>(
+                      value: label,
                       child: Text(
                         label,
                         style: TextStyle(
@@ -517,13 +677,26 @@ class _UserKtpPageState extends State<UserKtpPage> {
                           overflow: TextOverflow.ellipsis,
                         ),
                       ),
-                      value: label,
                     ))
                 .toList(),
             onChanged: (value) {
               setState(() {
-                selectedReason = value as String;
+                if (items.contains(_alasanPembuatan)) {
+                  _alasanPembuatan = value!;
+                } else if (items.contains(_statusPerkawinan)) {
+                  _statusPerkawinan = value!;
+                }
               });
+              if (onSave != null) {
+                onSave(value);
+              }
+            },
+            onSaved: onSave,
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return '$label tidak boleh kosong';
+              }
+              return null;
             },
             dropdownColor: Colors.white,
           ),
@@ -532,19 +705,56 @@ class _UserKtpPageState extends State<UserKtpPage> {
     );
   }
 
-  Widget _buildRadioButton(String title, String groupValue) {
+  Widget _buildRadioButton(String title, String? groupValue, {Function(String?)? onSave}) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 16.0),
-      child: RadioListTile(
+      child: RadioListTile<String>(
         title: Text(title, style: TextStyle(fontFamily: 'Ubuntu')),
         value: title,
-        groupValue: selectedGender,
+        groupValue: groupValue,
         onChanged: (value) {
           setState(() {
-            selectedGender = value as String;
+            _jenisKelamin = value;
           });
         },
+        controlAffinity: ListTileControlAffinity.trailing,
       ),
+    );
+  }
+
+  Widget _buildRadioButtonGroup({required String label, Function(String?)? onSave}) {
+    return FormField<String>(
+      onSaved: onSave,
+      validator: (value) {
+        if (value == null || value.isEmpty) {
+          return '$label tidak boleh kosong';
+        }
+        return null;
+      },
+      builder: (FormFieldState<String> state) {
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _buildSubTitle(label),
+            _buildRadioButton('Pria', _jenisKelamin, onSave: (value) {
+              state.didChange(value);
+              _jenisKelamin = value;
+            }),
+            _buildRadioButton('Wanita', _jenisKelamin, onSave: (value) {
+              state.didChange(value);
+              _jenisKelamin = value;
+            }),
+            if (state.hasError)
+              Padding(
+                padding: const EdgeInsets.only(left: 16.0, top: 8.0),
+                child: Text(
+                  state.errorText!,
+                  style: TextStyle(color: Colors.red, fontSize: 12),
+                ),
+              ),
+          ],
+        );
+      },
     );
   }
 
@@ -570,6 +780,35 @@ class _UserKtpPageState extends State<UserKtpPage> {
             TextSpan(text: part3),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget _buildFilePicker({
+    required String label,
+    required File? file,
+    required Future<void> Function() onPick,
+    required VoidCallback onRemove,
+  }) {
+    return Padding(
+      padding: EdgeInsets.symmetric(vertical: 8.0),
+      child: Row(
+        children: [
+          Expanded(
+            child: Text(
+              file == null ? label : 'File selected: ${file.path.split('/').last}',
+              style: TextStyle(
+                fontFamily: 'Ubuntu',
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+          IconButton(
+            icon: Icon(file == null ? Icons.upload : Icons.remove),
+            onPressed: file == null ? () async => await onPick() : onRemove,
+          ),
+        ],
       ),
     );
   }
