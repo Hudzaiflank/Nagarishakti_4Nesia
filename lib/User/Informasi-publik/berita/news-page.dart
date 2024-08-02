@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:nagarishakti/User/Informasi-publik/detail-news-page.dart';
+import 'package:nagarishakti/User/Informasi-publik/berita/detail-news-page.dart';
 
 class NewsPage extends StatefulWidget {
   @override
