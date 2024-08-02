@@ -78,8 +78,6 @@ class _UserKkPageState extends State<UserKkPage> {
     }
   }
 
-  String selectedReason = 'KK hilang/rusak';
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -201,7 +199,7 @@ class _UserKkPageState extends State<UserKkPage> {
                     onSave: (value) => _nomorNIK = int.tryParse(value!),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return 'NIK tidak boleh kosong';
+                        return 'Nomor Induk Kependudukan tidak boleh kosong';
                       }
                       return null;
                     },
@@ -214,7 +212,7 @@ class _UserKkPageState extends State<UserKkPage> {
                     onSave: (value) => _nomorKK = int.tryParse(value!),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return 'NIK tidak boleh kosong';
+                        return 'Nomor Kartu Keluarga tidak boleh kosong';
                       }
                       return null;
                     },
@@ -227,7 +225,7 @@ class _UserKkPageState extends State<UserKkPage> {
                     onSave: (value) => _nomorHandphone = int.tryParse(value!),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return 'NIK tidak boleh kosong';
+                        return 'Nomor Handphone tidak boleh kosong';
                       }
                       return null;
                     },
@@ -239,7 +237,7 @@ class _UserKkPageState extends State<UserKkPage> {
                     onSave: (value) => _email = value,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return 'Nama Lengkap tidak boleh kosong';
+                        return 'Email tidak boleh kosong';
                       }
                       return null;
                     },
@@ -276,7 +274,7 @@ class _UserKkPageState extends State<UserKkPage> {
                     ),
                   ),
                   SizedBox(height: 16.0),
-                  if (selectedReason == 'KK hilang/rusak') ...[
+                  if (_alasanPembuatan == 'KK hilang/rusak') ...[
                     _buildSubTitleWithItalic(
                       'Kartu Keluarga Lama (rusak)',
                       ' atau ',
@@ -346,6 +344,9 @@ class _UserKkPageState extends State<UserKkPage> {
                                     color: Colors.white, size: 16),
                                 onPressed: () {
                                   // ini nanti buat remove nya thinnn mas broo
+                                  _removeFile(() {
+                                    _buktiKehilangan = null;
+                                  });
                                 },
                               ),
                             ),
@@ -418,6 +419,9 @@ class _UserKkPageState extends State<UserKkPage> {
                                     color: Colors.white, size: 16),
                                 onPressed: () {
                                   // ini nanti buat remove nya thinnn mas broo
+                                  _removeFile(() {
+                                    _dokumenTambahan = null;
+                                  });
                                 },
                               ),
                             ),
@@ -425,7 +429,7 @@ class _UserKkPageState extends State<UserKkPage> {
                         ],
                       ),
                     ),
-                  ] else if (selectedReason ==
+                  ] else if (_alasanPembuatan ==
                       'KK Baru (membentuk Keluarga baru)') ...[
                     _buildSubTitleWithNormal(
                       'Buku nikah/kutipan akta perkawinan',
@@ -498,6 +502,9 @@ class _UserKkPageState extends State<UserKkPage> {
                                     color: Colors.white, size: 16),
                                 onPressed: () {
                                   // ini nanti buat remove nya thinnn mas broo
+                                  _removeFile(() {
+                                    _buktiStatusHubungan = null;
+                                  });
                                 },
                               ),
                             ),
@@ -570,6 +577,9 @@ class _UserKkPageState extends State<UserKkPage> {
                                     color: Colors.white, size: 16),
                                 onPressed: () {
                                   // ini nanti buat remove nya thinnn mas broo
+                                  _removeFile(() {
+                                    _dokumenTambahan = null;
+                                  });
                                 },
                               ),
                             ),
@@ -577,7 +587,7 @@ class _UserKkPageState extends State<UserKkPage> {
                         ],
                       ),
                     ),
-                  ] else if (selectedReason ==
+                  ] else if (_alasanPembuatan ==
                       'KK Baru (Pergantian Kepala Keluarga)') ...[
                     _buildSubTitle('Kartu Keluarga Lama'),
                     Padding(
@@ -644,6 +654,9 @@ class _UserKkPageState extends State<UserKkPage> {
                                     color: Colors.white, size: 16),
                                 onPressed: () {
                                   // ini nanti buat remove nya thinnn mas broo
+                                  _removeFile(() {
+                                    _buktiKKLama = null;
+                                  });
                                 },
                               ),
                             ),
@@ -716,6 +729,9 @@ class _UserKkPageState extends State<UserKkPage> {
                                     color: Colors.white, size: 16),
                                 onPressed: () {
                                   // ini nanti buat remove nya thinnn mas broo
+                                  _removeFile(() {
+                                    _buktiKematianKepalaKeluarga = null;
+                                  });
                                 },
                               ),
                             ),
@@ -788,6 +804,9 @@ class _UserKkPageState extends State<UserKkPage> {
                                     color: Colors.white, size: 16),
                                 onPressed: () {
                                   // ini nanti buat remove nya thinnn mas broo
+                                  _removeFile(() {
+                                    _dokumenTambahan = null;
+                                  });
                                 },
                               ),
                             ),
@@ -795,7 +814,7 @@ class _UserKkPageState extends State<UserKkPage> {
                         ],
                       ),
                     ),
-                  ] else if (selectedReason == 'KK Baru (Pindah Datang)') ...[
+                  ] else if (_alasanPembuatan == 'KK Baru (Pindah Datang)') ...[
                     _boxBuild(context),
                     _buildSubTitle('Surat Keterangan Pindah Datang (SKPD)'),
                     Padding(
@@ -862,6 +881,9 @@ class _UserKkPageState extends State<UserKkPage> {
                                     color: Colors.white, size: 16),
                                 onPressed: () {
                                   // ini nanti buat remove nya thinnn mas broo
+                                  _removeFile(() {
+                                    _buktiSKPD = null;
+                                  });
                                 },
                               ),
                             ),
@@ -934,6 +956,9 @@ class _UserKkPageState extends State<UserKkPage> {
                                     color: Colors.white, size: 16),
                                 onPressed: () {
                                   // ini nanti buat remove nya thinnn mas broo
+                                  _removeFile(() {
+                                    _buktiKKLama = null;
+                                  });
                                 },
                               ),
                             ),
@@ -1006,6 +1031,9 @@ class _UserKkPageState extends State<UserKkPage> {
                                     color: Colors.white, size: 16),
                                 onPressed: () {
                                   // ini nanti buat remove nya thinnn mas broo
+                                  _removeFile(() {
+                                    _dokumenTambahan = null;
+                                  });
                                 },
                               ),
                             ),
@@ -1013,7 +1041,7 @@ class _UserKkPageState extends State<UserKkPage> {
                         ],
                       ),
                     ),
-                  ] else if (selectedReason ==
+                  ] else if (_alasanPembuatan ==
                       'KK Baru (Pindah WNI dari luar negeri)') ...[
                     _buildSubTitle(
                         'Surat Keterangan Pindah Luar Negeri (SKPLN)'),
@@ -1081,6 +1109,9 @@ class _UserKkPageState extends State<UserKkPage> {
                                     color: Colors.white, size: 16),
                                 onPressed: () {
                                   // ini nanti buat remove nya thinnn mas broo
+                                  _removeFile(() {
+                                    _buktiSKPLN = null;
+                                  });
                                 },
                               ),
                             ),
@@ -1153,6 +1184,9 @@ class _UserKkPageState extends State<UserKkPage> {
                                     color: Colors.white, size: 16),
                                 onPressed: () {
                                   // ini nanti buat remove nya thinnn mas broo
+                                  _removeFile(() {
+                                    _dokumenTambahan = null;
+                                  });
                                 },
                               ),
                             ),
@@ -1160,7 +1194,7 @@ class _UserKkPageState extends State<UserKkPage> {
                         ],
                       ),
                     ),
-                  ] else if (selectedReason == 'KK Baru (Rentan Adminduk)') ...[
+                  ] else if (_alasanPembuatan == 'KK Baru (Rentan Adminduk)') ...[
                     _buildSubTitle('Surat Pengantar RT dan RW'),
                     Padding(
                       padding: const EdgeInsets.only(bottom: 16.0),
@@ -1226,6 +1260,9 @@ class _UserKkPageState extends State<UserKkPage> {
                                     color: Colors.white, size: 16),
                                 onPressed: () {
                                   // ini nanti buat remove nya thinnn mas broo
+                                  _removeFile(() {
+                                    _suratPengantar = null;
+                                  });
                                 },
                               ),
                             ),
@@ -1299,6 +1336,9 @@ class _UserKkPageState extends State<UserKkPage> {
                                     color: Colors.white, size: 16),
                                 onPressed: () {
                                   // ini nanti buat remove nya thinnn mas broo
+                                  _removeFile(() {
+                                    _suratPernyataanKependudukan = null;
+                                  });
                                 },
                               ),
                             ),
@@ -1371,6 +1411,9 @@ class _UserKkPageState extends State<UserKkPage> {
                                     color: Colors.white, size: 16),
                                 onPressed: () {
                                   // ini nanti buat remove nya thinnn mas broo
+                                  _removeFile(() {
+                                    _dokumenTambahan = null;
+                                  });
                                 },
                               ),
                             ),
@@ -1378,7 +1421,7 @@ class _UserKkPageState extends State<UserKkPage> {
                         ],
                       ),
                     ),
-                  ] else if (selectedReason ==
+                  ] else if (_alasanPembuatan ==
                       'KK Perubahan (Peristiwa penting)') ...[
                     _buildSubTitle('Kartu Keluarga Lama'),
                     Padding(
@@ -1445,6 +1488,9 @@ class _UserKkPageState extends State<UserKkPage> {
                                     color: Colors.white, size: 16),
                                 onPressed: () {
                                   // ini nanti buat remove nya thinnn mas broo
+                                  _removeFile(() {
+                                    _buktiKKLama = null;
+                                  });
                                 },
                               ),
                             ),
@@ -1520,6 +1566,9 @@ class _UserKkPageState extends State<UserKkPage> {
                                     color: Colors.white, size: 16),
                                 onPressed: () {
                                   // ini nanti buat remove nya thinnn mas broo
+                                  _removeFile(() {
+                                    _buktiPerubahanPeristiwa = null;
+                                  });
                                 },
                               ),
                             ),
@@ -1592,6 +1641,9 @@ class _UserKkPageState extends State<UserKkPage> {
                                     color: Colors.white, size: 16),
                                 onPressed: () {
                                   // ini nanti buat remove nya thinnn mas broo
+                                  _removeFile(() {
+                                    _dokumenTambahan = null;
+                                  });
                                 },
                               ),
                             ),
@@ -1670,7 +1722,8 @@ class _UserKkPageState extends State<UserKkPage> {
     required BuildContext context,
     required String label,
     required String hint,
-    bool isDateField = false,
+    required FormFieldSetter<String> onSave,
+    required FormFieldValidator<String> validator,
     bool isNumber = false,
   }) {
     return Column(
@@ -1679,39 +1732,9 @@ class _UserKkPageState extends State<UserKkPage> {
         _buildSubTitle(label),
         Padding(
           padding: const EdgeInsets.only(bottom: 16.0),
-          child: TextField(
-            readOnly: isDateField,
-            onTap: isDateField
-                ? () async {
-                    DateTime? date = await showDatePicker(
-                      context: context,
-                      initialDate: DateTime.now(),
-                      firstDate: DateTime(1900),
-                      lastDate: DateTime(2100),
-                      builder: (BuildContext context, Widget? child) {
-                        return Theme(
-                          data: ThemeData.light().copyWith(
-                            primaryColor: Color(0xFF4297A0),
-                            colorScheme: ColorScheme.light(
-                              primary: Color(0xFF4297A0),
-                              onPrimary: Colors.white,
-                              onSurface: Colors.black,
-                            ),
-                            buttonTheme: ButtonThemeData(
-                              textTheme: ButtonTextTheme.primary,
-                            ),
-                            dialogBackgroundColor: Colors.white,
-                          ),
-                          child: child!,
-                        );
-                      },
-                    );
-                    // Handle the selected date
-                  }
-                : null,
+          child: TextFormField(
             keyboardType: isNumber ? TextInputType.number : TextInputType.text,
-            inputFormatters:
-                isNumber ? [FilteringTextInputFormatter.digitsOnly] : [],
+            inputFormatters: isNumber ? [FilteringTextInputFormatter.digitsOnly] : [],
             decoration: InputDecoration(
               hintText: hint,
               hintStyle: TextStyle(
@@ -1725,8 +1748,9 @@ class _UserKkPageState extends State<UserKkPage> {
                 borderRadius: BorderRadius.circular(7),
                 borderSide: BorderSide.none,
               ),
-              suffixIcon: isDateField ? Icon(Icons.calendar_today) : null,
             ),
+            validator: validator,
+            onSaved: onSave,
           ),
         ),
       ],
@@ -1734,15 +1758,15 @@ class _UserKkPageState extends State<UserKkPage> {
   }
 
   Widget _buildDropdownField(BuildContext context, List<String> items,
-      {String? label, Color backgroundColor = Colors.white}) {
+      {String? label, Color backgroundColor = Colors.white, Function(String?)? onSave}) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         if (label != null) _buildSubTitle(label),
         Padding(
           padding: const EdgeInsets.only(bottom: 16.0),
-          child: DropdownButtonFormField(
-            value: selectedReason,
+          child: DropdownButtonFormField<String>(
+            value: items.contains(_alasanPembuatan) ? _alasanPembuatan : null,
             isDense: true,
             isExpanded: true,
             decoration: InputDecoration(
@@ -1754,7 +1778,8 @@ class _UserKkPageState extends State<UserKkPage> {
               ),
             ),
             items: items
-                .map((label) => DropdownMenuItem(
+                .map((label) => DropdownMenuItem<String>(
+                      value: label,
                       child: Text(
                         label,
                         style: TextStyle(
@@ -1762,13 +1787,22 @@ class _UserKkPageState extends State<UserKkPage> {
                           overflow: TextOverflow.ellipsis,
                         ),
                       ),
-                      value: label,
                     ))
                 .toList(),
             onChanged: (value) {
               setState(() {
-                selectedReason = value as String;
+                _alasanPembuatan = value!;
               });
+              if (onSave != null) {
+                onSave(value);
+              }
+            },
+            onSaved: onSave,
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return '$label tidak boleh kosong';
+              }
+              return null;
             },
             dropdownColor: Colors.white,
           ),
@@ -1875,6 +1909,35 @@ class _UserKkPageState extends State<UserKkPage> {
           ],
         ),
         textAlign: TextAlign.justify,
+      ),
+    );
+  }
+
+  Widget _buildFilePicker({
+    required String label,
+    required File? file,
+    required Future<void> Function() onPick,
+    required VoidCallback onRemove,
+  }) {
+    return Padding(
+      padding: EdgeInsets.symmetric(vertical: 8.0),
+      child: Row(
+        children: [
+          Expanded(
+            child: Text(
+              file == null ? label : 'File selected: ${file.path.split('/').last}',
+              style: TextStyle(
+                fontFamily: 'Ubuntu',
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+          IconButton(
+            icon: Icon(file == null ? Icons.upload : Icons.remove),
+            onPressed: file == null ? () async => await onPick() : onRemove,
+          ),
+        ],
       ),
     );
   }
