@@ -12,7 +12,7 @@ class DatabaseKtp {
 
   Future<Database> get database async {
     if (_database != null) return _database!;
-    _database = await _initDB('ktp_database.db');
+    _database = await _initDB('ktpBaru.db');
     return _database!;
   }
 
@@ -40,7 +40,7 @@ class DatabaseKtp {
         alamatLengkap TEXT NOT NULL,
         agama TEXT NOT NULL,
         jenisPekerjaan TEXT NOT NULL,
-        statusPerkawinan NOT NULL,
+        statusPerkawinan TEXT NOT NULL,
         kartuKeluarga TEXT NOT NULL,
         suratPengantar TEXT NOT NULL,
         buktiKehilangan TEXT NOT NULL
@@ -62,8 +62,8 @@ class DatabaseKtp {
   await db.update(
     'ktpBaru',
     ktp.toMap(),
-    where: 'alasanPembuatan = ?',
-    whereArgs: [ktp.alasanPembuatan],
+    where: 'id = ?',
+    whereArgs: [ktp.id],
   );
 }
 

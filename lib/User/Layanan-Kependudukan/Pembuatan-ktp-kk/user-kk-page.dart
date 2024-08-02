@@ -1,14 +1,83 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/services.dart';
+import '/Database/database_kk.dart';
 import '../../user-home.dart';
+import 'package:file_picker/file_picker.dart';
 
 class UserKkPage extends StatefulWidget {
+  const UserKkPage({super.key});
+
   @override
   _UserKkPageState createState() => _UserKkPageState();
 }
 
 class _UserKkPageState extends State<UserKkPage> {
+  final _formKey = GlobalKey<FormState>();
+  String? _alasanPembuatan;
+  String? _namaLengkap;
+  int? _nomorNIK;
+  int? _nomorKK;
+  int? _nomorHandphone;
+  String? _email;
+  File? _buktiKehilangan;
+  File? _buktiStatusHubungan;
+  File? _buktiKKLama;
+  File? _buktiKematianKepalaKeluarga;
+  File? _buktiSKPD;
+  File? _buktiSKPLN;
+  File? _suratPengantar;
+  File? _suratPernyataanKependudukan;
+  File? _buktiPerubahanPeristiwa;
+  File? _dokumenTambahan;
+
+  Future<void> _pickFile(Function(File) onFilePicked) async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles();
+    if (result != null) {
+      File file = File(result.files.single.path!);
+      setState(() {
+        onFilePicked(file);
+      });
+    }
+  }
+
+  void _removeFile(Function() onFileRemoved) {
+    setState(() {
+      onFileRemoved();
+    });
+  }
+
+  void _submitForm() async {
+    if (_formKey.currentState!.validate()) {
+      _formKey.currentState!.save();
+
+      final newKk = Kk(
+        alasanPembuatan: _alasanPembuatan!,
+        namaLengkap: _namaLengkap!,
+        nomorNIK: _nomorNIK!,
+        nomorKK: _nomorKK!,
+        nomorHandphone: _nomorHandphone!,
+        email: _email!,
+        buktiKehilangan: _buktiKehilangan!,
+        buktiStatusHubungan: _buktiStatusHubungan!,
+        buktiKKLama: _buktiKKLama!,
+        buktiKematianKepalaKeluarga: _buktiKematianKepalaKeluarga!,
+        buktiSKPD: _buktiSKPD!,
+        buktiSKPLN: _buktiSKPLN!,
+        suratPengantar: _suratPengantar!,
+        suratPernyataanKependudukan: _suratPernyataanKependudukan!,
+        buktiPerubahanPeristiwa: _buktiPerubahanPeristiwa!,
+        dokumenTambahan: _dokumenTambahan!,
+      );
+
+      final dbKk = DatabaseKk.instance;
+      await dbKk.insertKk(newKk);
+
+      Navigator.pop(context);
+    }
+  }
+
   String selectedReason = 'KK hilang/rusak';
 
   @override
@@ -83,6 +152,7 @@ class _UserKkPageState extends State<UserKkPage> {
                       'KK Baru (Rentan Adminduk)',
                       'KK Perubahan (Peristiwa penting)'
                     ],
+                    onSave: (value) => _alasanPembuatan = value,
                   ),
                 ],
               ),
@@ -115,29 +185,64 @@ class _UserKkPageState extends State<UserKkPage> {
                     context: context,
                     label: 'Nama Lengkap',
                     hint: 'nama lengkap kepala keluarga',
+                    onSave: (value) => _namaLengkap = value,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Nama Lengkap tidak boleh kosong';
+                      }
+                      return null;
+                    },
                   ),
                   _buildTextField(
                     context: context,
                     label: 'Nomor Induk Kependudukan',
                     hint: 'nomor induk kependudukan',
                     isNumber: true,
+                    onSave: (value) => _nomorNIK = int.tryParse(value!),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'NIK tidak boleh kosong';
+                      }
+                      return null;
+                    },
                   ),
                   _buildTextField(
                     context: context,
                     label: 'Nomor Kartu Keluarga',
                     hint: 'nomor kartu keluarga',
                     isNumber: true,
+                    onSave: (value) => _nomorKK = int.tryParse(value!),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'NIK tidak boleh kosong';
+                      }
+                      return null;
+                    },
                   ),
                   _buildTextField(
                     context: context,
                     label: 'Nomor Handphone',
                     hint: 'nomor handphone',
                     isNumber: true,
+                    onSave: (value) => _nomorHandphone = int.tryParse(value!),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'NIK tidak boleh kosong';
+                      }
+                      return null;
+                    },
                   ),
                   _buildTextField(
                     context: context,
                     label: 'Email',
                     hint: 'alamat email',
+                    onSave: (value) => _email = value,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Nama Lengkap tidak boleh kosong';
+                      }
+                      return null;
+                    },
                   ),
                 ],
               ),
@@ -183,8 +288,11 @@ class _UserKkPageState extends State<UserKkPage> {
                         clipBehavior: Clip.none,
                         children: [
                           GestureDetector(
-                            onTap: () {
+                            onTap: () async {
                               // ini buat handle upload document nya thin
+                              await _pickFile((file) {
+                                _buktiKehilangan = file;
+                              });
                             },
                             child: Container(
                               height: 100,
@@ -252,8 +360,11 @@ class _UserKkPageState extends State<UserKkPage> {
                         clipBehavior: Clip.none,
                         children: [
                           GestureDetector(
-                            onTap: () {
+                            onTap: () async {
                               // ini buat handle upload document nya thin
+                              await _pickFile((file) {
+                                _dokumenTambahan = file;
+                              });
                             },
                             child: Container(
                               height: 100,
@@ -329,8 +440,11 @@ class _UserKkPageState extends State<UserKkPage> {
                         clipBehavior: Clip.none,
                         children: [
                           GestureDetector(
-                            onTap: () {
+                            onTap: () async {
                               // ini buat handle upload document nya thin
+                              await _pickFile((file) {
+                                _buktiStatusHubungan = file;
+                              });
                             },
                             child: Container(
                               height: 100,
@@ -398,8 +512,11 @@ class _UserKkPageState extends State<UserKkPage> {
                         clipBehavior: Clip.none,
                         children: [
                           GestureDetector(
-                            onTap: () {
+                            onTap: () async {
                               // ini buat handle upload document nya thin
+                              await _pickFile((file) {
+                                _dokumenTambahan = file;
+                              });
                             },
                             child: Container(
                               height: 100,
@@ -469,8 +586,11 @@ class _UserKkPageState extends State<UserKkPage> {
                         clipBehavior: Clip.none,
                         children: [
                           GestureDetector(
-                            onTap: () {
+                            onTap: () async {
                               // ini buat handle upload document nya thin
+                              await _pickFile((file) {
+                                _buktiKKLama = file;
+                              });
                             },
                             child: Container(
                               height: 100,
@@ -538,8 +658,11 @@ class _UserKkPageState extends State<UserKkPage> {
                         clipBehavior: Clip.none,
                         children: [
                           GestureDetector(
-                            onTap: () {
+                            onTap: () async {
                               // ini buat handle upload document nya thin
+                              await _pickFile((file) {
+                                _buktiKematianKepalaKeluarga = file;
+                              });
                             },
                             child: Container(
                               height: 100,
@@ -607,8 +730,11 @@ class _UserKkPageState extends State<UserKkPage> {
                         clipBehavior: Clip.none,
                         children: [
                           GestureDetector(
-                            onTap: () {
+                            onTap: () async {
                               // ini buat handle upload document nya thin
+                              await _pickFile((file) {
+                                _dokumenTambahan = file;
+                              });
                             },
                             child: Container(
                               height: 100,
@@ -678,8 +804,11 @@ class _UserKkPageState extends State<UserKkPage> {
                         clipBehavior: Clip.none,
                         children: [
                           GestureDetector(
-                            onTap: () {
+                            onTap: () async {
                               // ini buat handle upload document nya thin
+                              await _pickFile((file) {
+                                _buktiSKPD = file;
+                              });
                             },
                             child: Container(
                               height: 100,
@@ -747,8 +876,11 @@ class _UserKkPageState extends State<UserKkPage> {
                         clipBehavior: Clip.none,
                         children: [
                           GestureDetector(
-                            onTap: () {
+                            onTap: () async {
                               // ini buat handle upload document nya thin
+                              await _pickFile((file) {
+                                _buktiKKLama = file;
+                              });
                             },
                             child: Container(
                               height: 100,
@@ -816,8 +948,11 @@ class _UserKkPageState extends State<UserKkPage> {
                         clipBehavior: Clip.none,
                         children: [
                           GestureDetector(
-                            onTap: () {
+                            onTap: () async {
                               // ini buat handle upload document nya thin
+                              await _pickFile((file) {
+                                _dokumenTambahan = file;
+                              });
                             },
                             child: Container(
                               height: 100,
@@ -888,8 +1023,11 @@ class _UserKkPageState extends State<UserKkPage> {
                         clipBehavior: Clip.none,
                         children: [
                           GestureDetector(
-                            onTap: () {
+                            onTap: () async {
                               // ini buat handle upload document nya thin
+                              await _pickFile((file) {
+                                _buktiSKPLN = file;
+                              });
                             },
                             child: Container(
                               height: 100,
@@ -957,8 +1095,11 @@ class _UserKkPageState extends State<UserKkPage> {
                         clipBehavior: Clip.none,
                         children: [
                           GestureDetector(
-                            onTap: () {
+                            onTap: () async {
                               // ini buat handle upload document nya thin
+                              await _pickFile((file) {
+                                _dokumenTambahan = file;
+                              });
                             },
                             child: Container(
                               height: 100,
@@ -1027,8 +1168,11 @@ class _UserKkPageState extends State<UserKkPage> {
                         clipBehavior: Clip.none,
                         children: [
                           GestureDetector(
-                            onTap: () {
+                            onTap: () async {
                               // ini buat handle upload document nya thin
+                              await _pickFile((file) {
+                                _suratPengantar = file;
+                              });
                             },
                             child: Container(
                               height: 100,
@@ -1097,8 +1241,11 @@ class _UserKkPageState extends State<UserKkPage> {
                         clipBehavior: Clip.none,
                         children: [
                           GestureDetector(
-                            onTap: () {
+                            onTap: () async {
                               // ini buat handle upload document nya thin
+                              await _pickFile((file) {
+                                _suratPernyataanKependudukan = file;
+                              });
                             },
                             child: Container(
                               height: 100,
@@ -1166,8 +1313,11 @@ class _UserKkPageState extends State<UserKkPage> {
                         clipBehavior: Clip.none,
                         children: [
                           GestureDetector(
-                            onTap: () {
+                            onTap: () async {
                               // ini buat handle upload document nya thin
+                              await _pickFile((file) {
+                                _dokumenTambahan = file;
+                              });
                             },
                             child: Container(
                               height: 100,
@@ -1237,8 +1387,11 @@ class _UserKkPageState extends State<UserKkPage> {
                         clipBehavior: Clip.none,
                         children: [
                           GestureDetector(
-                            onTap: () {
+                            onTap: () async {
                               // ini buat handle upload document nya thin
+                              await _pickFile((file) {
+                                _buktiKKLama = file;
+                              });
                             },
                             child: Container(
                               height: 100,
@@ -1309,8 +1462,11 @@ class _UserKkPageState extends State<UserKkPage> {
                         clipBehavior: Clip.none,
                         children: [
                           GestureDetector(
-                            onTap: () {
+                            onTap: () async {
                               // ini buat handle upload document nya thin
+                              await _pickFile((file) {
+                                _buktiPerubahanPeristiwa = file;
+                              });
                             },
                             child: Container(
                               height: 100,
@@ -1378,8 +1534,11 @@ class _UserKkPageState extends State<UserKkPage> {
                         clipBehavior: Clip.none,
                         children: [
                           GestureDetector(
-                            onTap: () {
+                            onTap: () async {
                               // ini buat handle upload document nya thin
+                              await _pickFile((file) {
+                                _dokumenTambahan = file;
+                              });
                             },
                             child: Container(
                               height: 100,
@@ -1451,9 +1610,7 @@ class _UserKkPageState extends State<UserKkPage> {
                   backgroundColor: Color(0xFFCDC2AE),
                   padding: EdgeInsets.symmetric(horizontal: 40),
                 ),
-                onPressed: () {
-                  // ini buat handle submit nya thinnn
-                },
+                onPressed: _submitForm, // ini buat handle submit nya thinnn
                 child: Text(
                   'Ajukan',
                   style: TextStyle(

@@ -542,7 +542,7 @@ class _UserKtpPageState extends State<UserKtpPage> {
                   backgroundColor: Color(0xFFCDC2AE),
                   padding: EdgeInsets.symmetric(horizontal: 40),
                 ),
-                onPressed: _submitForm,
+                onPressed: _submitForm, // ini buat handle submit nya thinnn
                 child: Text(
                   'Ajukan',
                   style: TextStyle(
