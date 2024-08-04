@@ -81,6 +81,7 @@ class _UserKkPageState extends State<UserKkPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _formKey,
       backgroundColor: Color(0xFF4297A0),
       body: SingleChildScrollView(
         padding: EdgeInsets.all(16.0),
@@ -1658,11 +1659,11 @@ class _UserKkPageState extends State<UserKkPage> {
             SizedBox(height: 16.0),
             Center(
               child: ElevatedButton(
+                onPressed: _submitForm, // ini buat handle submit nya thinnn
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Color(0xFFCDC2AE),
                   padding: EdgeInsets.symmetric(horizontal: 40),
                 ),
-                onPressed: _submitForm, // ini buat handle submit nya thinnn
                 child: Text(
                   'Ajukan',
                   style: TextStyle(
