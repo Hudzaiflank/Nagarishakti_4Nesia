@@ -12,6 +12,7 @@ import './Layanan-Kependudukan/Pendaftaran-AktaLahir-kematian/Surat-kematian.dar
 import './Layanan-Kependudukan/Pembaruan-data/perpindahan-kependudukan.dart';
 import 'Informasi-publik/berita/news-page.dart';
 import 'Informasi-publik/Dokumen-publik/Public-Document.dart';
+import 'Informasi-publik/Agenda-Pemerintah/Agenda-pemerintahan.dart';
 
 class UserHome extends StatefulWidget {
   const UserHome({super.key});
@@ -1356,7 +1357,14 @@ class _UserHomeState extends State<UserHome> {
                               padding:
                                   const EdgeInsets.symmetric(horizontal: 40.0),
                               child: ElevatedButton(
-                                onPressed: () {},
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            AgendaPemerintahan()),
+                                  );
+                                },
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor: const Color(0xFFAAA79C),
                                   shape: RoundedRectangleBorder(
@@ -1373,6 +1381,7 @@ class _UserHomeState extends State<UserHome> {
                                 ),
                               ),
                             ),
+                            const SizedBox(height: 10),
                           ],
                         ),
                       ],
@@ -1381,6 +1390,106 @@ class _UserHomeState extends State<UserHome> {
                 ],
               ),
             ),
+            const SizedBox(height: 10),
+
+            // Informasi Pariwisata
+            Container(
+              margin:
+                  const EdgeInsets.symmetric(horizontal: 16.0, vertical: 5.0),
+              padding: const EdgeInsets.all(0.0),
+              decoration: BoxDecoration(
+                color: const Color(0xFF327178),
+                borderRadius: BorderRadius.circular(7.0),
+              ),
+              child: Column(
+                children: [
+                  const Padding(
+                    padding: EdgeInsets.symmetric(vertical: 12.0),
+                    child: Text(
+                      'INFORMASI PARIWISATA',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontFamily: 'Ubuntu',
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18,
+                      ),
+                    ),
+                  ),
+                  Container(
+                    decoration: BoxDecoration(
+                      color: const Color(0xFFF8F6F3),
+                      borderRadius: BorderRadius.circular(7.0),
+                    ),
+                    child: Column(
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => UserDestinationPage()),
+                            );
+                          },
+                          child: ListTile(
+                            leading: SizedBox(
+                              width: 30,
+                              child: Image.asset(
+                                  'assets/user-home/Status-Document.png',
+                                  height: 30),
+                            ),
+                            title: const Text(
+                              'Status Pengajuan Dokumen',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontFamily: 'Ubuntu',
+                              ),
+                            ),
+                            subtitle: const Text(
+                              'Lihat statistik pengajuan dokumen Anda',
+                              style: TextStyle(fontFamily: 'Ubuntu'),
+                              textAlign: TextAlign.justify,
+                            ),
+                          ),
+                        ),
+                        const Divider(height: 1),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      UserTransportationPage()),
+                            );
+                          },
+                          child: ListTile(
+                            leading: SizedBox(
+                              width: 30,
+                              child: Image.asset(
+                                  'assets/user-home/Complaint-status.png',
+                                  height: 30),
+                            ),
+                            title: const Text(
+                              'Status Pengaduan',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontFamily: 'Ubuntu',
+                              ),
+                            ),
+                            subtitle: const Text(
+                              'Lihat statistik pengajuan aduan ',
+                              style: TextStyle(fontFamily: 'Ubuntu'),
+                              textAlign: TextAlign.justify,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 10),
           ],
         ),
       ),
