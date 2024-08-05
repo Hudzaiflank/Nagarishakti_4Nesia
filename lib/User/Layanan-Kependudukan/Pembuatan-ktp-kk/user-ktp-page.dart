@@ -88,6 +88,7 @@ class _UserKtpPageState extends State<UserKtpPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _formKey,
       backgroundColor: Color(0xFF4297A0),
       body: SingleChildScrollView(
         padding: EdgeInsets.all(16.0),
@@ -168,6 +169,7 @@ class _UserKtpPageState extends State<UserKtpPage> {
                     context: context,
                     label: 'NIK',
                     hint: 'nomor induk kependudukan',
+                    keyboardType: TextInputType.number,
                     onSave: (value) => _nik = int.tryParse(value!),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
@@ -538,11 +540,11 @@ class _UserKtpPageState extends State<UserKtpPage> {
             SizedBox(height: 16.0),
             Center(
               child: ElevatedButton(
+                onPressed: _submitForm, // ini buat handle submit nya thinnn
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Color(0xFFCDC2AE),
                   padding: EdgeInsets.symmetric(horizontal: 40),
                 ),
-                onPressed: _submitForm,
                 child: Text(
                   'Ajukan',
                   style: TextStyle(
@@ -578,6 +580,7 @@ class _UserKtpPageState extends State<UserKtpPage> {
     required String hint,
     required FormFieldSetter<String> onSave,
     required FormFieldValidator<String> validator,
+    TextInputType keyboardType = TextInputType.text,
     bool isDateField = false,
     DateTime? selectedDate,
     ValueChanged<DateTime>? onSelect,
@@ -589,6 +592,7 @@ class _UserKtpPageState extends State<UserKtpPage> {
         Padding(
           padding: const EdgeInsets.only(bottom: 16.0),
           child: TextFormField(
+            keyboardType: keyboardType,
             readOnly: isDateField,
             onTap: isDateField
                 ? () async {

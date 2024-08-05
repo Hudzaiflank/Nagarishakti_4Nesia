@@ -1,19 +1,87 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/services.dart';
+import '/Database/database_kk.dart';
 import '../../user-home.dart';
+import 'package:file_picker/file_picker.dart';
 
 class UserKkPage extends StatefulWidget {
+  const UserKkPage({super.key});
+
   @override
   _UserKkPageState createState() => _UserKkPageState();
 }
 
 class _UserKkPageState extends State<UserKkPage> {
-  String selectedReason = 'KK hilang/rusak';
+  final _formKey = GlobalKey<FormState>();
+  String? _alasanPembuatan;
+  String? _namaLengkap;
+  int? _nomorNIK;
+  int? _nomorKK;
+  int? _nomorHandphone;
+  String? _email;
+  File? _buktiKehilangan;
+  File? _buktiStatusHubungan;
+  File? _buktiKKLama;
+  File? _buktiKematianKepalaKeluarga;
+  File? _buktiSKPD;
+  File? _buktiSKPLN;
+  File? _suratPengantar;
+  File? _suratPernyataanKependudukan;
+  File? _buktiPerubahanPeristiwa;
+  File? _dokumenTambahan;
+
+  Future<void> _pickFile(Function(File) onFilePicked) async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles();
+    if (result != null) {
+      File file = File(result.files.single.path!);
+      setState(() {
+        onFilePicked(file);
+      });
+    }
+  }
+
+  void _removeFile(Function() onFileRemoved) {
+    setState(() {
+      onFileRemoved();
+    });
+  }
+
+  void _submitForm() async {
+    if (_formKey.currentState!.validate()) {
+      _formKey.currentState!.save();
+
+      final newKk = Kk(
+        alasanPembuatan: _alasanPembuatan!,
+        namaLengkap: _namaLengkap!,
+        nomorNIK: _nomorNIK!,
+        nomorKK: _nomorKK!,
+        nomorHandphone: _nomorHandphone!,
+        email: _email!,
+        buktiKehilangan: _buktiKehilangan!,
+        buktiStatusHubungan: _buktiStatusHubungan!,
+        buktiKKLama: _buktiKKLama!,
+        buktiKematianKepalaKeluarga: _buktiKematianKepalaKeluarga!,
+        buktiSKPD: _buktiSKPD!,
+        buktiSKPLN: _buktiSKPLN!,
+        suratPengantar: _suratPengantar!,
+        suratPernyataanKependudukan: _suratPernyataanKependudukan!,
+        buktiPerubahanPeristiwa: _buktiPerubahanPeristiwa!,
+        dokumenTambahan: _dokumenTambahan!,
+      );
+
+      final dbKk = DatabaseKk.instance;
+      await dbKk.insertKk(newKk);
+
+      Navigator.pop(context);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _formKey,
       backgroundColor: Color(0xFF4297A0),
       body: SingleChildScrollView(
         padding: EdgeInsets.all(16.0),
@@ -83,6 +151,7 @@ class _UserKkPageState extends State<UserKkPage> {
                       'KK Baru (Rentan Adminduk)',
                       'KK Perubahan (Peristiwa penting)'
                     ],
+                    onSave: (value) => _alasanPembuatan = value,
                   ),
                 ],
               ),
@@ -115,29 +184,64 @@ class _UserKkPageState extends State<UserKkPage> {
                     context: context,
                     label: 'Nama Lengkap',
                     hint: 'nama lengkap kepala keluarga',
+                    onSave: (value) => _namaLengkap = value,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Nama Lengkap tidak boleh kosong';
+                      }
+                      return null;
+                    },
                   ),
                   _buildTextField(
                     context: context,
                     label: 'Nomor Induk Kependudukan',
                     hint: 'nomor induk kependudukan',
                     isNumber: true,
+                    onSave: (value) => _nomorNIK = int.tryParse(value!),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Nomor Induk Kependudukan tidak boleh kosong';
+                      }
+                      return null;
+                    },
                   ),
                   _buildTextField(
                     context: context,
                     label: 'Nomor Kartu Keluarga',
                     hint: 'nomor kartu keluarga',
                     isNumber: true,
+                    onSave: (value) => _nomorKK = int.tryParse(value!),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Nomor Kartu Keluarga tidak boleh kosong';
+                      }
+                      return null;
+                    },
                   ),
                   _buildTextField(
                     context: context,
                     label: 'Nomor Handphone',
                     hint: 'nomor handphone',
                     isNumber: true,
+                    onSave: (value) => _nomorHandphone = int.tryParse(value!),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Nomor Handphone tidak boleh kosong';
+                      }
+                      return null;
+                    },
                   ),
                   _buildTextField(
                     context: context,
                     label: 'Email',
                     hint: 'alamat email',
+                    onSave: (value) => _email = value,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Email tidak boleh kosong';
+                      }
+                      return null;
+                    },
                   ),
                 ],
               ),
@@ -171,7 +275,7 @@ class _UserKkPageState extends State<UserKkPage> {
                     ),
                   ),
                   SizedBox(height: 16.0),
-                  if (selectedReason == 'KK hilang/rusak') ...[
+                  if (_alasanPembuatan == 'KK hilang/rusak') ...[
                     _buildSubTitleWithItalic(
                       'Kartu Keluarga Lama (rusak)',
                       ' atau ',
@@ -183,8 +287,11 @@ class _UserKkPageState extends State<UserKkPage> {
                         clipBehavior: Clip.none,
                         children: [
                           GestureDetector(
-                            onTap: () {
+                            onTap: () async {
                               // ini buat handle upload document nya thin
+                              await _pickFile((file) {
+                                _buktiKehilangan = file;
+                              });
                             },
                             child: Container(
                               height: 100,
@@ -238,6 +345,9 @@ class _UserKkPageState extends State<UserKkPage> {
                                     color: Colors.white, size: 16),
                                 onPressed: () {
                                   // ini nanti buat remove nya thinnn mas broo
+                                  _removeFile(() {
+                                    _buktiKehilangan = null;
+                                  });
                                 },
                               ),
                             ),
@@ -252,8 +362,11 @@ class _UserKkPageState extends State<UserKkPage> {
                         clipBehavior: Clip.none,
                         children: [
                           GestureDetector(
-                            onTap: () {
+                            onTap: () async {
                               // ini buat handle upload document nya thin
+                              await _pickFile((file) {
+                                _dokumenTambahan = file;
+                              });
                             },
                             child: Container(
                               height: 100,
@@ -307,6 +420,9 @@ class _UserKkPageState extends State<UserKkPage> {
                                     color: Colors.white, size: 16),
                                 onPressed: () {
                                   // ini nanti buat remove nya thinnn mas broo
+                                  _removeFile(() {
+                                    _dokumenTambahan = null;
+                                  });
                                 },
                               ),
                             ),
@@ -314,7 +430,7 @@ class _UserKkPageState extends State<UserKkPage> {
                         ],
                       ),
                     ),
-                  ] else if (selectedReason ==
+                  ] else if (_alasanPembuatan ==
                       'KK Baru (membentuk Keluarga baru)') ...[
                     _buildSubTitleWithNormal(
                       'Buku nikah/kutipan akta perkawinan',
@@ -329,8 +445,11 @@ class _UserKkPageState extends State<UserKkPage> {
                         clipBehavior: Clip.none,
                         children: [
                           GestureDetector(
-                            onTap: () {
+                            onTap: () async {
                               // ini buat handle upload document nya thin
+                              await _pickFile((file) {
+                                _buktiStatusHubungan = file;
+                              });
                             },
                             child: Container(
                               height: 100,
@@ -384,6 +503,9 @@ class _UserKkPageState extends State<UserKkPage> {
                                     color: Colors.white, size: 16),
                                 onPressed: () {
                                   // ini nanti buat remove nya thinnn mas broo
+                                  _removeFile(() {
+                                    _buktiStatusHubungan = null;
+                                  });
                                 },
                               ),
                             ),
@@ -398,8 +520,11 @@ class _UserKkPageState extends State<UserKkPage> {
                         clipBehavior: Clip.none,
                         children: [
                           GestureDetector(
-                            onTap: () {
+                            onTap: () async {
                               // ini buat handle upload document nya thin
+                              await _pickFile((file) {
+                                _dokumenTambahan = file;
+                              });
                             },
                             child: Container(
                               height: 100,
@@ -453,6 +578,9 @@ class _UserKkPageState extends State<UserKkPage> {
                                     color: Colors.white, size: 16),
                                 onPressed: () {
                                   // ini nanti buat remove nya thinnn mas broo
+                                  _removeFile(() {
+                                    _dokumenTambahan = null;
+                                  });
                                 },
                               ),
                             ),
@@ -460,7 +588,7 @@ class _UserKkPageState extends State<UserKkPage> {
                         ],
                       ),
                     ),
-                  ] else if (selectedReason ==
+                  ] else if (_alasanPembuatan ==
                       'KK Baru (Pergantian Kepala Keluarga)') ...[
                     _buildSubTitle('Kartu Keluarga Lama'),
                     Padding(
@@ -469,8 +597,11 @@ class _UserKkPageState extends State<UserKkPage> {
                         clipBehavior: Clip.none,
                         children: [
                           GestureDetector(
-                            onTap: () {
+                            onTap: () async {
                               // ini buat handle upload document nya thin
+                              await _pickFile((file) {
+                                _buktiKKLama = file;
+                              });
                             },
                             child: Container(
                               height: 100,
@@ -524,6 +655,9 @@ class _UserKkPageState extends State<UserKkPage> {
                                     color: Colors.white, size: 16),
                                 onPressed: () {
                                   // ini nanti buat remove nya thinnn mas broo
+                                  _removeFile(() {
+                                    _buktiKKLama = null;
+                                  });
                                 },
                               ),
                             ),
@@ -538,8 +672,11 @@ class _UserKkPageState extends State<UserKkPage> {
                         clipBehavior: Clip.none,
                         children: [
                           GestureDetector(
-                            onTap: () {
+                            onTap: () async {
                               // ini buat handle upload document nya thin
+                              await _pickFile((file) {
+                                _buktiKematianKepalaKeluarga = file;
+                              });
                             },
                             child: Container(
                               height: 100,
@@ -593,6 +730,9 @@ class _UserKkPageState extends State<UserKkPage> {
                                     color: Colors.white, size: 16),
                                 onPressed: () {
                                   // ini nanti buat remove nya thinnn mas broo
+                                  _removeFile(() {
+                                    _buktiKematianKepalaKeluarga = null;
+                                  });
                                 },
                               ),
                             ),
@@ -607,8 +747,11 @@ class _UserKkPageState extends State<UserKkPage> {
                         clipBehavior: Clip.none,
                         children: [
                           GestureDetector(
-                            onTap: () {
+                            onTap: () async {
                               // ini buat handle upload document nya thin
+                              await _pickFile((file) {
+                                _dokumenTambahan = file;
+                              });
                             },
                             child: Container(
                               height: 100,
@@ -662,6 +805,9 @@ class _UserKkPageState extends State<UserKkPage> {
                                     color: Colors.white, size: 16),
                                 onPressed: () {
                                   // ini nanti buat remove nya thinnn mas broo
+                                  _removeFile(() {
+                                    _dokumenTambahan = null;
+                                  });
                                 },
                               ),
                             ),
@@ -669,7 +815,7 @@ class _UserKkPageState extends State<UserKkPage> {
                         ],
                       ),
                     ),
-                  ] else if (selectedReason == 'KK Baru (Pindah Datang)') ...[
+                  ] else if (_alasanPembuatan == 'KK Baru (Pindah Datang)') ...[
                     _boxBuild(context),
                     _buildSubTitle('Surat Keterangan Pindah Datang (SKPD)'),
                     Padding(
@@ -678,8 +824,11 @@ class _UserKkPageState extends State<UserKkPage> {
                         clipBehavior: Clip.none,
                         children: [
                           GestureDetector(
-                            onTap: () {
+                            onTap: () async {
                               // ini buat handle upload document nya thin
+                              await _pickFile((file) {
+                                _buktiSKPD = file;
+                              });
                             },
                             child: Container(
                               height: 100,
@@ -733,6 +882,9 @@ class _UserKkPageState extends State<UserKkPage> {
                                     color: Colors.white, size: 16),
                                 onPressed: () {
                                   // ini nanti buat remove nya thinnn mas broo
+                                  _removeFile(() {
+                                    _buktiSKPD = null;
+                                  });
                                 },
                               ),
                             ),
@@ -747,8 +899,11 @@ class _UserKkPageState extends State<UserKkPage> {
                         clipBehavior: Clip.none,
                         children: [
                           GestureDetector(
-                            onTap: () {
+                            onTap: () async {
                               // ini buat handle upload document nya thin
+                              await _pickFile((file) {
+                                _buktiKKLama = file;
+                              });
                             },
                             child: Container(
                               height: 100,
@@ -802,6 +957,9 @@ class _UserKkPageState extends State<UserKkPage> {
                                     color: Colors.white, size: 16),
                                 onPressed: () {
                                   // ini nanti buat remove nya thinnn mas broo
+                                  _removeFile(() {
+                                    _buktiKKLama = null;
+                                  });
                                 },
                               ),
                             ),
@@ -816,8 +974,11 @@ class _UserKkPageState extends State<UserKkPage> {
                         clipBehavior: Clip.none,
                         children: [
                           GestureDetector(
-                            onTap: () {
+                            onTap: () async {
                               // ini buat handle upload document nya thin
+                              await _pickFile((file) {
+                                _dokumenTambahan = file;
+                              });
                             },
                             child: Container(
                               height: 100,
@@ -871,6 +1032,9 @@ class _UserKkPageState extends State<UserKkPage> {
                                     color: Colors.white, size: 16),
                                 onPressed: () {
                                   // ini nanti buat remove nya thinnn mas broo
+                                  _removeFile(() {
+                                    _dokumenTambahan = null;
+                                  });
                                 },
                               ),
                             ),
@@ -878,7 +1042,7 @@ class _UserKkPageState extends State<UserKkPage> {
                         ],
                       ),
                     ),
-                  ] else if (selectedReason ==
+                  ] else if (_alasanPembuatan ==
                       'KK Baru (Pindah WNI dari luar negeri)') ...[
                     _buildSubTitle(
                         'Surat Keterangan Pindah Luar Negeri (SKPLN)'),
@@ -888,8 +1052,11 @@ class _UserKkPageState extends State<UserKkPage> {
                         clipBehavior: Clip.none,
                         children: [
                           GestureDetector(
-                            onTap: () {
+                            onTap: () async {
                               // ini buat handle upload document nya thin
+                              await _pickFile((file) {
+                                _buktiSKPLN = file;
+                              });
                             },
                             child: Container(
                               height: 100,
@@ -943,6 +1110,9 @@ class _UserKkPageState extends State<UserKkPage> {
                                     color: Colors.white, size: 16),
                                 onPressed: () {
                                   // ini nanti buat remove nya thinnn mas broo
+                                  _removeFile(() {
+                                    _buktiSKPLN = null;
+                                  });
                                 },
                               ),
                             ),
@@ -957,8 +1127,11 @@ class _UserKkPageState extends State<UserKkPage> {
                         clipBehavior: Clip.none,
                         children: [
                           GestureDetector(
-                            onTap: () {
+                            onTap: () async {
                               // ini buat handle upload document nya thin
+                              await _pickFile((file) {
+                                _dokumenTambahan = file;
+                              });
                             },
                             child: Container(
                               height: 100,
@@ -1012,6 +1185,9 @@ class _UserKkPageState extends State<UserKkPage> {
                                     color: Colors.white, size: 16),
                                 onPressed: () {
                                   // ini nanti buat remove nya thinnn mas broo
+                                  _removeFile(() {
+                                    _dokumenTambahan = null;
+                                  });
                                 },
                               ),
                             ),
@@ -1019,7 +1195,7 @@ class _UserKkPageState extends State<UserKkPage> {
                         ],
                       ),
                     ),
-                  ] else if (selectedReason == 'KK Baru (Rentan Adminduk)') ...[
+                  ] else if (_alasanPembuatan == 'KK Baru (Rentan Adminduk)') ...[
                     _buildSubTitle('Surat Pengantar RT dan RW'),
                     Padding(
                       padding: const EdgeInsets.only(bottom: 16.0),
@@ -1027,8 +1203,11 @@ class _UserKkPageState extends State<UserKkPage> {
                         clipBehavior: Clip.none,
                         children: [
                           GestureDetector(
-                            onTap: () {
+                            onTap: () async {
                               // ini buat handle upload document nya thin
+                              await _pickFile((file) {
+                                _suratPengantar = file;
+                              });
                             },
                             child: Container(
                               height: 100,
@@ -1082,6 +1261,9 @@ class _UserKkPageState extends State<UserKkPage> {
                                     color: Colors.white, size: 16),
                                 onPressed: () {
                                   // ini nanti buat remove nya thinnn mas broo
+                                  _removeFile(() {
+                                    _suratPengantar = null;
+                                  });
                                 },
                               ),
                             ),
@@ -1097,8 +1279,11 @@ class _UserKkPageState extends State<UserKkPage> {
                         clipBehavior: Clip.none,
                         children: [
                           GestureDetector(
-                            onTap: () {
+                            onTap: () async {
                               // ini buat handle upload document nya thin
+                              await _pickFile((file) {
+                                _suratPernyataanKependudukan = file;
+                              });
                             },
                             child: Container(
                               height: 100,
@@ -1152,6 +1337,9 @@ class _UserKkPageState extends State<UserKkPage> {
                                     color: Colors.white, size: 16),
                                 onPressed: () {
                                   // ini nanti buat remove nya thinnn mas broo
+                                  _removeFile(() {
+                                    _suratPernyataanKependudukan = null;
+                                  });
                                 },
                               ),
                             ),
@@ -1166,8 +1354,11 @@ class _UserKkPageState extends State<UserKkPage> {
                         clipBehavior: Clip.none,
                         children: [
                           GestureDetector(
-                            onTap: () {
+                            onTap: () async {
                               // ini buat handle upload document nya thin
+                              await _pickFile((file) {
+                                _dokumenTambahan = file;
+                              });
                             },
                             child: Container(
                               height: 100,
@@ -1221,6 +1412,9 @@ class _UserKkPageState extends State<UserKkPage> {
                                     color: Colors.white, size: 16),
                                 onPressed: () {
                                   // ini nanti buat remove nya thinnn mas broo
+                                  _removeFile(() {
+                                    _dokumenTambahan = null;
+                                  });
                                 },
                               ),
                             ),
@@ -1228,7 +1422,7 @@ class _UserKkPageState extends State<UserKkPage> {
                         ],
                       ),
                     ),
-                  ] else if (selectedReason ==
+                  ] else if (_alasanPembuatan ==
                       'KK Perubahan (Peristiwa penting)') ...[
                     _buildSubTitle('Kartu Keluarga Lama'),
                     Padding(
@@ -1237,8 +1431,11 @@ class _UserKkPageState extends State<UserKkPage> {
                         clipBehavior: Clip.none,
                         children: [
                           GestureDetector(
-                            onTap: () {
+                            onTap: () async {
                               // ini buat handle upload document nya thin
+                              await _pickFile((file) {
+                                _buktiKKLama = file;
+                              });
                             },
                             child: Container(
                               height: 100,
@@ -1292,6 +1489,9 @@ class _UserKkPageState extends State<UserKkPage> {
                                     color: Colors.white, size: 16),
                                 onPressed: () {
                                   // ini nanti buat remove nya thinnn mas broo
+                                  _removeFile(() {
+                                    _buktiKKLama = null;
+                                  });
                                 },
                               ),
                             ),
@@ -1309,8 +1509,11 @@ class _UserKkPageState extends State<UserKkPage> {
                         clipBehavior: Clip.none,
                         children: [
                           GestureDetector(
-                            onTap: () {
+                            onTap: () async {
                               // ini buat handle upload document nya thin
+                              await _pickFile((file) {
+                                _buktiPerubahanPeristiwa = file;
+                              });
                             },
                             child: Container(
                               height: 100,
@@ -1364,6 +1567,9 @@ class _UserKkPageState extends State<UserKkPage> {
                                     color: Colors.white, size: 16),
                                 onPressed: () {
                                   // ini nanti buat remove nya thinnn mas broo
+                                  _removeFile(() {
+                                    _buktiPerubahanPeristiwa = null;
+                                  });
                                 },
                               ),
                             ),
@@ -1378,8 +1584,11 @@ class _UserKkPageState extends State<UserKkPage> {
                         clipBehavior: Clip.none,
                         children: [
                           GestureDetector(
-                            onTap: () {
+                            onTap: () async {
                               // ini buat handle upload document nya thin
+                              await _pickFile((file) {
+                                _dokumenTambahan = file;
+                              });
                             },
                             child: Container(
                               height: 100,
@@ -1433,6 +1642,9 @@ class _UserKkPageState extends State<UserKkPage> {
                                     color: Colors.white, size: 16),
                                 onPressed: () {
                                   // ini nanti buat remove nya thinnn mas broo
+                                  _removeFile(() {
+                                    _dokumenTambahan = null;
+                                  });
                                 },
                               ),
                             ),
@@ -1447,13 +1659,11 @@ class _UserKkPageState extends State<UserKkPage> {
             SizedBox(height: 16.0),
             Center(
               child: ElevatedButton(
+                onPressed: _submitForm, // ini buat handle submit nya thinnn
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Color(0xFFCDC2AE),
                   padding: EdgeInsets.symmetric(horizontal: 40),
                 ),
-                onPressed: () {
-                  // ini buat handle submit nya thinnn
-                },
                 child: Text(
                   'Ajukan',
                   style: TextStyle(
@@ -1513,7 +1723,8 @@ class _UserKkPageState extends State<UserKkPage> {
     required BuildContext context,
     required String label,
     required String hint,
-    bool isDateField = false,
+    required FormFieldSetter<String> onSave,
+    required FormFieldValidator<String> validator,
     bool isNumber = false,
   }) {
     return Column(
@@ -1522,39 +1733,9 @@ class _UserKkPageState extends State<UserKkPage> {
         _buildSubTitle(label),
         Padding(
           padding: const EdgeInsets.only(bottom: 16.0),
-          child: TextField(
-            readOnly: isDateField,
-            onTap: isDateField
-                ? () async {
-                    DateTime? date = await showDatePicker(
-                      context: context,
-                      initialDate: DateTime.now(),
-                      firstDate: DateTime(1900),
-                      lastDate: DateTime(2100),
-                      builder: (BuildContext context, Widget? child) {
-                        return Theme(
-                          data: ThemeData.light().copyWith(
-                            primaryColor: Color(0xFF4297A0),
-                            colorScheme: ColorScheme.light(
-                              primary: Color(0xFF4297A0),
-                              onPrimary: Colors.white,
-                              onSurface: Colors.black,
-                            ),
-                            buttonTheme: ButtonThemeData(
-                              textTheme: ButtonTextTheme.primary,
-                            ),
-                            dialogBackgroundColor: Colors.white,
-                          ),
-                          child: child!,
-                        );
-                      },
-                    );
-                    // Handle the selected date
-                  }
-                : null,
+          child: TextFormField(
             keyboardType: isNumber ? TextInputType.number : TextInputType.text,
-            inputFormatters:
-                isNumber ? [FilteringTextInputFormatter.digitsOnly] : [],
+            inputFormatters: isNumber ? [FilteringTextInputFormatter.digitsOnly] : [],
             decoration: InputDecoration(
               hintText: hint,
               hintStyle: TextStyle(
@@ -1568,8 +1749,9 @@ class _UserKkPageState extends State<UserKkPage> {
                 borderRadius: BorderRadius.circular(7),
                 borderSide: BorderSide.none,
               ),
-              suffixIcon: isDateField ? Icon(Icons.calendar_today) : null,
             ),
+            validator: validator,
+            onSaved: onSave,
           ),
         ),
       ],
@@ -1577,15 +1759,15 @@ class _UserKkPageState extends State<UserKkPage> {
   }
 
   Widget _buildDropdownField(BuildContext context, List<String> items,
-      {String? label, Color backgroundColor = Colors.white}) {
+      {String? label, Color backgroundColor = Colors.white, Function(String?)? onSave}) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         if (label != null) _buildSubTitle(label),
         Padding(
           padding: const EdgeInsets.only(bottom: 16.0),
-          child: DropdownButtonFormField(
-            value: selectedReason,
+          child: DropdownButtonFormField<String>(
+            value: items.contains(_alasanPembuatan) ? _alasanPembuatan : null,
             isDense: true,
             isExpanded: true,
             decoration: InputDecoration(
@@ -1597,7 +1779,8 @@ class _UserKkPageState extends State<UserKkPage> {
               ),
             ),
             items: items
-                .map((label) => DropdownMenuItem(
+                .map((label) => DropdownMenuItem<String>(
+                      value: label,
                       child: Text(
                         label,
                         style: TextStyle(
@@ -1605,13 +1788,22 @@ class _UserKkPageState extends State<UserKkPage> {
                           overflow: TextOverflow.ellipsis,
                         ),
                       ),
-                      value: label,
                     ))
                 .toList(),
             onChanged: (value) {
               setState(() {
-                selectedReason = value as String;
+                _alasanPembuatan = value!;
               });
+              if (onSave != null) {
+                onSave(value);
+              }
+            },
+            onSaved: onSave,
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return '$label tidak boleh kosong';
+              }
+              return null;
             },
             dropdownColor: Colors.white,
           ),
@@ -1718,6 +1910,35 @@ class _UserKkPageState extends State<UserKkPage> {
           ],
         ),
         textAlign: TextAlign.justify,
+      ),
+    );
+  }
+
+  Widget _buildFilePicker({
+    required String label,
+    required File? file,
+    required Future<void> Function() onPick,
+    required VoidCallback onRemove,
+  }) {
+    return Padding(
+      padding: EdgeInsets.symmetric(vertical: 8.0),
+      child: Row(
+        children: [
+          Expanded(
+            child: Text(
+              file == null ? label : 'File selected: ${file.path.split('/').last}',
+              style: TextStyle(
+                fontFamily: 'Ubuntu',
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+          IconButton(
+            icon: Icon(file == null ? Icons.upload : Icons.remove),
+            onPressed: file == null ? () async => await onPick() : onRemove,
+          ),
+        ],
       ),
     );
   }
