@@ -88,7 +88,6 @@ class _UserKtpPageState extends State<UserKtpPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: _formKey,
       backgroundColor: Color(0xFF4297A0),
       body: SingleChildScrollView(
         padding: EdgeInsets.all(16.0),
@@ -162,118 +161,121 @@ class _UserKtpPageState extends State<UserKtpPage> {
                 color: Color(0xFFF9FCFC),
                 borderRadius: BorderRadius.circular(7),
               ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  _buildTextField(
-                    context: context,
-                    label: 'NIK',
-                    hint: 'nomor induk kependudukan',
-                    keyboardType: TextInputType.number,
-                    onSave: (value) => _nik = int.tryParse(value!),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'NIK tidak boleh kosong';
-                      }
-                      return null;
-                    },
-                  ),
-                  _buildTextField(
-                    context: context,
-                    label: 'Nama Lengkap',
-                    hint: 'nama lengkap huruf kapital',
-                    onSave: (value) => _namaLengkap = value,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Nama Lengkap tidak boleh kosong';
-                      }
-                      return null;
-                    },
-                  ),
-                  _buildTextField(
-                    context: context,
-                    label: 'Tempat Lahir',
-                    hint: 'tempat lahir',
-                    onSave: (value) => _tempatLahir = value,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Tempat Lahir tidak boleh kosong';
-                      }
-                      return null;
-                    },
-                  ),
-                  _buildTextField(
-                    context: context,
-                    label: 'Tanggal Lahir',
-                    hint: 'TTTT-BB-HH',
-                    isDateField: true,
-                    selectedDate: _selectedDate,
-                    onSelect: (date) {
-                      setState(() {
-                        _selectedDate = date;
-                      });
-                    },
-                    onSave: (value) => null,
-                    validator: (value) {
-                      if (_selectedDate == null) {
-                        return 'Tanggal Lahir tidak boleh kosong';
-                      }
-                      return null;
-                    },
-                  ),
-                  _buildRadioButtonGroup(
-                    label: 'Jenis Kelamin',
-                    onSave: (value) => _jenisKelamin = value,
-                  ),
-                  _buildTextField(
-                    context: context,
-                    label: 'Alamat Lengkap',
-                    hint: 'alamat sesuai KTP',
-                    onSave: (value) => _alamatLengkap = value,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Alamat Lengkap tidak boleh kosong';
-                      }
-                      return null;
-                    },
-                  ),
-                  _buildTextField(
-                    context: context,
-                    label: 'Agama',
-                    hint: 'agama',
-                    onSave: (value) => _agama = value,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Agama tidak boleh kosong';
-                      }
-                      return null;
-                    },
-                  ),
-                  _buildTextField(
-                    context: context,
-                    label: 'Jenis Pekerjaan',
-                    hint: 'jenis pekerjaan',
-                    onSave: (value) => _jenisPekerjaan = value,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Jenis Pekerjaan tidak boleh kosong';
-                      }
-                      return null;
-                    },
-                  ),
-                  _buildDropdownField(
-                      context,
-                      [
-                        'Belum menikah',
-                        'Sudah menikah',
-                        'Cerai hidup',
-                        'Cerai mati'
-                      ],
-                      label: 'Status Perkawinan',
-                      onSave: (value) => _statusPerkawinan = value,
-                      backgroundColor: Color(0xFFE0E5E7),
-                  ),
-                ],
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    _buildTextField(
+                      context: context,
+                      label: 'NIK',
+                      hint: 'nomor induk kependudukan',
+                      keyboardType: TextInputType.number,
+                      onSave: (value) => _nik = int.tryParse(value!),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'NIK tidak boleh kosong';
+                        }
+                        return null;
+                      },
+                    ),
+                    _buildTextField(
+                      context: context,
+                      label: 'Nama Lengkap',
+                      hint: 'nama lengkap huruf kapital',
+                      onSave: (value) => _namaLengkap = value,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Nama Lengkap tidak boleh kosong';
+                        }
+                        return null;
+                      },
+                    ),
+                    _buildTextField(
+                      context: context,
+                      label: 'Tempat Lahir',
+                      hint: 'tempat lahir',
+                      onSave: (value) => _tempatLahir = value,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Tempat Lahir tidak boleh kosong';
+                        }
+                        return null;
+                      },
+                    ),
+                    _buildTextField(
+                      context: context,
+                      label: 'Tanggal Lahir',
+                      hint: 'TTTT-BB-HH',
+                      isDateField: true,
+                      selectedDate: _selectedDate,
+                      onSelect: (date) {
+                        setState(() {
+                          _selectedDate = date;
+                        });
+                      },
+                      onSave: (value) => null,
+                      validator: (value) {
+                        if (_selectedDate == null) {
+                          return 'Tanggal Lahir tidak boleh kosong';
+                        }
+                        return null;
+                      },
+                    ),
+                    _buildRadioButtonGroup(
+                      label: 'Jenis Kelamin',
+                      onSave: (value) => _jenisKelamin = value,
+                    ),
+                    _buildTextField(
+                      context: context,
+                      label: 'Alamat Lengkap',
+                      hint: 'alamat sesuai KTP',
+                      onSave: (value) => _alamatLengkap = value,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Alamat Lengkap tidak boleh kosong';
+                        }
+                        return null;
+                      },
+                    ),
+                    _buildTextField(
+                      context: context,
+                      label: 'Agama',
+                      hint: 'agama',
+                      onSave: (value) => _agama = value,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Agama tidak boleh kosong';
+                        }
+                        return null;
+                      },
+                    ),
+                    _buildTextField(
+                      context: context,
+                      label: 'Jenis Pekerjaan',
+                      hint: 'jenis pekerjaan',
+                      onSave: (value) => _jenisPekerjaan = value,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Jenis Pekerjaan tidak boleh kosong';
+                        }
+                        return null;
+                      },
+                    ),
+                    _buildDropdownField(
+                        context,
+                        [
+                          'Belum menikah',
+                          'Sudah menikah',
+                          'Cerai hidup',
+                          'Cerai mati'
+                        ],
+                        label: 'Status Perkawinan',
+                        onSave: (value) => _statusPerkawinan = value,
+                        backgroundColor: Color(0xFFE0E5E7),
+                    ),
+                  ],
+                ),
               ),
             ),
             SizedBox(height: 16.0),
@@ -539,18 +541,20 @@ class _UserKtpPageState extends State<UserKtpPage> {
             ),
             SizedBox(height: 16.0),
             Center(
-              child: ElevatedButton(
-                onPressed: _submitForm, // ini buat handle submit nya thinnn
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Color(0xFFCDC2AE),
-                  padding: EdgeInsets.symmetric(horizontal: 40),
-                ),
-                child: Text(
-                  'Ajukan',
-                  style: TextStyle(
-                    fontFamily: 'Ubuntu',
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black,
+              child: Form(
+                child: ElevatedButton(
+                  onPressed: _submitForm, // ini buat handle submit nya thinnn
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Color(0xFFCDC2AE),
+                    padding: EdgeInsets.symmetric(horizontal: 40),
+                  ),
+                  child: Text(
+                    'Ajukan',
+                    style: TextStyle(
+                      fontFamily: 'Ubuntu',
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
+                    ),
                   ),
                 ),
               ),

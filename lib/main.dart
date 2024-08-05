@@ -12,6 +12,7 @@ import '/Database/database_acara.dart';
 import '/Database/database_transportasi.dart';
 import '/Database/database_ktp.dart';
 import '/Database/database_kk.dart';
+import '/Database/database_aktaKelahiran.dart';
 import 'User/user-home.dart';
 import 'admin-home.dart';
 import 'SuperAdmin-home.dart';
@@ -33,6 +34,7 @@ void main() async {
   await DatabaseTransportasi.instance.database;
   await DatabaseKtp.instance.database;
   await DatabaseKk.instance.database;
+  await DatabaseAktaKelahiran.instance.database;
 
   // Check table schema
   await DatabaseDetailDestinasi.instance.checkTableSchema();

@@ -1,14 +1,129 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
+import '/Database/database_aktaKelahiran.dart';
+import 'package:file_picker/file_picker.dart';
 
 class AktaLahir extends StatefulWidget {
+  const AktaLahir({super.key});
+
   @override
   _AktaLahirState createState() => _AktaLahirState();
 }
 
 class _AktaLahirState extends State<AktaLahir> {
-  String? _selectedGender;
-  String? _selectedJenisKelahiran;
-  String? _selectedPenolongKelahiran;
+  final _formKey = GlobalKey<FormState>();
+  int? _nikPelapor;
+  int? _kkPelapor;
+  int? _nikAyah;
+  int? _nikIbu;
+  int? _nikAnak;
+  int? _urutanKelahiranAnak;
+  int? _panjangAnak;
+  String? _namaPelapor;
+  String? _kewarganegaraanPelapor;
+  String? _namaAyah;
+  String? _tempatLahirAyah;
+  String? _kewarganegaraanAyah;
+  String? _namaIbu;
+  String? _tempatLahirIbu;
+  String? _kewarganegaraanIbu;
+  String? _namaAnak;
+  String? _jenisKelaminAnak;
+  String? _tempatLahirAnak;
+  String? _daerahLahirAnak;
+  String? _hariLahirAnak;
+  String? _waktuLahirAnak;
+  String? _jenisKelahiranAnak;
+  String? _beratAnak;
+  String? _penolongKelahiranAnak;
+  DateTime? _selectedDateAyah;
+  DateTime? _selectedDateIbu;
+  DateTime? _selectedDateAnak;
+  File? _suratKelahiran;
+  File? _buktiSPTJM;
+  File? _kkOrangTua;
+  File? _ktpAyah;
+  File? _ktpIbu;
+  File? _dokumenTambahan;
+
+  Future<void> _selectDate({
+    required BuildContext context,
+    required DateTime? selectedDate,
+    required ValueChanged<DateTime> onSelect,
+  }) async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: selectedDate ?? DateTime.now(),
+      firstDate: DateTime(1900),
+      lastDate: DateTime(2101),
+    );
+    if (picked != null) {
+      onSelect(picked);
+    }
+  }
+
+  Future<void> _pickFile(Function(File) onFilePicked) async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles();
+    if (result != null) {
+      File file = File(result.files.single.path!);
+      setState(() {
+        onFilePicked(file);
+      });
+    }
+  }
+
+  void _removeFile(Function() onFileRemoved) {
+    setState(() {
+      onFileRemoved();
+    });
+  }
+
+  void _submitForm() async {
+    if (_formKey.currentState!.validate()) {
+      _formKey.currentState!.save();
+
+      final newAkta = Akta(
+        nikPelapor: _nikPelapor!,
+        namaPelapor: _namaPelapor!,
+        kkPelapor: _kkPelapor!,
+        kewarganegaraanPelapor: _kewarganegaraanPelapor!,
+        nikAyah: _nikAyah!,
+        namaAyah: _namaAyah!,
+        tempatLahirAyah: _tempatLahirAyah!,
+        tanggalLahirAyah: _selectedDateAyah!,
+        kewarganegaraanAyah: _kewarganegaraanAyah!,
+        nikIbu: _nikIbu!,
+        namaIbu: _namaIbu!,
+        tempatLahirIbu: _tempatLahirIbu!,
+        tanggalLahirIbu: _selectedDateIbu!,        
+        kewarganegaraanIbu: _kewarganegaraanIbu!,
+        nikAnak: _nikAnak!,
+        namaAnak: _namaAnak!,
+        jenisKelaminAnak: _jenisKelaminAnak!,
+        tempatLahirAnak: _tempatLahirAnak!,
+        daerahLahirAnak: _daerahLahirAnak!,
+        hariLahirAnak: _hariLahirAnak!,
+        tanggalLahirAnak: _selectedDateAnak!,
+        waktuLahirAnak: _waktuLahirAnak!,
+        jenisKelahiranAnak: _jenisKelahiranAnak!,
+        urutanKelahiranAnak: _urutanKelahiranAnak!,
+        beratAnak: _beratAnak!,
+        panjangAnak: _panjangAnak!,
+        penolongKelahiranAnak: _penolongKelahiranAnak!,        
+        suratKelahiran: _suratKelahiran!,
+        buktiSPTJM: _buktiSPTJM!,
+        kkOrangTua: _kkOrangTua!,
+        ktpAyah: _ktpAyah!,
+        ktpIbu: _ktpIbu!,        
+        dokumenTambahan: _dokumenTambahan!,
+      );
+
+      final dbAkta = DatabaseAktaKelahiran.instance;
+      await dbAkta.insertAkta(newAkta);
+
+      Navigator.pop(context);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -81,6 +196,7 @@ class _AktaLahirState extends State<AktaLahir> {
                     context: context,
                     label: 'Kewarganegaraan',
                     items: _countries,
+                    onSave: (value) => _kewarganegaraanPelapor = value,
                   ),
                 ],
               ),
@@ -107,11 +223,25 @@ class _AktaLahirState extends State<AktaLahir> {
                   _buildDatePickerField(
                     context: context,
                     label: 'Tanggal Lahir Ayah',
+                    selectedDate: _selectedDateAyah,
+                    onSelect: (date) {
+                      setState(() {
+                        _selectedDateAyah = date;
+                      });
+                    },
+                    onSave: (value) => null,
+                    validator: (value) {
+                      if (_selectedDateAyah == null) {
+                        return 'Tanggal Lahir Ayah tidak boleh kosong';
+                      }
+                      return null;
+                    },
                   ),
                   _buildDropdownField(
                     context: context,
                     label: 'Kewarganegaraan Ayah',
                     items: _countries,
+                    onSave: (value) => _kewarganegaraanAyah = value,
                   ),
                   _buildTextField(
                     context: context,
@@ -132,11 +262,25 @@ class _AktaLahirState extends State<AktaLahir> {
                   _buildDatePickerField(
                     context: context,
                     label: 'Tanggal Lahir Ibu',
+                    selectedDate: _selectedDateIbu,
+                    onSelect: (date) {
+                      setState(() {
+                        _selectedDateIbu = date;
+                      });
+                    },
+                    onSave: (value) => null,
+                    validator: (value) {
+                      if (_selectedDateIbu == null) {
+                        return 'Tanggal Lahir Ibu tidak boleh kosong';
+                      }
+                      return null;
+                    },
                   ),
                   _buildDropdownField(
                     context: context,
                     label: 'Kewarganegaraan Ibu',
                     items: _countries,
+                    onSave: (value) => _kewarganegaraanIbu = value,
                   ),
                 ],
               ),
@@ -182,10 +326,24 @@ class _AktaLahirState extends State<AktaLahir> {
                       'Sabtu',
                       'Minggu'
                     ],
+                    onSave: (value) => _hariLahirAnak = value,
                   ),
                   _buildDatePickerField(
                     context: context,
                     label: 'Tanggal Lahir',
+                    selectedDate: _selectedDateAnak,
+                    onSelect: (date) {
+                      setState(() {
+                        _selectedDateAnak = date;
+                      });
+                    },
+                    onSave: (value) => null,
+                    validator: (value) {
+                      if (_selectedDateAnak == null) {
+                        return 'Tanggal Lahir Anak tidak boleh kosong';
+                      }
+                      return null;
+                    },
                   ),
                   _buildTextField(
                     context: context,
@@ -202,6 +360,7 @@ class _AktaLahirState extends State<AktaLahir> {
                       'Kembar 4',
                       'Lainnya'
                     ],
+                    onSave: (value) => _jenisKelahiranAnak = value,
                     onChanged: (value) {
                       setState(() {
                         _selectedJenisKelahiran = value;
@@ -238,6 +397,7 @@ class _AktaLahirState extends State<AktaLahir> {
                     context: context,
                     label: 'Penolong Kelahiran',
                     items: ['Dokter', 'Bidan/Perawat', 'Dukun', 'Lainnya'],
+                    onSave: (value) => _penolongKelahiranAnak = value,
                     onChanged: (value) {
                       setState(() {
                         _selectedPenolongKelahiran = value;
@@ -292,8 +452,11 @@ class _AktaLahirState extends State<AktaLahir> {
                         clipBehavior: Clip.none,
                         children: [
                           GestureDetector(
-                            onTap: () {
+                            onTap: () async {
                               // ini buat handle upload document nya thin
+                              await _pickFile((file) {
+                                _suratKelahiran = file;
+                              });
                             },
                             child: Container(
                               height: 100,
@@ -347,6 +510,9 @@ class _AktaLahirState extends State<AktaLahir> {
                                     color: Colors.white, size: 16),
                                 onPressed: () {
                                   // ini nanti buat remove nya thinnn mas broo
+                                  _removeFile(() {
+                                    _suratKelahiran = null;
+                                  });
                                 },
                               ),
                             ),
@@ -361,8 +527,11 @@ class _AktaLahirState extends State<AktaLahir> {
                         clipBehavior: Clip.none,
                         children: [
                           GestureDetector(
-                            onTap: () {
+                            onTap: () async {
                               // ini buat handle upload document nya thin
+                              await _pickFile((file) {
+                                _buktiSPTJM = file;
+                              });
                             },
                             child: Container(
                               height: 100,
@@ -416,6 +585,9 @@ class _AktaLahirState extends State<AktaLahir> {
                                     color: Colors.white, size: 16),
                                 onPressed: () {
                                   // ini nanti buat remove nya thinnn mas broo
+                                  _removeFile(() {
+                                    _buktiSPTJM = null;
+                                  });
                                 },
                               ),
                             ),
@@ -430,8 +602,11 @@ class _AktaLahirState extends State<AktaLahir> {
                         clipBehavior: Clip.none,
                         children: [
                           GestureDetector(
-                            onTap: () {
+                            onTap: () async {
                               // ini buat handle upload document nya thin
+                              await _pickFile((file) {
+                                _kkOrangTua = file;
+                              });
                             },
                             child: Container(
                               height: 100,
@@ -485,6 +660,9 @@ class _AktaLahirState extends State<AktaLahir> {
                                     color: Colors.white, size: 16),
                                 onPressed: () {
                                   // ini nanti buat remove nya thinnn mas broo
+                                  _removeFile(() {
+                                    _kkOrangTua = null;
+                                  });
                                 },
                               ),
                             ),
@@ -499,8 +677,11 @@ class _AktaLahirState extends State<AktaLahir> {
                         clipBehavior: Clip.none,
                         children: [
                           GestureDetector(
-                            onTap: () {
+                            onTap: () async {
                               // ini buat handle upload document nya thin
+                              await _pickFile((file) {
+                                _ktpAyah = file;
+                              });
                             },
                             child: Container(
                               height: 100,
@@ -554,6 +735,9 @@ class _AktaLahirState extends State<AktaLahir> {
                                     color: Colors.white, size: 16),
                                 onPressed: () {
                                   // ini nanti buat remove nya thinnn mas broo
+                                  _removeFile(() {
+                                    _ktpAyah = null;
+                                  });
                                 },
                               ),
                             ),
@@ -568,8 +752,11 @@ class _AktaLahirState extends State<AktaLahir> {
                         clipBehavior: Clip.none,
                         children: [
                           GestureDetector(
-                            onTap: () {
+                            onTap: () async {
                               // ini buat handle upload document nya thin
+                              await _pickFile((file) {
+                                _ktpIbu = file;
+                              });
                             },
                             child: Container(
                               height: 100,
@@ -623,6 +810,9 @@ class _AktaLahirState extends State<AktaLahir> {
                                     color: Colors.white, size: 16),
                                 onPressed: () {
                                   // ini nanti buat remove nya thinnn mas broo
+                                  _removeFile(() {
+                                    _ktpIbu = null;
+                                  });
                                 },
                               ),
                             ),
@@ -637,8 +827,11 @@ class _AktaLahirState extends State<AktaLahir> {
                         clipBehavior: Clip.none,
                         children: [
                           GestureDetector(
-                            onTap: () {
+                            onTap: () async {
                               // ini buat handle upload document nya thin
+                              await _pickFile((file) {
+                                _dokumenTambahan = file;
+                              });
                             },
                             child: Container(
                               height: 100,
@@ -692,6 +885,9 @@ class _AktaLahirState extends State<AktaLahir> {
                                     color: Colors.white, size: 16),
                                 onPressed: () {
                                   // ini nanti buat remove nya thinnn mas broo
+                                  _removeFile(() {
+                                    _dokumenTambahan = null;
+                                  });
                                 },
                               ),
                             ),
@@ -708,6 +904,7 @@ class _AktaLahirState extends State<AktaLahir> {
                 child: Padding(
                   padding: const EdgeInsets.only(right: 10.0),
                   child: ElevatedButton(
+                    onPressed: _submitForm,
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Color(0xFFC6B79B),
                       shape: RoundedRectangleBorder(
@@ -716,7 +913,6 @@ class _AktaLahirState extends State<AktaLahir> {
                       padding:
                           EdgeInsets.symmetric(vertical: 12, horizontal: 20),
                     ),
-                    onPressed: () {},
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
@@ -964,6 +1160,10 @@ class _AktaLahirState extends State<AktaLahir> {
   Widget _buildDatePickerField({
     required BuildContext context,
     required String label,
+    required FormFieldSetter<String> onSave,
+    required FormFieldValidator<String> validator,
+    DateTime? selectedDate,
+    ValueChanged<DateTime>? onSelect,
   }) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8),
@@ -1004,7 +1204,9 @@ class _AktaLahirState extends State<AktaLahir> {
                   );
                 },
               );
-              // Handle the selected date
+              if (date != null && onSelect != null) {
+                onSelect(date);
+              }
             },
             child: Container(
               width: double.infinity,
@@ -1018,7 +1220,9 @@ class _AktaLahirState extends State<AktaLahir> {
                 children: [
                   Expanded(
                     child: Text(
-                      'BB-HH-TTTT',
+                      selectedDate != null
+                          ? "${selectedDate.toLocal()}".split(' ')[0]
+                          : 'TTTT-BB-HH',
                       style: TextStyle(
                         fontFamily: 'Ubuntu',
                         fontStyle: FontStyle.italic,
@@ -1032,6 +1236,18 @@ class _AktaLahirState extends State<AktaLahir> {
               ),
             ),
           ),
+          onSaved: onSave,
+          if (validator != null)
+            Text(
+              validator(selectedDate != null
+                      ? "${selectedDate.toLocal()}".split(' ')[0]
+                      : null) ??
+                  '',
+              style: TextStyle(
+                color: Colors.red,
+                fontSize: 12,
+              ),
+            ),
         ],
       ),
     );
