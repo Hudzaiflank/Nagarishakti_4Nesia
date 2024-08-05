@@ -20,6 +20,9 @@ import 'User/Destination/user-Destination-page.dart';
 import 'User/Destination/user-DetailDestination-page.dart';
 import 'User/user-Timeline-Festival.dart';
 import 'User/user-transportation-page.dart';
+import 'User/Layanan-Kependudukan/Pembuatan-ktp-kk/user-kk-page.dart';
+import 'User/Layanan-Kependudukan/Pembuatan-ktp-kk/user-ktp-page.dart';
+import 'User/Layanan-Kependudukan/Pendaftaran-AktaLahir-kematian/Akta-lahir.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

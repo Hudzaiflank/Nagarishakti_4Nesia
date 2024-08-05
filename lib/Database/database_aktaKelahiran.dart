@@ -60,7 +60,7 @@ class DatabaseAktaKelahiran {
         penolongKelahiranAnak TEXT NOT NULL,
         suratKelahiran TEXT NOT NULL,
         buktiSPTJM TEXT NOT NULL,
-        kkOrangTua TEXT NOT NULL
+        kkOrangTua TEXT NOT NULL,
         ktpAyah TEXT NOT NULL,
         ktpIbu TEXT NOT NULL,
         dokumenTambahan TEXT NOT NULL

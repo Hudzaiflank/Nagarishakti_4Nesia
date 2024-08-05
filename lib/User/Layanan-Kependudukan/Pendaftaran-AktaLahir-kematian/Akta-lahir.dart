@@ -132,807 +132,837 @@ class _AktaLahirState extends State<AktaLahir> {
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(height: 16.0),
-              GestureDetector(
-                onTap: () => Navigator.of(context).pop(),
-                child: Container(
-                  width: 40,
-                  height: 40,
-                  decoration: BoxDecoration(
-                    color: Color(0xFFE2DED0),
-                    shape: BoxShape.circle,
+          child: Form (
+            key: _formKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(height: 16.0),
+                GestureDetector(
+                  onTap: () => Navigator.of(context).pop(),
+                  child: Container(
+                    width: 40,
+                    height: 40,
+                    decoration: BoxDecoration(
+                      color: Color(0xFFE2DED0),
+                      shape: BoxShape.circle,
+                    ),
+                    child: Icon(Icons.arrow_back, color: Colors.black),
                   ),
-                  child: Icon(Icons.arrow_back, color: Colors.black),
                 ),
-              ),
-              SizedBox(height: 16.0),
-              Center(
-                child: Column(
-                  children: [
-                    Text(
-                      'FORMULIR PENGAJUAN AKTA KELAHIRAN',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontFamily: 'Ubuntu',
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
+                SizedBox(height: 16.0),
+                Center(
+                  child: Column(
+                    children: [
+                      Text(
+                        'FORMULIR PENGAJUAN AKTA KELAHIRAN',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontFamily: 'Ubuntu',
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                        ),
+                      ),
+                      SizedBox(height: 14),
+                      Container(
+                        height: 2,
                         color: Colors.black,
+                        width: double.infinity,
                       ),
-                    ),
-                    SizedBox(height: 14),
-                    Container(
-                      height: 2,
-                      color: Colors.black,
-                      width: double.infinity,
-                    ),
-                    SizedBox(height: 19),
-                  ],
-                ),
-              ),
-              _buildSection(
-                title: 'DATA PELAPOR',
-                fields: [
-                  _buildTextField(
-                    context: context,
-                    label: 'NIK Pelapor',
-                    hint: 'nomor induk kependudukan pelapor',
-                    isNumber: true,
-                  ),
-                  _buildTextField(
-                    context: context,
-                    label: 'Nama Lengkap',
-                    hint: 'tulis nama lengkap pelapor',
-                  ),
-                  _buildTextField(
-                    context: context,
-                    label: 'Nomor KK',
-                    hint: 'nomor KK',
-                    isNumber: true,
-                  ),
-                  _buildDropdownField(
-                    context: context,
-                    label: 'Kewarganegaraan',
-                    items: _countries,
-                    onSave: (value) => _kewarganegaraanPelapor = value,
-                  ),
-                ],
-              ),
-              SizedBox(height: 16),
-              _buildSection(
-                title: 'DATA ORANG TUA',
-                fields: [
-                  _buildTextField(
-                    context: context,
-                    label: 'NIK Ayah',
-                    hint: 'nomor induk kependudukan ayah',
-                    isNumber: true,
-                  ),
-                  _buildTextField(
-                    context: context,
-                    label: 'Nama Ayah',
-                    hint: 'tulis nama lengkap ayah',
-                  ),
-                  _buildTextField(
-                    context: context,
-                    label: 'Tempat Lahir Ayah',
-                    hint: 'Tempat lahir',
-                  ),
-                  _buildDatePickerField(
-                    context: context,
-                    label: 'Tanggal Lahir Ayah',
-                    selectedDate: _selectedDateAyah,
-                    onSelect: (date) {
-                      setState(() {
-                        _selectedDateAyah = date;
-                      });
-                    },
-                    onSave: (value) => null,
-                    validator: (value) {
-                      if (_selectedDateAyah == null) {
-                        return 'Tanggal Lahir Ayah tidak boleh kosong';
-                      }
-                      return null;
-                    },
-                  ),
-                  _buildDropdownField(
-                    context: context,
-                    label: 'Kewarganegaraan Ayah',
-                    items: _countries,
-                    onSave: (value) => _kewarganegaraanAyah = value,
-                  ),
-                  _buildTextField(
-                    context: context,
-                    label: 'NIK Ibu',
-                    hint: 'nomor induk kependudukan ibu',
-                    isNumber: true,
-                  ),
-                  _buildTextField(
-                    context: context,
-                    label: 'Nama Ibu',
-                    hint: 'tulis nama lengkap ibu',
-                  ),
-                  _buildTextField(
-                    context: context,
-                    label: 'Tempat Lahir Ibu',
-                    hint: 'Tempat lahir',
-                  ),
-                  _buildDatePickerField(
-                    context: context,
-                    label: 'Tanggal Lahir Ibu',
-                    selectedDate: _selectedDateIbu,
-                    onSelect: (date) {
-                      setState(() {
-                        _selectedDateIbu = date;
-                      });
-                    },
-                    onSave: (value) => null,
-                    validator: (value) {
-                      if (_selectedDateIbu == null) {
-                        return 'Tanggal Lahir Ibu tidak boleh kosong';
-                      }
-                      return null;
-                    },
-                  ),
-                  _buildDropdownField(
-                    context: context,
-                    label: 'Kewarganegaraan Ibu',
-                    items: _countries,
-                    onSave: (value) => _kewarganegaraanIbu = value,
-                  ),
-                ],
-              ),
-              SizedBox(height: 16),
-              _buildSection(
-                title: 'DATA ANAK',
-                fields: [
-                  _buildTextField(
-                    context: context,
-                    label: 'NIK Bayi (jika ada)',
-                    hint: 'nomor induk kependudukan anak',
-                    isNumber: true,
-                  ),
-                  _buildTextField(
-                    context: context,
-                    label: 'Nama Lengkap',
-                    hint: 'tulis nama lengkap dengan huruf kapital',
-                  ),
-                  _buildRadioField(
-                    context: context,
-                    label: 'Jenis Kelamin',
-                    items: ['Laki-laki', 'Perempuan'],
-                  ),
-                  _buildTextField(
-                    context: context,
-                    label: 'Tempat Dilahirkan',
-                    hint: 'Tempat lahir',
-                  ),
-                  _buildTextField(
-                    context: context,
-                    label: 'Tempat Kelahiran',
-                    hint: 'Daerah tempat dilahirkan',
-                  ),
-                  _buildDropdownField(
-                    context: context,
-                    label: 'Hari Lahir',
-                    items: [
-                      'Senin',
-                      'Selasa',
-                      'Rabu',
-                      'Kamis',
-                      'Jumat',
-                      'Sabtu',
-                      'Minggu'
+                      SizedBox(height: 19),
                     ],
-                    onSave: (value) => _hariLahirAnak = value,
                   ),
-                  _buildDatePickerField(
-                    context: context,
-                    label: 'Tanggal Lahir',
-                    selectedDate: _selectedDateAnak,
-                    onSelect: (date) {
-                      setState(() {
-                        _selectedDateAnak = date;
-                      });
-                    },
-                    onSave: (value) => null,
-                    validator: (value) {
-                      if (_selectedDateAnak == null) {
-                        return 'Tanggal Lahir Anak tidak boleh kosong';
-                      }
-                      return null;
-                    },
-                  ),
-                  _buildTextField(
-                    context: context,
-                    label: 'Waktu Kelahiran',
-                    hint: 'jam dilahirkan',
-                  ),
-                  _buildCustomDropdownField(
-                    context: context,
-                    label: 'Jenis Kelahiran',
-                    items: [
-                      'Tunggal',
-                      'Kembar 2',
-                      'Kembar 3',
-                      'Kembar 4',
-                      'Lainnya'
-                    ],
-                    onSave: (value) => _jenisKelahiranAnak = value,
-                    onChanged: (value) {
-                      setState(() {
-                        _selectedJenisKelahiran = value;
-                      });
-                    },
-                  ),
-                  if (_selectedJenisKelahiran == 'Lainnya')
-                    Padding(
-                      padding: const EdgeInsets.only(top: 3),
-                      child: _buildTextField(
-                        context: context,
-                        label: '',
-                        hint: '',
-                      ),
-                    ),
-                  _buildTextField(
-                    context: context,
-                    label: 'Kelahiran Ke-',
-                    hint: 'isi dengan angka',
-                    isNumber: true,
-                  ),
-                  _buildTextField(
-                    context: context,
-                    label: 'Berat Bayi',
-                    hint: 'satuan kg, pisahkan dengan tanda titik (.)',
-                  ),
-                  _buildTextField(
-                    context: context,
-                    label: 'Panjang Bayi',
-                    hint: 'satuan cm',
-                    isNumber: true,
-                  ),
-                  _buildCustomDropdownField(
-                    context: context,
-                    label: 'Penolong Kelahiran',
-                    items: ['Dokter', 'Bidan/Perawat', 'Dukun', 'Lainnya'],
-                    onSave: (value) => _penolongKelahiranAnak = value,
-                    onChanged: (value) {
-                      setState(() {
-                        _selectedPenolongKelahiran = value;
-                      });
-                    },
-                  ),
-                  if (_selectedPenolongKelahiran == 'Lainnya')
-                    Padding(
-                      padding: const EdgeInsets.only(top: 3),
-                      child: _buildTextField(
-                        context: context,
-                        label: '',
-                        hint: '',
-                      ),
-                    ),
-                ],
-              ),
-              SizedBox(height: 34),
-              SizedBox(height: 16.0),
-              Container(
-                padding: EdgeInsets.all(16.0),
-                decoration: BoxDecoration(
-                  color: Color(0xFFF9FCFC),
-                  borderRadius: BorderRadius.circular(7),
                 ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Center(
-                      child: Container(
-                        padding: EdgeInsets.symmetric(
-                            vertical: 4.0, horizontal: 8.0),
-                        decoration: BoxDecoration(
-                          color: Color(0xFFCE7277),
-                          borderRadius: BorderRadius.circular(4),
-                        ),
-                        child: Text(
-                          'UNGGAH DOKUMEN KELENGKAPAN',
-                          style: TextStyle(
-                            fontFamily: 'Ubuntu',
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
+                _buildSection(
+                  title: 'DATA PELAPOR',
+                  fields: [
+                    _buildTextField(
+                      context: context,
+                      label: 'NIK Pelapor',
+                      hint: 'nomor induk kependudukan pelapor',
+                      isNumber: true,
+                      onSave: (value) => _nikPelapor = value != null ? int.tryParse(value) : null,
                     ),
-                    SizedBox(height: 16.0),
-                    _buildSubTitle('Surat Keterangan Kelahiran'),
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 16.0),
-                      child: Stack(
-                        clipBehavior: Clip.none,
-                        children: [
-                          GestureDetector(
-                            onTap: () async {
-                              // ini buat handle upload document nya thin
-                              await _pickFile((file) {
-                                _suratKelahiran = file;
-                              });
-                            },
-                            child: Container(
-                              height: 100,
-                              decoration: BoxDecoration(
-                                color: Color(0xFFE0E5E7),
-                                borderRadius: BorderRadius.circular(7),
-                              ),
-                              child: Center(
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Image.asset(
-                                      'assets/upload-icon.png',
-                                      height: 30,
-                                      width: 30,
-                                    ),
-                                    SizedBox(height: 8),
-                                    Container(
-                                      padding: EdgeInsets.symmetric(
-                                          horizontal: 8, vertical: 4),
-                                      decoration: BoxDecoration(
-                                        color: Color(0xFFE2DED0),
-                                        borderRadius: BorderRadius.circular(4),
-                                      ),
-                                      child: Text(
-                                        'Pilih gambar atau dokumen',
-                                        style: TextStyle(
-                                          fontFamily: 'Ubuntu',
-                                          color: Colors.black54,
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-                          Positioned(
-                            top: -10,
-                            right: -10,
-                            child: Container(
-                              width: 24,
-                              height: 24,
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: Color(0xFF4F4E49),
-                              ),
-                              child: IconButton(
-                                padding: EdgeInsets.zero,
-                                icon: Icon(Icons.close,
-                                    color: Colors.white, size: 16),
-                                onPressed: () {
-                                  // ini nanti buat remove nya thinnn mas broo
-                                  _removeFile(() {
-                                    _suratKelahiran = null;
-                                  });
-                                },
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
+                    _buildTextField(
+                      context: context,
+                      label: 'Nama Lengkap',
+                      hint: 'tulis nama lengkap pelapor',
+                      onSave: (value) => _namaPelapor = value,
                     ),
-                    _buildSubTitle('Buku Nikah Orang Tua / SPTJM'),
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 16.0),
-                      child: Stack(
-                        clipBehavior: Clip.none,
-                        children: [
-                          GestureDetector(
-                            onTap: () async {
-                              // ini buat handle upload document nya thin
-                              await _pickFile((file) {
-                                _buktiSPTJM = file;
-                              });
-                            },
-                            child: Container(
-                              height: 100,
-                              decoration: BoxDecoration(
-                                color: Color(0xFFE0E5E7),
-                                borderRadius: BorderRadius.circular(7),
-                              ),
-                              child: Center(
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Image.asset(
-                                      'assets/upload-icon.png',
-                                      height: 30,
-                                      width: 30,
-                                    ),
-                                    SizedBox(height: 8),
-                                    Container(
-                                      padding: EdgeInsets.symmetric(
-                                          horizontal: 8, vertical: 4),
-                                      decoration: BoxDecoration(
-                                        color: Color(0xFFE2DED0),
-                                        borderRadius: BorderRadius.circular(4),
-                                      ),
-                                      child: Text(
-                                        'Pilih gambar atau dokumen',
-                                        style: TextStyle(
-                                          fontFamily: 'Ubuntu',
-                                          color: Colors.black54,
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-                          Positioned(
-                            top: -10,
-                            right: -10,
-                            child: Container(
-                              width: 24,
-                              height: 24,
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: Color(0xFF4F4E49),
-                              ),
-                              child: IconButton(
-                                padding: EdgeInsets.zero,
-                                icon: Icon(Icons.close,
-                                    color: Colors.white, size: 16),
-                                onPressed: () {
-                                  // ini nanti buat remove nya thinnn mas broo
-                                  _removeFile(() {
-                                    _buktiSPTJM = null;
-                                  });
-                                },
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
+                    _buildTextField(
+                      context: context,
+                      label: 'Nomor KK',
+                      hint: 'nomor KK',
+                      isNumber: true,
+                      onSave: (value) => _kkPelapor = value != null ? int.tryParse(value) : null,
                     ),
-                    _buildSubTitle('Kartu Keluarga Orang Tua'),
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 16.0),
-                      child: Stack(
-                        clipBehavior: Clip.none,
-                        children: [
-                          GestureDetector(
-                            onTap: () async {
-                              // ini buat handle upload document nya thin
-                              await _pickFile((file) {
-                                _kkOrangTua = file;
-                              });
-                            },
-                            child: Container(
-                              height: 100,
-                              decoration: BoxDecoration(
-                                color: Color(0xFFE0E5E7),
-                                borderRadius: BorderRadius.circular(7),
-                              ),
-                              child: Center(
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Image.asset(
-                                      'assets/upload-icon.png',
-                                      height: 30,
-                                      width: 30,
-                                    ),
-                                    SizedBox(height: 8),
-                                    Container(
-                                      padding: EdgeInsets.symmetric(
-                                          horizontal: 8, vertical: 4),
-                                      decoration: BoxDecoration(
-                                        color: Color(0xFFE2DED0),
-                                        borderRadius: BorderRadius.circular(4),
-                                      ),
-                                      child: Text(
-                                        'Pilih gambar atau dokumen',
-                                        style: TextStyle(
-                                          fontFamily: 'Ubuntu',
-                                          color: Colors.black54,
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-                          Positioned(
-                            top: -10,
-                            right: -10,
-                            child: Container(
-                              width: 24,
-                              height: 24,
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: Color(0xFF4F4E49),
-                              ),
-                              child: IconButton(
-                                padding: EdgeInsets.zero,
-                                icon: Icon(Icons.close,
-                                    color: Colors.white, size: 16),
-                                onPressed: () {
-                                  // ini nanti buat remove nya thinnn mas broo
-                                  _removeFile(() {
-                                    _kkOrangTua = null;
-                                  });
-                                },
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    _buildSubTitle('KTP Ayah'),
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 16.0),
-                      child: Stack(
-                        clipBehavior: Clip.none,
-                        children: [
-                          GestureDetector(
-                            onTap: () async {
-                              // ini buat handle upload document nya thin
-                              await _pickFile((file) {
-                                _ktpAyah = file;
-                              });
-                            },
-                            child: Container(
-                              height: 100,
-                              decoration: BoxDecoration(
-                                color: Color(0xFFE0E5E7),
-                                borderRadius: BorderRadius.circular(7),
-                              ),
-                              child: Center(
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Image.asset(
-                                      'assets/upload-icon.png',
-                                      height: 30,
-                                      width: 30,
-                                    ),
-                                    SizedBox(height: 8),
-                                    Container(
-                                      padding: EdgeInsets.symmetric(
-                                          horizontal: 8, vertical: 4),
-                                      decoration: BoxDecoration(
-                                        color: Color(0xFFE2DED0),
-                                        borderRadius: BorderRadius.circular(4),
-                                      ),
-                                      child: Text(
-                                        'Pilih gambar atau dokumen',
-                                        style: TextStyle(
-                                          fontFamily: 'Ubuntu',
-                                          color: Colors.black54,
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-                          Positioned(
-                            top: -10,
-                            right: -10,
-                            child: Container(
-                              width: 24,
-                              height: 24,
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: Color(0xFF4F4E49),
-                              ),
-                              child: IconButton(
-                                padding: EdgeInsets.zero,
-                                icon: Icon(Icons.close,
-                                    color: Colors.white, size: 16),
-                                onPressed: () {
-                                  // ini nanti buat remove nya thinnn mas broo
-                                  _removeFile(() {
-                                    _ktpAyah = null;
-                                  });
-                                },
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    _buildSubTitle('KTP Ibu'),
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 16.0),
-                      child: Stack(
-                        clipBehavior: Clip.none,
-                        children: [
-                          GestureDetector(
-                            onTap: () async {
-                              // ini buat handle upload document nya thin
-                              await _pickFile((file) {
-                                _ktpIbu = file;
-                              });
-                            },
-                            child: Container(
-                              height: 100,
-                              decoration: BoxDecoration(
-                                color: Color(0xFFE0E5E7),
-                                borderRadius: BorderRadius.circular(7),
-                              ),
-                              child: Center(
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Image.asset(
-                                      'assets/upload-icon.png',
-                                      height: 30,
-                                      width: 30,
-                                    ),
-                                    SizedBox(height: 8),
-                                    Container(
-                                      padding: EdgeInsets.symmetric(
-                                          horizontal: 8, vertical: 4),
-                                      decoration: BoxDecoration(
-                                        color: Color(0xFFE2DED0),
-                                        borderRadius: BorderRadius.circular(4),
-                                      ),
-                                      child: Text(
-                                        'Pilih gambar atau dokumen',
-                                        style: TextStyle(
-                                          fontFamily: 'Ubuntu',
-                                          color: Colors.black54,
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-                          Positioned(
-                            top: -10,
-                            right: -10,
-                            child: Container(
-                              width: 24,
-                              height: 24,
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: Color(0xFF4F4E49),
-                              ),
-                              child: IconButton(
-                                padding: EdgeInsets.zero,
-                                icon: Icon(Icons.close,
-                                    color: Colors.white, size: 16),
-                                onPressed: () {
-                                  // ini nanti buat remove nya thinnn mas broo
-                                  _removeFile(() {
-                                    _ktpIbu = null;
-                                  });
-                                },
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    _buildSubTitle('Dokumen Tambahan'),
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 16.0),
-                      child: Stack(
-                        clipBehavior: Clip.none,
-                        children: [
-                          GestureDetector(
-                            onTap: () async {
-                              // ini buat handle upload document nya thin
-                              await _pickFile((file) {
-                                _dokumenTambahan = file;
-                              });
-                            },
-                            child: Container(
-                              height: 100,
-                              decoration: BoxDecoration(
-                                color: Color(0xFFE0E5E7),
-                                borderRadius: BorderRadius.circular(7),
-                              ),
-                              child: Center(
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Image.asset(
-                                      'assets/upload-icon.png',
-                                      height: 30,
-                                      width: 30,
-                                    ),
-                                    SizedBox(height: 8),
-                                    Container(
-                                      padding: EdgeInsets.symmetric(
-                                          horizontal: 8, vertical: 4),
-                                      decoration: BoxDecoration(
-                                        color: Color(0xFFE2DED0),
-                                        borderRadius: BorderRadius.circular(4),
-                                      ),
-                                      child: Text(
-                                        'Pilih gambar atau dokumen',
-                                        style: TextStyle(
-                                          fontFamily: 'Ubuntu',
-                                          color: Colors.black54,
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-                          Positioned(
-                            top: -10,
-                            right: -10,
-                            child: Container(
-                              width: 24,
-                              height: 24,
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: Color(0xFF4F4E49),
-                              ),
-                              child: IconButton(
-                                padding: EdgeInsets.zero,
-                                icon: Icon(Icons.close,
-                                    color: Colors.white, size: 16),
-                                onPressed: () {
-                                  // ini nanti buat remove nya thinnn mas broo
-                                  _removeFile(() {
-                                    _dokumenTambahan = null;
-                                  });
-                                },
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
+                    _buildDropdownField(
+                      context: context,
+                      label: 'Kewarganegaraan',
+                      items: _countries,
+                      currentValue: _kewarganegaraanPelapor,
+                      onSave: (value) => _kewarganegaraanPelapor = value,
                     ),
                   ],
                 ),
-              ),
-              SizedBox(height: 16.0),
-              Align(
-                alignment: Alignment.bottomRight,
-                child: Padding(
-                  padding: const EdgeInsets.only(right: 10.0),
-                  child: ElevatedButton(
-                    onPressed: _submitForm,
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Color(0xFFC6B79B),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(4),
-                      ),
-                      padding:
-                          EdgeInsets.symmetric(vertical: 12, horizontal: 20),
+                SizedBox(height: 16),
+                _buildSection(
+                  title: 'DATA ORANG TUA',
+                  fields: [
+                    _buildTextField(
+                      context: context,
+                      label: 'NIK Ayah',
+                      hint: 'nomor induk kependudukan ayah',
+                      isNumber: true,
+                      onSave: (value) => _nikAyah = value != null ? int.tryParse(value) : null,
                     ),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Text(
-                          'SELANJUTNYA',
-                          style: TextStyle(
-                            fontFamily: 'Ubuntu',
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black,
-                          ),
-                        ),
-                        Icon(Icons.arrow_forward, color: Color(0xFFE57F84)),
+                    _buildTextField(
+                      context: context,
+                      label: 'Nama Ayah',
+                      hint: 'tulis nama lengkap ayah',
+                      onSave: (value) => _namaAyah = value,
+                    ),
+                    _buildTextField(
+                      context: context,
+                      label: 'Tempat Lahir Ayah',
+                      hint: 'Tempat lahir',
+                      onSave: (value) => _tempatLahirAyah = value,
+                    ),
+                    _buildDatePickerField(
+                      context: context,
+                      label: 'Tanggal Lahir Ayah',
+                      selectedDate: _selectedDateAyah,
+                      onSelect: (date) {
+                        setState(() {
+                          _selectedDateAyah = date;
+                        });
+                      },
+                      onSave: (value) => null,
+                      validator: (value) {
+                        if (_selectedDateAyah == null) {
+                          return 'Tanggal Lahir Ayah tidak boleh kosong';
+                        }
+                        return null;
+                      },
+                    ),
+                    _buildDropdownField(
+                      context: context,
+                      label: 'Kewarganegaraan Ayah',
+                      items: _countries,
+                      currentValue: _kewarganegaraanAyah,
+                      onSave: (value) => _kewarganegaraanAyah = value,
+                    ),
+                    _buildTextField(
+                      context: context,
+                      label: 'NIK Ibu',
+                      hint: 'nomor induk kependudukan ibu',
+                      isNumber: true,
+                      onSave: (value) => _nikIbu = value != null ? int.tryParse(value) : null,
+                    ),
+                    _buildTextField(
+                      context: context,
+                      label: 'Nama Ibu',
+                      hint: 'tulis nama lengkap ibu',
+                      onSave: (value) => _namaIbu = value,
+                    ),
+                    _buildTextField(
+                      context: context,
+                      label: 'Tempat Lahir Ibu',
+                      hint: 'Tempat lahir',
+                      onSave: (value) => _tempatLahirIbu = value,
+                    ),
+                    _buildDatePickerField(
+                      context: context,
+                      label: 'Tanggal Lahir Ibu',
+                      selectedDate: _selectedDateIbu,
+                      onSelect: (date) {
+                        setState(() {
+                          _selectedDateIbu = date;
+                        });
+                      },
+                      onSave: (value) => null,
+                      validator: (value) {
+                        if (_selectedDateIbu == null) {
+                          return 'Tanggal Lahir Ibu tidak boleh kosong';
+                        }
+                        return null;
+                      },
+                    ),
+                    _buildDropdownField(
+                      context: context,
+                      label: 'Kewarganegaraan Ibu',
+                      items: _countries,
+                      currentValue: _kewarganegaraanIbu,
+                      onSave: (value) => _kewarganegaraanIbu = value,
+                    ),
+                  ],
+                ),
+                SizedBox(height: 16),
+                _buildSection(
+                  title: 'DATA ANAK',
+                  fields: [
+                    _buildTextField(
+                      context: context,
+                      label: 'NIK Bayi (jika ada)',
+                      hint: 'nomor induk kependudukan anak',
+                      isNumber: true,
+                      onSave: (value) => _nikAnak = value != null ? int.tryParse(value) : null,
+                    ),
+                    _buildTextField(
+                      context: context,
+                      label: 'Nama Lengkap',
+                      hint: 'tulis nama lengkap dengan huruf kapital',
+                      onSave: (value) => _namaAnak = value,
+                    ),
+                    _buildRadioField(
+                      context: context,
+                      label: 'Jenis Kelamin',
+                      items: ['Laki-laki', 'Perempuan'],
+                      groupValue: _jenisKelaminAnak,
+                      onSaved: (value) => _jenisKelaminAnak = value,
+                    ),
+                    _buildTextField(
+                      context: context,
+                      label: 'Tempat Dilahirkan',
+                      hint: 'Tempat lahir',
+                      onSave: (value) => _tempatLahirAnak = value,
+                    ),
+                    _buildTextField(
+                      context: context,
+                      label: 'Tempat Kelahiran',
+                      hint: 'Daerah tempat dilahirkan',
+                      onSave: (value) => _daerahLahirAnak = value,
+                    ),
+                    _buildDropdownField(
+                      context: context,
+                      label: 'Hari Lahir',
+                      items: [
+                        'Senin',
+                        'Selasa',
+                        'Rabu',
+                        'Kamis',
+                        'Jumat',
+                        'Sabtu',
+                        'Minggu'
                       ],
+                      currentValue: _hariLahirAnak,
+                      onSave: (value) => _hariLahirAnak = value,
+                    ),
+                    _buildDatePickerField(
+                      context: context,
+                      label: 'Tanggal Lahir',
+                      selectedDate: _selectedDateAnak,
+                      onSelect: (date) {
+                        setState(() {
+                          _selectedDateAnak = date;
+                        });
+                      },
+                      onSave: (value) => null,
+                      validator: (value) {
+                        if (_selectedDateAnak == null) {
+                          return 'Tanggal Lahir Anak tidak boleh kosong';
+                        }
+                        return null;
+                      },
+                    ),
+                    _buildTextField(
+                      context: context,
+                      label: 'Waktu Kelahiran',
+                      hint: 'jam dilahirkan',
+                      onSave: (value) => _waktuLahirAnak = value,
+                    ),
+                    _buildCustomDropdownField(
+                      context: context,
+                      label: 'Jenis Kelahiran',
+                      items: [
+                        'Tunggal',
+                        'Kembar 2',
+                        'Kembar 3',
+                        'Kembar 4',
+                        'Lainnya'
+                      ],
+                      onSave: (value) => _jenisKelahiranAnak = value,
+                      onChanged: (value) {
+                        setState(() {
+                          _jenisKelahiranAnak = value;
+                        });
+                      },
+                    ),
+                    if (_jenisKelahiranAnak == 'Lainnya')
+                      Padding(
+                        padding: const EdgeInsets.only(top: 3),
+                        child: _buildTextField(
+                          context: context,
+                          label: '',
+                          hint: '',
+                          onSave: (value) => _jenisKelahiranAnak = value,
+                        ),
+                      ),
+                    _buildTextField(
+                      context: context,
+                      label: 'Kelahiran Ke-',
+                      hint: 'isi dengan angka',
+                      isNumber: true,
+                      onSave: (value) => _urutanKelahiranAnak = value != null ? int.tryParse(value) : null,
+                    ),
+                    _buildTextField(
+                      context: context,
+                      label: 'Berat Bayi',
+                      hint: 'satuan kg, pisahkan dengan tanda titik (.)',
+                      onSave: (value) => _beratAnak = value,
+                    ),
+                    _buildTextField(
+                      context: context,
+                      label: 'Panjang Bayi',
+                      hint: 'satuan cm',
+                      isNumber: true,
+                      onSave: (value) => _panjangAnak = value != null ? int.tryParse(value) : null,
+                    ),
+                    _buildCustomDropdownField(
+                      context: context,
+                      label: 'Penolong Kelahiran',
+                      items: ['Dokter', 'Bidan/Perawat', 'Dukun', 'Lainnya'],
+                      onSave: (value) => _penolongKelahiranAnak = value,
+                      onChanged: (value) {
+                        setState(() {
+                          _penolongKelahiranAnak = value;
+                        });
+                      },
+                    ),
+                    if (_penolongKelahiranAnak == 'Lainnya')
+                      Padding(
+                        padding: const EdgeInsets.only(top: 3),
+                        child: _buildTextField(
+                          context: context,
+                          label: '',
+                          hint: '',
+                          onSave: (value) => _penolongKelahiranAnak = value,
+                        ),
+                      ),
+                  ],
+                ),
+                SizedBox(height: 34),
+                SizedBox(height: 16.0),
+                Container(
+                  padding: EdgeInsets.all(16.0),
+                  decoration: BoxDecoration(
+                    color: Color(0xFFF9FCFC),
+                    borderRadius: BorderRadius.circular(7),
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Center(
+                        child: Container(
+                          padding: EdgeInsets.symmetric(
+                              vertical: 4.0, horizontal: 8.0),
+                          decoration: BoxDecoration(
+                            color: Color(0xFFCE7277),
+                            borderRadius: BorderRadius.circular(4),
+                          ),
+                          child: Text(
+                            'UNGGAH DOKUMEN KELENGKAPAN',
+                            style: TextStyle(
+                              fontFamily: 'Ubuntu',
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 16.0),
+                      _buildSubTitle('Surat Keterangan Kelahiran'),
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 16.0),
+                        child: Stack(
+                          clipBehavior: Clip.none,
+                          children: [
+                            GestureDetector(
+                              onTap: () async {
+                                // ini buat handle upload document nya thin
+                                await _pickFile((file) {
+                                  _suratKelahiran = file;
+                                });
+                              },
+                              child: Container(
+                                height: 100,
+                                decoration: BoxDecoration(
+                                  color: Color(0xFFE0E5E7),
+                                  borderRadius: BorderRadius.circular(7),
+                                ),
+                                child: Center(
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Image.asset(
+                                        'assets/upload-icon.png',
+                                        height: 30,
+                                        width: 30,
+                                      ),
+                                      SizedBox(height: 8),
+                                      Container(
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: 8, vertical: 4),
+                                        decoration: BoxDecoration(
+                                          color: Color(0xFFE2DED0),
+                                          borderRadius: BorderRadius.circular(4),
+                                        ),
+                                        child: Text(
+                                          'Pilih gambar atau dokumen',
+                                          style: TextStyle(
+                                            fontFamily: 'Ubuntu',
+                                            color: Colors.black54,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Positioned(
+                              top: -10,
+                              right: -10,
+                              child: Container(
+                                width: 24,
+                                height: 24,
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: Color(0xFF4F4E49),
+                                ),
+                                child: IconButton(
+                                  padding: EdgeInsets.zero,
+                                  icon: Icon(Icons.close,
+                                      color: Colors.white, size: 16),
+                                  onPressed: () {
+                                    // ini nanti buat remove nya thinnn mas broo
+                                    _removeFile(() {
+                                      _suratKelahiran = null;
+                                    });
+                                  },
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      _buildSubTitle('Buku Nikah Orang Tua / SPTJM'),
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 16.0),
+                        child: Stack(
+                          clipBehavior: Clip.none,
+                          children: [
+                            GestureDetector(
+                              onTap: () async {
+                                // ini buat handle upload document nya thin
+                                await _pickFile((file) {
+                                  _buktiSPTJM = file;
+                                });
+                              },
+                              child: Container(
+                                height: 100,
+                                decoration: BoxDecoration(
+                                  color: Color(0xFFE0E5E7),
+                                  borderRadius: BorderRadius.circular(7),
+                                ),
+                                child: Center(
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Image.asset(
+                                        'assets/upload-icon.png',
+                                        height: 30,
+                                        width: 30,
+                                      ),
+                                      SizedBox(height: 8),
+                                      Container(
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: 8, vertical: 4),
+                                        decoration: BoxDecoration(
+                                          color: Color(0xFFE2DED0),
+                                          borderRadius: BorderRadius.circular(4),
+                                        ),
+                                        child: Text(
+                                          'Pilih gambar atau dokumen',
+                                          style: TextStyle(
+                                            fontFamily: 'Ubuntu',
+                                            color: Colors.black54,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Positioned(
+                              top: -10,
+                              right: -10,
+                              child: Container(
+                                width: 24,
+                                height: 24,
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: Color(0xFF4F4E49),
+                                ),
+                                child: IconButton(
+                                  padding: EdgeInsets.zero,
+                                  icon: Icon(Icons.close,
+                                      color: Colors.white, size: 16),
+                                  onPressed: () {
+                                    // ini nanti buat remove nya thinnn mas broo
+                                    _removeFile(() {
+                                      _buktiSPTJM = null;
+                                    });
+                                  },
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      _buildSubTitle('Kartu Keluarga Orang Tua'),
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 16.0),
+                        child: Stack(
+                          clipBehavior: Clip.none,
+                          children: [
+                            GestureDetector(
+                              onTap: () async {
+                                // ini buat handle upload document nya thin
+                                await _pickFile((file) {
+                                  _kkOrangTua = file;
+                                });
+                              },
+                              child: Container(
+                                height: 100,
+                                decoration: BoxDecoration(
+                                  color: Color(0xFFE0E5E7),
+                                  borderRadius: BorderRadius.circular(7),
+                                ),
+                                child: Center(
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Image.asset(
+                                        'assets/upload-icon.png',
+                                        height: 30,
+                                        width: 30,
+                                      ),
+                                      SizedBox(height: 8),
+                                      Container(
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: 8, vertical: 4),
+                                        decoration: BoxDecoration(
+                                          color: Color(0xFFE2DED0),
+                                          borderRadius: BorderRadius.circular(4),
+                                        ),
+                                        child: Text(
+                                          'Pilih gambar atau dokumen',
+                                          style: TextStyle(
+                                            fontFamily: 'Ubuntu',
+                                            color: Colors.black54,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Positioned(
+                              top: -10,
+                              right: -10,
+                              child: Container(
+                                width: 24,
+                                height: 24,
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: Color(0xFF4F4E49),
+                                ),
+                                child: IconButton(
+                                  padding: EdgeInsets.zero,
+                                  icon: Icon(Icons.close,
+                                      color: Colors.white, size: 16),
+                                  onPressed: () {
+                                    // ini nanti buat remove nya thinnn mas broo
+                                    _removeFile(() {
+                                      _kkOrangTua = null;
+                                    });
+                                  },
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      _buildSubTitle('KTP Ayah'),
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 16.0),
+                        child: Stack(
+                          clipBehavior: Clip.none,
+                          children: [
+                            GestureDetector(
+                              onTap: () async {
+                                // ini buat handle upload document nya thin
+                                await _pickFile((file) {
+                                  _ktpAyah = file;
+                                });
+                              },
+                              child: Container(
+                                height: 100,
+                                decoration: BoxDecoration(
+                                  color: Color(0xFFE0E5E7),
+                                  borderRadius: BorderRadius.circular(7),
+                                ),
+                                child: Center(
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Image.asset(
+                                        'assets/upload-icon.png',
+                                        height: 30,
+                                        width: 30,
+                                      ),
+                                      SizedBox(height: 8),
+                                      Container(
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: 8, vertical: 4),
+                                        decoration: BoxDecoration(
+                                          color: Color(0xFFE2DED0),
+                                          borderRadius: BorderRadius.circular(4),
+                                        ),
+                                        child: Text(
+                                          'Pilih gambar atau dokumen',
+                                          style: TextStyle(
+                                            fontFamily: 'Ubuntu',
+                                            color: Colors.black54,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Positioned(
+                              top: -10,
+                              right: -10,
+                              child: Container(
+                                width: 24,
+                                height: 24,
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: Color(0xFF4F4E49),
+                                ),
+                                child: IconButton(
+                                  padding: EdgeInsets.zero,
+                                  icon: Icon(Icons.close,
+                                      color: Colors.white, size: 16),
+                                  onPressed: () {
+                                    // ini nanti buat remove nya thinnn mas broo
+                                    _removeFile(() {
+                                      _ktpAyah = null;
+                                    });
+                                  },
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      _buildSubTitle('KTP Ibu'),
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 16.0),
+                        child: Stack(
+                          clipBehavior: Clip.none,
+                          children: [
+                            GestureDetector(
+                              onTap: () async {
+                                // ini buat handle upload document nya thin
+                                await _pickFile((file) {
+                                  _ktpIbu = file;
+                                });
+                              },
+                              child: Container(
+                                height: 100,
+                                decoration: BoxDecoration(
+                                  color: Color(0xFFE0E5E7),
+                                  borderRadius: BorderRadius.circular(7),
+                                ),
+                                child: Center(
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Image.asset(
+                                        'assets/upload-icon.png',
+                                        height: 30,
+                                        width: 30,
+                                      ),
+                                      SizedBox(height: 8),
+                                      Container(
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: 8, vertical: 4),
+                                        decoration: BoxDecoration(
+                                          color: Color(0xFFE2DED0),
+                                          borderRadius: BorderRadius.circular(4),
+                                        ),
+                                        child: Text(
+                                          'Pilih gambar atau dokumen',
+                                          style: TextStyle(
+                                            fontFamily: 'Ubuntu',
+                                            color: Colors.black54,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Positioned(
+                              top: -10,
+                              right: -10,
+                              child: Container(
+                                width: 24,
+                                height: 24,
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: Color(0xFF4F4E49),
+                                ),
+                                child: IconButton(
+                                  padding: EdgeInsets.zero,
+                                  icon: Icon(Icons.close,
+                                      color: Colors.white, size: 16),
+                                  onPressed: () {
+                                    // ini nanti buat remove nya thinnn mas broo
+                                    _removeFile(() {
+                                      _ktpIbu = null;
+                                    });
+                                  },
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      _buildSubTitle('Dokumen Tambahan'),
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 16.0),
+                        child: Stack(
+                          clipBehavior: Clip.none,
+                          children: [
+                            GestureDetector(
+                              onTap: () async {
+                                // ini buat handle upload document nya thin
+                                await _pickFile((file) {
+                                  _dokumenTambahan = file;
+                                });
+                              },
+                              child: Container(
+                                height: 100,
+                                decoration: BoxDecoration(
+                                  color: Color(0xFFE0E5E7),
+                                  borderRadius: BorderRadius.circular(7),
+                                ),
+                                child: Center(
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Image.asset(
+                                        'assets/upload-icon.png',
+                                        height: 30,
+                                        width: 30,
+                                      ),
+                                      SizedBox(height: 8),
+                                      Container(
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: 8, vertical: 4),
+                                        decoration: BoxDecoration(
+                                          color: Color(0xFFE2DED0),
+                                          borderRadius: BorderRadius.circular(4),
+                                        ),
+                                        child: Text(
+                                          'Pilih gambar atau dokumen',
+                                          style: TextStyle(
+                                            fontFamily: 'Ubuntu',
+                                            color: Colors.black54,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Positioned(
+                              top: -10,
+                              right: -10,
+                              child: Container(
+                                width: 24,
+                                height: 24,
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: Color(0xFF4F4E49),
+                                ),
+                                child: IconButton(
+                                  padding: EdgeInsets.zero,
+                                  icon: Icon(Icons.close,
+                                      color: Colors.white, size: 16),
+                                  onPressed: () {
+                                    // ini nanti buat remove nya thinnn mas broo
+                                    _removeFile(() {
+                                      _dokumenTambahan = null;
+                                    });
+                                  },
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(height: 16.0),
+                Align(
+                  alignment: Alignment.bottomRight,
+                  child: Padding(
+                    padding: const EdgeInsets.only(right: 10.0),
+                    child: Form(
+                      child: ElevatedButton(
+                        onPressed: _submitForm,
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Color(0xFFC6B79B),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(4),
+                          ),
+                          padding:
+                              EdgeInsets.symmetric(vertical: 12, horizontal: 20),
+                        ),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text(
+                              'SELANJUTNYA',
+                              style: TextStyle(
+                                fontFamily: 'Ubuntu',
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black,
+                              ),
+                            ),
+                            Icon(Icons.arrow_forward, color: Color(0xFFE57F84)),
+                          ],
+                        ),
+                      ),
                     ),
                   ),
                 ),
-              ),
-              SizedBox(height: 38),
-            ],
-          ),
+                SizedBox(height: 38),
+              ],
+            ),
+          ), 
         ),
       ),
     );
@@ -979,6 +1009,7 @@ class _AktaLahirState extends State<AktaLahir> {
     required String label,
     required String hint,
     bool isNumber = false,
+    required FormFieldSetter<String?> onSave, // Menyesuaikan dengan tipe data nullable
   }) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8),
@@ -987,33 +1018,51 @@ class _AktaLahirState extends State<AktaLahir> {
         children: [
           Text(
             label,
-            style: TextStyle(
+            style: const TextStyle(
               fontFamily: 'Ubuntu',
               fontWeight: FontWeight.bold,
               color: Colors.black,
             ),
           ),
-          SizedBox(height: 8),
-          TextField(
+          const SizedBox(height: 8),
+          TextFormField(
+            onSaved: (value) {
+              if (isNumber) {
+                // Konversi string ke integer jika isNumber true
+                onSave(value?.isNotEmpty == true ? int.tryParse(value!)?.toString() : null);
+              } else {
+                onSave(value);
+              }
+            },
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return '$label tidak boleh kosong';
+              }
+              if (isNumber && int.tryParse(value) == null) {
+                return '$label tidak boleh kosong';
+              }
+              return null;
+            },
+            keyboardType: isNumber ? TextInputType.number : TextInputType.text,
             decoration: InputDecoration(
               hintText: hint,
-              hintStyle: TextStyle(
+              hintStyle: const TextStyle(
                 fontStyle: FontStyle.italic,
-                fontWeight: FontWeight.w100,
-                color: Colors.black54,
+                fontWeight: FontWeight.w300,
+                fontFamily: 'Ubuntu',
               ),
               filled: true,
               fillColor: Colors.white,
               border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(7),
-                borderSide: BorderSide.none,
+                borderRadius: BorderRadius.circular(7.0),
+                borderSide: const BorderSide(color: Colors.white),
               ),
             ),
-            style: TextStyle(
+            style: const TextStyle(
               color: Colors.black,
             ),
-            keyboardType: isNumber ? TextInputType.number : TextInputType.text,
           ),
+          const SizedBox(height: 15),
         ],
       ),
     );
@@ -1023,6 +1072,8 @@ class _AktaLahirState extends State<AktaLahir> {
     required BuildContext context,
     required String label,
     required List<String> items,
+    String? currentValue, // Nilai saat ini yang dipilih
+    Function(String?)? onSave, // Fungsi untuk menyimpan nilai yang dipilih
   }) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8),
@@ -1050,17 +1101,27 @@ class _AktaLahirState extends State<AktaLahir> {
                 filled: true,
                 border: InputBorder.none,
               ),
-              value: null,
+              value: items.contains(currentValue) ? currentValue : null, // Menggunakan currentValue
               items: items.map((String value) {
                 return DropdownMenuItem<String>(
                   value: value,
                   child: Text(value, style: TextStyle(color: Colors.black)),
                 );
               }).toList(),
-              onChanged: (value) {},
+              onChanged: (value) {
+                if (onSave != null) {
+                  onSave(value);
+                }
+              },
+              onSaved: onSave,
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return '$label tidak boleh kosong';
+                }
+                return null;
+              },
               dropdownColor: Colors.white,
-              isExpanded:
-                  true, // Ensure the dropdown expands to fill its container
+              isExpanded: true, // Ensure the dropdown expands to fill its container
             ),
           ),
         ],
@@ -1073,6 +1134,7 @@ class _AktaLahirState extends State<AktaLahir> {
     required String label,
     required List<String> items,
     required ValueChanged<String?> onChanged,
+    Function(String?)? onSave, // Tambahkan parameter onSave
   }) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8),
@@ -1107,12 +1169,44 @@ class _AktaLahirState extends State<AktaLahir> {
                   child: Text(value, style: TextStyle(color: Colors.black)),
                 );
               }).toList(),
-              onChanged: onChanged,
+              onChanged: (value) {
+                onChanged(value);
+                if (onSave != null) {
+                  onSave(value);
+                }
+              },
+              onSaved: onSave,
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return '$label tidak boleh kosong';
+                }
+                return null;
+              },
               dropdownColor: Colors.white,
-              isExpanded:
-                  true, // Ensure the dropdown expands to fill its container
+              isExpanded: true, // Ensure the dropdown expands to fill its container
             ),
           ),
+          // Kondisi untuk menampilkan TextField jika pilihan "Lainnya" dipilih
+          if (label == 'Jenis Kelahiran' && items.contains('Lainnya') && _jenisKelahiranAnak == 'Lainnya')
+            Padding(
+              padding: const EdgeInsets.only(top: 3),
+              child: _buildTextField(
+                context: context,
+                label: '',
+                hint: '',
+                onSave: (value) => _jenisKelahiranAnak = value,
+              ),
+            ),
+          if (label == 'Penolong Kelahiran' && items.contains('Lainnya') && _penolongKelahiranAnak == 'Lainnya')
+            Padding(
+              padding: const EdgeInsets.only(top: 3),
+              child: _buildTextField(
+                context: context,
+                label: '',
+                hint: '',
+                onSave: (value) => _penolongKelahiranAnak = value,
+              ),
+            ),
         ],
       ),
     );
@@ -1122,37 +1216,61 @@ class _AktaLahirState extends State<AktaLahir> {
     required BuildContext context,
     required String label,
     required List<String> items,
+    required String? groupValue,
+    required void Function(String?)? onSaved,
   }) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            label,
-            style: TextStyle(
-              fontFamily: 'Ubuntu',
-              fontWeight: FontWeight.bold,
-              color: Colors.black,
-            ),
-          ),
-          SizedBox(height: 8),
-          Column(
-            children: items.map((String item) {
-              return RadioListTile<String>(
-                title: Text(item),
-                value: item,
-                groupValue: _selectedGender,
-                onChanged: (value) {
-                  setState(() {
-                    _selectedGender = value;
-                  });
-                },
-                activeColor: Colors.black,
-              );
-            }).toList(),
-          ),
-        ],
+      child: FormField<String>(
+        onSaved: onSaved,
+        validator: (value) {
+          if (value == null || value.isEmpty) {
+            return '$label tidak boleh kosong';
+          }
+          return null;
+        },
+        builder: (FormFieldState<String> state) {
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                label,
+                style: TextStyle(
+                  fontFamily: 'Ubuntu',
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
+                ),
+              ),
+              SizedBox(height: 8),
+              Column(
+                children: items.map((String item) {
+                  return RadioListTile<String>(
+                    title: Text(item),
+                    value: item,
+                    groupValue: groupValue,
+                    onChanged: (value) {
+                      state.didChange(value);
+                      onSaved?.call(value);
+                      setState(() {
+                        // Update the value when the radio button is selected
+                        groupValue = value;
+                      });
+                    },
+                    activeColor: Colors.black,
+                  );
+                }).toList(),
+              ),
+              if (state.hasError)
+                Padding(
+                  padding: const EdgeInsets.only(top: 8.0),
+                  child: Text(
+                    state.errorText!,
+                    style: TextStyle(color: Colors.red, fontSize: 12),
+                  ),
+                ),
+            ],
+          );
+        },
       ),
     );
   }
@@ -1165,6 +1283,10 @@ class _AktaLahirState extends State<AktaLahir> {
     DateTime? selectedDate,
     ValueChanged<DateTime>? onSelect,
   }) {
+    TextEditingController _controller = TextEditingController(
+      text: selectedDate != null ? "${selectedDate.toLocal()}".split(' ')[0] : '',
+    );
+
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8),
       child: Column(
@@ -1179,7 +1301,9 @@ class _AktaLahirState extends State<AktaLahir> {
             ),
           ),
           SizedBox(height: 8),
-          GestureDetector(
+          TextFormField(
+            controller: _controller,
+            readOnly: true,
             onTap: () async {
               DateTime? date = await showDatePicker(
                 context: context,
@@ -1204,50 +1328,53 @@ class _AktaLahirState extends State<AktaLahir> {
                   );
                 },
               );
-              if (date != null && onSelect != null) {
-                onSelect(date);
+              if (date != null) {
+                _controller.text = "${date.toLocal()}".split(' ')[0];
+                if (onSelect != null) {
+                  onSelect(date);
+                }
               }
             },
-            child: Container(
-              width: double.infinity,
-              height: 60,
-              decoration: BoxDecoration(
-                color: Colors.white,
+            decoration: InputDecoration(
+              suffixIcon: Icon(Icons.calendar_today, color: Colors.black),
+              border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(7),
               ),
-              padding: EdgeInsets.symmetric(horizontal: 12, vertical: 16),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: Text(
-                      selectedDate != null
-                          ? "${selectedDate.toLocal()}".split(' ')[0]
-                          : 'TTTT-BB-HH',
-                      style: TextStyle(
-                        fontFamily: 'Ubuntu',
-                        fontStyle: FontStyle.italic,
-                        fontWeight: FontWeight.w100,
-                        color: Colors.black54,
-                      ),
-                    ),
-                  ),
-                  Icon(Icons.calendar_today, color: Colors.black),
-                ],
+              filled: true,
+              fillColor: Colors.white,
+            ),
+            onSaved: onSave,
+            validator: validator,
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildFilePicker({
+    required String label,
+    required File? file,
+    required Future<void> Function() onPick,
+    required VoidCallback onRemove,
+  }) {
+    return Padding(
+      padding: EdgeInsets.symmetric(vertical: 8.0),
+      child: Row(
+        children: [
+          Expanded(
+            child: Text(
+              file == null ? label : 'File selected: ${file.path.split('/').last}',
+              style: TextStyle(
+                fontFamily: 'Ubuntu',
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
               ),
             ),
           ),
-          onSaved: onSave,
-          if (validator != null)
-            Text(
-              validator(selectedDate != null
-                      ? "${selectedDate.toLocal()}".split(' ')[0]
-                      : null) ??
-                  '',
-              style: TextStyle(
-                color: Colors.red,
-                fontSize: 12,
-              ),
-            ),
+          IconButton(
+            icon: Icon(file == null ? Icons.upload : Icons.remove),
+            onPressed: file == null ? () async => await onPick() : onRemove,
+          ),
         ],
       ),
     );
