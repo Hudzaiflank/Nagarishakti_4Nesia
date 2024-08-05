@@ -4,6 +4,8 @@
 //!JANGAN DI UBAH STYLINGNYA
 //!JANGAN DI UBAH STYLINGNYA
 
+//TODO: buat sub judul tidak inline block jadi si icon download bisa di tengah
+//TODO: buat popup notifikasi
 import 'package:flutter/material.dart';
 
 class PublicDocumentPage extends StatelessWidget {
