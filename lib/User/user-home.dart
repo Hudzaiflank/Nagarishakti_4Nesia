@@ -11,6 +11,7 @@ import './Layanan-Kependudukan/Pendaftaran-AktaLahir-kematian/Akta-lahir.dart';
 import './Layanan-Kependudukan/Pendaftaran-AktaLahir-kematian/Surat-kematian.dart';
 import './Layanan-Kependudukan/Pembaruan-data/perpindahan-kependudukan.dart';
 import 'Informasi-publik/berita/news-page.dart';
+import 'Pengaduan-Masyarakat/pengaduan-masyarakat.dart';
 import 'Informasi-publik/Dokumen-publik/Public-Document.dart';
 import 'Informasi-publik/Agenda-Pemerintah/Agenda-pemerintahan.dart';
 
@@ -1067,6 +1068,14 @@ class _UserHomeState extends State<UserHome> {
                             style: TextStyle(fontFamily: 'Ubuntu'),
                             textAlign: TextAlign.justify,
                           ),
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => PengaduanMasyarakat(),
+                              ),
+                            );
+                          },
                         ),
                       ],
                     ),
