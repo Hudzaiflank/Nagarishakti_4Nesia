@@ -12,6 +12,7 @@ import '/Database/database_acara.dart';
 import '/Database/database_transportasi.dart';
 import '/Database/database_ktp.dart';
 import '/Database/database_kk.dart';
+import '/Database/database_aktaKelahiran.dart';
 import 'User/user-home.dart';
 import 'admin-home.dart';
 import 'SuperAdmin-home.dart';
@@ -19,6 +20,9 @@ import 'User/Destination/user-Destination-page.dart';
 import 'User/Destination/user-DetailDestination-page.dart';
 import 'User/user-Timeline-Festival.dart';
 import 'User/user-transportation-page.dart';
+import 'User/Layanan-Kependudukan/Pembuatan-ktp-kk/user-kk-page.dart';
+import 'User/Layanan-Kependudukan/Pembuatan-ktp-kk/user-ktp-page.dart';
+import 'User/Layanan-Kependudukan/Pendaftaran-AktaLahir-kematian/Akta-lahir.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -33,6 +37,7 @@ void main() async {
   await DatabaseTransportasi.instance.database;
   await DatabaseKtp.instance.database;
   await DatabaseKk.instance.database;
+  await DatabaseAktaKelahiran.instance.database;
 
   // Check table schema
   await DatabaseDetailDestinasi.instance.checkTableSchema();
