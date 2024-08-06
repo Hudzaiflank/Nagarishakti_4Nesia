@@ -1169,20 +1169,20 @@ class _AktaLahirState extends State<AktaLahir> {
           // Kondisi untuk menampilkan TextField jika pilihan "Lainnya" dipilih
           if (label == 'Jenis Kelahiran' && items.contains('Lainnya') && _jenisKelahiranAnak == 'Lainnya')
             Padding(
-              padding: const EdgeInsets.only(top: 3),
+              padding: const EdgeInsets.only(top: 16),
               child: _buildTextField(
                 context: context,
-                label: '',
+                label: 'Jenis Kelahiran Lainnya',
                 hint: '',
                 onSave: (value) => _jenisKelahiranAnak = value,
               ),
             ),
           if (label == 'Penolong Kelahiran' && items.contains('Lainnya') && _penolongKelahiranAnak == 'Lainnya')
             Padding(
-              padding: const EdgeInsets.only(top: 3),
+              padding: const EdgeInsets.only(top: 16),
               child: _buildTextField(
                 context: context,
-                label: '',
+                label: 'Penolong Kelahiran Lainnya',
                 hint: '',
                 onSave: (value) => _penolongKelahiranAnak = value,
               ),

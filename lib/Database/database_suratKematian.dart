@@ -71,7 +71,7 @@ class DatabaseSuratKematian {
   );
 }
 
-  Future<List<Kematian>> getAkta() async {
+  Future<List<Kematian>> getSuratKematian() async {
     final db = await instance.database;
     final result = await db.query('suratKematian');
     return result.map((json) => Kematian.fromMap(json)).toList();

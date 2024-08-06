@@ -140,7 +140,6 @@ class _UserKkPageState extends State<UserKkPage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    _buildSubTitle('Alasan Pembuatan'),
                     _buildDropdownField(
                       context,
                       [
@@ -152,6 +151,7 @@ class _UserKkPageState extends State<UserKkPage> {
                         'KK Baru (Rentan Adminduk)',
                         'KK Perubahan (Peristiwa penting)'
                       ],
+                      label: 'Alasan Pembuatan',
                       onSave: (value) => _alasanPembuatan = value,
                     ),
                   ],
