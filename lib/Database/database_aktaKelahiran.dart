@@ -54,10 +54,12 @@ class DatabaseAktaKelahiran {
         tanggalLahirAnak TEXT NOT NULL,
         waktuLahirAnak TEXT NOT NULL,
         jenisKelahiranAnak TEXT NOT NULL,
+        jenisKelahiranAnakLainnya TEXT NOT NULL,
         urutanKelahiranAnak INTEGER NOT NULL,
         beratAnak TEXT NOT NULL,
         panjangAnak INTEGER NOT NULL,
         penolongKelahiranAnak TEXT NOT NULL,
+        penolongKelahiranAnakLainnya TEXT NOT NULL,
         suratKelahiran TEXT NOT NULL,
         buktiSPTJM TEXT NOT NULL,
         kkOrangTua TEXT NOT NULL,
@@ -119,15 +121,17 @@ class Akta {
   final String namaAnak;
   final String jenisKelaminAnak;
   final String tempatLahirAnak;
-  final String daerahLahirAnak;
+  final String daerahLahirAnak; 
   final String hariLahirAnak;
   final DateTime tanggalLahirAnak;
-  final String waktuLahirAnak;
+  final String waktuLahirAnak; 
   final String jenisKelahiranAnak;
+  final String jenisKelahiranAnakLainnya;
   final int urutanKelahiranAnak;
   final String beratAnak;
   final int panjangAnak;
   final String penolongKelahiranAnak;
+  final String penolongKelahiranAnakLainnya;
   final File suratKelahiran;
   final File buktiSPTJM;
   final File kkOrangTua;
@@ -160,10 +164,12 @@ class Akta {
     required this.tanggalLahirAnak,
     required this.waktuLahirAnak,
     required this.jenisKelahiranAnak,
+    required this.jenisKelahiranAnakLainnya,
     required this.urutanKelahiranAnak,
     required this.beratAnak,
     required this.panjangAnak,
     required this.penolongKelahiranAnak,
+    required this.penolongKelahiranAnakLainnya,
     required this.suratKelahiran,
     required this.buktiSPTJM,
     required this.kkOrangTua,
@@ -198,10 +204,12 @@ class Akta {
       'tanggalLahirAnak': DateFormat('yyyy-MM-dd').format(tanggalLahirAnak),
       'waktuLahirAnak': waktuLahirAnak,
       'jenisKelahiranAnak': jenisKelahiranAnak,
+      'jenisKelahiranAnakLainnya': jenisKelahiranAnakLainnya,
       'urutanKelahiranAnak': urutanKelahiranAnak,
       'beratAnak': beratAnak,
       'panjangAnak': panjangAnak,
       'penolongKelahiranAnak': penolongKelahiranAnak,
+      'penolongKelahiranAnakLainnya': penolongKelahiranAnakLainnya,
       'suratKelahiran': suratKelahiran,
       'buktiSPTJM': buktiSPTJM,
       'kkOrangTua': kkOrangTua,
@@ -237,10 +245,12 @@ class Akta {
       tanggalLahirAnak: DateTime.parse(map['tanggalLahirAnak'] as String),
       waktuLahirAnak: map['waktuLahirAnak'] as String,
       jenisKelahiranAnak: map['jenisKelahiranAnak'] as String,
+      jenisKelahiranAnakLainnya: map['jenisKelahiranAnakLainnya'] as String,
       urutanKelahiranAnak: map['urutanKelahiranAnak'] as int,
       beratAnak: map['beratAnak'] as String,
       panjangAnak: map['panjangAnak'] as int,
       penolongKelahiranAnak: map['penolongKelahiranAnak'] as String,
+      penolongKelahiranAnakLainnya: map['penolongKelahiranAnakLainnya'] as String,
       suratKelahiran: map['suratKelahiran'] as File,
       buktiSPTJM: map['buktiSPTJM'] as File,
       kkOrangTua: map['kkOrangTua'] as File,
@@ -252,6 +262,6 @@ class Akta {
 
   @override
   String toString() {
-    return 'Akta{id: $id, nikPelapor: $nikPelapor, namaPelapor: $namaPelapor, kkPelapor: $kkPelapor, kewarganegaraanPelapor: $kewarganegaraanPelapor, nikAyah: $nikAyah, namaAyah: $namaAyah, tempatLahirAyah: $tempatLahirAyah, tanggalLahirAyah: $tanggalLahirAyah, kewarganegaraanAyah: $kewarganegaraanAyah, nikIbu: $nikIbu, namaIbu: $namaIbu, tempatLahirIbu: $tempatLahirIbu, tanggalLahirIbu: $tanggalLahirIbu, kewarganegaraanIbu: $kewarganegaraanIbu, nikAnak: $nikAnak, namaAnak: $namaAnak, jenisKelaminAnak: $jenisKelaminAnak, tempatLahirAnak: $tempatLahirAnak, daerahLahirAnak: $daerahLahirAnak, hariLahirAnak: $hariLahirAnak, tanggalLahirAnak: $tanggalLahirAnak, waktuLahirAnak: $waktuLahirAnak, jenisKelahiranAnak: $jenisKelahiranAnak, urutanKelahiranAnak: $urutanKelahiranAnak, beratAnak: $beratAnak, panjangAnak: $panjangAnak, penolongKelahiranAnak: $penolongKelahiranAnak, suratKelahiran: $suratKelahiran, buktiSPTJM: $buktiSPTJM, kkOrangTua: $kkOrangTua, ktpAyah: $ktpAyah, ktpIbu: $ktpIbu, dokumenTambahan: $dokumenTambahan}';
+    return 'Akta{id: $id, nikPelapor: $nikPelapor, namaPelapor: $namaPelapor, kkPelapor: $kkPelapor, kewarganegaraanPelapor: $kewarganegaraanPelapor, nikAyah: $nikAyah, namaAyah: $namaAyah, tempatLahirAyah: $tempatLahirAyah, tanggalLahirAyah: $tanggalLahirAyah, kewarganegaraanAyah: $kewarganegaraanAyah, nikIbu: $nikIbu, namaIbu: $namaIbu, tempatLahirIbu: $tempatLahirIbu, tanggalLahirIbu: $tanggalLahirIbu, kewarganegaraanIbu: $kewarganegaraanIbu, nikAnak: $nikAnak, namaAnak: $namaAnak, jenisKelaminAnak: $jenisKelaminAnak, tempatLahirAnak: $tempatLahirAnak, daerahLahirAnak: $daerahLahirAnak, hariLahirAnak: $hariLahirAnak, tanggalLahirAnak: $tanggalLahirAnak, waktuLahirAnak: $waktuLahirAnak, jenisKelahiranAnak: $jenisKelahiranAnak, jenisKelahiranAnakLainnya: $jenisKelahiranAnakLainnya, urutanKelahiranAnak: $urutanKelahiranAnak, beratAnak: $beratAnak, panjangAnak: $panjangAnak, penolongKelahiranAnak: $penolongKelahiranAnak, penolongKelahiranAnakLainnya: $penolongKelahiranAnakLainnya, suratKelahiran: $suratKelahiran, buktiSPTJM: $buktiSPTJM, kkOrangTua: $kkOrangTua, ktpAyah: $ktpAyah, ktpIbu: $ktpIbu, dokumenTambahan: $dokumenTambahan}';
   }
 }

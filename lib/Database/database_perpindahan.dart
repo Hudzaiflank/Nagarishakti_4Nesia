@@ -53,6 +53,7 @@ class DatabasePerpindahan {
         kecamatanTujuan TEXT NOT NULL,
         desaKelurahanTujuan TEXT NOT NULL,
         alasanPerpindahan TEXT NOT NULL,
+        alasanPerpindahanLainnya TEXT NOT NULL,
         jenisPerpindahan TEXT NOT NULL,
         kepindahanAnggotaKeluarga TEXT NOT NULL,
         alamatTujuanNegara TEXT NOT NULL,
@@ -124,6 +125,7 @@ class Perpindahan {
   final String kecamatanTujuan;
   final String desaKelurahanTujuan;
   final String alasanPerpindahan;
+  final String alasanPerpindahanLainnya;
   final String jenisPerpindahan;
   final String kepindahanAnggotaKeluarga;
   final String alamatTujuanNegara;
@@ -161,6 +163,7 @@ class Perpindahan {
     required this.kecamatanTujuan,
     required this.desaKelurahanTujuan,
     required this.alasanPerpindahan,
+    required this.alasanPerpindahanLainnya,
     required this.jenisPerpindahan,
     required this.kepindahanAnggotaKeluarga,
     required this.alamatTujuanNegara,
@@ -200,6 +203,7 @@ class Perpindahan {
       'kecamatanTujuan': kecamatanTujuan,
       'desaKelurahanTujuan': kodePosAsal,
       'alasanPerpindahan': alasanPerpindahan,
+      'alasanPerpindahanLainnya': alasanPerpindahanLainnya,
       'jenisPerpindahan': jenisPerpindahan,
       'kepindahanAnggotaKeluarga': kepindahanAnggotaKeluarga,
       'alamatTujuanNegara': alamatTujuanNegara,
@@ -240,6 +244,7 @@ class Perpindahan {
       kecamatanTujuan: map['kecamatanTujuan'] as String,
       desaKelurahanTujuan: map['desaKelurahanTujuan'] as String,
       alasanPerpindahan: map['alasanPerpindahan'] as String,
+      alasanPerpindahanLainnya: map['alasanPerpindahanLainnya'] as String,
       jenisPerpindahan: map['jenisPerpindahan'] as String,
       kepindahanAnggotaKeluarga: map['kepindahanAnggotaKeluarga'] as String,
       alamatTujuanNegara: map['alamatTujuanNegara'] as String,
@@ -257,6 +262,6 @@ class Perpindahan {
 
   @override
   String toString() {
-    return 'Perpindahan{id: $id, kkPemohon: $kkPemohon, nikPemohon: $nikPemohon, namaPemohon: $namaPemohon, kedudukanPemohon: $kedudukanPemohon, alasanPembuatan: $alasanPembuatan, alamatAsal: $alamatAsal, rtAsal: $rtAsal, rwAsal: $rwAsal, kodePosAsal: $kodePosAsal, provinsiAsal: $provinsiAsal, kotaKapubatenAsal: $kotaKapubatenAsal, kecamatanAsal: $kecamatanAsal, desaKelurahanAsal: $desaKelurahanAsal, alamatTujuanDaerah: $alamatTujuanDaerah, rtTujuan: $rtTujuan, rwTujuan: $rwTujuan, kodePosTujuan: $kodePosTujuan, provinsiTujuan: $provinsiTujuan, kotaKabupatenTujuan: $kotaKabupatenTujuan, kecamatanTujuan: $kecamatanTujuan, desaKelurahanTujuan: $desaKelurahanTujuan, alasanPerpindahan: $alasanPerpindahan, jenisPerpindahan: $jenisPerpindahan, kepindahanAnggotaKeluarga: $kepindahanAnggotaKeluarga, alamatTujuanNegara: $alamatTujuanNegara, kodeNegara: $kodeNegara, namaPenanggungJawab: $namaPenanggungJawab, nomorHandphone: $nomorHandphone, namaPelapor: $namaPelapor, ktpPemohon: $ktpPemohon, kartuKeluarga: $kartuKeluarga, formulirF102: $formulirF102, formulirF103: $formulirF103}';
+    return 'Perpindahan{id: $id, kkPemohon: $kkPemohon, nikPemohon: $nikPemohon, namaPemohon: $namaPemohon, kedudukanPemohon: $kedudukanPemohon, alasanPembuatan: $alasanPembuatan, alamatAsal: $alamatAsal, rtAsal: $rtAsal, rwAsal: $rwAsal, kodePosAsal: $kodePosAsal, provinsiAsal: $provinsiAsal, kotaKapubatenAsal: $kotaKapubatenAsal, kecamatanAsal: $kecamatanAsal, desaKelurahanAsal: $desaKelurahanAsal, alamatTujuanDaerah: $alamatTujuanDaerah, rtTujuan: $rtTujuan, rwTujuan: $rwTujuan, kodePosTujuan: $kodePosTujuan, provinsiTujuan: $provinsiTujuan, kotaKabupatenTujuan: $kotaKabupatenTujuan, kecamatanTujuan: $kecamatanTujuan, desaKelurahanTujuan: $desaKelurahanTujuan, alasanPerpindahan: $alasanPerpindahan, alasanPerpindahanLainnya: $alasanPerpindahanLainnya, jenisPerpindahan: $jenisPerpindahan, kepindahanAnggotaKeluarga: $kepindahanAnggotaKeluarga, alamatTujuanNegara: $alamatTujuanNegara, kodeNegara: $kodeNegara, namaPenanggungJawab: $namaPenanggungJawab, nomorHandphone: $nomorHandphone, namaPelapor: $namaPelapor, ktpPemohon: $ktpPemohon, kartuKeluarga: $kartuKeluarga, formulirF102: $formulirF102, formulirF103: $formulirF103}';
   }
 }
