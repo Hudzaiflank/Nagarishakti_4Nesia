@@ -1,6 +1,13 @@
 import 'package:flutter/material.dart';
 
-class AgendaPemerintahan extends StatelessWidget {
+class AgendaPemerintahan extends StatefulWidget {
+    const AgendaPemerintahan({super.key});
+
+  @override
+  _AgendaPemerintahanState createState() => _AgendaPemerintahanState();
+}
+
+class _AgendaPemerintahanState extends State<AgendaPemerintahan> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,7 +44,7 @@ class AgendaPemerintahan extends StatelessWidget {
                 ),
               ),
               const Text(
-                'TIMELINE ACARA & FESTIVAL',
+                'AGENDA PEMERINTAHAN',
                 style: TextStyle(
                   fontFamily: 'Ubuntu',
                   fontSize: 22,
