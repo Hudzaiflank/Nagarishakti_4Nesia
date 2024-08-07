@@ -389,16 +389,6 @@ class _AktaLahirState extends State<AktaLahir> {
                         });
                       },
                     ),
-                    if (_jenisKelahiranAnak == 'Lainnya')
-                      Padding(
-                        padding: const EdgeInsets.only(top: 3),
-                        child: _buildTextField(
-                          context: context,
-                          label: '',
-                          hint: '',
-                          onSave: (value) => _jenisKelahiranAnak = value,
-                        ),
-                      ),
                     _buildTextField(
                       context: context,
                       label: 'Kelahiran Ke-',
@@ -430,16 +420,6 @@ class _AktaLahirState extends State<AktaLahir> {
                         });
                       },
                     ),
-                    if (_penolongKelahiranAnak == 'Lainnya')
-                      Padding(
-                        padding: const EdgeInsets.only(top: 3),
-                        child: _buildTextField(
-                          context: context,
-                          label: '',
-                          hint: '',
-                          onSave: (value) => _penolongKelahiranAnak = value,
-                        ),
-                      ),
                   ],
                 ),
                 SizedBox(height: 34),
@@ -1054,8 +1034,8 @@ class _AktaLahirState extends State<AktaLahir> {
               filled: true,
               fillColor: Colors.white,
               border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(7.0),
-                borderSide: const BorderSide(color: Colors.white),
+                borderRadius: BorderRadius.circular(7),
+                borderSide: BorderSide.none,
               ),
             ),
             style: const TextStyle(
@@ -1072,8 +1052,8 @@ class _AktaLahirState extends State<AktaLahir> {
     required BuildContext context,
     required String label,
     required List<String> items,
-    String? currentValue, // Nilai saat ini yang dipilih
-    Function(String?)? onSave, // Fungsi untuk menyimpan nilai yang dipilih
+    String? currentValue,
+    Function(String?)? onSave,
   }) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8),
@@ -1101,7 +1081,7 @@ class _AktaLahirState extends State<AktaLahir> {
                 filled: true,
                 border: InputBorder.none,
               ),
-              value: items.contains(currentValue) ? currentValue : null, // Menggunakan currentValue
+              value: items.contains(currentValue) ? currentValue : null,
               items: items.map((String value) {
                 return DropdownMenuItem<String>(
                   value: value,
@@ -1121,7 +1101,7 @@ class _AktaLahirState extends State<AktaLahir> {
                 return null;
               },
               dropdownColor: Colors.white,
-              isExpanded: true, // Ensure the dropdown expands to fill its container
+              isExpanded: true, 
             ),
           ),
         ],
@@ -1134,7 +1114,7 @@ class _AktaLahirState extends State<AktaLahir> {
     required String label,
     required List<String> items,
     required ValueChanged<String?> onChanged,
-    Function(String?)? onSave, // Tambahkan parameter onSave
+    Function(String?)? onSave,
   }) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8),
@@ -1189,20 +1169,20 @@ class _AktaLahirState extends State<AktaLahir> {
           // Kondisi untuk menampilkan TextField jika pilihan "Lainnya" dipilih
           if (label == 'Jenis Kelahiran' && items.contains('Lainnya') && _jenisKelahiranAnak == 'Lainnya')
             Padding(
-              padding: const EdgeInsets.only(top: 3),
+              padding: const EdgeInsets.only(top: 16),
               child: _buildTextField(
                 context: context,
-                label: '',
+                label: 'Jenis Kelahiran Lainnya',
                 hint: '',
                 onSave: (value) => _jenisKelahiranAnak = value,
               ),
             ),
           if (label == 'Penolong Kelahiran' && items.contains('Lainnya') && _penolongKelahiranAnak == 'Lainnya')
             Padding(
-              padding: const EdgeInsets.only(top: 3),
+              padding: const EdgeInsets.only(top: 16),
               child: _buildTextField(
                 context: context,
-                label: '',
+                label: 'Penolong Kelahiran Lainnya',
                 hint: '',
                 onSave: (value) => _penolongKelahiranAnak = value,
               ),
@@ -1339,6 +1319,7 @@ class _AktaLahirState extends State<AktaLahir> {
               suffixIcon: Icon(Icons.calendar_today, color: Colors.black),
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(7),
+                borderSide: BorderSide.none,
               ),
               filled: true,
               fillColor: Colors.white,

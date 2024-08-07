@@ -147,10 +147,10 @@ class _UserKtpPageState extends State<UserKtpPage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    _buildSubTitle('Alasan Pembuatan'),
                     _buildDropdownField(
                         context, 
                         ['Telah berusia 17 tahun', 'KTP hilang/rusak'],
+                        label: 'Alasan Pembuatan',
                         onSave: (value) => _alasanPembuatan = value,
                     ),
                   ],
@@ -306,7 +306,7 @@ class _UserKtpPageState extends State<UserKtpPage> {
                       ),
                     ),
                     SizedBox(height: 16.0),
-                    _buildSubTitle('Kartu Keluarga'),
+                    _buildSubTitle('Kartu Keluarga',),
                     Padding(
                       padding: const EdgeInsets.only(bottom: 16.0),
                       child: Stack(
