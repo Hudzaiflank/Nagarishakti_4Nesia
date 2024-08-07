@@ -37,17 +37,17 @@ class DatabasePerpindahan {
         kedudukanPemohon TEXT NOT NULL,
         alasanPembuatan TEXT NOT NULL,
         alamatAsal TEXT NOT NULL,
-        rtAsal TEXT NOT NULL,
-        rwAsal TEXT NOT NULL,
-        kodePosAsal TEXT NOT NULL,
+        rtAsal INTEGER NOT NULL,
+        rwAsal INTEGER NOT NULL,
+        kodePosAsal INTEGER NOT NULL,
         provinsiAsal TEXT NOT NULL,
         kotaKapubatenAsal TEXT NOT NULL,
         kecamatanAsal TEXT NOT NULL,
         desaKelurahanAsal TEXT NOT NULL,
         alamatTujuanDaerah TEXT NOT NULL,
-        rtTujuan TEXT NOT NULL,
-        rwTujuan TEXT NOT NULL,
-        kodePosTujuan TEXT NOT NULL,
+        rtTujuan INTEGER NOT NULL,
+        rwTujuan INTEGER NOT NULL,
+        kodePosTujuan INTEGER NOT NULL,
         provinsiTujuan TEXT NOT NULL,
         kotaKabupatenTujuan TEXT NOT NULL,
         kecamatanTujuan TEXT NOT NULL,
@@ -109,17 +109,17 @@ class Perpindahan {
   final String kedudukanPemohon;
   final String alasanPembuatan;
   final String alamatAsal;
-  final String rtAsal;
-  final String rwAsal;
-  final String kodePosAsal;
+  final int rtAsal;
+  final int rwAsal;
+  final int kodePosAsal;
   final String provinsiAsal;
   final String kotaKapubatenAsal;
   final String kecamatanAsal;
   final String desaKelurahanAsal;
   final String alamatTujuanDaerah;
-  final String rtTujuan;
-  final String rwTujuan;
-  final String kodePosTujuan;
+  final int rtTujuan;
+  final int rwTujuan;
+  final int kodePosTujuan;
   final String provinsiTujuan;
   final String kotaKabupatenTujuan;
   final String kecamatanTujuan;
@@ -228,17 +228,17 @@ class Perpindahan {
       kedudukanPemohon: map['kedudukanPemohon'] as String,
       alasanPembuatan: map['alasanPembuatan'] as String,
       alamatAsal: map['alamatAsal'] as String,
-      rtAsal: map['rtAsal'] as String,
-      rwAsal: map['rwAsal'] as String,
-      kodePosAsal: map['kodePosAsal'] as String,
+      rtAsal: map['rtAsal'] as int,
+      rwAsal: map['rwAsal'] as int,
+      kodePosAsal: map['kodePosAsal'] as int,
       provinsiAsal: map['provinsiAsal'] as String,
       kotaKapubatenAsal: map['kotaKapubatenAsal'] as String,
       kecamatanAsal: map['kecamatanAsal'] as String,
       desaKelurahanAsal: map['desaKelurahanAsal'] as String,
       alamatTujuanDaerah: map['alamatTujuanDaerah'] as String,
-      rtTujuan: map['rtTujuan'] as String,
-      rwTujuan: map['rwTujuan'] as String,
-      kodePosTujuan: map['kodePosTujuan'] as String,
+      rtTujuan: map['rtTujuan'] as int,
+      rwTujuan: map['rwTujuan'] as int,
+      kodePosTujuan: map['kodePosTujuan'] as int,
       provinsiTujuan: map['provinsiTujuan'] as String,
       kotaKabupatenTujuan: map['kotaKabupatenTujuan'] as String,
       kecamatanTujuan: map['kecamatanTujuan'] as String,

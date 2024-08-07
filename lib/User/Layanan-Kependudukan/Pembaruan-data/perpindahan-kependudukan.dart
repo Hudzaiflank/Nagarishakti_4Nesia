@@ -15,21 +15,21 @@ class _PerpindahanKependudukanState extends State<PerpindahanKependudukan> {
   int? _kkPemohon;
   int? _nikPemohon;
   int? _nomorHandphone;
+  int? _rtAsal;
+  int? _rwAsal;
+  int? _kodePosAsal;
+  int? _rtTujuan;
+  int? _rwTujuan;
+  int? _kodePosTujuan;
   String? _namaPemohon;
   String? _kedudukanPemohon;
   String? _alasanPembuatan;
   String? _alamatAsal;
-  String? _rtAsal;
-  String? _rwAsal;
-  String? _kodePosAsal;
   String? _provinsiAsal;
   String? _kotaKapubatenAsal;
   String? _kecamatanAsal;
   String? _desaKelurahanAsal;
   String? _alamatTujuanDaerah;
-  String? _rtTujuan;
-  String? _rwTujuan;
-  String? _kodePosTujuan;
   String? _provinsiTujuan;
   String? _kotaKabupatenTujuan;
   String? _kecamatanTujuan;
@@ -636,7 +636,7 @@ class _PerpindahanKependudukanState extends State<PerpindahanKependudukan> {
                       // ),
                       _buildCustomDropdownField(
                         context: context,
-                        label: 'Alasan Kepindahan  ',
+                        label: 'Alasan Kepindahan',
                         hint: 'Alasan Kepindahan',
                         items: [
                           'Pekerjaan',
@@ -1900,7 +1900,7 @@ class _PerpindahanKependudukanState extends State<PerpindahanKependudukan> {
               child: _buildTextField(
                 context: context,
                 label: 'Alasan Kepindahan Lainnya',
-                hint: '',
+                hint: 'Alasan Kepindahan Lainnya',
                 onSave: (value) => _alasanPerpindahanLainnya = value,
               ),
             ),
@@ -2010,12 +2010,21 @@ class _PerpindahanKependudukanState extends State<PerpindahanKependudukan> {
             onSaved: onSave,
             validator: validator,
             builder: (FormFieldState<String> field) {
-              return InputDecorator(
-                decoration: InputDecoration(
-                  errorText: field.errorText,
-                  border: InputBorder.none,
-                ),
-                child: Container(),
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  if (field.errorText != null)
+                    Padding(
+                      padding: const EdgeInsets.only(top: 8.0),
+                      child: Text(
+                        field.errorText!,
+                        style: TextStyle(
+                          color: Colors.red,
+                          fontSize: 12,
+                        ),
+                      ),
+                    ),
+                ],
               );
             },
           ),
