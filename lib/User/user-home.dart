@@ -14,6 +14,8 @@ import 'Informasi-publik/berita/news-page.dart';
 import 'Pengaduan-Masyarakat/pengaduan-masyarakat.dart';
 import 'Informasi-publik/Dokumen-publik/Public-Document.dart';
 import 'Informasi-publik/Agenda-Pemerintah/Agenda-pemerintahan.dart';
+import 'Dashboard-Status/Pengajuan-Dokumen/Pengajuan-Dokumen.dart';
+import 'Dashboard-Status/Pengajuan-Keluhan/Pengajuan-Keluhan.dart';
 
 class UserHome extends StatefulWidget {
   const UserHome({super.key});
@@ -1401,7 +1403,7 @@ class _UserHomeState extends State<UserHome> {
             ),
             const SizedBox(height: 10),
 
-            // Informasi Pariwisata
+            // DASHBOARD DAN STATUS
             Container(
               margin:
                   const EdgeInsets.symmetric(horizontal: 16.0, vertical: 5.0),
@@ -1415,7 +1417,7 @@ class _UserHomeState extends State<UserHome> {
                   const Padding(
                     padding: EdgeInsets.symmetric(vertical: 12.0),
                     child: Text(
-                      'INFORMASI PARIWISATA',
+                      'DASHBOARD DAN STATUS',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: Colors.white,
@@ -1437,7 +1439,7 @@ class _UserHomeState extends State<UserHome> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => UserDestinationPage()),
+                                  builder: (context) => PengajuanDokumen()),
                             );
                           },
                           child: ListTile(
@@ -1467,8 +1469,7 @@ class _UserHomeState extends State<UserHome> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) =>
-                                      UserTransportationPage()),
+                                  builder: (context) => PengajuanKeluhan()),
                             );
                           },
                           child: ListTile(
