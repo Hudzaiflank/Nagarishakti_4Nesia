@@ -14,6 +14,7 @@ import '/Database/database_ktp.dart';
 import '/Database/database_kk.dart';
 import '/Database/database_aktaKelahiran.dart';
 import '/Database/database_suratKematian.dart';
+import '/Database/database_perpindahan.dart';
 import 'User/user-home.dart';
 import 'admin-home.dart';
 import 'SuperAdmin-home.dart';
@@ -25,6 +26,7 @@ import 'User/Layanan-Kependudukan/Pembuatan-ktp-kk/user-kk-page.dart';
 import 'User/Layanan-Kependudukan/Pembuatan-ktp-kk/user-ktp-page.dart';
 import 'User/Layanan-Kependudukan/Pendaftaran-AktaLahir-kematian/Akta-lahir.dart';
 import 'User/Layanan-Kependudukan/Pendaftaran-AktaLahir-kematian/Surat-Kematian.dart';
+import 'User/Layanan-Kependudukan/Pembaruan-data/perpindahan-kependudukan.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -41,6 +43,7 @@ void main() async {
   await DatabaseKk.instance.database;
   await DatabaseAktaKelahiran.instance.database;
   await DatabaseSuratKematian.instance.database;
+  await DatabasePerpindahan.instance.database;
 
   // Check table schema
   await DatabaseDetailDestinasi.instance.checkTableSchema();

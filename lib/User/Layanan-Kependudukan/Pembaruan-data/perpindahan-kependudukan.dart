@@ -1,13 +1,133 @@
 import 'package:flutter/material.dart';
+import 'dart:io';
+import '/Database/database_perpindahan.dart';
+import 'package:file_picker/file_picker.dart';
 
 class PerpindahanKependudukan extends StatefulWidget {
+  const PerpindahanKependudukan({super.key});
+
   @override
-  _PerpindahanKependudukanState createState() =>
-      _PerpindahanKependudukanState();
+  _PerpindahanKependudukanState createState() => _PerpindahanKependudukanState();
 }
 
 class _PerpindahanKependudukanState extends State<PerpindahanKependudukan> {
-  String selectedReason = 'Surat Keterangan Pindah';
+  final _formKey = GlobalKey<FormState>();
+  int? _kkPemohon;
+  int? _nikPemohon;
+  int? _nomorHandphone;
+  int? _rtAsal;
+  int? _rwAsal;
+  int? _kodePosAsal;
+  int? _rtTujuan;
+  int? _rwTujuan;
+  int? _kodePosTujuan;
+  String? _namaPemohon;
+  String? _kedudukanPemohon;
+  String? _alasanPembuatan;
+  String? _alamatAsal;
+  String? _provinsiAsal;
+  String? _kotaKapubatenAsal;
+  String? _kecamatanAsal;
+  String? _desaKelurahanAsal;
+  String? _alamatTujuanDaerah;
+  String? _provinsiTujuan;
+  String? _kotaKabupatenTujuan;
+  String? _kecamatanTujuan;
+  String? _desaKelurahanTujuan;
+  String? _alasanPerpindahan; 
+  String? _alasanPerpindahanLainnya;
+  String? _jenisPerpindahan;
+  String? _kepindahanAnggotaKeluarga;
+  String? _alamatTujuanNegara;
+  String? _kodeNegara;
+  String? _namaPenanggungJawab;
+  String? _namaPelapor;
+  DateTime? _selectedDatePerpindahan;
+  File? _ktpPemohon;
+  File? _kartuKeluarga;
+  File? _formulirF102;
+  File? _formulirF103;
+
+  Future<void> _selectDate({
+    required BuildContext context,
+    required DateTime? selectedDate,
+    required ValueChanged<DateTime> onSelect,
+  }) async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: selectedDate ?? DateTime.now(),
+      firstDate: DateTime(1900),
+      lastDate: DateTime(2101),
+    );
+    if (picked != null) {
+      onSelect(picked);
+    }
+  }
+
+  Future<void> _pickFile(Function(File) onFilePicked) async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles();
+    if (result != null) {
+      File file = File(result.files.single.path!);
+      setState(() {
+        onFilePicked(file);
+      });
+    }
+  }
+
+  void _removeFile(Function() onFileRemoved) {
+    setState(() {
+      onFileRemoved();
+    });
+  }
+
+  void _submitForm() async {
+    if (_formKey.currentState!.validate()) {
+      _formKey.currentState!.save();
+
+      final newPerpindahan = Perpindahan(
+        kkPemohon: _kkPemohon!,
+        nikPemohon: _nikPemohon!,
+        namaPemohon: _namaPemohon!,
+        kedudukanPemohon: _kedudukanPemohon!,
+        alasanPembuatan: _alasanPembuatan!,
+        alamatAsal: _alamatAsal!,
+        rtAsal: _rtAsal!,
+        rwAsal: _rwAsal!,
+        kodePosAsal: _kodePosAsal!,
+        provinsiAsal: _provinsiAsal!,
+        kotaKapubatenAsal: _kotaKapubatenAsal!,
+        kecamatanAsal: _kecamatanAsal!,      
+        desaKelurahanAsal: _desaKelurahanAsal!,
+        alamatTujuanDaerah: _alamatTujuanDaerah!,      
+        rtTujuan: _rtTujuan!,
+        rwTujuan: _rwTujuan!,
+        kodePosTujuan: _kodePosTujuan!,
+        provinsiTujuan: _provinsiTujuan!,
+        kotaKabupatenTujuan: _kotaKabupatenTujuan!,
+        kecamatanTujuan: _kecamatanTujuan!,
+        desaKelurahanTujuan: _desaKelurahanTujuan!,
+        alasanPerpindahan: _alasanPerpindahan!, 
+        alasanPerpindahanLainnya: _alasanPerpindahanLainnya!,
+        jenisPerpindahan: _jenisPerpindahan!,
+        kepindahanAnggotaKeluarga: _kepindahanAnggotaKeluarga!,      
+        alamatTujuanNegara: _alamatTujuanNegara!,
+        kodeNegara: _kodeNegara!,  
+        namaPenanggungJawab: _namaPenanggungJawab!,
+        tanggalPerpindahan: _selectedDatePerpindahan!,      
+        nomorHandphone: _nomorHandphone!,
+        namaPelapor: _namaPelapor!,       
+        ktpPemohon: _ktpPemohon!,
+        kartuKeluarga: _kartuKeluarga!,
+        formulirF102: _formulirF102!,
+        formulirF103: _formulirF103!,
+      );
+
+      final dbPerpindahan = DatabasePerpindahan.instance;
+      await dbPerpindahan.insertPerpindahanKependudukan(newPerpindahan);
+
+      Navigator.pop(context);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -16,1368 +136,1531 @@ class _PerpindahanKependudukanState extends State<PerpindahanKependudukan> {
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(height: 16.0),
-              GestureDetector(
-                onTap: () => Navigator.of(context).pop(),
-                child: Container(
-                  width: 40,
-                  height: 40,
-                  decoration: BoxDecoration(
-                    color: Color(0xFFE2DED0),
-                    shape: BoxShape.circle,
+          child: Form (
+            key: _formKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(height: 16.0),
+                GestureDetector(
+                  onTap: () => Navigator.of(context).pop(),
+                  child: Container(
+                    width: 40,
+                    height: 40,
+                    decoration: BoxDecoration(
+                      color: Color(0xFFE2DED0),
+                      shape: BoxShape.circle,
+                    ),
+                    child: Icon(Icons.arrow_back, color: Colors.black),
                   ),
-                  child: Icon(Icons.arrow_back, color: Colors.black),
-                ),
-              ),
-              SizedBox(height: 16.0),
-              Center(
-                child: Column(
-                  children: [
-                    Text(
-                      'PENGAJUAN PERPINDAHAN KEPENDUDUKAN',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontFamily: 'Ubuntu',
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black,
-                      ),
-                    ),
-                    SizedBox(height: 14),
-                    Container(
-                      height: 2,
-                      color: Colors.black,
-                      width: double.infinity,
-                    ),
-                    SizedBox(height: 19),
-                  ],
-                ),
-              ),
-              //ini data pemohon sob
-              _buildSection(
-                title: 'DATA PEMOHON',
-                fields: [
-                  _buildTextField(
-                    context: context,
-                    label: 'Nomor KK',
-                    hint: 'nomor kartu keluarga',
-                    isNumber: true,
-                  ),
-                  _buildTextField(
-                    context: context,
-                    label: 'NIK Pemohon',
-                    hint: 'nomor induk kependudukan pelapor',
-                  ),
-                  _buildTextField(
-                    context: context,
-                    label: 'Nama Lengkap',
-                    hint: 'tulis nama lengkap pelapor',
-                  ),
-                  _buildTextField(
-                    context: context,
-                    label: 'Posisi dalam Keluarga',
-                    hint: 'kedudukan pada kartu keluarga',
-                  ),
-                ],
-              ),
-              SizedBox(height: 16.0),
-              //ini alasan pembuatan sob
-              Container(
-                padding: EdgeInsets.all(16.0),
-                decoration: BoxDecoration(
-                  color: Color(0xFFE2DED0),
-                  borderRadius: BorderRadius.circular(7),
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    _buildSubTitle('Alasan Pembuatan'),
-                    _buildDropdownField(
-                      context,
-                      [
-                        'Surat Keterangan Pindah',
-                        'Surat Keterangan Pindah Luar Negeri (SKPLN)'
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(height: 16.0),
-              if (selectedReason == 'Surat Keterangan Pindah') ...[
-                _buildSection(
-                  title: 'DAERAH ASAL',
-                  fields: [
-                    _buildTextField(
-                        context: context,
-                        label: 'Alamat Asal',
-                        hint: 'Nomor rumah atau lainnya'),
-                    _buildSubTitle('RT, RW, dan Kode Pos'),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Container(
-                          width: 90,
-                          child: GestureDetector(
-                            onTap: () {
-                              // Handle the click event here
-                              print('TextField clicked');
-                            },
-                            child: AbsorbPointer(
-                              child: TextField(
-                                keyboardType: TextInputType.number,
-                                style: TextStyle(
-                                  fontFamily: 'Ubuntu',
-                                  fontStyle: FontStyle.italic,
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.w100,
-                                ),
-                                decoration: InputDecoration(
-                                  hintText: 'RT',
-                                  hintStyle: TextStyle(
-                                    fontFamily: 'Ubuntu',
-                                    fontStyle: FontStyle.italic,
-                                    fontWeight: FontWeight.w100,
-                                  ),
-                                  filled: true,
-                                  fillColor: Colors.white,
-                                  border: OutlineInputBorder(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(7)),
-                                    borderSide: BorderSide.none,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                        Container(
-                          width: 90,
-                          child: GestureDetector(
-                            onTap: () {
-                              // Handle the click event here
-                              print('TextField clicked');
-                            },
-                            child: AbsorbPointer(
-                              child: TextField(
-                                keyboardType: TextInputType.number,
-                                style: TextStyle(
-                                  fontFamily: 'Ubuntu',
-                                  fontSize: 15,
-                                  fontStyle: FontStyle.italic,
-                                  fontWeight: FontWeight.w100,
-                                ),
-                                decoration: InputDecoration(
-                                  hintText: 'RW',
-                                  hintStyle: TextStyle(
-                                    fontFamily: 'Ubuntu',
-                                    fontStyle: FontStyle.italic,
-                                    fontWeight: FontWeight.w100,
-                                  ),
-                                  filled: true,
-                                  fillColor: Colors.white,
-                                  border: OutlineInputBorder(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(7)),
-                                    borderSide: BorderSide.none,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                        Container(
-                          width: 90,
-                          child: GestureDetector(
-                            onTap: () {
-                              // Handle the click event here
-                              print('TextField clicked');
-                            },
-                            child: AbsorbPointer(
-                              child: TextField(
-                                keyboardType: TextInputType.number,
-                                style: TextStyle(
-                                  fontFamily: 'Ubuntu',
-                                  fontSize: 15,
-                                  fontStyle: FontStyle.italic,
-                                  fontWeight: FontWeight.w100,
-                                ),
-                                decoration: InputDecoration(
-                                  hintText: 'Kode Pos',
-                                  hintStyle: TextStyle(
-                                    fontFamily: 'Ubuntu',
-                                    fontStyle: FontStyle.italic,
-                                    fontWeight: FontWeight.w100,
-                                  ),
-                                  filled: true,
-                                  fillColor: Colors.white,
-                                  border: OutlineInputBorder(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(7)),
-                                    borderSide: BorderSide.none,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    _buildCustomDropdownField(
-                      context: context,
-                      label: 'Provinsi',
-                      hint: 'PILIH PROVINSI',
-                      items: [
-                        'Senin',
-                        'Selasa',
-                        'Rabu',
-                        'Kamis',
-                        'Jumat',
-                        'Sabtu',
-                        'Minggu'
-                      ],
-                    ),
-                    _buildCustomDropdownField(
-                      context: context,
-                      label: 'Kota/Kabupaten',
-                      hint: 'PILIH KOTA/KABUPATEN',
-                      items: [
-                        'Senin',
-                        'Selasa',
-                        'Rabu',
-                        'Kamis',
-                        'Jumat',
-                        'Sabtu',
-                        'Minggu'
-                      ],
-                    ),
-                    _buildCustomDropdownField(
-                      context: context,
-                      label: 'Kecamatan',
-                      hint: 'PILIH KECAMATAN',
-                      items: [
-                        'Senin',
-                        'Selasa',
-                        'Rabu',
-                        'Kamis',
-                        'Jumat',
-                        'Sabtu',
-                        'Minggu'
-                      ],
-                    ),
-                    _buildCustomDropdownField(
-                      context: context,
-                      label: 'Desa/Kelurahan  ',
-                      hint: 'PILIH DESA/KELURAHAN',
-                      items: [
-                        'Senin',
-                        'Selasa',
-                        'Rabu',
-                        'Kamis',
-                        'Jumat',
-                        'Sabtu',
-                        'Minggu'
-                      ],
-                    ),
-                  ],
                 ),
                 SizedBox(height: 16.0),
-                _buildSection(
-                  title: 'Daerah Perpindahan',
-                  fields: [
-                    _buildTextField(
-                        context: context,
-                        label: 'Alamat Tujuan',
-                        hint: 'Nomor rumah atau lainnya'),
-                    _buildSubTitle('RT, RW, dan Kode Pos'),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Container(
-                          width: 90,
-                          child: GestureDetector(
-                            onTap: () {
-                              // Handle the click event here
-                              print('TextField clicked');
-                            },
-                            child: AbsorbPointer(
-                              child: TextField(
-                                keyboardType: TextInputType.number,
-                                style: TextStyle(
-                                  fontFamily: 'Ubuntu',
-                                  fontStyle: FontStyle.italic,
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.w100,
-                                ),
-                                decoration: InputDecoration(
-                                  hintText: 'RT',
-                                  hintStyle: TextStyle(
-                                    fontFamily: 'Ubuntu',
-                                    fontStyle: FontStyle.italic,
-                                    fontWeight: FontWeight.w100,
-                                  ),
-                                  filled: true,
-                                  fillColor: Colors.white,
-                                  border: OutlineInputBorder(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(7)),
-                                    borderSide: BorderSide.none,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                        Container(
-                          width: 90,
-                          child: GestureDetector(
-                            onTap: () {
-                              // Handle the click event here
-                              print('TextField clicked');
-                            },
-                            child: AbsorbPointer(
-                              child: TextField(
-                                keyboardType: TextInputType.number,
-                                style: TextStyle(
-                                  fontFamily: 'Ubuntu',
-                                  fontSize: 15,
-                                  fontStyle: FontStyle.italic,
-                                  fontWeight: FontWeight.w100,
-                                ),
-                                decoration: InputDecoration(
-                                  hintText: 'RW',
-                                  hintStyle: TextStyle(
-                                    fontFamily: 'Ubuntu',
-                                    fontStyle: FontStyle.italic,
-                                    fontWeight: FontWeight.w100,
-                                  ),
-                                  filled: true,
-                                  fillColor: Colors.white,
-                                  border: OutlineInputBorder(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(7)),
-                                    borderSide: BorderSide.none,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                        Container(
-                          width: 90,
-                          child: GestureDetector(
-                            onTap: () {
-                              // Handle the click event here
-                              print('TextField clicked');
-                            },
-                            child: AbsorbPointer(
-                              child: TextField(
-                                keyboardType: TextInputType.number,
-                                style: TextStyle(
-                                  fontFamily: 'Ubuntu',
-                                  fontSize: 15,
-                                  fontStyle: FontStyle.italic,
-                                  fontWeight: FontWeight.w100,
-                                ),
-                                decoration: InputDecoration(
-                                  hintText: 'Kode Pos',
-                                  hintStyle: TextStyle(
-                                    fontFamily: 'Ubuntu',
-                                    fontStyle: FontStyle.italic,
-                                    fontWeight: FontWeight.w100,
-                                  ),
-                                  filled: true,
-                                  fillColor: Colors.white,
-                                  border: OutlineInputBorder(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(7)),
-                                    borderSide: BorderSide.none,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    _buildCustomDropdownField(
-                      context: context,
-                      label: 'Provinsi',
-                      hint: 'PILIH PROVINSI',
-                      items: [
-                        'Senin',
-                        'Selasa',
-                        'Rabu',
-                        'Kamis',
-                        'Jumat',
-                        'Sabtu',
-                        'Minggu'
-                      ],
-                    ),
-                    _buildCustomDropdownField(
-                      context: context,
-                      label: 'Kota/Kabupaten',
-                      hint: 'PILIH KOTA/KABUPATEN',
-                      items: [
-                        'Senin',
-                        'Selasa',
-                        'Rabu',
-                        'Kamis',
-                        'Jumat',
-                        'Sabtu',
-                        'Minggu'
-                      ],
-                    ),
-                    _buildCustomDropdownField(
-                      context: context,
-                      label: 'Kecamatan',
-                      hint: 'PILIH KECAMATAN',
-                      items: [
-                        'Senin',
-                        'Selasa',
-                        'Rabu',
-                        'Kamis',
-                        'Jumat',
-                        'Sabtu',
-                        'Minggu'
-                      ],
-                    ),
-                    _buildCustomDropdownField(
-                      context: context,
-                      label: 'Desa/Kelurahan  ',
-                      hint: 'PILIH DESA/KELURAHAN',
-                      items: [
-                        'Senin',
-                        'Selasa',
-                        'Rabu',
-                        'Kamis',
-                        'Jumat',
-                        'Sabtu',
-                        'Minggu'
-                      ],
-                    ),
-                    _buildCustomDropdownField(
-                      context: context,
-                      label: 'Alasan Kepindahan  ',
-                      hint: 'Alasan Kepindahan',
-                      items: [
-                        'Senin',
-                        'Selasa',
-                        'Rabu',
-                        'Kamis',
-                        'Jumat',
-                        'Sabtu',
-                        'Minggu'
-                      ],
-                    ),
-                    _buildCustomDropdownField(
-                      context: context,
-                      label: 'Jenis Kepindahan  ',
-                      hint: 'Jenis Kepindahan',
-                      items: [
-                        'Senin',
-                        'Selasa',
-                        'Rabu',
-                        'Kamis',
-                        'Jumat',
-                        'Sabtu',
-                        'Minggu'
-                      ],
-                    ),
-                    _buildCustomDropdownField(
-                      context: context,
-                      label: 'Anggota Keluarga yang Pindah ',
-                      hint: 'Kepindahan Anggota Keluarga',
-                      items: [
-                        'Senin',
-                        'Selasa',
-                        'Rabu',
-                        'Kamis',
-                        'Jumat',
-                        'Sabtu',
-                        'Minggu'
-                      ],
-                    ),
-                  ],
-                ),
-                SizedBox(height: 16.0),
-                Container(
-                  padding: EdgeInsets.all(16.0),
-                  decoration: BoxDecoration(
-                    color: Color(0xFFF9FCFC),
-                    borderRadius: BorderRadius.circular(7),
-                  ),
+                Center(
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Center(
-                        child: Container(
-                          padding: EdgeInsets.symmetric(
-                              vertical: 4.0, horizontal: 8.0),
-                          decoration: BoxDecoration(
-                            color: Color(0xFFCE7277),
-                            borderRadius: BorderRadius.circular(4),
-                          ),
-                          child: Text(
-                            'UNGGAH DOKUMEN KELENGKAPAN',
-                            style: TextStyle(
-                              fontFamily: 'Ubuntu',
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
-                            ),
-                          ),
+                      Text(
+                        'PENGAJUAN PERPINDAHAN KEPENDUDUKAN',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontFamily: 'Ubuntu',
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
                         ),
                       ),
-                      SizedBox(height: 16.0),
-                      _buildSubTitle('KTP Pemohon'),
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 16.0),
-                        child: Stack(
-                          clipBehavior: Clip.none,
-                          children: [
-                            GestureDetector(
-                              onTap: () {
-                                // ini buat handle upload document nya thin
-                              },
-                              child: Container(
-                                height: 100,
-                                decoration: BoxDecoration(
-                                  color: Color(0xFFE0E5E7),
-                                  borderRadius: BorderRadius.circular(7),
-                                ),
-                                child: Center(
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Image.asset(
-                                        'assets/upload-icon.png',
-                                        height: 30,
-                                        width: 30,
-                                      ),
-                                      SizedBox(height: 8),
-                                      Container(
-                                        padding: EdgeInsets.symmetric(
-                                            horizontal: 8, vertical: 4),
-                                        decoration: BoxDecoration(
-                                          color: Color(0xFFE2DED0),
-                                          borderRadius:
-                                              BorderRadius.circular(4),
-                                        ),
-                                        child: Text(
-                                          'Pilih gambar atau dokumen',
-                                          style: TextStyle(
-                                            fontFamily: 'Ubuntu',
-                                            color: Colors.black54,
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ),
-                            Positioned(
-                              top: -10,
-                              right: -10,
-                              child: Container(
-                                width: 24,
-                                height: 24,
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: Color(0xFF4F4E49),
-                                ),
-                                child: IconButton(
-                                  padding: EdgeInsets.zero,
-                                  icon: Icon(Icons.close,
-                                      color: Colors.white, size: 16),
-                                  onPressed: () {
-                                    // ini nanti buat remove nya thinnn mas broo
-                                  },
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
+                      SizedBox(height: 14),
+                      Container(
+                        height: 2,
+                        color: Colors.black,
+                        width: double.infinity,
                       ),
-                      _buildSubTitle('Kartu Keluarga'),
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 16.0),
-                        child: Stack(
-                          clipBehavior: Clip.none,
-                          children: [
-                            GestureDetector(
-                              onTap: () {
-                                // ini buat handle upload document nya thin
-                              },
-                              child: Container(
-                                height: 100,
-                                decoration: BoxDecoration(
-                                  color: Color(0xFFE0E5E7),
-                                  borderRadius: BorderRadius.circular(7),
-                                ),
-                                child: Center(
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Image.asset(
-                                        'assets/upload-icon.png',
-                                        height: 30,
-                                        width: 30,
-                                      ),
-                                      SizedBox(height: 8),
-                                      Container(
-                                        padding: EdgeInsets.symmetric(
-                                            horizontal: 8, vertical: 4),
-                                        decoration: BoxDecoration(
-                                          color: Color(0xFFE2DED0),
-                                          borderRadius:
-                                              BorderRadius.circular(4),
-                                        ),
-                                        child: Text(
-                                          'Pilih gambar atau dokumen',
-                                          style: TextStyle(
-                                            fontFamily: 'Ubuntu',
-                                            color: Colors.black54,
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ),
-                            Positioned(
-                              top: -10,
-                              right: -10,
-                              child: Container(
-                                width: 24,
-                                height: 24,
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: Color(0xFF4F4E49),
-                                ),
-                                child: IconButton(
-                                  padding: EdgeInsets.zero,
-                                  icon: Icon(Icons.close,
-                                      color: Colors.white, size: 16),
-                                  onPressed: () {
-                                    // ini nanti buat remove nya thinnn mas broo
-                                  },
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      _buildSubTitle('Formulir F-1.02'),
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 16.0),
-                        child: Stack(
-                          clipBehavior: Clip.none,
-                          children: [
-                            GestureDetector(
-                              onTap: () {
-                                // ini buat handle upload document nya thin
-                              },
-                              child: Container(
-                                height: 100,
-                                decoration: BoxDecoration(
-                                  color: Color(0xFFE0E5E7),
-                                  borderRadius: BorderRadius.circular(7),
-                                ),
-                                child: Center(
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Image.asset(
-                                        'assets/upload-icon.png',
-                                        height: 30,
-                                        width: 30,
-                                      ),
-                                      SizedBox(height: 8),
-                                      Container(
-                                        padding: EdgeInsets.symmetric(
-                                            horizontal: 8, vertical: 4),
-                                        decoration: BoxDecoration(
-                                          color: Color(0xFFE2DED0),
-                                          borderRadius:
-                                              BorderRadius.circular(4),
-                                        ),
-                                        child: Text(
-                                          'Pilih gambar atau dokumen',
-                                          style: TextStyle(
-                                            fontFamily: 'Ubuntu',
-                                            color: Colors.black54,
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ),
-                            Positioned(
-                              top: -10,
-                              right: -10,
-                              child: Container(
-                                width: 24,
-                                height: 24,
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: Color(0xFF4F4E49),
-                                ),
-                                child: IconButton(
-                                  padding: EdgeInsets.zero,
-                                  icon: Icon(Icons.close,
-                                      color: Colors.white, size: 16),
-                                  onPressed: () {
-                                    // ini nanti buat remove nya thinnn mas broo
-                                  },
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      _buildSubTitle('Formulir F-1.03'),
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 16.0),
-                        child: Stack(
-                          clipBehavior: Clip.none,
-                          children: [
-                            GestureDetector(
-                              onTap: () {
-                                // ini buat handle upload document nya thin
-                              },
-                              child: Container(
-                                height: 100,
-                                decoration: BoxDecoration(
-                                  color: Color(0xFFE0E5E7),
-                                  borderRadius: BorderRadius.circular(7),
-                                ),
-                                child: Center(
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Image.asset(
-                                        'assets/upload-icon.png',
-                                        height: 30,
-                                        width: 30,
-                                      ),
-                                      SizedBox(height: 8),
-                                      Container(
-                                        padding: EdgeInsets.symmetric(
-                                            horizontal: 8, vertical: 4),
-                                        decoration: BoxDecoration(
-                                          color: Color(0xFFE2DED0),
-                                          borderRadius:
-                                              BorderRadius.circular(4),
-                                        ),
-                                        child: Text(
-                                          'Pilih gambar atau dokumen',
-                                          style: TextStyle(
-                                            fontFamily: 'Ubuntu',
-                                            color: Colors.black54,
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ),
-                            Positioned(
-                              top: -10,
-                              right: -10,
-                              child: Container(
-                                width: 24,
-                                height: 24,
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: Color(0xFF4F4E49),
-                                ),
-                                child: IconButton(
-                                  padding: EdgeInsets.zero,
-                                  icon: Icon(Icons.close,
-                                      color: Colors.white, size: 16),
-                                  onPressed: () {
-                                    // ini nanti buat remove nya thinnn mas broo
-                                  },
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
+                      SizedBox(height: 19),
                     ],
                   ),
                 ),
-              ] else if (selectedReason ==
-                  'Surat Keterangan Pindah Luar Negeri (SKPLN)') ...[
+                //ini data pemohon sob
                 _buildSection(
-                  title: 'DAERAH ASAL',
+                  title: 'DATA PEMOHON',
                   fields: [
                     _buildTextField(
-                        context: context,
-                        label: 'Alamat Asal',
-                        hint: 'Nomor rumah atau lainnya'),
-                    _buildSubTitle('RT, RW, dan Kode Pos'),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Container(
-                          width: 90,
-                          child: GestureDetector(
-                            onTap: () {
-                              // Handle the click event here
-                              print('TextField clicked');
-                            },
-                            child: AbsorbPointer(
-                              child: TextField(
-                                keyboardType: TextInputType.number,
-                                style: TextStyle(
-                                  fontFamily: 'Ubuntu',
-                                  fontStyle: FontStyle.italic,
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.w100,
-                                ),
-                                decoration: InputDecoration(
-                                  hintText: 'RT',
-                                  hintStyle: TextStyle(
-                                    fontFamily: 'Ubuntu',
-                                    fontStyle: FontStyle.italic,
-                                    fontWeight: FontWeight.w100,
-                                  ),
-                                  filled: true,
-                                  fillColor: Colors.white,
-                                  border: OutlineInputBorder(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(7)),
-                                    borderSide: BorderSide.none,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                        Container(
-                          width: 90,
-                          child: GestureDetector(
-                            onTap: () {
-                              // Handle the click event here
-                              print('TextField clicked');
-                            },
-                            child: AbsorbPointer(
-                              child: TextField(
-                                keyboardType: TextInputType.number,
-                                style: TextStyle(
-                                  fontFamily: 'Ubuntu',
-                                  fontSize: 15,
-                                  fontStyle: FontStyle.italic,
-                                  fontWeight: FontWeight.w100,
-                                ),
-                                decoration: InputDecoration(
-                                  hintText: 'RW',
-                                  hintStyle: TextStyle(
-                                    fontFamily: 'Ubuntu',
-                                    fontStyle: FontStyle.italic,
-                                    fontWeight: FontWeight.w100,
-                                  ),
-                                  filled: true,
-                                  fillColor: Colors.white,
-                                  border: OutlineInputBorder(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(7)),
-                                    borderSide: BorderSide.none,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                        Container(
-                          width: 90,
-                          child: GestureDetector(
-                            onTap: () {
-                              // Handle the click event here
-                              print('TextField clicked');
-                            },
-                            child: AbsorbPointer(
-                              child: TextField(
-                                keyboardType: TextInputType.number,
-                                style: TextStyle(
-                                  fontFamily: 'Ubuntu',
-                                  fontSize: 15,
-                                  fontStyle: FontStyle.italic,
-                                  fontWeight: FontWeight.w100,
-                                ),
-                                decoration: InputDecoration(
-                                  hintText: 'Kode Pos',
-                                  hintStyle: TextStyle(
-                                    fontFamily: 'Ubuntu',
-                                    fontStyle: FontStyle.italic,
-                                    fontWeight: FontWeight.w100,
-                                  ),
-                                  filled: true,
-                                  fillColor: Colors.white,
-                                  border: OutlineInputBorder(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(7)),
-                                    borderSide: BorderSide.none,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    _buildCustomDropdownField(
                       context: context,
-                      label: 'Provinsi',
-                      hint: 'PILIH PROVINSI',
-                      items: [
-                        'Senin',
-                        'Selasa',
-                        'Rabu',
-                        'Kamis',
-                        'Jumat',
-                        'Sabtu',
-                        'Minggu'
-                      ],
-                    ),
-                    _buildCustomDropdownField(
-                      context: context,
-                      label: 'Kota/Kabupaten',
-                      hint: 'PILIH KOTA/KABUPATEN',
-                      items: [
-                        'Senin',
-                        'Selasa',
-                        'Rabu',
-                        'Kamis',
-                        'Jumat',
-                        'Sabtu',
-                        'Minggu'
-                      ],
-                    ),
-                    _buildCustomDropdownField(
-                      context: context,
-                      label: 'Kecamatan',
-                      hint: 'PILIH KECAMATAN',
-                      items: [
-                        'Senin',
-                        'Selasa',
-                        'Rabu',
-                        'Kamis',
-                        'Jumat',
-                        'Sabtu',
-                        'Minggu'
-                      ],
-                    ),
-                    _buildCustomDropdownField(
-                      context: context,
-                      label: 'Desa/Kelurahan  ',
-                      hint: 'PILIH DESA/KELURAHAN',
-                      items: [
-                        'Senin',
-                        'Selasa',
-                        'Rabu',
-                        'Kamis',
-                        'Jumat',
-                        'Sabtu',
-                        'Minggu'
-                      ],
-                    ),
-                  ],
-                ),
-                SizedBox(height: 16.0),
-                _buildSection(
-                  title: 'Negara Perpindahan',
-                  fields: [
-                    _buildTextField(
-                        context: context,
-                        label: 'Alamat Tujuan',
-                        hint: 'Nomor rumah atau lainnya'),
-                    _buildCustomDropdownField(
-                      context: context,
-                      label: 'Kode Negara',
-                      hint: 'PILIH KODE NEGARA',
-                      items: [
-                        'Senin',
-                        'Selasa',
-                        'Rabu',
-                        'Kamis',
-                        'Jumat',
-                        'Sabtu',
-                        'Minggu'
-                      ],
-                    ),
-                    _buildTextField(
-                        context: context,
-                        label: 'Penanggung Jawab',
-                        hint: 'nama penanggung jawab kepindahan'),
-                    _buildDatePickerField(
-                      context: context,
-                      label: 'Rencana Pindah Tanggal',
-                    ),
-                    _buildTextField(
-                      context: context,
-                      label: 'Nomor Handphone',
-                      hint: 'nomor handphone',
+                      label: 'Nomor KK',
+                      hint: 'nomor kartu keluarga',
                       isNumber: true,
+                      onSave: (value) => _kkPemohon = value != null ? int.tryParse(value) : null,
+                    ),
+                    _buildTextField(
+                      context: context,
+                      label: 'NIK Pemohon',
+                      hint: 'nomor induk kependudukan pelapor',
+                      isNumber: true,
+                      onSave: (value) => _nikPemohon = value != null ? int.tryParse(value) : null,
                     ),
                     _buildTextField(
                       context: context,
                       label: 'Nama Lengkap',
                       hint: 'tulis nama lengkap pelapor',
+                      onSave: (value) => _namaPemohon = value,
+                    ),
+                    _buildTextField(
+                      context: context,
+                      label: 'Posisi dalam Keluarga',
+                      hint: 'kedudukan pada kartu keluarga',
+                      onSave: (value) => _kedudukanPemohon = value,
                     ),
                   ],
                 ),
                 SizedBox(height: 16.0),
+                //ini alasan pembuatan sob
                 Container(
                   padding: EdgeInsets.all(16.0),
                   decoration: BoxDecoration(
-                    color: Color(0xFFF9FCFC),
+                    color: Color(0xFFE2DED0),
                     borderRadius: BorderRadius.circular(7),
                   ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Center(
-                        child: Container(
-                          padding: EdgeInsets.symmetric(
-                              vertical: 4.0, horizontal: 8.0),
-                          decoration: BoxDecoration(
-                            color: Color(0xFFCE7277),
-                            borderRadius: BorderRadius.circular(4),
-                          ),
-                          child: Text(
-                            'UNGGAH DOKUMEN KELENGKAPAN',
-                            style: TextStyle(
-                              fontFamily: 'Ubuntu',
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
-                            ),
-                          ),
-                        ),
-                      ),
-                      SizedBox(height: 16.0),
-                      _buildSubTitle('KTP Pemohon'),
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 16.0),
-                        child: Stack(
-                          clipBehavior: Clip.none,
-                          children: [
-                            GestureDetector(
-                              onTap: () {
-                                // ini buat handle upload document nya thin
-                              },
-                              child: Container(
-                                height: 100,
-                                decoration: BoxDecoration(
-                                  color: Color(0xFFE0E5E7),
-                                  borderRadius: BorderRadius.circular(7),
-                                ),
-                                child: Center(
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Image.asset(
-                                        'assets/upload-icon.png',
-                                        height: 30,
-                                        width: 30,
-                                      ),
-                                      SizedBox(height: 8),
-                                      Container(
-                                        padding: EdgeInsets.symmetric(
-                                            horizontal: 8, vertical: 4),
-                                        decoration: BoxDecoration(
-                                          color: Color(0xFFE2DED0),
-                                          borderRadius:
-                                              BorderRadius.circular(4),
-                                        ),
-                                        child: Text(
-                                          'Pilih gambar atau dokumen',
-                                          style: TextStyle(
-                                            fontFamily: 'Ubuntu',
-                                            color: Colors.black54,
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ),
-                            Positioned(
-                              top: -10,
-                              right: -10,
-                              child: Container(
-                                width: 24,
-                                height: 24,
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: Color(0xFF4F4E49),
-                                ),
-                                child: IconButton(
-                                  padding: EdgeInsets.zero,
-                                  icon: Icon(Icons.close,
-                                      color: Colors.white, size: 16),
-                                  onPressed: () {
-                                    // ini nanti buat remove nya thinnn mas broo
-                                  },
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      _buildSubTitle('Kartu Keluarga'),
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 16.0),
-                        child: Stack(
-                          clipBehavior: Clip.none,
-                          children: [
-                            GestureDetector(
-                              onTap: () {
-                                // ini buat handle upload document nya thin
-                              },
-                              child: Container(
-                                height: 100,
-                                decoration: BoxDecoration(
-                                  color: Color(0xFFE0E5E7),
-                                  borderRadius: BorderRadius.circular(7),
-                                ),
-                                child: Center(
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Image.asset(
-                                        'assets/upload-icon.png',
-                                        height: 30,
-                                        width: 30,
-                                      ),
-                                      SizedBox(height: 8),
-                                      Container(
-                                        padding: EdgeInsets.symmetric(
-                                            horizontal: 8, vertical: 4),
-                                        decoration: BoxDecoration(
-                                          color: Color(0xFFE2DED0),
-                                          borderRadius:
-                                              BorderRadius.circular(4),
-                                        ),
-                                        child: Text(
-                                          'Pilih gambar atau dokumen',
-                                          style: TextStyle(
-                                            fontFamily: 'Ubuntu',
-                                            color: Colors.black54,
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ),
-                            Positioned(
-                              top: -10,
-                              right: -10,
-                              child: Container(
-                                width: 24,
-                                height: 24,
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: Color(0xFF4F4E49),
-                                ),
-                                child: IconButton(
-                                  padding: EdgeInsets.zero,
-                                  icon: Icon(Icons.close,
-                                      color: Colors.white, size: 16),
-                                  onPressed: () {
-                                    // ini nanti buat remove nya thinnn mas broo
-                                  },
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      _buildSubTitle('Formulir F-1.02'),
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 16.0),
-                        child: Stack(
-                          clipBehavior: Clip.none,
-                          children: [
-                            GestureDetector(
-                              onTap: () {
-                                // ini buat handle upload document nya thin
-                              },
-                              child: Container(
-                                height: 100,
-                                decoration: BoxDecoration(
-                                  color: Color(0xFFE0E5E7),
-                                  borderRadius: BorderRadius.circular(7),
-                                ),
-                                child: Center(
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Image.asset(
-                                        'assets/upload-icon.png',
-                                        height: 30,
-                                        width: 30,
-                                      ),
-                                      SizedBox(height: 8),
-                                      Container(
-                                        padding: EdgeInsets.symmetric(
-                                            horizontal: 8, vertical: 4),
-                                        decoration: BoxDecoration(
-                                          color: Color(0xFFE2DED0),
-                                          borderRadius:
-                                              BorderRadius.circular(4),
-                                        ),
-                                        child: Text(
-                                          'Pilih gambar atau dokumen',
-                                          style: TextStyle(
-                                            fontFamily: 'Ubuntu',
-                                            color: Colors.black54,
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ),
-                            Positioned(
-                              top: -10,
-                              right: -10,
-                              child: Container(
-                                width: 24,
-                                height: 24,
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: Color(0xFF4F4E49),
-                                ),
-                                child: IconButton(
-                                  padding: EdgeInsets.zero,
-                                  icon: Icon(Icons.close,
-                                      color: Colors.white, size: 16),
-                                  onPressed: () {
-                                    // ini nanti buat remove nya thinnn mas broo
-                                  },
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      _buildSubTitle('Formulir F-1.03 (Opsional)'),
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 16.0),
-                        child: Stack(
-                          clipBehavior: Clip.none,
-                          children: [
-                            GestureDetector(
-                              onTap: () {
-                                // ini buat handle upload document nya thin
-                              },
-                              child: Container(
-                                height: 100,
-                                decoration: BoxDecoration(
-                                  color: Color(0xFFE0E5E7),
-                                  borderRadius: BorderRadius.circular(7),
-                                ),
-                                child: Center(
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Image.asset(
-                                        'assets/upload-icon.png',
-                                        height: 30,
-                                        width: 30,
-                                      ),
-                                      SizedBox(height: 8),
-                                      Container(
-                                        padding: EdgeInsets.symmetric(
-                                            horizontal: 8, vertical: 4),
-                                        decoration: BoxDecoration(
-                                          color: Color(0xFFE2DED0),
-                                          borderRadius:
-                                              BorderRadius.circular(4),
-                                        ),
-                                        child: Text(
-                                          'Pilih gambar atau dokumen',
-                                          style: TextStyle(
-                                            fontFamily: 'Ubuntu',
-                                            color: Colors.black54,
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ),
-                            Positioned(
-                              top: -10,
-                              right: -10,
-                              child: Container(
-                                width: 24,
-                                height: 24,
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: Color(0xFF4F4E49),
-                                ),
-                                child: IconButton(
-                                  padding: EdgeInsets.zero,
-                                  icon: Icon(Icons.close,
-                                      color: Colors.white, size: 16),
-                                  onPressed: () {
-                                    // ini nanti buat remove nya thinnn mas broo
-                                  },
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
+                      _buildDropdownField(
+                        context,
+                        [
+                          'Surat Keterangan Pindah',
+                          'Surat Keterangan Pindah Luar Negeri (SKPLN)'
+                        ],
+                        label: 'Alasan Pembuatan',
+                        onSave: (value) => _alasanPembuatan = value,
                       ),
                     ],
                   ),
                 ),
-              ],
-              SizedBox(height: 16.0),
-              SizedBox(height: 16.0),
-              Align(
-                alignment: Alignment.center,
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 30.0),
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Color(0xFF2F5061),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20),
+                SizedBox(height: 16.0),
+                if (_alasanPembuatan == 'Surat Keterangan Pindah') ...[
+                  _buildSection(
+                    title: 'DAERAH ASAL',
+                    fields: [
+                      _buildTextField(
+                          context: context,
+                          label: 'Alamat Asal',
+                          hint: 'Nomor rumah atau lainnya',
+                          onSave: (value) => _alamatAsal = value,
                       ),
-                      padding:
-                          EdgeInsets.symmetric(vertical: 12, horizontal: 50),
+                      _buildSubTitle('RT, RW, dan Kode Pos'),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Container(
+                            width: 90,
+                            child: GestureDetector(
+                              onTap: () {
+                                // Handle the click event here
+                                print('TextField clicked');
+                              },
+                              child: AbsorbPointer(
+                                child: TextField(
+                                  keyboardType: TextInputType.number,
+                                  style: TextStyle(
+                                    fontFamily: 'Ubuntu',
+                                    fontStyle: FontStyle.italic,
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w100,
+                                  ),
+                                  decoration: InputDecoration(
+                                    hintText: 'RT',
+                                    hintStyle: TextStyle(
+                                      fontFamily: 'Ubuntu',
+                                      fontStyle: FontStyle.italic,
+                                      fontWeight: FontWeight.w100,
+                                    ),
+                                    filled: true,
+                                    fillColor: Colors.white,
+                                    border: OutlineInputBorder(
+                                      borderRadius:
+                                          BorderRadius.all(Radius.circular(7)),
+                                      borderSide: BorderSide.none,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                          Container(
+                            width: 90,
+                            child: GestureDetector(
+                              onTap: () {
+                                // Handle the click event here
+                                print('TextField clicked');
+                              },
+                              child: AbsorbPointer(
+                                child: TextField(
+                                  keyboardType: TextInputType.number,
+                                  style: TextStyle(
+                                    fontFamily: 'Ubuntu',
+                                    fontSize: 15,
+                                    fontStyle: FontStyle.italic,
+                                    fontWeight: FontWeight.w100,
+                                  ),
+                                  decoration: InputDecoration(
+                                    hintText: 'RW',
+                                    hintStyle: TextStyle(
+                                      fontFamily: 'Ubuntu',
+                                      fontStyle: FontStyle.italic,
+                                      fontWeight: FontWeight.w100,
+                                    ),
+                                    filled: true,
+                                    fillColor: Colors.white,
+                                    border: OutlineInputBorder(
+                                      borderRadius:
+                                          BorderRadius.all(Radius.circular(7)),
+                                      borderSide: BorderSide.none,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                          Container(
+                            width: 90,
+                            child: GestureDetector(
+                              onTap: () {
+                                // Handle the click event here
+                                print('TextField clicked');
+                              },
+                              child: AbsorbPointer(
+                                child: TextField(
+                                  keyboardType: TextInputType.number,
+                                  style: TextStyle(
+                                    fontFamily: 'Ubuntu',
+                                    fontSize: 15,
+                                    fontStyle: FontStyle.italic,
+                                    fontWeight: FontWeight.w100,
+                                  ),
+                                  decoration: InputDecoration(
+                                    hintText: 'Kode Pos',
+                                    hintStyle: TextStyle(
+                                      fontFamily: 'Ubuntu',
+                                      fontStyle: FontStyle.italic,
+                                      fontWeight: FontWeight.w100,
+                                    ),
+                                    filled: true,
+                                    fillColor: Colors.white,
+                                    border: OutlineInputBorder(
+                                      borderRadius:
+                                          BorderRadius.all(Radius.circular(7)),
+                                      borderSide: BorderSide.none,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      _buildCustomDropdownField(
+                        context: context,
+                        label: 'Provinsi',
+                        hint: 'PILIH PROVINSI',
+                        items: _provinces,
+                        currentValue: _provinsiAsal,
+                        onSave: (value) => _provinsiAsal = value,
+                        onChanged: (value) {
+                          setState(() {
+                            _provinsiAsal = value;
+                          });
+                        },
+                      ),
+                      _buildCustomDropdownField(
+                        context: context,
+                        label: 'Kota/Kabupaten',
+                        hint: 'PILIH KOTA/KABUPATEN',
+                        items: _citiesAndRegencies,
+                        currentValue: _kotaKapubatenAsal,
+                        onSave: (value) => _kotaKapubatenAsal = value,
+                        onChanged: (value) {
+                          setState(() {
+                            _kotaKapubatenAsal = value;
+                          });
+                        },
+                      ),
+                      // _buildCustomDropdownField(
+                      //   context: context,
+                      //   label: 'Kecamatan',
+                      //   hint: 'PILIH KECAMATAN',
+                      //   items: [
+                      //     'Senin',
+                      //     'Selasa',
+                      //     'Rabu',
+                      //     'Kamis',
+                      //     'Jumat',
+                      //     'Sabtu',
+                      //     'Minggu'
+                      //   ],
+                      //   onSave: (value) => _kecamatanAsal = value,
+                      //   onChanged: (value) {
+                      //     setState(() {
+                      //       _kecamatanAsal = value;
+                      //     });
+                      //   },
+                      // ),
+                      _buildTextField(
+                        context: context,
+                        label: 'Kecamatan',
+                        hint: 'Ketik Kecamatan',
+                        onSave: (value) => _kecamatanAsal = value,
+                      ),
+                      _buildTextField(
+                        context: context,
+                        label: 'Desa/Kelurahan',
+                        hint: 'Ketik Desa/Kelurahan',
+                        onSave: (value) => _desaKelurahanAsal = value,
+                      ),
+                      // _buildCustomDropdownField(
+                      //   context: context,
+                      //   label: 'Desa/Kelurahan  ',
+                      //   hint: 'PILIH DESA/KELURAHAN',
+                      //   items: [
+                      //     'Senin',
+                      //     'Selasa',
+                      //     'Rabu',
+                      //     'Kamis',
+                      //     'Jumat',
+                      //     'Sabtu',
+                      //     'Minggu'
+                      //   ],
+                      //   onSave: (value) => _desaKelurahanAsal = value,
+                      //   onChanged: (value) {
+                      //     setState(() {
+                      //       _desaKelurahanAsal = value;
+                      //     });
+                      //   },
+                      // ),
+                    ],
+                  ),
+                  SizedBox(height: 16.0),
+                  _buildSection(
+                    title: 'Daerah Perpindahan',
+                    fields: [
+                      _buildTextField(
+                          context: context,
+                          label: 'Alamat Tujuan',
+                          hint: 'Nomor rumah atau lainnya',
+                          onSave: (value) => _alamatTujuanDaerah = value,
+                      ),
+                      _buildSubTitle('RT, RW, dan Kode Pos'),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Container(
+                            width: 90,
+                            child: GestureDetector(
+                              onTap: () {
+                                // Handle the click event here
+                                print('TextField clicked');
+                              },
+                              child: AbsorbPointer(
+                                child: TextField(
+                                  keyboardType: TextInputType.number,
+                                  style: TextStyle(
+                                    fontFamily: 'Ubuntu',
+                                    fontStyle: FontStyle.italic,
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w100,
+                                  ),
+                                  decoration: InputDecoration(
+                                    hintText: 'RT',
+                                    hintStyle: TextStyle(
+                                      fontFamily: 'Ubuntu',
+                                      fontStyle: FontStyle.italic,
+                                      fontWeight: FontWeight.w100,
+                                    ),
+                                    filled: true,
+                                    fillColor: Colors.white,
+                                    border: OutlineInputBorder(
+                                      borderRadius:
+                                          BorderRadius.all(Radius.circular(7)),
+                                      borderSide: BorderSide.none,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                          Container(
+                            width: 90,
+                            child: GestureDetector(
+                              onTap: () {
+                                // Handle the click event here
+                                print('TextField clicked');
+                              },
+                              child: AbsorbPointer(
+                                child: TextField(
+                                  keyboardType: TextInputType.number,
+                                  style: TextStyle(
+                                    fontFamily: 'Ubuntu',
+                                    fontSize: 15,
+                                    fontStyle: FontStyle.italic,
+                                    fontWeight: FontWeight.w100,
+                                  ),
+                                  decoration: InputDecoration(
+                                    hintText: 'RW',
+                                    hintStyle: TextStyle(
+                                      fontFamily: 'Ubuntu',
+                                      fontStyle: FontStyle.italic,
+                                      fontWeight: FontWeight.w100,
+                                    ),
+                                    filled: true,
+                                    fillColor: Colors.white,
+                                    border: OutlineInputBorder(
+                                      borderRadius:
+                                          BorderRadius.all(Radius.circular(7)),
+                                      borderSide: BorderSide.none,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                          Container(
+                            width: 90,
+                            child: GestureDetector(
+                              onTap: () {
+                                // Handle the click event here
+                                print('TextField clicked');
+                              },
+                              child: AbsorbPointer(
+                                child: TextField(
+                                  keyboardType: TextInputType.number,
+                                  style: TextStyle(
+                                    fontFamily: 'Ubuntu',
+                                    fontSize: 15,
+                                    fontStyle: FontStyle.italic,
+                                    fontWeight: FontWeight.w100,
+                                  ),
+                                  decoration: InputDecoration(
+                                    hintText: 'Kode Pos',
+                                    hintStyle: TextStyle(
+                                      fontFamily: 'Ubuntu',
+                                      fontStyle: FontStyle.italic,
+                                      fontWeight: FontWeight.w100,
+                                    ),
+                                    filled: true,
+                                    fillColor: Colors.white,
+                                    border: OutlineInputBorder(
+                                      borderRadius:
+                                          BorderRadius.all(Radius.circular(7)),
+                                      borderSide: BorderSide.none,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      _buildCustomDropdownField(
+                        context: context,
+                        label: 'Provinsi',
+                        hint: 'PILIH PROVINSI',
+                        items: _provinces,
+                        onSave: (value) => _provinsiTujuan = value,
+                        currentValue: _provinsiTujuan,
+                        onChanged: (value) {
+                          setState(() {
+                            _provinsiTujuan = value;
+                          });
+                        },
+                      ),
+                      _buildCustomDropdownField(
+                        context: context,
+                        label: 'Kota/Kabupaten',
+                        hint: 'PILIH KOTA/KABUPATEN',
+                        items: _citiesAndRegencies,
+                        onSave: (value) => _kotaKabupatenTujuan = value,
+                        currentValue: _kotaKabupatenTujuan,
+                        onChanged: (value) {
+                          setState(() {
+                            _kotaKabupatenTujuan = value;
+                          });
+                        },
+                      ),
+                      // _buildCustomDropdownField(
+                      //   context: context,
+                      //   label: 'Kecamatan',
+                      //   hint: 'PILIH KECAMATAN',
+                      //   items: [
+                      //     'Senin',
+                      //     'Selasa',
+                      //     'Rabu',
+                      //     'Kamis',
+                      //     'Jumat',
+                      //     'Sabtu',
+                      //     'Minggu'
+                      //   ],
+                      //   onSave: (value) => _kecamatanTujuan = value,
+                      //   onChanged: (value) {
+                      //     setState(() {
+                      //       _kecamatanTujuan = value;
+                      //     });
+                      //   },
+                      // ),
+                      _buildTextField(
+                        context: context,
+                        label: 'Kecamatan',
+                        hint: 'Ketik Kecamatan',
+                        onSave: (value) => _kecamatanTujuan = value,
+                      ),
+                      _buildTextField(
+                        context: context,
+                        label: 'Desa/Kelurahan',
+                        hint: 'Ketik Desa/Kelurahan',
+                        onSave: (value) => _desaKelurahanTujuan = value,
+                      ),
+                      // _buildCustomDropdownField(
+                      //   context: context,
+                      //   label: 'Desa/Kelurahan  ',
+                      //   hint: 'PILIH DESA/KELURAHAN',
+                      //   items: [
+                      //     'Senin',
+                      //     'Selasa',
+                      //     'Rabu',
+                      //     'Kamis',
+                      //     'Jumat',
+                      //     'Sabtu',
+                      //     'Minggu'
+                      //   ],
+                      //   onSave: (value) => _desaKelurahanTujuan = value,
+                      //   onChanged: (value) {
+                      //     setState(() {
+                      //       _desaKelurahanTujuan = value;
+                      //     });
+                      //   },
+                      // ),
+                      _buildCustomDropdownField(
+                        context: context,
+                        label: 'Alasan Kepindahan',
+                        hint: 'Alasan Kepindahan',
+                        items: [
+                          'Pekerjaan',
+                          'Pendidikan',
+                          'Kesehatan',
+                          'Keamanan',
+                          'Keluarga',
+                          'Perumahan',
+                          'Lainnya'
+                        ],
+                        currentValue: _alasanPerpindahan,
+                        onSave: (value) => _alasanPerpindahan = value,
+                        onChanged: (value) {
+                          setState(() {
+                            _alasanPerpindahan = value;
+                            if (value != 'Lainnya') {
+                              _alasanPerpindahanLainnya = null;
+                            }
+                          });
+                        },
+                      ),
+                      _buildCustomDropdownField(
+                        context: context,
+                        label: 'Jenis Kepindahan  ',
+                        hint: 'Jenis Kepindahan',
+                        items: [
+                          'Kepala Keluarga',
+                          'Kepala Keluarga dan Sebagian Anggota Keluarga',
+                          'Kepala Keluarga dan Seluruh Anggota Keluarga',
+                          'Anggota Keluarga'
+                        ],
+                        currentValue: _jenisPerpindahan,
+                        onSave: (value) => _jenisPerpindahan = value,
+                        onChanged: (value) {
+                          setState(() {
+                            _jenisPerpindahan = value;
+                          });
+                        },
+                      ),
+                      _buildCustomDropdownField(
+                        context: context,
+                        label: 'Anggota Keluarga yang Pindah ',
+                        hint: 'Kepindahan Anggota Keluarga',
+                        items: [
+                          'Numpang KK',
+                          'Membuat KK Baru'
+                        ],
+                        currentValue: _kepindahanAnggotaKeluarga,
+                        onSave: (value) => _kepindahanAnggotaKeluarga = value,
+                        onChanged: (value) {
+                          setState(() {
+                            _kepindahanAnggotaKeluarga = value;
+                          });
+                        },
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 16.0),
+                  Container(
+                    padding: EdgeInsets.all(16.0),
+                    decoration: BoxDecoration(
+                      color: Color(0xFFF9FCFC),
+                      borderRadius: BorderRadius.circular(7),
                     ),
-                    onPressed: () {},
-                    child: Text(
-                      'BUAT PENGAJUAN',
-                      style: TextStyle(
-                        fontFamily: 'Ubuntu',
-                        fontWeight: FontWeight.w700, // Very bold font weight
-                        color: Colors.white,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Center(
+                          child: Container(
+                            padding: EdgeInsets.symmetric(
+                                vertical: 4.0, horizontal: 8.0),
+                            decoration: BoxDecoration(
+                              color: Color(0xFFCE7277),
+                              borderRadius: BorderRadius.circular(4),
+                            ),
+                            child: Text(
+                              'UNGGAH DOKUMEN KELENGKAPAN',
+                              style: TextStyle(
+                                fontFamily: 'Ubuntu',
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: 16.0),
+                        _buildSubTitle('KTP Pemohon'),
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 16.0),
+                          child: Stack(
+                            clipBehavior: Clip.none,
+                            children: [
+                              GestureDetector(
+                                onTap: () async {
+                                  // ini buat handle upload document nya thin
+                                  await _pickFile((file) {
+                                    _ktpPemohon = file;
+                                  });
+                                },
+                                child: Container(
+                                  height: 100,
+                                  decoration: BoxDecoration(
+                                    color: Color(0xFFE0E5E7),
+                                    borderRadius: BorderRadius.circular(7),
+                                  ),
+                                  child: Center(
+                                    child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        Image.asset(
+                                          'assets/upload-icon.png',
+                                          height: 30,
+                                          width: 30,
+                                        ),
+                                        SizedBox(height: 8),
+                                        Container(
+                                          padding: EdgeInsets.symmetric(
+                                              horizontal: 8, vertical: 4),
+                                          decoration: BoxDecoration(
+                                            color: Color(0xFFE2DED0),
+                                            borderRadius:
+                                                BorderRadius.circular(4),
+                                          ),
+                                          child: Text(
+                                            'Pilih gambar atau dokumen',
+                                            style: TextStyle(
+                                              fontFamily: 'Ubuntu',
+                                              color: Colors.black54,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              Positioned(
+                                top: -10,
+                                right: -10,
+                                child: Container(
+                                  width: 24,
+                                  height: 24,
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: Color(0xFF4F4E49),
+                                  ),
+                                  child: IconButton(
+                                    padding: EdgeInsets.zero,
+                                    icon: Icon(Icons.close,
+                                        color: Colors.white, size: 16),
+                                    onPressed: () {
+                                      // ini nanti buat remove nya thinnn mas broo
+                                      _removeFile(() {
+                                        _ktpPemohon = null;
+                                      });
+                                    },
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        _buildSubTitle('Kartu Keluarga'),
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 16.0),
+                          child: Stack(
+                            clipBehavior: Clip.none,
+                            children: [
+                              GestureDetector(
+                                onTap: () async {
+                                  // ini buat handle upload document nya thin
+                                  await _pickFile((file) {
+                                    _kartuKeluarga = file;
+                                  });
+                                },
+                                child: Container(
+                                  height: 100,
+                                  decoration: BoxDecoration(
+                                    color: Color(0xFFE0E5E7),
+                                    borderRadius: BorderRadius.circular(7),
+                                  ),
+                                  child: Center(
+                                    child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        Image.asset(
+                                          'assets/upload-icon.png',
+                                          height: 30,
+                                          width: 30,
+                                        ),
+                                        SizedBox(height: 8),
+                                        Container(
+                                          padding: EdgeInsets.symmetric(
+                                              horizontal: 8, vertical: 4),
+                                          decoration: BoxDecoration(
+                                            color: Color(0xFFE2DED0),
+                                            borderRadius:
+                                                BorderRadius.circular(4),
+                                          ),
+                                          child: Text(
+                                            'Pilih gambar atau dokumen',
+                                            style: TextStyle(
+                                              fontFamily: 'Ubuntu',
+                                              color: Colors.black54,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              Positioned(
+                                top: -10,
+                                right: -10,
+                                child: Container(
+                                  width: 24,
+                                  height: 24,
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: Color(0xFF4F4E49),
+                                  ),
+                                  child: IconButton(
+                                    padding: EdgeInsets.zero,
+                                    icon: Icon(Icons.close,
+                                        color: Colors.white, size: 16),
+                                    onPressed: () {
+                                      // ini nanti buat remove nya thinnn mas broo
+                                      _removeFile(() {
+                                        _kartuKeluarga = null;
+                                      });
+                                    },
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        _buildSubTitle('Formulir F-1.02'),
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 16.0),
+                          child: Stack(
+                            clipBehavior: Clip.none,
+                            children: [
+                              GestureDetector(
+                                onTap: () async {
+                                  // ini buat handle upload document nya thin
+                                  await _pickFile((file) {
+                                    _formulirF102 = file;
+                                  });
+                                },
+                                child: Container(
+                                  height: 100,
+                                  decoration: BoxDecoration(
+                                    color: Color(0xFFE0E5E7),
+                                    borderRadius: BorderRadius.circular(7),
+                                  ),
+                                  child: Center(
+                                    child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        Image.asset(
+                                          'assets/upload-icon.png',
+                                          height: 30,
+                                          width: 30,
+                                        ),
+                                        SizedBox(height: 8),
+                                        Container(
+                                          padding: EdgeInsets.symmetric(
+                                              horizontal: 8, vertical: 4),
+                                          decoration: BoxDecoration(
+                                            color: Color(0xFFE2DED0),
+                                            borderRadius:
+                                                BorderRadius.circular(4),
+                                          ),
+                                          child: Text(
+                                            'Pilih gambar atau dokumen',
+                                            style: TextStyle(
+                                              fontFamily: 'Ubuntu',
+                                              color: Colors.black54,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              Positioned(
+                                top: -10,
+                                right: -10,
+                                child: Container(
+                                  width: 24,
+                                  height: 24,
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: Color(0xFF4F4E49),
+                                  ),
+                                  child: IconButton(
+                                    padding: EdgeInsets.zero,
+                                    icon: Icon(Icons.close,
+                                        color: Colors.white, size: 16),
+                                    onPressed: () {
+                                      // ini nanti buat remove nya thinnn mas broo
+                                      _removeFile(() {
+                                        _formulirF102 = null;
+                                      });
+                                    },
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        _buildSubTitle('Formulir F-1.03'),
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 16.0),
+                          child: Stack(
+                            clipBehavior: Clip.none,
+                            children: [
+                              GestureDetector(
+                                onTap: () async {
+                                  // ini buat handle upload document nya thin
+                                  await _pickFile((file) {
+                                    _formulirF103 = file;
+                                  });
+                                },
+                                child: Container(
+                                  height: 100,
+                                  decoration: BoxDecoration(
+                                    color: Color(0xFFE0E5E7),
+                                    borderRadius: BorderRadius.circular(7),
+                                  ),
+                                  child: Center(
+                                    child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        Image.asset(
+                                          'assets/upload-icon.png',
+                                          height: 30,
+                                          width: 30,
+                                        ),
+                                        SizedBox(height: 8),
+                                        Container(
+                                          padding: EdgeInsets.symmetric(
+                                              horizontal: 8, vertical: 4),
+                                          decoration: BoxDecoration(
+                                            color: Color(0xFFE2DED0),
+                                            borderRadius:
+                                                BorderRadius.circular(4),
+                                          ),
+                                          child: Text(
+                                            'Pilih gambar atau dokumen',
+                                            style: TextStyle(
+                                              fontFamily: 'Ubuntu',
+                                              color: Colors.black54,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              Positioned(
+                                top: -10,
+                                right: -10,
+                                child: Container(
+                                  width: 24,
+                                  height: 24,
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: Color(0xFF4F4E49),
+                                  ),
+                                  child: IconButton(
+                                    padding: EdgeInsets.zero,
+                                    icon: Icon(Icons.close,
+                                        color: Colors.white, size: 16),
+                                    onPressed: () {
+                                      // ini nanti buat remove nya thinnn mas broo
+                                      _removeFile(() {
+                                        _formulirF103 = null;
+                                      });
+                                    },
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ] else if (_alasanPembuatan ==
+                    'Surat Keterangan Pindah Luar Negeri (SKPLN)') ...[
+                  _buildSection(
+                    title: 'DAERAH ASAL',
+                    fields: [
+                      _buildTextField(
+                          context: context,
+                          label: 'Alamat Asal',
+                          hint: 'Nomor rumah atau lainnya',
+                          onSave: (value) => _alamatAsal = value,
+                      ),
+                      _buildSubTitle('RT, RW, dan Kode Pos'),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Container(
+                            width: 90,
+                            child: GestureDetector(
+                              onTap: () {
+                                // Handle the click event here
+                                print('TextField clicked');
+                              },
+                              child: AbsorbPointer(
+                                child: TextField(
+                                  keyboardType: TextInputType.number,
+                                  style: TextStyle(
+                                    fontFamily: 'Ubuntu',
+                                    fontStyle: FontStyle.italic,
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w100,
+                                  ),
+                                  decoration: InputDecoration(
+                                    hintText: 'RT',
+                                    hintStyle: TextStyle(
+                                      fontFamily: 'Ubuntu',
+                                      fontStyle: FontStyle.italic,
+                                      fontWeight: FontWeight.w100,
+                                    ),
+                                    filled: true,
+                                    fillColor: Colors.white,
+                                    border: OutlineInputBorder(
+                                      borderRadius:
+                                          BorderRadius.all(Radius.circular(7)),
+                                      borderSide: BorderSide.none,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                          Container(
+                            width: 90,
+                            child: GestureDetector(
+                              onTap: () {
+                                // Handle the click event here
+                                print('TextField clicked');
+                              },
+                              child: AbsorbPointer(
+                                child: TextField(
+                                  keyboardType: TextInputType.number,
+                                  style: TextStyle(
+                                    fontFamily: 'Ubuntu',
+                                    fontSize: 15,
+                                    fontStyle: FontStyle.italic,
+                                    fontWeight: FontWeight.w100,
+                                  ),
+                                  decoration: InputDecoration(
+                                    hintText: 'RW',
+                                    hintStyle: TextStyle(
+                                      fontFamily: 'Ubuntu',
+                                      fontStyle: FontStyle.italic,
+                                      fontWeight: FontWeight.w100,
+                                    ),
+                                    filled: true,
+                                    fillColor: Colors.white,
+                                    border: OutlineInputBorder(
+                                      borderRadius:
+                                          BorderRadius.all(Radius.circular(7)),
+                                      borderSide: BorderSide.none,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                          Container(
+                            width: 90,
+                            child: GestureDetector(
+                              onTap: () {
+                                // Handle the click event here
+                                print('TextField clicked');
+                              },
+                              child: AbsorbPointer(
+                                child: TextField(
+                                  keyboardType: TextInputType.number,
+                                  style: TextStyle(
+                                    fontFamily: 'Ubuntu',
+                                    fontSize: 15,
+                                    fontStyle: FontStyle.italic,
+                                    fontWeight: FontWeight.w100,
+                                  ),
+                                  decoration: InputDecoration(
+                                    hintText: 'Kode Pos',
+                                    hintStyle: TextStyle(
+                                      fontFamily: 'Ubuntu',
+                                      fontStyle: FontStyle.italic,
+                                      fontWeight: FontWeight.w100,
+                                    ),
+                                    filled: true,
+                                    fillColor: Colors.white,
+                                    border: OutlineInputBorder(
+                                      borderRadius:
+                                          BorderRadius.all(Radius.circular(7)),
+                                      borderSide: BorderSide.none,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      _buildCustomDropdownField(
+                        context: context,
+                        label: 'Provinsi',
+                        hint: 'PILIH PROVINSI',
+                        items: _provinces,
+                        currentValue: _provinsiAsal,
+                        onSave: (value) => _provinsiAsal = value,
+                        onChanged: (value) {
+                          setState(() {
+                            _provinsiAsal = value;
+                          });
+                        },
+                      ),
+                      _buildCustomDropdownField(
+                        context: context,
+                        label: 'Kota/Kabupaten',
+                        hint: 'PILIH KOTA/KABUPATEN',
+                        items: _citiesAndRegencies,
+                        currentValue: _kotaKapubatenAsal,
+                        onSave: (value) => _kotaKapubatenAsal = value,
+                        onChanged: (value) {
+                          setState(() {
+                            _kotaKapubatenAsal = value;
+                          });
+                        },
+                      ),
+                      // _buildCustomDropdownField(
+                      //   context: context,
+                      //   label: 'Kecamatan',
+                      //   hint: 'PILIH KECAMATAN',
+                      //   items: [
+                      //     'Senin',
+                      //     'Selasa',
+                      //     'Rabu',
+                      //     'Kamis',
+                      //     'Jumat',
+                      //     'Sabtu',
+                      //     'Minggu'
+                      //   ],
+                      _buildTextField(
+                        context: context,
+                        label: 'Kecamatan',
+                        hint: 'Ketik Kecamatan',
+                        onSave: (value) => _kecamatanAsal = value,
+                      ),
+                      _buildTextField(
+                        context: context,
+                        label: 'Desa/Kelurahan',
+                        hint: 'Ketik Desa/Kelurahan',
+                        onSave: (value) => _desaKelurahanAsal = value,
+                      ),
+                      //   onSave: (value) => _kecamatanAsal = value,
+                      //   onChanged: (value) {
+                      //     setState(() {
+                      //       _kecamatanAsal = value;
+                      //     });
+                      //   },
+                      // ),
+                      // _buildCustomDropdownField(
+                      //   context: context,
+                      //   label: 'Desa/Kelurahan  ',
+                      //   hint: 'PILIH DESA/KELURAHAN',
+                      //   items: [
+                      //     'Senin',
+                      //     'Selasa',
+                      //     'Rabu',
+                      //     'Kamis',
+                      //     'Jumat',
+                      //     'Sabtu',
+                      //     'Minggu'
+                      //   ],
+                      //   onSave: (value) => _desaKelurahanAsal = value,
+                      //   onChanged: (value) {
+                      //     setState(() {
+                      //       _desaKelurahanAsal = value;
+                      //     });
+                      //   },
+                      // ),
+                    ],
+                  ),
+                  SizedBox(height: 16.0),
+                  _buildSection(
+                    title: 'Negara Perpindahan',
+                    fields: [
+                      _buildTextField(
+                          context: context,
+                          label: 'Alamat Tujuan',
+                          hint: 'Nomor rumah atau lainnya',
+                          onSave: (value) => _alamatTujuanNegara = value,
+                      ),
+                      _buildCustomDropdownField(
+                        context: context,
+                        label: 'Kode Negara',
+                        hint: 'PILIH KODE NEGARA',
+                        items: _countriesCode,
+                        currentValue: _kodeNegara,
+                        onSave: (value) => _kodeNegara = value,
+                        onChanged: (value) {
+                          setState(() {
+                            _kodeNegara = value;
+                          });
+                        },
+                      ),
+                      _buildTextField(
+                          context: context,
+                          label: 'Penanggung Jawab',
+                          hint: 'nama penanggung jawab kepindahan',
+                          onSave: (value) => _namaPenanggungJawab = value,
+                      ),
+                      _buildDatePickerField(
+                        context: context,
+                        label: 'Rencana Pindah Tanggal',
+                        selectedDate: _selectedDatePerpindahan,
+                        onSelect: (date) {
+                          setState(() {
+                            _selectedDatePerpindahan = date;
+                          });
+                        },
+                        onSave: (value) => null,
+                        validator: (value) {
+                          if (_selectedDatePerpindahan == null) {
+                            return 'Tanggal Rencana Perpindahan tidak boleh kosong';
+                          }
+                          return null;
+                        },
+                      ),
+                      _buildTextField(
+                        context: context,
+                        label: 'Nomor Handphone',
+                        hint: 'nomor handphone',
+                        isNumber: true,
+                        onSave: (value) => _nomorHandphone = value != null ? int.tryParse(value) : null,
+                      ),
+                      _buildTextField(
+                        context: context,
+                        label: 'Nama Lengkap',
+                        hint: 'tulis nama lengkap pelapor',
+                        onSave: (value) => _namaPelapor = value,
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 16.0),
+                  Container(
+                    padding: EdgeInsets.all(16.0),
+                    decoration: BoxDecoration(
+                      color: Color(0xFFF9FCFC),
+                      borderRadius: BorderRadius.circular(7),
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Center(
+                          child: Container(
+                            padding: EdgeInsets.symmetric(
+                                vertical: 4.0, horizontal: 8.0),
+                            decoration: BoxDecoration(
+                              color: Color(0xFFCE7277),
+                              borderRadius: BorderRadius.circular(4),
+                            ),
+                            child: Text(
+                              'UNGGAH DOKUMEN KELENGKAPAN',
+                              style: TextStyle(
+                                fontFamily: 'Ubuntu',
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: 16.0),
+                        _buildSubTitle('KTP Pemohon'),
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 16.0),
+                          child: Stack(
+                            clipBehavior: Clip.none,
+                            children: [
+                              GestureDetector(
+                                onTap: () async {
+                                  // ini buat handle upload document nya thin
+                                  await _pickFile((file) {
+                                    _ktpPemohon = file;
+                                  });
+                                },
+                                child: Container(
+                                  height: 100,
+                                  decoration: BoxDecoration(
+                                    color: Color(0xFFE0E5E7),
+                                    borderRadius: BorderRadius.circular(7),
+                                  ),
+                                  child: Center(
+                                    child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        Image.asset(
+                                          'assets/upload-icon.png',
+                                          height: 30,
+                                          width: 30,
+                                        ),
+                                        SizedBox(height: 8),
+                                        Container(
+                                          padding: EdgeInsets.symmetric(
+                                              horizontal: 8, vertical: 4),
+                                          decoration: BoxDecoration(
+                                            color: Color(0xFFE2DED0),
+                                            borderRadius:
+                                                BorderRadius.circular(4),
+                                          ),
+                                          child: Text(
+                                            'Pilih gambar atau dokumen',
+                                            style: TextStyle(
+                                              fontFamily: 'Ubuntu',
+                                              color: Colors.black54,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              Positioned(
+                                top: -10,
+                                right: -10,
+                                child: Container(
+                                  width: 24,
+                                  height: 24,
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: Color(0xFF4F4E49),
+                                  ),
+                                  child: IconButton(
+                                    padding: EdgeInsets.zero,
+                                    icon: Icon(Icons.close,
+                                        color: Colors.white, size: 16),
+                                    onPressed: () {
+                                      // ini nanti buat remove nya thinnn mas broo
+                                    _removeFile(() {
+                                        _ktpPemohon = null;
+                                      });
+                                    },
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        _buildSubTitle('Kartu Keluarga'),
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 16.0),
+                          child: Stack(
+                            clipBehavior: Clip.none,
+                            children: [
+                              GestureDetector(
+                                onTap: () async {
+                                  // ini buat handle upload document nya thin
+                                  await _pickFile((file) {
+                                    _kartuKeluarga = file;
+                                  });
+                                },
+                                child: Container(
+                                  height: 100,
+                                  decoration: BoxDecoration(
+                                    color: Color(0xFFE0E5E7),
+                                    borderRadius: BorderRadius.circular(7),
+                                  ),
+                                  child: Center(
+                                    child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        Image.asset(
+                                          'assets/upload-icon.png',
+                                          height: 30,
+                                          width: 30,
+                                        ),
+                                        SizedBox(height: 8),
+                                        Container(
+                                          padding: EdgeInsets.symmetric(
+                                              horizontal: 8, vertical: 4),
+                                          decoration: BoxDecoration(
+                                            color: Color(0xFFE2DED0),
+                                            borderRadius:
+                                                BorderRadius.circular(4),
+                                          ),
+                                          child: Text(
+                                            'Pilih gambar atau dokumen',
+                                            style: TextStyle(
+                                              fontFamily: 'Ubuntu',
+                                              color: Colors.black54,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              Positioned(
+                                top: -10,
+                                right: -10,
+                                child: Container(
+                                  width: 24,
+                                  height: 24,
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: Color(0xFF4F4E49),
+                                  ),
+                                  child: IconButton(
+                                    padding: EdgeInsets.zero,
+                                    icon: Icon(Icons.close,
+                                        color: Colors.white, size: 16),
+                                    onPressed: () {
+                                      // ini nanti buat remove nya thinnn mas broo
+                                      _removeFile(() {
+                                        _kartuKeluarga = null;
+                                      });
+                                    },
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        _buildSubTitle('Formulir F-1.02'),
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 16.0),
+                          child: Stack(
+                            clipBehavior: Clip.none,
+                            children: [
+                              GestureDetector(
+                                onTap: () async {
+                                  // ini buat handle upload document nya thin
+                                  await _pickFile((file) {
+                                    _formulirF102 = file;
+                                  });
+                                },
+                                child: Container(
+                                  height: 100,
+                                  decoration: BoxDecoration(
+                                    color: Color(0xFFE0E5E7),
+                                    borderRadius: BorderRadius.circular(7),
+                                  ),
+                                  child: Center(
+                                    child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        Image.asset(
+                                          'assets/upload-icon.png',
+                                          height: 30,
+                                          width: 30,
+                                        ),
+                                        SizedBox(height: 8),
+                                        Container(
+                                          padding: EdgeInsets.symmetric(
+                                              horizontal: 8, vertical: 4),
+                                          decoration: BoxDecoration(
+                                            color: Color(0xFFE2DED0),
+                                            borderRadius:
+                                                BorderRadius.circular(4),
+                                          ),
+                                          child: Text(
+                                            'Pilih gambar atau dokumen',
+                                            style: TextStyle(
+                                              fontFamily: 'Ubuntu',
+                                              color: Colors.black54,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              Positioned(
+                                top: -10,
+                                right: -10,
+                                child: Container(
+                                  width: 24,
+                                  height: 24,
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: Color(0xFF4F4E49),
+                                  ),
+                                  child: IconButton(
+                                    padding: EdgeInsets.zero,
+                                    icon: Icon(Icons.close,
+                                        color: Colors.white, size: 16),
+                                    onPressed: () {
+                                      // ini nanti buat remove nya thinnn mas broo
+                                      _removeFile(() {
+                                        _formulirF102 = null;
+                                      });
+                                    },
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        _buildSubTitle('Formulir F-1.03 (Opsional)'),
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 16.0),
+                          child: Stack(
+                            clipBehavior: Clip.none,
+                            children: [
+                              GestureDetector(
+                                onTap: () async {
+                                  // ini buat handle upload document nya thin
+                                  await _pickFile((file) {
+                                    _formulirF103 = file;
+                                  });
+                                },
+                                child: Container(
+                                  height: 100,
+                                  decoration: BoxDecoration(
+                                    color: Color(0xFFE0E5E7),
+                                    borderRadius: BorderRadius.circular(7),
+                                  ),
+                                  child: Center(
+                                    child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        Image.asset(
+                                          'assets/upload-icon.png',
+                                          height: 30,
+                                          width: 30,
+                                        ),
+                                        SizedBox(height: 8),
+                                        Container(
+                                          padding: EdgeInsets.symmetric(
+                                              horizontal: 8, vertical: 4),
+                                          decoration: BoxDecoration(
+                                            color: Color(0xFFE2DED0),
+                                            borderRadius:
+                                                BorderRadius.circular(4),
+                                          ),
+                                          child: Text(
+                                            'Pilih gambar atau dokumen',
+                                            style: TextStyle(
+                                              fontFamily: 'Ubuntu',
+                                              color: Colors.black54,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              Positioned(
+                                top: -10,
+                                right: -10,
+                                child: Container(
+                                  width: 24,
+                                  height: 24,
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: Color(0xFF4F4E49),
+                                  ),
+                                  child: IconButton(
+                                    padding: EdgeInsets.zero,
+                                    icon: Icon(Icons.close,
+                                        color: Colors.white, size: 16),
+                                    onPressed: () {
+                                      // ini nanti buat remove nya thinnn mas broo
+                                      _removeFile(() {
+                                        _formulirF103 = null;
+                                      });
+                                    },
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+                SizedBox(height: 16.0),
+                SizedBox(height: 16.0),
+                Align(
+                  alignment: Alignment.center,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                    child: ElevatedButton(
+                      onPressed: _submitForm,
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Color(0xFF2F5061),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        padding:
+                            EdgeInsets.symmetric(vertical: 12, horizontal: 50),
+                      ),
+                      child: Text(
+                        'BUAT PENGAJUAN',
+                        style: TextStyle(
+                          fontFamily: 'Ubuntu',
+                          fontWeight: FontWeight.w700, // Very bold font weight
+                          color: Colors.white,
+                        ),
                       ),
                     ),
                   ),
                 ),
-              ),
-              SizedBox(height: 38),
-            ],
-          ),
+                SizedBox(height: 38),
+              ],
+            ),
+          ),  
         ),
       ),
     );
@@ -1424,6 +1707,7 @@ class _PerpindahanKependudukanState extends State<PerpindahanKependudukan> {
     required String label,
     required String hint,
     bool isNumber = false,
+    required FormFieldSetter<String?> onSave,
   }) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8),
@@ -1439,13 +1723,30 @@ class _PerpindahanKependudukanState extends State<PerpindahanKependudukan> {
             ),
           ),
           SizedBox(height: 8),
-          TextField(
+          TextFormField(
+            onSaved: (value) {
+              if (isNumber) {
+                onSave(value?.isNotEmpty == true ? int.tryParse(value!)?.toString() : null);
+              } else {
+                onSave(value);
+              }
+            },
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return '$label tidak boleh kosong';
+              }
+              if (isNumber && int.tryParse(value) == null) {
+                return '$label tidak boleh kosong';
+              }
+              return null;
+            },
+            keyboardType: isNumber ? TextInputType.number : TextInputType.text,
             decoration: InputDecoration(
               hintText: hint,
               hintStyle: TextStyle(
                 fontStyle: FontStyle.italic,
-                fontWeight: FontWeight.w100,
-                color: Colors.black54,
+                fontWeight: FontWeight.w300,
+                fontFamily: 'Ubuntu',
               ),
               filled: true,
               fillColor: Colors.white,
@@ -1457,7 +1758,6 @@ class _PerpindahanKependudukanState extends State<PerpindahanKependudukan> {
             style: TextStyle(
               color: Colors.black,
             ),
-            keyboardType: isNumber ? TextInputType.number : TextInputType.text,
           ),
         ],
       ),
@@ -1465,15 +1765,15 @@ class _PerpindahanKependudukanState extends State<PerpindahanKependudukan> {
   }
 
   Widget _buildDropdownField(BuildContext context, List<String> items,
-      {String? label, Color backgroundColor = Colors.white}) {
+      {String? label, Color backgroundColor = Colors.white, Function(String?)? onSave, String? Function(String?)? validator}) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         if (label != null) _buildSubTitle(label),
         Padding(
           padding: const EdgeInsets.only(bottom: 16.0),
-          child: DropdownButtonFormField(
-            value: items.contains(selectedReason) ? selectedReason : null,
+          child: DropdownButtonFormField<String>(
+            value: items.contains(_alasanPembuatan) ? _alasanPembuatan : null,
             isDense: true,
             isExpanded: true,
             decoration: InputDecoration(
@@ -1485,7 +1785,8 @@ class _PerpindahanKependudukanState extends State<PerpindahanKependudukan> {
               ),
             ),
             items: items
-                .map((label) => DropdownMenuItem(
+                .map((label) => DropdownMenuItem<String>(
+                      value: label,
                       child: Text(
                         label,
                         style: TextStyle(
@@ -1493,14 +1794,21 @@ class _PerpindahanKependudukanState extends State<PerpindahanKependudukan> {
                           overflow: TextOverflow.ellipsis,
                         ),
                       ),
-                      value: label,
                     ))
                 .toList(),
             onChanged: (value) {
               setState(() {
-                selectedReason = value as String;
+                _alasanPembuatan = value!;
               });
             },
+            onSaved: onSave,
+            validator: validator ??
+                (value) {
+                  if (value == null || value.isEmpty) {
+                    return '$label tidak boleh kosong';
+                  }
+                  return null;
+                },
             dropdownColor: Colors.white,
           ),
         ),
@@ -1513,6 +1821,9 @@ class _PerpindahanKependudukanState extends State<PerpindahanKependudukan> {
     required String label,
     required String hint,
     required List<String> items,
+    String? currentValue,
+    required ValueChanged<String?> onChanged,
+    Function(String?)? onSave,
   }) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8),
@@ -1543,8 +1854,7 @@ class _PerpindahanKependudukanState extends State<PerpindahanKependudukan> {
                     fontWeight: FontWeight.w100,
                     color: Colors.black54,
                   ),
-                  contentPadding:
-                      EdgeInsets.symmetric(vertical: 0, horizontal: 10),
+                  contentPadding: EdgeInsets.symmetric(vertical: 0, horizontal: 10),
                   fillColor: Colors.white,
                   filled: true,
                   border: OutlineInputBorder(
@@ -1556,19 +1866,44 @@ class _PerpindahanKependudukanState extends State<PerpindahanKependudukan> {
                   Icons.arrow_drop_down,
                   color: Colors.black54,
                 ),
-                value: null,
+                value: items.contains(currentValue) ? currentValue : null,
                 items: items.map((String value) {
                   return DropdownMenuItem<String>(
                     value: value,
                     child: Text(value, style: TextStyle(color: Colors.black)),
                   );
                 }).toList(),
-                onChanged: (value) {},
+                onChanged: (value) {
+                  onChanged(value);
+                  if (onSave != null) {
+                    onSave(value);
+                  }
+                  if (label == 'Alasan Kepindahan' && value != 'Lainnya') {
+                    _alasanPerpindahanLainnya = null;
+                  }
+                },
+                onSaved: onSave,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return '$label tidak boleh kosong';
+                  }
+                  return null;
+                },
                 dropdownColor: Colors.white,
                 isExpanded: true,
               ),
             ),
           ),
+          if (label == 'Alasan Kepindahan' && currentValue == 'Lainnya')
+            Padding(
+              padding: const EdgeInsets.only(top: 16),
+              child: _buildTextField(
+                context: context,
+                label: 'Alasan Kepindahan Lainnya',
+                hint: 'Alasan Kepindahan Lainnya',
+                onSave: (value) => _alasanPerpindahanLainnya = value,
+              ),
+            ),
         ],
       ),
     );
@@ -1590,7 +1925,15 @@ class _PerpindahanKependudukanState extends State<PerpindahanKependudukan> {
   Widget _buildDatePickerField({
     required BuildContext context,
     required String label,
+    required FormFieldSetter<String> onSave,
+    required FormFieldValidator<String> validator,
+    DateTime? selectedDate,
+    ValueChanged<DateTime>? onSelect,
   }) {
+    TextEditingController _controller = TextEditingController(
+      text: selectedDate != null ? "${selectedDate.toLocal()}".split(' ')[0] : '',
+    );
+
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8),
       child: Column(
@@ -1630,7 +1973,12 @@ class _PerpindahanKependudukanState extends State<PerpindahanKependudukan> {
                   );
                 },
               );
-              // Handle the selected date
+              if (date != null) {
+                _controller.text = "${date.toLocal()}".split(' ')[0];
+                if (onSelect != null) {
+                  onSelect(date);
+                }
+              }
             },
             child: Container(
               width: double.infinity,
@@ -1644,7 +1992,7 @@ class _PerpindahanKependudukanState extends State<PerpindahanKependudukan> {
                 children: [
                   Expanded(
                     child: Text(
-                      'BB-HH-TTTT',
+                      _controller.text.isEmpty ? 'TTTT-BB-HH' : _controller.text,
                       style: TextStyle(
                         fontFamily: 'Ubuntu',
                         fontStyle: FontStyle.italic,
@@ -1657,6 +2005,57 @@ class _PerpindahanKependudukanState extends State<PerpindahanKependudukan> {
                 ],
               ),
             ),
+          ),
+          FormField<String>(
+            onSaved: onSave,
+            validator: validator,
+            builder: (FormFieldState<String> field) {
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  if (field.errorText != null)
+                    Padding(
+                      padding: const EdgeInsets.only(top: 8.0),
+                      child: Text(
+                        field.errorText!,
+                        style: TextStyle(
+                          color: Colors.red,
+                          fontSize: 12,
+                        ),
+                      ),
+                    ),
+                ],
+              );
+            },
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildFilePicker({
+    required String label,
+    required File? file,
+    required Future<void> Function() onPick,
+    required VoidCallback onRemove,
+  }) {
+    return Padding(
+      padding: EdgeInsets.symmetric(vertical: 8.0),
+      child: Row(
+        children: [
+          Expanded(
+            child: Text(
+              file == null ? label : 'File selected: ${file.path.split('/').last}',
+              style: TextStyle(
+                fontFamily: 'Ubuntu',
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+          IconButton(
+            icon: Icon(file == null ? Icons.upload : Icons.remove),
+            onPressed: file == null ? () async => await onPick() : onRemove,
           ),
         ],
       ),
@@ -2327,4 +2726,198 @@ class _PerpindahanKependudukanState extends State<PerpindahanKependudukan> {
         'Kabupaten Teluk Wondama',
         'Kota Sorong',
       ];
+
+  List<String> get _countriesCode => [
+    'AFG', // Afganistan
+    'ALB', // Albania
+    'DZA', // Aljazair
+    'AND', // Andorra
+    'AGO', // Angola
+    'ATG', // Antigua dan Barbuda
+    'ARG', // Argentina
+    'ARM', // Armenia
+    'AUS', // Australia
+    'AUT', // Austria
+    'AZE', // Azerbaijan
+    'BHS', // Bahama
+    'BHR', // Bahrain
+    'BGD', // Bangladesh
+    'BRB', // Barbados
+    'BLR', // Belarus
+    'BEL', // Belgia
+    'BLZ', // Belize
+    'BEN', // Benin
+    'BTN', // Bhutan
+    'BOL', // Bolivia
+    'BIH', // Bosnia dan Herzegovina
+    'BWA', // Botswana
+    'BRA', // Brazil
+    'BRN', // Brunei
+    'BGR', // Bulgaria
+    'BFA', // Burkina Faso
+    'BDI', // Burundi
+    'CPV', // Cabo Verde
+    'KHM', // Kamboja
+    'CMR', // Kamerun
+    'CAN', // Kanada
+    'CAF', // Republik Afrika Tengah
+    'TCD', // Chad
+    'CHL', // Cile
+    'CHN', // Cina
+    'COL', // Kolombia
+    'COM', // Komoros
+    'COG', // Kongo 
+    'CRI', // Kosta Rika
+    'HRV', // Kroasia
+    'CUB', // Kuba
+    'CYP', // Siprus
+    'CZE', // Ceko 
+    'DNK', // Denmark
+    'DJI', // Djibouti
+    'DMA', // Dominika
+    'DOM', // Republik Dominika
+    'ECU', // Ekuador
+    'EGY', // Mesir
+    'SLV', // El Salvador
+    'GNQ', // Guinea Khatulistiwa
+    'ERI', // Eritrea
+    'EST', // Estonia
+    'SWZ', // Eswatini
+    'ETH', // Etiopia
+    'FJI', // Fiji
+    'FIN', // Finlandia
+    'FRA', // Prancis
+    'GAB', // Gabon
+    'GMB', // Gambia
+    'GEO', // Georgia
+    'DEU', // Jerman
+    'GHA', // Ghana
+    'GRC', // Yunani
+    'GRD', // Grenada
+    'GTM', // Guatemala
+    'GIN', // Guinea
+    'GNB', // Guinea-Bissau
+    'GUY', // Guyana
+    'HTI', // Haiti
+    'HND', // Honduras
+    'HUN', // Hongaria
+    'ISL', // Islandia
+    'IND', // India
+    'IDN', // Indonesia
+    'IRN', // Iran
+    'IRQ', // Irak
+    'IRL', // Irlandia
+    'ISR', // Israel
+    'ITA', // Italia
+    'JAM', // Jamaika
+    'JPN', // Jepang
+    'JOR', // Yordania
+    'KAZ', // Kazakhstan
+    'KEN', // Kenya
+    'KIR', // Kiribati
+    'PRK', // Korea Utara
+    'KOR', // Korea Selatan
+    'XKX', // Kosovo
+    'KWT', // Kuwait
+    'KGZ', // Kirgistan
+    'LAO', // Laos
+    'LVA', // Latvia
+    'LBN', // Libanon
+    'LSO', // Lesotho
+    'LBR', // Liberia
+    'LBY', // Libya
+    'LIE', // Liechtenstein
+    'LTU', // Lituania
+    'LUX', // Luxembourg
+    'MDG', // Madagaskar
+    'MWI', // Malawi
+    'MYS', // Malaysia
+    'MDV', // Maladewa
+    'MLI', // Mali
+    'MLT', // Malta
+    'MHL', // Kepulauan Marshall
+    'MRT', // Mauritania
+    'MUS', // Mauritius
+    'MEX', // Meksiko
+    'FSM', // Mikronesia
+    'MDA', // Moldova
+    'MCO', // Monako
+    'MNG', // Mongolia
+    'MNE', // Montenegro
+    'MAR', // Maroko
+    'MOZ', // Mozambik
+    'MMR', // Myanmar
+    'NAM', // Namibia
+    'NRU', // Nauru
+    'NPL', // Nepal
+    'NLD', // Belanda
+    'NZL', // Selandia Baru
+    'NIC', // Nikaragua
+    'NER', // Niger
+    'NGA', // Nigeria
+    'MKD', // Makedonia Utara
+    'NOR', // Norwegia
+    'OMN', // Oman
+    'PAK', // Pakistan
+    'PLW', // Palau
+    'PSE', // Negara Palestina
+    'PAN', // Panama
+    'PNG', // Papua Nugini
+    'PRY', // Paraguay
+    'PER', // Peru
+    'PHL', // Filipina
+    'POL', // Polandia
+    'PRT', // Portugal
+    'QAT', // Qatar
+    'ROU', // Rumania
+    'RUS', // Rusia
+    'RWA', // Rwanda
+    'KNA', // Saint Kitts dan Nevis
+    'LCA', // Saint Lucia
+    'VCT', // Saint Vincent dan Grenadines
+    'WSM', // Samoa
+    'SMR', // San Marino
+    'STP', // Sao Tome dan Principe
+    'SAU', // Arab Saudi
+    'SEN', // Senegal
+    'SRB', // Serbia
+    'SYC', // Seychelles
+    'SLE', // Sierra Leone
+    'SGP', // Singapura
+    'SVK', // Slovakia
+    'SVN', // Slovenia
+    'SLB', // Kepulauan Solomon
+    'SOM', // Somalia
+    'ZAF', // Afrika Selatan
+    'SSD', // Sudan Selatan
+    'ESP', // Spanyol
+    'LKA', // Sri Lanka
+    'SDN', // Sudan
+    'SUR', // Suriname
+    'SWE', // Swedia
+    'CHE', // Swiss
+    'SYR', // Suriah
+    'TWN', // Taiwan
+    'TJK', // Tajikistan
+    'TZA', // Tanzania
+    'THA', // Thailand
+    'TLS', // Timor Leste
+    'TUR', // Turki
+    'TKM', // Turkmenistan
+    'TUV', // Tuvalu
+    'UGA', // Uganda
+    'UKR', // Ukraina
+    'ARE', // Uni Emirat Arab
+    'GBR', // Inggris
+    'USA', // Amerika Serikat
+    'URY', // Uruguay
+    'UZB', // Uzbekistan
+    'VUT', // Vanuatu
+    'VAT', // Kota Vatikan
+    'VEN', // Venezuela
+    'VNM', // Vietnam
+    'YEM', // Yaman
+    'ZMB', // Zambia
+    'ZWE', // Zimbabwe
+  ];
 }

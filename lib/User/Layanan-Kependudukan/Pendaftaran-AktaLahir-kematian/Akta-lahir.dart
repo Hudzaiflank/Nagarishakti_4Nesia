@@ -33,9 +33,11 @@ class _AktaLahirState extends State<AktaLahir> {
   String? _daerahLahirAnak;
   String? _hariLahirAnak;
   String? _waktuLahirAnak;
-  String? _jenisKelahiranAnak;
+  String? _jenisKelahiranAnak; 
+  String? _jenisKelahiranAnakLainnya;
   String? _beratAnak;
-  String? _penolongKelahiranAnak;
+  String? _penolongKelahiranAnak; 
+  String? _penolongKelahiranAnakLainnya;
   DateTime? _selectedDateAyah;
   DateTime? _selectedDateIbu;
   DateTime? _selectedDateAnak;
@@ -105,11 +107,13 @@ class _AktaLahirState extends State<AktaLahir> {
         hariLahirAnak: _hariLahirAnak!,
         tanggalLahirAnak: _selectedDateAnak!,
         waktuLahirAnak: _waktuLahirAnak!,
-        jenisKelahiranAnak: _jenisKelahiranAnak!,
+        jenisKelahiranAnak: _jenisKelahiranAnak!, 
+        jenisKelahiranAnakLainnya: _jenisKelahiranAnakLainnya!,
         urutanKelahiranAnak: _urutanKelahiranAnak!,
         beratAnak: _beratAnak!,
         panjangAnak: _panjangAnak!,
-        penolongKelahiranAnak: _penolongKelahiranAnak!,        
+        penolongKelahiranAnak: _penolongKelahiranAnak!,    
+        penolongKelahiranAnakLainnya: _penolongKelahiranAnakLainnya!,
         suratKelahiran: _suratKelahiran!,
         buktiSPTJM: _buktiSPTJM!,
         kkOrangTua: _kkOrangTua!,
@@ -382,10 +386,14 @@ class _AktaLahirState extends State<AktaLahir> {
                         'Kembar 4',
                         'Lainnya'
                       ],
+                      currentValue: _jenisKelahiranAnak,
                       onSave: (value) => _jenisKelahiranAnak = value,
                       onChanged: (value) {
                         setState(() {
                           _jenisKelahiranAnak = value;
+                          if (value != 'Lainnya') {
+                            _jenisKelahiranAnak = null;
+                          }
                         });
                       },
                     ),
@@ -413,10 +421,14 @@ class _AktaLahirState extends State<AktaLahir> {
                       context: context,
                       label: 'Penolong Kelahiran',
                       items: ['Dokter', 'Bidan/Perawat', 'Dukun', 'Lainnya'],
+                      currentValue: _penolongKelahiranAnak,
                       onSave: (value) => _penolongKelahiranAnak = value,
                       onChanged: (value) {
                         setState(() {
                           _penolongKelahiranAnak = value;
+                          if (value != 'Lainnya') {
+                            _penolongKelahiranAnak = null;
+                          }
                         });
                       },
                     ),
@@ -1115,6 +1127,7 @@ class _AktaLahirState extends State<AktaLahir> {
     required List<String> items,
     required ValueChanged<String?> onChanged,
     Function(String?)? onSave,
+    String? currentValue,
   }) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8),
@@ -1142,7 +1155,7 @@ class _AktaLahirState extends State<AktaLahir> {
                 filled: true,
                 border: InputBorder.none,
               ),
-              value: null,
+              value: items.contains(currentValue) ? currentValue : null,
               items: items.map((String value) {
                 return DropdownMenuItem<String>(
                   value: value,
@@ -1153,6 +1166,12 @@ class _AktaLahirState extends State<AktaLahir> {
                 onChanged(value);
                 if (onSave != null) {
                   onSave(value);
+                }
+                if (label == 'Jenis Kelahiran' && value != 'Lainnya') {
+                  _jenisKelahiranAnakLainnya = null;
+                }
+                if (label == 'Penolong Kelahiran' && value != 'Lainnya') {
+                  _penolongKelahiranAnakLainnya = null;
                 }
               },
               onSaved: onSave,
@@ -1167,24 +1186,24 @@ class _AktaLahirState extends State<AktaLahir> {
             ),
           ),
           // Kondisi untuk menampilkan TextField jika pilihan "Lainnya" dipilih
-          if (label == 'Jenis Kelahiran' && items.contains('Lainnya') && _jenisKelahiranAnak == 'Lainnya')
+          if (label == 'Jenis Kelahiran' && currentValue == 'Lainnya')
             Padding(
               padding: const EdgeInsets.only(top: 16),
               child: _buildTextField(
                 context: context,
                 label: 'Jenis Kelahiran Lainnya',
                 hint: '',
-                onSave: (value) => _jenisKelahiranAnak = value,
+                onSave: (value) => _jenisKelahiranAnakLainnya = value,
               ),
             ),
-          if (label == 'Penolong Kelahiran' && items.contains('Lainnya') && _penolongKelahiranAnak == 'Lainnya')
+          if (label == 'Penolong Kelahiran' && currentValue == 'Lainnya')
             Padding(
               padding: const EdgeInsets.only(top: 16),
               child: _buildTextField(
                 context: context,
                 label: 'Penolong Kelahiran Lainnya',
                 hint: '',
-                onSave: (value) => _penolongKelahiranAnak = value,
+                onSave: (value) => _penolongKelahiranAnakLainnya = value,
               ),
             ),
         ],
