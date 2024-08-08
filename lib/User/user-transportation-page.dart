@@ -76,7 +76,7 @@ class _UserTransportationPageState extends State<UserTransportationPage> {
                           fontWeight: FontWeight.bold,
                           fontFamily: 'Ubuntu',
                           color: Colors.black,
-                          fontSize: 22,
+                          fontSize: 18,
                         ),
                         textAlign: TextAlign.center,
                       ),
@@ -93,7 +93,7 @@ class _UserTransportationPageState extends State<UserTransportationPage> {
                             style: TextStyle(
                               fontFamily: 'Ubuntu',
                               color: Colors.red,
-                              fontSize: 15,
+                              fontSize: 14,
                             ),
                           ),
                         ],

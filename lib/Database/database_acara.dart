@@ -105,7 +105,7 @@ class Acara {
       'image': image,
       'date': date,
       'description': description,
-      'notification': notification ? 1 : 0, 
+      'notification': notification ? 1 : 0,
     };
   }
 
@@ -117,7 +117,7 @@ class Acara {
       image: map['image'] as String,
       date: map['date'] as String,
       description: map['description'] as String,
-      notification: (map['notification'] as int) == 1
+      notification: (map['notification'] as int) == 1,
     );
   }
 }

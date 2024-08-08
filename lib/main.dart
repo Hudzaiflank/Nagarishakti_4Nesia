@@ -15,6 +15,7 @@ import '/Database/database_kk.dart';
 import '/Database/database_aktaKelahiran.dart';
 import '/Database/database_suratKematian.dart';
 import '/Database/database_perpindahan.dart';
+import '/Database/database_agenda.dart';
 import 'User/user-home.dart';
 import 'admin-home.dart';
 import 'SuperAdmin-home.dart';
@@ -27,6 +28,7 @@ import 'User/Layanan-Kependudukan/Pembuatan-ktp-kk/user-ktp-page.dart';
 import 'User/Layanan-Kependudukan/Pendaftaran-AktaLahir-kematian/Akta-lahir.dart';
 import 'User/Layanan-Kependudukan/Pendaftaran-AktaLahir-kematian/Surat-Kematian.dart';
 import 'User/Layanan-Kependudukan/Pembaruan-data/perpindahan-kependudukan.dart';
+import 'User/Informasi-publik/Agenda-Pemerintah/Agenda-pemerintahan.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -44,6 +46,7 @@ void main() async {
   await DatabaseAktaKelahiran.instance.database;
   await DatabaseSuratKematian.instance.database;
   await DatabasePerpindahan.instance.database;
+  await DatabaseAgenda.instance.database;
 
   // Check table schema
   await DatabaseDetailDestinasi.instance.checkTableSchema();
@@ -62,6 +65,9 @@ void main() async {
 
   // Load Transportation from JSON
   await loadTransportasiFromJson();
+
+  // Load Agenda from JSON
+  await loadAgendaFromJson();
 
   runApp(const MyApp());
 }
@@ -197,6 +203,7 @@ Future<void> loadAcaraFromJson() async {
 
       for (var event in data) {
         final acara = Acara(
+          id: event['id'],
           title: event['title'],
           location: event['location'],
           image: event['image'],
@@ -242,6 +249,32 @@ Future<void> loadTransportasiFromJson() async {
     }
   } catch (e) {
     print('Error loading transportations from JSON: $e');
+  }
+}
+
+Future<void> loadAgendaFromJson() async {
+  try {
+    final String response = await rootBundle.loadString('assets/API/agenda.json');
+    final Map<String, dynamic> jsonData = json.decode(response);
+
+    if (jsonData.containsKey('agenda')) {
+      final List<dynamic> data = jsonData['agenda'];
+      final DatabaseAgenda db = DatabaseAgenda.instance;
+
+      for (var schedule in data) {
+        final agenda = Agenda(
+          id: schedule['id'],
+          judul: schedule['judul'],
+          waktu: schedule['waktu'],
+          lokasi: schedule['lokasi'],
+        );
+        await db.insertAgenda(agenda);
+      }
+    } else {
+      print('Key "agenda" not found in JSON');
+    }
+  } catch (e) {
+    print('Error loading agendas from JSON: $e');
   }
 }
 

@@ -1,8 +1,34 @@
 import 'package:flutter/material.dart';
+import '/Database/database_agenda.dart'; // Impor database_agenda.dart
 
-class AgendaPemerintahan extends StatelessWidget {
+class AgendaPemerintahan extends StatefulWidget {
+  const AgendaPemerintahan({super.key});
+
+  @override
+  _AgendaPemerintahanState createState() => _AgendaPemerintahanState();
+}
+
+class _AgendaPemerintahanState extends State<AgendaPemerintahan> {
+  List<Agenda> _agendas = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _loadAgendasFromDB();
+  }
+
+  Future<void> _loadAgendasFromDB() async {
+    final DatabaseAgenda db = DatabaseAgenda.instance;
+    final List<Agenda> agendas = await db.getAgenda();
+    setState(() {
+      _agendas = agendas;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    Set<String> displayedAgendas = {};
+
     return Scaffold(
       backgroundColor: const Color(0xFFC4DFE2),
       appBar: PreferredSize(
@@ -37,7 +63,7 @@ class AgendaPemerintahan extends StatelessWidget {
                 ),
               ),
               const Text(
-                'TIMELINE ACARA & FESTIVAL',
+                'AGENDA PEMERINTAHAN',
                 style: TextStyle(
                   fontFamily: 'Ubuntu',
                   fontSize: 22,
@@ -72,33 +98,14 @@ class AgendaPemerintahan extends StatelessWidget {
           child: Column(
             children: [
               const SizedBox(height: 13),
-              eventCard(
-                subjudul:
-                    'Rapat Paripurna Pengucapan Sumpah/Janji Anggota DPRD Masa Jabatan 2024-2029',
-                tanggalJam: '4 Juli 2024 09:00 - 12:00 WIB',
-                lokasi: 'Gedung Paripurna DPRD Kota Bekasi',
-              ),
-              eventCard(
-                subjudul:
-                    'Kunjungan kerja ke seluruh Perangkat Daerah Pemerintah Kota Bekasi (Perumda Aneka Usaha)',
-                tanggalJam: '11 Agustus 2024  08:00 - 09:00 WIB',
-                lokasi: 'Perumda Aneka Usaha',
-              ),
-              eventCard(
-                subjudul: 'Penyerahan Bantuan Sosial',
-                tanggalJam: '12 Agustus 2024  08:00 - 09:00 WIB',
-                lokasi: 'Balai Kota Bekasi',
-              ),
-              eventCard(
-                subjudul: 'Rockpot Kesehatan',
-                tanggalJam: '20 Agustus 2024  06:00 - 08:00 WIB',
-                lokasi: 'Stadion Utama Kota Bekasi',
-              ),
-              eventCard(
-                subjudul: '(DL) Healthy Cities summit ke-6 tahun 2024',
-                tanggalJam: '28 Juli 2024  09:00 - 12:00 WIB',
-                lokasi: 'Grand Inna Samudra Beach, Sukabumi',
-              ),
+              for (var schedule in _agendas)
+                if (displayedAgendas.add(
+                    '${schedule.judul}_${schedule.waktu}_${schedule.lokasi}'))
+                  eventCard(
+                    judul: schedule.judul,
+                    waktu: schedule.waktu,
+                    lokasi: schedule.lokasi,
+                  ),
             ],
           ),
         ),
@@ -107,8 +114,8 @@ class AgendaPemerintahan extends StatelessWidget {
   }
 
   Widget eventCard({
-    required String subjudul,
-    required String tanggalJam,
+    required String judul,
+    required String waktu,
     required String lokasi,
   }) {
     return Column(
@@ -125,7 +132,7 @@ class AgendaPemerintahan extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                subjudul,
+                judul,
                 style: TextStyle(
                   fontFamily: 'Ubuntu',
                   fontWeight: FontWeight.bold,
@@ -139,7 +146,7 @@ class AgendaPemerintahan extends StatelessWidget {
                   Icon(Icons.calendar_today, color: Color(0xFFCE7277)),
                   SizedBox(width: 8),
                   Text(
-                    tanggalJam,
+                    waktu,
                     style: TextStyle(
                       fontFamily: 'Ubuntu',
                       fontSize: 14,
