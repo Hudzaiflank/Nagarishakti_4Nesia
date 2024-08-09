@@ -62,9 +62,9 @@ class DatabaseTransportasi {
     );
 
     if (result.isNotEmpty) {
-      print('Fetched Destination with id $id: ${result.first['nama']}');
+      print('Fetched Transportation with id $id: ${result.first['nama']}');
     } else {
-      print('No Destination found with id $id');
+      print('No Transportation found with id $id');
     }
 
     List<Transportasi> transportations = result.map((json) => Transportasi.fromMap(json)).toList();

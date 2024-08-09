@@ -70,9 +70,9 @@ class _UserTimelineFestivalState extends State<UserTimelineFestival> {
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(120.0),
         child: Container(
-          padding: const EdgeInsets.only(top: 20.0, bottom: 16.0),
+          padding: const EdgeInsets.only(top: 10.0, bottom: 20.0),
           decoration: const BoxDecoration(
-            color: Color(0xFFC4DFE2),
+            color: Color(0xFF4297A0),
             borderRadius: BorderRadius.vertical(bottom: Radius.circular(7.0)),
           ),
           child: Column(
@@ -83,7 +83,7 @@ class _UserTimelineFestivalState extends State<UserTimelineFestival> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Container(
-                      margin: const EdgeInsets.only(right: 10.0),
+                      margin: const EdgeInsets.only(left: 10.0, top: 10.0),
                       decoration: const BoxDecoration(
                         color: Color(0xFFE2DED0),
                         shape: BoxShape.circle,
@@ -99,11 +99,11 @@ class _UserTimelineFestivalState extends State<UserTimelineFestival> {
                 ),
               ),
               const Text(
-                'TIMELINE ACARA & FESTIVAL',
+                'TIMELINE \nACARA & FESTIVAL',
                 style: TextStyle(
                   fontFamily: 'Ubuntu',
-                  fontSize: 22,
-                  color: Colors.white,
+                  fontSize: 18,
+                  color: Colors.black,
                   fontWeight: FontWeight.bold,
                 ),
                 textAlign: TextAlign.center,
@@ -112,14 +112,14 @@ class _UserTimelineFestivalState extends State<UserTimelineFestival> {
               const Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(Icons.location_pin, size: 16, color: Color(0xFFA53525)),
+                  Icon(Icons.location_pin, size: 16, color: Colors.red),
                   SizedBox(width: 4),
                   Text(
                     'Kota Bekasi',
                     style: TextStyle(
                       fontFamily: 'Ubuntu',
                       fontSize: 16,
-                      color: Color(0xFFCDC2AE),
+                      color: Colors.red,
                     ),
                   ),
                 ],
@@ -250,8 +250,11 @@ class _UserTimelineFestivalState extends State<UserTimelineFestival> {
                                 child: IconButton(
                                   icon: Icon(
                                     event.notification ? Icons.notifications : Icons.notifications_off,
-                                    color: Colors.white, size: 24), // Increased size
-                                  onPressed: () => _updateNotification(event),
+                                    color: event.notification ? Colors.white : Colors.white
+                                  ), 
+                                  onPressed: () {
+                                    _updateNotification(event);
+                                  },
                                 ),
                               ),
                             ],

@@ -48,6 +48,35 @@ class _PerpindahanKependudukanState extends State<PerpindahanKependudukan> {
   File? _formulirF102;
   File? _formulirF103;
 
+  final TextEditingController _rtAsalController = TextEditingController();
+  final TextEditingController _rwAsalController = TextEditingController();
+  final TextEditingController _kodePosAsalController = TextEditingController();
+  final TextEditingController _rtTujuanController = TextEditingController();
+  final TextEditingController _rwTujuanController = TextEditingController();
+  final TextEditingController _kodePosTujuanController = TextEditingController();
+
+  @override
+  void dispose() {
+    _rtAsalController.dispose();
+    _rwAsalController.dispose();
+    _kodePosAsalController.dispose();
+    _rtTujuanController.dispose();
+    _rwTujuanController.dispose();
+    _kodePosTujuanController.dispose();
+    super.dispose();
+  }
+
+  String? _validateNotEmptyInt(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Harus Diisi';
+    }
+    final intValue = int.tryParse(value);
+    if (intValue == null) {
+      return 'Harus Diisi';
+    }
+    return null;
+  }
+
   Future<void> _selectDate({
     required BuildContext context,
     required DateTime? selectedDate,
@@ -250,107 +279,89 @@ class _PerpindahanKependudukanState extends State<PerpindahanKependudukan> {
                         children: [
                           Container(
                             width: 90,
-                            child: GestureDetector(
-                              onTap: () {
-                                // Handle the click event here
-                                print('TextField clicked');
-                              },
-                              child: AbsorbPointer(
-                                child: TextField(
-                                  keyboardType: TextInputType.number,
-                                  style: TextStyle(
-                                    fontFamily: 'Ubuntu',
-                                    fontStyle: FontStyle.italic,
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.w100,
-                                  ),
-                                  decoration: InputDecoration(
-                                    hintText: 'RT',
-                                    hintStyle: TextStyle(
-                                      fontFamily: 'Ubuntu',
-                                      fontStyle: FontStyle.italic,
-                                      fontWeight: FontWeight.w100,
-                                    ),
-                                    filled: true,
-                                    fillColor: Colors.white,
-                                    border: OutlineInputBorder(
-                                      borderRadius:
-                                          BorderRadius.all(Radius.circular(7)),
-                                      borderSide: BorderSide.none,
-                                    ),
-                                  ),
+                            child: TextFormField(
+                              controller: _rtAsalController,
+                              keyboardType: TextInputType.number,
+                              style: TextStyle(
+                                fontFamily: 'Ubuntu',
+                                fontStyle: FontStyle.italic,
+                                fontSize: 15,
+                                fontWeight: FontWeight.w100,
+                              ),
+                              decoration: InputDecoration(
+                                hintText: 'RT',
+                                hintStyle: TextStyle(
+                                  fontFamily: 'Ubuntu',
+                                  fontStyle: FontStyle.italic,
+                                  fontWeight: FontWeight.w100,
+                                ),
+                                filled: true,
+                                fillColor: Colors.white,
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.all(Radius.circular(7)),
+                                  borderSide: BorderSide.none,
                                 ),
                               ),
+                              onSaved: (value) => _rtAsal = int.tryParse(value ?? ''),
+                              validator: _validateNotEmptyInt,
                             ),
                           ),
                           Container(
                             width: 90,
-                            child: GestureDetector(
-                              onTap: () {
-                                // Handle the click event here
-                                print('TextField clicked');
-                              },
-                              child: AbsorbPointer(
-                                child: TextField(
-                                  keyboardType: TextInputType.number,
-                                  style: TextStyle(
-                                    fontFamily: 'Ubuntu',
-                                    fontSize: 15,
-                                    fontStyle: FontStyle.italic,
-                                    fontWeight: FontWeight.w100,
-                                  ),
-                                  decoration: InputDecoration(
-                                    hintText: 'RW',
-                                    hintStyle: TextStyle(
-                                      fontFamily: 'Ubuntu',
-                                      fontStyle: FontStyle.italic,
-                                      fontWeight: FontWeight.w100,
-                                    ),
-                                    filled: true,
-                                    fillColor: Colors.white,
-                                    border: OutlineInputBorder(
-                                      borderRadius:
-                                          BorderRadius.all(Radius.circular(7)),
-                                      borderSide: BorderSide.none,
-                                    ),
-                                  ),
+                            child: TextFormField(
+                              controller: _rwAsalController,
+                              keyboardType: TextInputType.number,
+                              style: TextStyle(
+                                fontFamily: 'Ubuntu',
+                                fontStyle: FontStyle.italic,
+                                fontSize: 15,
+                                fontWeight: FontWeight.w100,
+                              ),
+                              decoration: InputDecoration(
+                                hintText: 'RW',
+                                hintStyle: TextStyle(
+                                  fontFamily: 'Ubuntu',
+                                  fontStyle: FontStyle.italic,
+                                  fontWeight: FontWeight.w100,
+                                ),
+                                filled: true,
+                                fillColor: Colors.white,
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.all(Radius.circular(7)),
+                                  borderSide: BorderSide.none,
                                 ),
                               ),
+                              onSaved: (value) => _rwAsal = int.tryParse(value ?? ''),
+                              validator: _validateNotEmptyInt,
                             ),
                           ),
                           Container(
                             width: 90,
-                            child: GestureDetector(
-                              onTap: () {
-                                // Handle the click event here
-                                print('TextField clicked');
-                              },
-                              child: AbsorbPointer(
-                                child: TextField(
-                                  keyboardType: TextInputType.number,
-                                  style: TextStyle(
-                                    fontFamily: 'Ubuntu',
-                                    fontSize: 15,
-                                    fontStyle: FontStyle.italic,
-                                    fontWeight: FontWeight.w100,
-                                  ),
-                                  decoration: InputDecoration(
-                                    hintText: 'Kode Pos',
-                                    hintStyle: TextStyle(
-                                      fontFamily: 'Ubuntu',
-                                      fontStyle: FontStyle.italic,
-                                      fontWeight: FontWeight.w100,
-                                    ),
-                                    filled: true,
-                                    fillColor: Colors.white,
-                                    border: OutlineInputBorder(
-                                      borderRadius:
-                                          BorderRadius.all(Radius.circular(7)),
-                                      borderSide: BorderSide.none,
-                                    ),
-                                  ),
+                            child: TextFormField(
+                              controller: _kodePosAsalController,
+                              keyboardType: TextInputType.number,
+                              style: TextStyle(
+                                fontFamily: 'Ubuntu',
+                                fontStyle: FontStyle.italic,
+                                fontSize: 15,
+                                fontWeight: FontWeight.w100,
+                              ),
+                              decoration: InputDecoration(
+                                hintText: 'Kode Pos',
+                                hintStyle: TextStyle(
+                                  fontFamily: 'Ubuntu',
+                                  fontStyle: FontStyle.italic,
+                                  fontWeight: FontWeight.w100,
+                                ),
+                                filled: true,
+                                fillColor: Colors.white,
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.all(Radius.circular(7)),
+                                  borderSide: BorderSide.none,
                                 ),
                               ),
+                              onSaved: (value) => _kodePosAsal = int.tryParse(value ?? ''),
+                              validator: _validateNotEmptyInt,
                             ),
                           ),
                         ],
@@ -451,107 +462,89 @@ class _PerpindahanKependudukanState extends State<PerpindahanKependudukan> {
                         children: [
                           Container(
                             width: 90,
-                            child: GestureDetector(
-                              onTap: () {
-                                // Handle the click event here
-                                print('TextField clicked');
-                              },
-                              child: AbsorbPointer(
-                                child: TextField(
-                                  keyboardType: TextInputType.number,
-                                  style: TextStyle(
-                                    fontFamily: 'Ubuntu',
-                                    fontStyle: FontStyle.italic,
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.w100,
-                                  ),
-                                  decoration: InputDecoration(
-                                    hintText: 'RT',
-                                    hintStyle: TextStyle(
-                                      fontFamily: 'Ubuntu',
-                                      fontStyle: FontStyle.italic,
-                                      fontWeight: FontWeight.w100,
-                                    ),
-                                    filled: true,
-                                    fillColor: Colors.white,
-                                    border: OutlineInputBorder(
-                                      borderRadius:
-                                          BorderRadius.all(Radius.circular(7)),
-                                      borderSide: BorderSide.none,
-                                    ),
-                                  ),
+                            child: TextFormField(
+                              controller: _rtTujuanController,
+                              keyboardType: TextInputType.number,
+                              style: TextStyle(
+                                fontFamily: 'Ubuntu',
+                                fontStyle: FontStyle.italic,
+                                fontSize: 15,
+                                fontWeight: FontWeight.w100,
+                              ),
+                              decoration: InputDecoration(
+                                hintText: 'RT',
+                                hintStyle: TextStyle(
+                                  fontFamily: 'Ubuntu',
+                                  fontStyle: FontStyle.italic,
+                                  fontWeight: FontWeight.w100,
+                                ),
+                                filled: true,
+                                fillColor: Colors.white,
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.all(Radius.circular(7)),
+                                  borderSide: BorderSide.none,
                                 ),
                               ),
+                              onSaved: (value) => _rtTujuan = int.tryParse(value ?? ''),
+                              validator: _validateNotEmptyInt,
                             ),
                           ),
                           Container(
                             width: 90,
-                            child: GestureDetector(
-                              onTap: () {
-                                // Handle the click event here
-                                print('TextField clicked');
-                              },
-                              child: AbsorbPointer(
-                                child: TextField(
-                                  keyboardType: TextInputType.number,
-                                  style: TextStyle(
-                                    fontFamily: 'Ubuntu',
-                                    fontSize: 15,
-                                    fontStyle: FontStyle.italic,
-                                    fontWeight: FontWeight.w100,
-                                  ),
-                                  decoration: InputDecoration(
-                                    hintText: 'RW',
-                                    hintStyle: TextStyle(
-                                      fontFamily: 'Ubuntu',
-                                      fontStyle: FontStyle.italic,
-                                      fontWeight: FontWeight.w100,
-                                    ),
-                                    filled: true,
-                                    fillColor: Colors.white,
-                                    border: OutlineInputBorder(
-                                      borderRadius:
-                                          BorderRadius.all(Radius.circular(7)),
-                                      borderSide: BorderSide.none,
-                                    ),
-                                  ),
+                            child: TextFormField(
+                              controller: _rwTujuanController,
+                              keyboardType: TextInputType.number,
+                              style: TextStyle(
+                                fontFamily: 'Ubuntu',
+                                fontStyle: FontStyle.italic,
+                                fontSize: 15,
+                                fontWeight: FontWeight.w100,
+                              ),
+                              decoration: InputDecoration(
+                                hintText: 'RW',
+                                hintStyle: TextStyle(
+                                  fontFamily: 'Ubuntu',
+                                  fontStyle: FontStyle.italic,
+                                  fontWeight: FontWeight.w100,
+                                ),
+                                filled: true,
+                                fillColor: Colors.white,
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.all(Radius.circular(7)),
+                                  borderSide: BorderSide.none,
                                 ),
                               ),
+                              onSaved: (value) => _rwTujuan = int.tryParse(value ?? ''),
+                              validator: _validateNotEmptyInt,
                             ),
                           ),
                           Container(
                             width: 90,
-                            child: GestureDetector(
-                              onTap: () {
-                                // Handle the click event here
-                                print('TextField clicked');
-                              },
-                              child: AbsorbPointer(
-                                child: TextField(
-                                  keyboardType: TextInputType.number,
-                                  style: TextStyle(
-                                    fontFamily: 'Ubuntu',
-                                    fontSize: 15,
-                                    fontStyle: FontStyle.italic,
-                                    fontWeight: FontWeight.w100,
-                                  ),
-                                  decoration: InputDecoration(
-                                    hintText: 'Kode Pos',
-                                    hintStyle: TextStyle(
-                                      fontFamily: 'Ubuntu',
-                                      fontStyle: FontStyle.italic,
-                                      fontWeight: FontWeight.w100,
-                                    ),
-                                    filled: true,
-                                    fillColor: Colors.white,
-                                    border: OutlineInputBorder(
-                                      borderRadius:
-                                          BorderRadius.all(Radius.circular(7)),
-                                      borderSide: BorderSide.none,
-                                    ),
-                                  ),
+                            child: TextFormField(
+                              controller: _kodePosTujuanController,
+                              keyboardType: TextInputType.number,
+                              style: TextStyle(
+                                fontFamily: 'Ubuntu',
+                                fontStyle: FontStyle.italic,
+                                fontSize: 15,
+                                fontWeight: FontWeight.w100,
+                              ),
+                              decoration: InputDecoration(
+                                hintText: 'Kode Pos',
+                                hintStyle: TextStyle(
+                                  fontFamily: 'Ubuntu',
+                                  fontStyle: FontStyle.italic,
+                                  fontWeight: FontWeight.w100,
+                                ),
+                                filled: true,
+                                fillColor: Colors.white,
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.all(Radius.circular(7)),
+                                  borderSide: BorderSide.none,
                                 ),
                               ),
+                              onSaved: (value) => _kodePosTujuan = int.tryParse(value ?? ''),
+                              validator: _validateNotEmptyInt,
                             ),
                           ),
                         ],
@@ -1047,107 +1040,89 @@ class _PerpindahanKependudukanState extends State<PerpindahanKependudukan> {
                         children: [
                           Container(
                             width: 90,
-                            child: GestureDetector(
-                              onTap: () {
-                                // Handle the click event here
-                                print('TextField clicked');
-                              },
-                              child: AbsorbPointer(
-                                child: TextField(
-                                  keyboardType: TextInputType.number,
-                                  style: TextStyle(
-                                    fontFamily: 'Ubuntu',
-                                    fontStyle: FontStyle.italic,
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.w100,
-                                  ),
-                                  decoration: InputDecoration(
-                                    hintText: 'RT',
-                                    hintStyle: TextStyle(
-                                      fontFamily: 'Ubuntu',
-                                      fontStyle: FontStyle.italic,
-                                      fontWeight: FontWeight.w100,
-                                    ),
-                                    filled: true,
-                                    fillColor: Colors.white,
-                                    border: OutlineInputBorder(
-                                      borderRadius:
-                                          BorderRadius.all(Radius.circular(7)),
-                                      borderSide: BorderSide.none,
-                                    ),
-                                  ),
+                            child: TextFormField(
+                              controller: _rtAsalController,
+                              keyboardType: TextInputType.number,
+                              style: TextStyle(
+                                fontFamily: 'Ubuntu',
+                                fontStyle: FontStyle.italic,
+                                fontSize: 15,
+                                fontWeight: FontWeight.w100,
+                              ),
+                              decoration: InputDecoration(
+                                hintText: 'RT',
+                                hintStyle: TextStyle(
+                                  fontFamily: 'Ubuntu',
+                                  fontStyle: FontStyle.italic,
+                                  fontWeight: FontWeight.w100,
+                                ),
+                                filled: true,
+                                fillColor: Colors.white,
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.all(Radius.circular(7)),
+                                  borderSide: BorderSide.none,
                                 ),
                               ),
+                              onSaved: (value) => _rtAsal = int.tryParse(value ?? ''),
+                              validator: _validateNotEmptyInt,
                             ),
                           ),
                           Container(
                             width: 90,
-                            child: GestureDetector(
-                              onTap: () {
-                                // Handle the click event here
-                                print('TextField clicked');
-                              },
-                              child: AbsorbPointer(
-                                child: TextField(
-                                  keyboardType: TextInputType.number,
-                                  style: TextStyle(
-                                    fontFamily: 'Ubuntu',
-                                    fontSize: 15,
-                                    fontStyle: FontStyle.italic,
-                                    fontWeight: FontWeight.w100,
-                                  ),
-                                  decoration: InputDecoration(
-                                    hintText: 'RW',
-                                    hintStyle: TextStyle(
-                                      fontFamily: 'Ubuntu',
-                                      fontStyle: FontStyle.italic,
-                                      fontWeight: FontWeight.w100,
-                                    ),
-                                    filled: true,
-                                    fillColor: Colors.white,
-                                    border: OutlineInputBorder(
-                                      borderRadius:
-                                          BorderRadius.all(Radius.circular(7)),
-                                      borderSide: BorderSide.none,
-                                    ),
-                                  ),
+                            child: TextFormField(
+                              controller: _rwAsalController,
+                              keyboardType: TextInputType.number,
+                              style: TextStyle(
+                                fontFamily: 'Ubuntu',
+                                fontStyle: FontStyle.italic,
+                                fontSize: 15,
+                                fontWeight: FontWeight.w100,
+                              ),
+                              decoration: InputDecoration(
+                                hintText: 'RW',
+                                hintStyle: TextStyle(
+                                  fontFamily: 'Ubuntu',
+                                  fontStyle: FontStyle.italic,
+                                  fontWeight: FontWeight.w100,
+                                ),
+                                filled: true,
+                                fillColor: Colors.white,
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.all(Radius.circular(7)),
+                                  borderSide: BorderSide.none,
                                 ),
                               ),
+                              onSaved: (value) => _rwAsal = int.tryParse(value ?? ''),
+                              validator: _validateNotEmptyInt,
                             ),
                           ),
                           Container(
                             width: 90,
-                            child: GestureDetector(
-                              onTap: () {
-                                // Handle the click event here
-                                print('TextField clicked');
-                              },
-                              child: AbsorbPointer(
-                                child: TextField(
-                                  keyboardType: TextInputType.number,
-                                  style: TextStyle(
-                                    fontFamily: 'Ubuntu',
-                                    fontSize: 15,
-                                    fontStyle: FontStyle.italic,
-                                    fontWeight: FontWeight.w100,
-                                  ),
-                                  decoration: InputDecoration(
-                                    hintText: 'Kode Pos',
-                                    hintStyle: TextStyle(
-                                      fontFamily: 'Ubuntu',
-                                      fontStyle: FontStyle.italic,
-                                      fontWeight: FontWeight.w100,
-                                    ),
-                                    filled: true,
-                                    fillColor: Colors.white,
-                                    border: OutlineInputBorder(
-                                      borderRadius:
-                                          BorderRadius.all(Radius.circular(7)),
-                                      borderSide: BorderSide.none,
-                                    ),
-                                  ),
+                            child: TextFormField(
+                              controller: _kodePosAsalController,
+                              keyboardType: TextInputType.number,
+                              style: TextStyle(
+                                fontFamily: 'Ubuntu',
+                                fontStyle: FontStyle.italic,
+                                fontSize: 15,
+                                fontWeight: FontWeight.w100,
+                              ),
+                              decoration: InputDecoration(
+                                hintText: 'Kode Pos',
+                                hintStyle: TextStyle(
+                                  fontFamily: 'Ubuntu',
+                                  fontStyle: FontStyle.italic,
+                                  fontWeight: FontWeight.w100,
+                                ),
+                                filled: true,
+                                fillColor: Colors.white,
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.all(Radius.circular(7)),
+                                  borderSide: BorderSide.none,
                                 ),
                               ),
+                              onSaved: (value) => _kodePosAsal = int.tryParse(value ?? ''),
+                              validator: _validateNotEmptyInt,
                             ),
                           ),
                         ],
