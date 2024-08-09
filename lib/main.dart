@@ -295,10 +295,10 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       home: const AdminHome(),
-      // routes: {
-      //   '/login': (context) => const LoginScreen(),
-      //   '/register': (context) => const RegistrationScreen(),
-      // },
+      routes: {
+        '/login': (context) => const LoginScreen(),
+        '/register': (context) => const RegistrationScreen(),
+      },
     );
   }
 }
