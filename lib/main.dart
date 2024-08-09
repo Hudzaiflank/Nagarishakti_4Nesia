@@ -16,6 +16,7 @@ import '/Database/database_aktaKelahiran.dart';
 import '/Database/database_suratKematian.dart';
 import '/Database/database_perpindahan.dart';
 import '/Database/database_agenda.dart';
+import '/Database/database_dokumen.dart';
 import 'User/user-home.dart';
 import 'Admin/admin-home.dart';
 import 'Admin/SuperAdmin-home.dart';
@@ -29,14 +30,20 @@ import 'User/Layanan-Kependudukan/Pendaftaran-AktaLahir-kematian/Akta-lahir.dart
 import 'User/Layanan-Kependudukan/Pendaftaran-AktaLahir-kematian/Surat-Kematian.dart';
 import 'User/Layanan-Kependudukan/Pembaruan-data/perpindahan-kependudukan.dart';
 import 'User/Informasi-publik/Agenda-Pemerintah/Agenda-pemerintahan.dart';
+import 'User/Informasi-publik/Dokumen-publik/Public-Document.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
+  // Delete the existing database
+  await DatabaseDestinasi.instance.deleteDatabaseFile();
+  await DatabaseDetailDestinasi.instance.deleteDatabaseFile();
+  await DatabaseDokumen.instance.deleteDatabaseFile();
+
   // Initialize databases
   await DatabaseUser.instance.database;
-  await DatabaseAdmin.instance.database;
-  await DatabaseSuperAdmin.instance.database;
+  await DatabaseAdmin.instance.database; 
+  await DatabaseSuperAdmin.instance.database; 
   await DatabaseDestinasi.instance.database;
   await DatabaseDetailDestinasi.instance.database;
   await DatabaseAcara.instance.database;
@@ -47,6 +54,7 @@ void main() async {
   await DatabaseSuratKematian.instance.database;
   await DatabasePerpindahan.instance.database;
   await DatabaseAgenda.instance.database;
+  await DatabaseDokumen.instance.database;
 
   // Check table schema
   await DatabaseDetailDestinasi.instance.checkTableSchema();
@@ -68,6 +76,9 @@ void main() async {
 
   // Load Agenda from JSON
   await loadAgendaFromJson();
+
+  // Load Document from JSON
+  await loadDokumenFromJson();
 
   runApp(const MyApp());
 }
@@ -126,8 +137,7 @@ Future<void> _insertInitialData() async {
 
 Future<void> loadDestinationsFromJson() async {
   try {
-    final String response =
-        await rootBundle.loadString('assets/API/destinasi.json');
+    final String response = await rootBundle.loadString('assets/API/destinasi.json');
     final Map<String, dynamic> jsonData = json.decode(response);
 
     if (jsonData.containsKey('destinasi')) {
@@ -170,8 +180,7 @@ Future<void> loadDestinationsFromJson() async {
 
 Future<void> loadDetailDestinationsFromJson() async {
   try {
-    final String response =
-        await rootBundle.loadString('assets/API/detailDestinasi.json');
+    final String response = await rootBundle.loadString('assets/API/detailDestinasi.json');
     final Map<String, dynamic> jsonData = json.decode(response);
 
     if (jsonData.containsKey('detailDestinasi')) {
@@ -197,8 +206,7 @@ Future<void> loadDetailDestinationsFromJson() async {
 
 Future<void> loadAcaraFromJson() async {
   try {
-    final String response =
-        await rootBundle.loadString('assets/API/acara.json');
+    final String response = await rootBundle.loadString('assets/API/acara.json');
     final Map<String, dynamic> jsonData = json.decode(response);
 
     if (jsonData.containsKey('acara')) {
@@ -227,8 +235,7 @@ Future<void> loadAcaraFromJson() async {
 
 Future<void> loadTransportasiFromJson() async {
   try {
-    final String response =
-        await rootBundle.loadString('assets/API/transportasi.json');
+    final String response = await rootBundle.loadString('assets/API/transportasi.json');
     final Map<String, dynamic> jsonData = json.decode(response);
 
     if (jsonData.containsKey('transportasi')) {
@@ -259,8 +266,7 @@ Future<void> loadTransportasiFromJson() async {
 
 Future<void> loadAgendaFromJson() async {
   try {
-    final String response =
-        await rootBundle.loadString('assets/API/agenda.json');
+    final String response = await rootBundle.loadString('assets/API/agenda.json');
     final Map<String, dynamic> jsonData = json.decode(response);
 
     if (jsonData.containsKey('agenda')) {
@@ -281,6 +287,33 @@ Future<void> loadAgendaFromJson() async {
     }
   } catch (e) {
     print('Error loading agendas from JSON: $e');
+  }
+}
+
+Future<void> loadDokumenFromJson() async {
+  try {
+    final String response = await rootBundle.loadString('assets/API/dokumen.json');
+    final Map<String, dynamic> jsonData = json.decode(response);
+
+    if (jsonData.containsKey('dokumen')) {
+      final List<dynamic> data = jsonData['dokumen'];
+      final DatabaseDokumen db = DatabaseDokumen.instance;
+
+      for (var document in data) {
+        final dokumen = Dokumen(
+          id: document['id'],
+          title: document['title'],
+          date: document['date'],
+          time: document['time'], 
+          fileUrl: document['fileUrl'], 
+        );
+        await db.insertDokumen(dokumen);
+      }
+    } else {
+      print('Key "dokumen" not found in JSON');
+    }
+  } catch (e) {
+    print('Error loading documents from JSON: $e');
   }
 }
 

@@ -76,8 +76,8 @@ class _UserDetailDestinationPageState extends State<UserDetailDestinationPage> {
                                 ? Icons.bookmark
                                 : Icons.bookmark_border,
                             color: widget.destination.bookmark
-                                ? Colors.white
-                                : const Color(0xFF979797),
+                                ? Color(0xFF979797)
+                                : Color(0xFF979797),
                           ),
                         ],
                       ),
@@ -113,7 +113,7 @@ class _UserDetailDestinationPageState extends State<UserDetailDestinationPage> {
                       Text(
                         widget.detaildestinasi.deskripsi,
                         style: const TextStyle(
-                            color: Colors.grey, fontFamily: 'Ubuntu'),
+                            color: Colors.black, fontFamily: 'Ubuntu'),
                         textAlign: TextAlign.justify,
                       ),
                       const SizedBox(height: 16.0),
@@ -164,10 +164,12 @@ class _UserDetailDestinationPageState extends State<UserDetailDestinationPage> {
                           color: const Color(0xFFF6F5F0),
                           borderRadius: BorderRadius.circular(8.0),
                         ),
+                        width: double.infinity,
                         child: Text(
                           widget.detaildestinasi.fasilitas,
                           style: const TextStyle(
                               color: Colors.black,
+                              fontWeight: FontWeight.bold,
                               fontFamily: 'Ubuntu',
                               height: 1.7),
                           textAlign: TextAlign.justify,

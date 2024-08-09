@@ -7,10 +7,96 @@
 //TODO: buat sub judul tidak inline block jadi si icon download bisa di tengah
 //TODO: buat popup notifikasi
 import 'package:flutter/material.dart';
+import '/Database/database_dokumen.dart'; 
+import 'package:path_provider/path_provider.dart';
+import 'dart:io';
+import 'package:flutter/services.dart' show rootBundle, ByteData;
 
-class PublicDocumentPage extends StatelessWidget {
+class PublicDocumentPage extends StatefulWidget {
+  const PublicDocumentPage({super.key});
+
+  @override
+  _PublicDocumentPageState createState() => _PublicDocumentPageState();
+}
+
+class _PublicDocumentPageState extends State<PublicDocumentPage> {
+  final TextEditingController _searchController = TextEditingController();
+  String _searchQuery = '';
+  List<Dokumen> _dokumens = [];
+  List<Dokumen> _uniqueDokumens = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _loadDokumensFromDB();
+  }
+
+  Future<void> _loadDokumensFromDB() async {
+    final DatabaseDokumen db = DatabaseDokumen.instance;
+    final List<Dokumen> dokumens = await db.getDokumen();
+    setState(() {
+      _dokumens = dokumens;
+      _uniqueDokumens = _getUniqueDokumens(dokumens);
+    });
+  }
+
+  List<Dokumen> _getUniqueDokumens(List<Dokumen> dokumens) {
+    final uniqueKeys = <String>{};
+    return dokumens.where((dok) {
+      final key = '${dok.title}_${dok.date}_${dok.time}';
+      if (uniqueKeys.contains(key)) {
+        return false;
+      } else {
+        uniqueKeys.add(key);
+        return true;
+      }
+    }).toList();
+  }
+
+  Future<void> _downloadFile(String filePath, String fileName) async {
+    try {
+      final ByteData data = await rootBundle.load(filePath);
+      final documentDirectory = await getApplicationDocumentsDirectory();
+      final file = File('${documentDirectory.path}/$fileName');
+
+      await file.writeAsBytes(data.buffer.asUint8List());
+      
+      // Show success dialog
+      _showNotification('Download $fileName berhasil');
+    } catch (e) {
+      // Show failure dialog
+      _showNotification('Download $fileName gagal');
+    }
+  }
+
+  void _showNotification(String message) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          content: Text(message),
+          actions: <Widget>[
+            TextButton(
+              child: Text('OK'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
+    List<Dokumen> filteredDokumens = _uniqueDokumens.where((document) {
+      final query = _searchQuery.toLowerCase();
+      return document.title.toLowerCase().contains(query) ||
+          document.date.toLowerCase().contains(query) ||
+          document.time.toLowerCase().contains(query);
+    }).toList();
+
     return Scaffold(
       backgroundColor: Color(0xFFECF5F6),
       body: CustomScrollView(
@@ -29,6 +115,7 @@ class PublicDocumentPage extends StatelessWidget {
                 icon: Icon(Icons.arrow_back, color: Colors.black),
                 onPressed: () {
                   // Handle back button press
+                  Navigator.pop(context);
                 },
               ),
             ),
@@ -39,12 +126,13 @@ class PublicDocumentPage extends StatelessWidget {
                 borderRadius: BorderRadius.circular(50),
               ),
               child: TextField(
+                controller: _searchController,
                 decoration: InputDecoration(
                   contentPadding:
                       const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
                   filled: true,
                   fillColor: Colors.transparent,
-                  hintText: 'Cari Berita',
+                  hintText: 'Cari Dokumen Publik',
                   hintStyle: const TextStyle(
                     color: Color(0xFF8E98A8),
                     fontStyle: FontStyle.italic,
@@ -56,6 +144,11 @@ class PublicDocumentPage extends StatelessWidget {
                   ),
                   border: InputBorder.none,
                 ),
+                onChanged: (query) {
+                  setState(() {
+                    _searchQuery = query;
+                  });
+                },
               ),
             ),
             centerTitle: true,
@@ -105,27 +198,20 @@ class PublicDocumentPage extends StatelessWidget {
                     ),
                   ),
                   SizedBox(height: 16),
-                  documentCard(
-                    title: 'Rencana Kerja Perangkat Daerah (RKPD) 2024 ',
-                    date: '12/07/2024',
-                    time: '08:00 WIB',
-                  ),
-                  documentCard(
-                    title:
-                        'Rencana Pembangunan Jangka Menengah Daerah (RPJMD) 2024',
-                    date: '15/07/2024',
-                    time: '09:23 WIB',
-                  ),
-                  documentCard(
-                    title:
-                        'Laporan Harta Kekayaan Penyelenggara Negara (LHKPN) 2023',
-                    date: '19/07/2024',
-                    time: '12:10 WIB',
-                  ),
-                  documentCard(
-                    title: 'Laporan Keterangan Pertanggungjawaban 2023',
-                    date: '12/07/2024',
-                    time: '08:00 WIB',
+                  ListView.builder(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: filteredDokumens.length,
+                    itemBuilder: (context, index) {
+                      final document = filteredDokumens[index];
+                      return documentCard(
+                        title: document.title,
+                        date: document.date,
+                        time: document.time,
+                        fileUrl: document.fileUrl,
+                        onDownload: _downloadFile,
+                      );
+                    },
                   ),
                 ],
               ),
@@ -141,6 +227,8 @@ Widget documentCard({
   required String title,
   required String date,
   required String time,
+  required String fileUrl,
+  required Function(String, String) onDownload,
 }) {
   return Card(
     color: Color(0xFFFBFAF8),
@@ -186,6 +274,7 @@ Widget documentCard({
                       width: 24, height: 24),
                   onPressed: () {
                     // TODO: thin buat handle download masing masing disini, panggil aja pk atau id nya
+                    onDownload(fileUrl, '$title.pdf');
                   },
                 ),
               ),
