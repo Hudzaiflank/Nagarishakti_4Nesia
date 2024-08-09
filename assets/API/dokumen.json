@@ -1,0 +1,28 @@
+{
+    "dokumen" : [
+        {
+            "title": "Rencana Kerja Perangkat Daerah (RKPD) 2024",
+            "date": "12/07/2024",
+            "time": "08:00 WIB",
+            "fileUrl": "assets/Contoh.pdf"
+        },
+        {
+            "title": "Rencana Pembangunan Jangka Menengah Daerah (RPJMD) 2024",
+            "date": "15/07/2024",
+            "time": "09:23 WIB",
+            "fileUrl": "assets/Contoh.pdf"
+        },
+        {
+            "title": "Laporan Harta Kekayaan Penyelenggara Negara (LHKPN) 2023",
+            "date": "19/07/2024",
+            "time": "12:10 WIB",
+            "fileUrl": "assets/Contoh.pdf"
+        },
+        {
+            "title": "Laporan Keterangan Pertanggungjawaban 2023",
+            "date": "12/07/2024",
+            "time": "08:00 WIB",
+            "fileUrl": "assets/Contoh.pdf"
+        }
+    ]
+}

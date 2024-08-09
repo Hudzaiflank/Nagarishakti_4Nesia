@@ -74,6 +74,13 @@ class DatabaseDestinasi {
     print('Updated Destination: ${destinasi.title} with color: ${destinasi.backgroundColor}');
   }
 
+  Future<void> deleteDatabaseFile() async {
+    final dbPath = await getDatabasesPath();
+    final path = join(dbPath, 'destinasi.db');
+    await databaseFactory.deleteDatabase(path);
+    print('Database deleted');
+  }
+
   Future close() async {
     final db = await instance.database;
     db.close();
