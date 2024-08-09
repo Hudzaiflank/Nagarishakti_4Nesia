@@ -3,9 +3,9 @@ import '/Database/database_user.dart';
 import '/Database/database_admin.dart';
 import '/Database/database_superAdmin.dart';
 import 'register.dart';
-import 'User/user-home.dart'; 
-import 'admin-home.dart';
-import 'SuperAdmin-home.dart';
+import 'User/user-home.dart';
+import 'Admin/admin-home.dart';
+import 'Admin/SuperAdmin-home.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -67,7 +67,8 @@ class _LoginScreenState extends State<LoginScreen> {
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(
-                builder: (context) => const AdminHome()), // Adjust this as needed
+                builder: (context) =>
+                    const AdminHome()), // Adjust this as needed
           );
           return;
         }
@@ -161,7 +162,8 @@ class _LoginScreenState extends State<LoginScreen> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => const RegistrationScreen()),
+                                  builder: (context) =>
+                                      const RegistrationScreen()),
                             );
                           },
                           child: const Text(

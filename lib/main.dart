@@ -17,8 +17,8 @@ import '/Database/database_suratKematian.dart';
 import '/Database/database_perpindahan.dart';
 import '/Database/database_agenda.dart';
 import 'User/user-home.dart';
-import 'admin-home.dart';
-import 'SuperAdmin-home.dart';
+import 'Admin/admin-home.dart';
+import 'Admin/SuperAdmin-home.dart';
 import 'User/Destination/user-Destination-page.dart';
 import 'User/Destination/user-DetailDestination-page.dart';
 import 'User/user-Timeline-Festival.dart';
@@ -35,8 +35,8 @@ void main() async {
 
   // Initialize databases
   await DatabaseUser.instance.database;
-  await DatabaseAdmin.instance.database; 
-  await DatabaseSuperAdmin.instance.database; 
+  await DatabaseAdmin.instance.database;
+  await DatabaseSuperAdmin.instance.database;
   await DatabaseDestinasi.instance.database;
   await DatabaseDetailDestinasi.instance.database;
   await DatabaseAcara.instance.database;
@@ -112,7 +112,8 @@ Future<void> _insertInitialData() async {
   }
 
   // Insert a super admin record if not exists
-  final superAdminExists = (await dbSuperAdmin.getRegistersSuperAdmin()).isNotEmpty;
+  final superAdminExists =
+      (await dbSuperAdmin.getRegistersSuperAdmin()).isNotEmpty;
   if (!superAdminExists) {
     final superAdmin = RegisterSuperAdmin(
       username: "superadmin1",
@@ -125,7 +126,8 @@ Future<void> _insertInitialData() async {
 
 Future<void> loadDestinationsFromJson() async {
   try {
-    final String response = await rootBundle.loadString('assets/API/destinasi.json');
+    final String response =
+        await rootBundle.loadString('assets/API/destinasi.json');
     final Map<String, dynamic> jsonData = json.decode(response);
 
     if (jsonData.containsKey('destinasi')) {
@@ -134,12 +136,12 @@ Future<void> loadDestinationsFromJson() async {
 
       for (var destination in data) {
         String colorString = destination['backgroundColor'];
-        
+
         // Remove the "0x" prefix if it exists
         if (colorString.startsWith('0x')) {
           colorString = colorString.substring(2);
         }
-        
+
         // Ensure the colorString is in ARGB format
         if (colorString.length == 6) {
           colorString = 'FF$colorString';
@@ -168,7 +170,8 @@ Future<void> loadDestinationsFromJson() async {
 
 Future<void> loadDetailDestinationsFromJson() async {
   try {
-    final String response = await rootBundle.loadString('assets/API/detailDestinasi.json');
+    final String response =
+        await rootBundle.loadString('assets/API/detailDestinasi.json');
     final Map<String, dynamic> jsonData = json.decode(response);
 
     if (jsonData.containsKey('detailDestinasi')) {
@@ -194,7 +197,8 @@ Future<void> loadDetailDestinationsFromJson() async {
 
 Future<void> loadAcaraFromJson() async {
   try {
-    final String response = await rootBundle.loadString('assets/API/acara.json');
+    final String response =
+        await rootBundle.loadString('assets/API/acara.json');
     final Map<String, dynamic> jsonData = json.decode(response);
 
     if (jsonData.containsKey('acara')) {
@@ -223,7 +227,8 @@ Future<void> loadAcaraFromJson() async {
 
 Future<void> loadTransportasiFromJson() async {
   try {
-    final String response = await rootBundle.loadString('assets/API/transportasi.json');
+    final String response =
+        await rootBundle.loadString('assets/API/transportasi.json');
     final Map<String, dynamic> jsonData = json.decode(response);
 
     if (jsonData.containsKey('transportasi')) {
@@ -232,7 +237,7 @@ Future<void> loadTransportasiFromJson() async {
 
       for (var transportation in data) {
         final transportasi = Transportasi(
-          id: transportation['id'] ?? 0, 
+          id: transportation['id'] ?? 0,
           gambar: transportation['gambar'],
           nama: transportation['nama'],
           deskripsi: transportation['deskripsi'],
@@ -254,7 +259,8 @@ Future<void> loadTransportasiFromJson() async {
 
 Future<void> loadAgendaFromJson() async {
   try {
-    final String response = await rootBundle.loadString('assets/API/agenda.json');
+    final String response =
+        await rootBundle.loadString('assets/API/agenda.json');
     final Map<String, dynamic> jsonData = json.decode(response);
 
     if (jsonData.containsKey('agenda')) {
@@ -288,11 +294,11 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const UserHome(),
-      routes: {
-        '/login': (context) => const LoginScreen(),
-        '/register': (context) => const RegistrationScreen(),
-      },
+      home: const AdminHome(),
+      // routes: {
+      //   '/login': (context) => const LoginScreen(),
+      //   '/register': (context) => const RegistrationScreen(),
+      // },
     );
   }
 }

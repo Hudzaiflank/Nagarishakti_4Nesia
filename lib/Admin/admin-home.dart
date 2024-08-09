@@ -1,7 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'User/Profile/user-profile.dart';
+import 'Profile/admin-profile.dart';
 
 class AdminHome extends StatefulWidget {
   const AdminHome({super.key});
@@ -48,7 +48,8 @@ class _AdminHomeState extends State<AdminHome> {
           children: [
             // Header
             Container(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
               decoration: const BoxDecoration(
                 color: Color(0xFF4297A0),
               ),
@@ -73,15 +74,15 @@ class _AdminHomeState extends State<AdminHome> {
                   const SizedBox(width: 10), //
                   GestureDetector(
                     onTap: () {
-                      if (!isLoggedIn) {
-                        Navigator.pushReplacementNamed(context, '/login');
-                      } else {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const EditUserProfile()),
-                        );
-                      }
+                      // if (!isLoggedIn) {
+                      //   Navigator.pushReplacementNamed(context, '/login');
+                      // } else {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => EditAdminProfile()),
+                      );
+                      // }
                     },
                     child: const CircleAvatar(
                       radius: 22,
@@ -129,7 +130,8 @@ class _AdminHomeState extends State<AdminHome> {
 
             // Layanan Kependudukan
             Container(
-              margin: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 5.0),
+              margin:
+                  const EdgeInsets.symmetric(horizontal: 16.0, vertical: 5.0),
               padding: const EdgeInsets.all(0.0),
               decoration: BoxDecoration(
                 color: const Color(0xFF327178),
@@ -228,7 +230,8 @@ class _AdminHomeState extends State<AdminHome> {
 
             // Pengaduan Masyarakat
             Container(
-              margin: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 5.0),
+              margin:
+                  const EdgeInsets.symmetric(horizontal: 16.0, vertical: 5.0),
               padding: const EdgeInsets.all(0.0),
               decoration: BoxDecoration(
                 color: const Color(0xFF327178),
@@ -286,7 +289,8 @@ class _AdminHomeState extends State<AdminHome> {
 
             // Informasi Pariwisata
             Container(
-              margin: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 5.0),
+              margin:
+                  const EdgeInsets.symmetric(horizontal: 16.0, vertical: 5.0),
               padding: const EdgeInsets.all(0.0),
               decoration: BoxDecoration(
                 color: const Color(0xFF327178),
@@ -386,7 +390,8 @@ class _AdminHomeState extends State<AdminHome> {
 
             // Informasi Publik
             Container(
-              margin: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 5.0),
+              margin:
+                  const EdgeInsets.symmetric(horizontal: 16.0, vertical: 5.0),
               padding: const EdgeInsets.all(0.0),
               decoration: BoxDecoration(
                 color: const Color(0xFF327178),
@@ -395,16 +400,17 @@ class _AdminHomeState extends State<AdminHome> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Padding(
-                    padding: EdgeInsets.symmetric(vertical: 12.0),
-                    child: Text(
-                      'INFORMASI PUBLIK',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontFamily: 'Ubuntu',
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18,
+                  Center(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 12.0),
+                      child: Text(
+                        'INFORMASI PUBLIK',
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontFamily: 'Ubuntu',
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18,
+                        ),
                       ),
                     ),
                   ),
@@ -433,7 +439,8 @@ class _AdminHomeState extends State<AdminHome> {
                             child: Row(
                               children: List.generate(4, (index) {
                                 return Container(
-                                  margin: const EdgeInsets.symmetric(horizontal: 5.0),
+                                  margin: const EdgeInsets.symmetric(
+                                      horizontal: 5.0),
                                   width: 150,
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(7.0),
@@ -444,7 +451,8 @@ class _AdminHomeState extends State<AdminHome> {
                                         CrossAxisAlignment.start,
                                     children: [
                                       ClipRRect(
-                                        borderRadius: const BorderRadius.vertical(
+                                        borderRadius:
+                                            const BorderRadius.vertical(
                                           top: Radius.circular(7.0),
                                         ),
                                         child: Image.asset(
@@ -489,7 +497,8 @@ class _AdminHomeState extends State<AdminHome> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 40.0),
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 40.0),
                               child: ElevatedButton(
                                 onPressed: () {},
                                 style: ElevatedButton.styleFrom(
@@ -510,7 +519,8 @@ class _AdminHomeState extends State<AdminHome> {
                             ),
                             const SizedBox(height: 10),
                             Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 40.0),
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 40.0),
                               child: ElevatedButton(
                                 onPressed: () {},
                                 style: ElevatedButton.styleFrom(
