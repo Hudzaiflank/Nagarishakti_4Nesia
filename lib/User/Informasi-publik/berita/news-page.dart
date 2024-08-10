@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
+import '/Database/database_berita.dart'; 
+import '/Database/database_pengumuman.dart'; 
+import '/Database/database_detailBerita.dart';
 import 'package:nagarishakti/User/Informasi-publik/berita/detail-news-page.dart';
 
 class NewsPage extends StatefulWidget {
+  const NewsPage({super.key});
+
   @override
   _NewsPageState createState() => _NewsPageState();
 }
@@ -27,6 +32,11 @@ Color _getNextColor() {
 class _NewsPageState extends State<NewsPage>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
+  final TextEditingController _searchController = TextEditingController();
+  String _searchQuery = '';
+  List<Berita> _beritas = [];
+  List<Berita> _uniqueBeritas = [];
+  List<Pengumuman> _pengumumans = [];
 
   @override
   void initState() {
@@ -35,6 +45,67 @@ class _NewsPageState extends State<NewsPage>
     _tabController.addListener(() {
       setState(() {});
     });
+
+    _loadBeritasFromDB();
+    _loadPengumumansFromDB();
+  }
+
+  Future<void> _loadPengumumansFromDB() async {
+    final DatabasePengumuman db = DatabasePengumuman.instance;
+    final List<Pengumuman> pengumumans = await db.getPengumuman();
+    setState(() {
+      _pengumumans = pengumumans;
+    });
+  }
+
+  Future<void> _loadBeritasFromDB() async {
+    final DatabaseBerita db = DatabaseBerita.instance;
+    final List<Berita> beritas = await db.getBerita();
+    setState(() {
+      _beritas = beritas;
+      _uniqueBeritas = _getUniqueBeritas(beritas);
+    });
+  }
+
+  List<Berita> _getUniqueBeritas(List<Berita> beritas) {
+    final uniqueKeys = <String>{};
+    return beritas.where((brt) {
+      final key = '${brt.title}_';
+      if (uniqueKeys.contains(key)) {
+        return false;
+      } else {
+        uniqueKeys.add(key);
+        return true;
+      }
+    }).toList();
+  }
+  
+  Future<void> _navigateToDetail(Berita news) async {
+    final DatabaseDetailBerita dbDetail = DatabaseDetailBerita.instance;
+    if (news.id != null) {
+      final List<DetailBerita> detailBeritaList = await dbDetail.getDetailBerita(news.id!);
+
+      if (detailBeritaList.isNotEmpty) {
+        final DetailBerita newsDetail = detailBeritaList.first;
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => DetailNewsPage(
+              news: news,
+              newsDetail: newsDetail,
+            ),
+          ),
+        );
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Detail berita tidak ditemukan')),
+        );
+      }
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('ID berita tidak valid')),
+      );
+    }
   }
 
   @override
@@ -45,6 +116,11 @@ class _NewsPageState extends State<NewsPage>
 
   @override
   Widget build(BuildContext context) {
+    List<Berita> filteredBeritas = _uniqueBeritas.where((news) {
+      final query = _searchQuery.toLowerCase();
+      return news.title.toLowerCase().contains(query);
+    }).toList();
+
     return Scaffold(
       body: CustomScrollView(
         slivers: [
@@ -161,6 +237,15 @@ class _NewsPageState extends State<NewsPage>
                         GestureDetector(
                           onTap: () {
                             //TODO ini buat handle search thin
+                            setState(() {
+                              filteredBeritas = _searchQuery.isNotEmpty
+                                  ? filteredBeritas.where((news) {
+                                      return news.title
+                                          .toLowerCase()
+                                          .contains(_searchQuery.toLowerCase());
+                                    }).toList()
+                                  : filteredBeritas;
+                            });
                           },
                           child: Container(
                             padding:
@@ -178,6 +263,7 @@ class _NewsPageState extends State<NewsPage>
                               ],
                             ),
                             child: TextField(
+                              controller: _searchController,
                               decoration: InputDecoration(
                                 contentPadding: const EdgeInsets.symmetric(
                                     vertical: 10, horizontal: 16),
@@ -197,65 +283,58 @@ class _NewsPageState extends State<NewsPage>
                                 ),
                                 border: InputBorder.none,
                               ),
+                              onChanged: (query) {
+                                setState(() {
+                                  _searchQuery = query;
+                                  filteredBeritas = _searchQuery.isNotEmpty
+                                      ? filteredBeritas.where((news) {
+                                          return news.title
+                                              .toLowerCase()
+                                              .contains(_searchQuery.toLowerCase());
+                                        }).toList()
+                                      : filteredBeritas;
+                                });
+                              },
                             ),
                           ),
                         ),
                         SizedBox(height: 16.0),
-                        _cardBeritaWidget(
-                          'assets/contoh-gambar.png',
-                          'Pemerintah Daerah Menjalin Kerjasama dengan PT 4nesia untuk menyatukan kuasa',
-                        ),
-                        _cardBeritaWidget(
-                          'assets/contoh-gambar.png',
-                          'Pemerintah Daerah Menjalin Kerjasama dengan PT 4nesia untuk menyatukan kuasa',
-                        ),
-                        _cardBeritaWidget(
-                          'assets/contoh-gambar.png',
-                          'Pemerintah Daerah Menjalin Kerjasama dengan PT 4nesia untuk menyatukan kuasa',
-                        ),
-                        _cardBeritaWidget(
-                          'assets/contoh-gambar.png',
-                          'Pemerintah Daerah Menjalin Kerjasama dengan PT 4nesia untuk menyatukan kuasa',
-                        ),
+                        ...filteredBeritas.map((news) {
+                          // return _cardBeritaWidget(news.image, news.title);
+                          return _cardBeritaWidget(news);
+                        }).toList(),
                       ],
                     ),
                   )
                 : Container(
                     color: Color(0xFFE3EFF1),
-                    child: ListView(
-                      padding: EdgeInsets.all(8.0),
+                    child: Column(
                       children: [
-                        SizedBox(height: 42.0),
-                        _pengumumanWidget(
-                          '1 Juli 2024',
-                          'Pembukaan Fitur Pelayanan Transportasi',
-                          'Fitur pelayanan transportasi baru akan dibuka pada tanggal 17 Agustus 2024. Anda bisa mengeceknya pada sublayanan Informasi Pariwisata ',
-                        ),
-                        _pengumumanWidget(
-                          '1 Juli 2024',
-                          'Pembukaan Fitur Pelayanan Transportasi',
-                          'Fitur pelayanan transportasi baru akan dibuka pada tanggal 17 Agustus 2024. Anda bisa mengeceknya pada sublayanan Informasi Pariwisata ',
-                        ),
-                        _pengumumanWidget(
-                          '1 Juli 2024',
-                          'Pembukaan Fitur Pelayanan Transportasi',
-                          'Fitur pelayanan transportasi baru akan dibuka pada tanggal 17 Agustus 2024. Anda bisa mengeceknya pada sublayanan Informasi Pariwisata ',
-                        ),
-                        _pengumumanWidget(
-                          '1 Juli 2024',
-                          'Pembukaan Fitur Pelayanan Transportasi',
-                          'Fitur pelayanan transportasi baru akan dibuka pada tanggal 17 Agustus 2024. Anda bisa mengeceknya pada sublayanan Informasi Pariwisata ',
+                        SizedBox(height: 42.0), // Memastikan SizedBox digunakan dengan benar
+                        Expanded(
+                          child: ListView.builder(
+                            padding: EdgeInsets.all(8.0),
+                            itemCount: _pengumumans.length,
+                            itemBuilder: (context, index) {
+                              final announcement = _pengumumans[index];
+                              return _pengumumanWidget(
+                                announcement.date,
+                                announcement.title,
+                                announcement.subtitle,
+                              );
+                            },
+                          ),
                         ),
                       ],
                     ),
-                  ),
+                  )
           ),
         ],
       ),
     );
   }
 
-  Widget _pengumumanWidget(String tanggal, String judul, String deskripsi) {
+  Widget _pengumumanWidget(String date, String title, String subtitle) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -268,7 +347,7 @@ class _NewsPageState extends State<NewsPage>
               Icon(Icons.calendar_today, size: 16, color: Colors.white),
               SizedBox(width: 4.0),
               Text(
-                tanggal,
+                date,
                 style: TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.bold,
@@ -293,7 +372,7 @@ class _NewsPageState extends State<NewsPage>
               children: [
                 SizedBox(height: 4.0),
                 Text(
-                  judul,
+                  title,
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
@@ -302,7 +381,7 @@ class _NewsPageState extends State<NewsPage>
                 ),
                 SizedBox(height: 8.0),
                 Text(
-                  deskripsi,
+                  subtitle,
                   style: TextStyle(
                     fontSize: 14,
                     fontFamily: 'Ubuntu',
@@ -317,16 +396,59 @@ class _NewsPageState extends State<NewsPage>
     );
   }
 
-  Widget _cardBeritaWidget(String gambar, String text) {
+  // Widget _cardBeritaWidget(String image, String title) {
+  //   return GestureDetector(
+  //     onTap: () async {
+  //       Navigator.push(
+  //         //thin lu ntar detail nya ambil per id atau pk bebas, ganti kode dibawah ya
+  //         //TODO dari sini
+  //         context,
+  //         MaterialPageRoute(builder: (context) => DetailNewsPage()),
+  //         //TODO sampai sini
+  //       );
+  //     },
+  //     child: Card(
+  //       margin: EdgeInsets.symmetric(vertical: 8.0),
+  //       child: Stack(
+  //         children: [
+  //           ClipRRect(
+  //             borderRadius: BorderRadius.circular(7.0),
+  //             child: Image.asset(
+  //               image,
+  //               width: double.infinity,
+  //               fit: BoxFit.cover,
+  //             ),
+  //           ),
+  //           Positioned(
+  //             bottom: 0,
+  //             left: 0,
+  //             right: 0,
+  //             child: Container(
+  //               decoration: BoxDecoration(
+  //                 color: _getNextColor(), // Gunakan warna yang telah dipilih
+  //                 borderRadius: BorderRadius.circular(7.0),
+  //               ),
+  //               padding: EdgeInsets.all(8.0),
+  //               child: Text(
+  //                 title,
+  //                 style: TextStyle(
+  //                   fontSize: 16,
+  //                   fontFamily: 'Ubuntu',
+  //                   color: Colors.white,
+  //                 ),
+  //               ),
+  //             ),
+  //           ),
+  //         ],
+  //       ),
+  //     ),
+  //   );
+  // }
+  
+  Widget _cardBeritaWidget(Berita news) {
     return GestureDetector(
-      onTap: () {
-        Navigator.push(
-          //thin lu ntar detail nya ambil per id atau pk bebas, ganti kode dibawah ya
-          //TODO dari sini
-          context,
-          MaterialPageRoute(builder: (context) => DetailNewsPage()),
-          //TODO sampai sini
-        );
+      onTap: () async {
+        await _navigateToDetail(news);
       },
       child: Card(
         margin: EdgeInsets.symmetric(vertical: 8.0),
@@ -335,7 +457,7 @@ class _NewsPageState extends State<NewsPage>
             ClipRRect(
               borderRadius: BorderRadius.circular(7.0),
               child: Image.asset(
-                gambar,
+                news.image,
                 width: double.infinity,
                 fit: BoxFit.cover,
               ),
@@ -346,12 +468,12 @@ class _NewsPageState extends State<NewsPage>
               right: 0,
               child: Container(
                 decoration: BoxDecoration(
-                  color: _getNextColor(), // Gunakan warna yang telah dipilih
+                  color: _getNextColor(),
                   borderRadius: BorderRadius.circular(7.0),
                 ),
                 padding: EdgeInsets.all(8.0),
                 child: Text(
-                  text,
+                  news.title,
                   style: TextStyle(
                     fontSize: 16,
                     fontFamily: 'Ubuntu',

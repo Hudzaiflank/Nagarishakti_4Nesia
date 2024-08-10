@@ -18,6 +18,9 @@ import '/Database/database_perpindahan.dart';
 import '/Database/database_agenda.dart';
 import '/Database/database_dokumen.dart';
 import '/Database/database_pengaduan.dart';
+import '/Database/database_berita.dart';
+import '/Database/database_pengumuman.dart';
+import '/Database/database_detailBerita.dart';
 import 'User/user-home.dart';
 import 'Admin/admin-home.dart';
 import 'Admin/SuperAdmin-home.dart';
@@ -33,6 +36,8 @@ import 'User/Layanan-Kependudukan/Pembaruan-data/perpindahan-kependudukan.dart';
 import 'User/Informasi-publik/Agenda-Pemerintah/Agenda-pemerintahan.dart';
 import 'User/Informasi-publik/Dokumen-publik/Public-Document.dart';
 import 'User/Pengaduan-Masyarakat/pengaduan-masyarakat.dart';
+import 'User/Informasi-publik/berita/news-page.dart';
+import 'User/Informasi-publik/berita/detail-news-page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -41,6 +46,9 @@ void main() async {
   await DatabaseDestinasi.instance.deleteDatabaseFile();
   await DatabaseDetailDestinasi.instance.deleteDatabaseFile();
   await DatabaseDokumen.instance.deleteDatabaseFile();
+  await DatabaseBerita.instance.deleteDatabaseFile();
+  await DatabasePengumuman.instance.deleteDatabaseFile();
+  await DatabaseDetailBerita.instance.deleteDatabaseFile();
 
   // Initialize databases
   await DatabaseUser.instance.database;
@@ -58,6 +66,9 @@ void main() async {
   await DatabaseAgenda.instance.database;
   await DatabaseDokumen.instance.database;
   await DatabasePengaduan.instance.database;
+  await DatabaseBerita.instance.database;
+  await DatabasePengumuman.instance.database;
+  await DatabaseDetailBerita.instance.database;
 
   // Check table schema
   await DatabaseDetailDestinasi.instance.checkTableSchema();
@@ -82,6 +93,15 @@ void main() async {
 
   // Load Document from JSON
   await loadDokumenFromJson();
+
+  // Load News from JSON
+  await loadBeritaFromJson();
+
+  // Load Announcement from JSON
+  await loadPengumumanFromJson();
+
+  // Load Announcement from JSON
+  await loadDetailBeritaFromJson();
 
   runApp(const MyApp());
 }
@@ -317,6 +337,85 @@ Future<void> loadDokumenFromJson() async {
     }
   } catch (e) {
     print('Error loading documents from JSON: $e');
+  }
+} 
+
+Future<void> loadBeritaFromJson() async {
+  try {
+    final String response = await rootBundle.loadString('assets/API/berita.json');
+    final Map<String, dynamic> jsonData = json.decode(response);
+
+    if (jsonData.containsKey('berita')) {
+      final List<dynamic> data = jsonData['berita'];
+      final DatabaseBerita db = DatabaseBerita.instance;
+
+      for (var news in data) {
+        final berita = Berita(
+          id: news['id'],
+          image: news['image'], 
+          title: news['title'], 
+        );
+        await db.insertBerita(berita);
+      }
+    } else {
+      print('Key "berita" not found in JSON');
+    }
+  } catch (e) {
+    print('Error loading news from JSON: $e');
+  }
+} 
+
+Future<void> loadPengumumanFromJson() async {
+  try {
+    final String response = await rootBundle.loadString('assets/API/pengumuman.json');
+    final Map<String, dynamic> jsonData = json.decode(response);
+
+    if (jsonData.containsKey('pengumuman')) {
+      final List<dynamic> data = jsonData['pengumuman'];
+      final DatabasePengumuman db = DatabasePengumuman.instance;
+
+      for (var announcement in data) {
+        final pengumuman = Pengumuman(
+          id: announcement['id'],
+          date: announcement['date'], 
+          title: announcement['title'], 
+          subtitle: announcement['subtitle'],
+        );
+        await db.insertPengumuman(pengumuman);
+      }
+    } else {
+      print('Key "berita" not found in JSON');
+    }
+  } catch (e) {
+    print('Error loading news from JSON: $e');
+  }
+} 
+
+Future<void> loadDetailBeritaFromJson() async {
+  try {
+    final String response = await rootBundle.loadString('assets/API/detailBerita.json');
+    final Map<String, dynamic> jsonData = json.decode(response);
+
+    if (jsonData.containsKey('detailBerita')) {
+      final List<dynamic> data = jsonData['detailBerita'];
+      final DatabaseDetailBerita db = DatabaseDetailBerita.instance;
+
+      for (var newsDetail in data) {
+        final detailberita = DetailBerita(
+          id: newsDetail['id'],
+          subtitle: newsDetail['subtitle'],
+          firstImage: newsDetail['firstImage'], 
+          firstDescription: newsDetail['firstDescription'], 
+          secondImage: newsDetail['secondImage'], 
+          secondDescription: newsDetail['secondDescription'],
+        );
+        await db.insertDetailBerita(detailberita);
+      }
+    } else {
+      print('Key "detailberita" not found in JSON');
+    }
+  } catch (e) {
+    print('Error loading news detail from JSON: $e');
   }
 }
 
