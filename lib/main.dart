@@ -17,6 +17,7 @@ import '/Database/database_suratKematian.dart';
 import '/Database/database_perpindahan.dart';
 import '/Database/database_agenda.dart';
 import '/Database/database_dokumen.dart';
+import '/Database/database_pengaduan.dart';
 import 'User/user-home.dart';
 import 'Admin/admin-home.dart';
 import 'Admin/SuperAdmin-home.dart';
@@ -31,6 +32,7 @@ import 'User/Layanan-Kependudukan/Pendaftaran-AktaLahir-kematian/Surat-Kematian.
 import 'User/Layanan-Kependudukan/Pembaruan-data/perpindahan-kependudukan.dart';
 import 'User/Informasi-publik/Agenda-Pemerintah/Agenda-pemerintahan.dart';
 import 'User/Informasi-publik/Dokumen-publik/Public-Document.dart';
+import 'User/Pengaduan-Masyarakat/pengaduan-masyarakat.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -55,6 +57,7 @@ void main() async {
   await DatabasePerpindahan.instance.database;
   await DatabaseAgenda.instance.database;
   await DatabaseDokumen.instance.database;
+  await DatabasePengaduan.instance.database;
 
   // Check table schema
   await DatabaseDetailDestinasi.instance.checkTableSchema();
@@ -327,7 +330,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const AdminHome(),
+      home: const UserHome(),
       routes: {
         '/login': (context) => const LoginScreen(),
         '/register': (context) => const RegistrationScreen(),

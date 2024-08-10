@@ -217,10 +217,6 @@ class _NewsPageState extends State<NewsPage>
                           'assets/contoh-gambar.png',
                           'Pemerintah Daerah Menjalin Kerjasama dengan PT 4nesia untuk menyatukan kuasa',
                         ),
-                        _cardBeritaWidget(
-                          'assets/contoh-gambar.png',
-                          'Pemerintah Daerah Menjalin Kerjasama dengan PT 4nesia untuk menyatukan kuasa',
-                        ),
                       ],
                     ),
                   )
@@ -230,6 +226,11 @@ class _NewsPageState extends State<NewsPage>
                       padding: EdgeInsets.all(8.0),
                       children: [
                         SizedBox(height: 42.0),
+                        _pengumumanWidget(
+                          '1 Juli 2024',
+                          'Pembukaan Fitur Pelayanan Transportasi',
+                          'Fitur pelayanan transportasi baru akan dibuka pada tanggal 17 Agustus 2024. Anda bisa mengeceknya pada sublayanan Informasi Pariwisata ',
+                        ),
                         _pengumumanWidget(
                           '1 Juli 2024',
                           'Pembukaan Fitur Pelayanan Transportasi',
