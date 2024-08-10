@@ -1,13 +1,81 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
+import '/Database/database_pengaduan.dart';
+import 'package:file_picker/file_picker.dart';
 
 class PengaduanMasyarakat extends StatefulWidget {
+  const PengaduanMasyarakat({super.key});
+
   @override
   _PengaduanMasyarakat createState() => _PengaduanMasyarakat();
 }
 
 class _PengaduanMasyarakat extends State<PengaduanMasyarakat> {
-  String? _selectedGender;
-  String? _selectedJenisPelapor;
+  final _formKey = GlobalKey<FormState>();
+  String? _subjekAduan;
+  String? _deskripsi;
+  DateTime? _selectedDateKejadian;
+  String? _lokasiLengkap;
+  String? _instansiTujuan;
+  String? _anonimitas;
+  String? _namaAnonimitas;
+  int? _noTelepon;
+  File? _kkOrangTua;
+
+    Future<void> _selectDate({
+    required BuildContext context,
+    required DateTime? selectedDate,
+    required ValueChanged<DateTime> onSelect,
+  }) async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: selectedDate ?? DateTime.now(),
+      firstDate: DateTime(1900),
+      lastDate: DateTime(2101),
+    );
+    if (picked != null) {
+      onSelect(picked);
+    }
+  }
+
+  Future<void> _pickFile(Function(File) onFilePicked) async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles();
+    if (result != null) {
+      File file = File(result.files.single.path!);
+      setState(() {
+        onFilePicked(file);
+      });
+    }
+  }
+
+  void _removeFile(Function() onFileRemoved) {
+    setState(() {
+      onFileRemoved();
+    });
+  }
+
+  void _submitForm() async {
+    if (_formKey.currentState!.validate()) {
+      _formKey.currentState!.save();
+
+      final newPengaduan = Pengaduan(
+        subjekAduan: _subjekAduan!,
+        deskripsi: _deskripsi!,
+        tanggalKejadian: _selectedDateKejadian!,
+        lokasiLengkap: _lokasiLengkap!,
+        instansiTujuan: _instansiTujuan!,
+        anonimitas: _anonimitas!,
+        namaAnonimitas: _namaAnonimitas!,
+        noTelepon: _noTelepon!,
+        kkOrangTua: _kkOrangTua!,
+      );
+
+      final dbPengaduan = DatabasePengaduan.instance;
+      await dbPengaduan.insertPengaduanMasyarakat(newPengaduan);
+
+      Navigator.pop(context);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -64,159 +132,181 @@ class _PengaduanMasyarakat extends State<PengaduanMasyarakat> {
         body: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Column(
-              children: [
-                SizedBox(height: 16),
-                _buildSection(
-                  title: '',
-                  fields: [
-                    _buildTextField(
-                      context: context,
-                      label: 'Subjek Aduan',
-                      hint: 'tulis nama lengkap anda',
-                    ),
-                    _buildTextField(
-                      context: context,
-                      label: 'Deskripsi',
-                      hint: 'deskripsi lengkap',
-                    ),
-                    _buildDatePickerField(
-                      context: context,
-                      label: 'Tanggal Kejadian',
-                    ),
-                    _buildTextField(
-                      context: context,
-                      label: 'Lokasi Lengkap',
-                      hint: 'alamat subjek keluhan',
-                    ),
-                    _buildDropdownField(
-                      context: context,
-                      label: 'Instansi Tujuan',
-                      items: ['Disdukcapil', 'kominfo', 'Dishub'],
-                    ),
-                    _buildRadioField(
-                      context: context,
-                      label: 'Anonimitas',
-                      items: ['Anonim', 'Sertakan Nama'],
-                      onChanged: (value) {
-                        setState(() {
-                          _selectedJenisPelapor = value;
-                        });
-                      },
-                    ),
-                    if (_selectedJenisPelapor == 'Sertakan Nama')
-                      Padding(
-                        padding: const EdgeInsets.only(top: 3),
-                        child: _buildTextField(
-                          context: context,
-                          label: '',
-                          hint: '',
-                        ),
+            child: Form(
+              key: _formKey,
+              child: Column(
+                children: [
+                  SizedBox(height: 16),
+                  _buildSection(
+                    title: '',
+                    fields: [
+                      _buildTextField(
+                        context: context,
+                        label: 'Subjek Aduan',
+                        hint: 'tulis nama lengkap anda',
+                        onSave: (value) => _subjekAduan = value,
                       ),
-                    _buildTextField(
-                      context: context,
-                      label: 'Nomor Telepon',
-                      hint: '+62 ...',
-                      isNumber: true,
-                    ),
-                    _buildSubTitle('Kartu Keluarga Orang Tua'),
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 16.0),
-                      child: Stack(
-                        clipBehavior: Clip.none,
-                        children: [
-                          GestureDetector(
-                            onTap: () async {
-                              // ini buat handle upload document nya thin
-                            },
-                            child: Container(
-                              height: 100,
-                              decoration: BoxDecoration(
-                                color: Color(0xFFE0E5E7),
-                                borderRadius: BorderRadius.circular(7),
-                              ),
-                              child: Center(
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Image.asset(
-                                      'assets/upload-icon.png',
-                                      height: 30,
-                                      width: 30,
-                                    ),
-                                    SizedBox(height: 8),
-                                    Container(
-                                      padding: EdgeInsets.symmetric(
-                                          horizontal: 8, vertical: 4),
-                                      decoration: BoxDecoration(
-                                        color: Color(0xFFE2DED0),
-                                        borderRadius: BorderRadius.circular(4),
+                      _buildTextField(
+                        context: context,
+                        label: 'Deskripsi',
+                        hint: 'deskripsi lengkap',
+                        onSave: (value) => _deskripsi = value,
+                      ),
+                      _buildDatePickerField(
+                        context: context,
+                        label: 'Tanggal Kejadian',
+                        selectedDate: _selectedDateKejadian,
+                        onSelect: (date) {
+                          setState(() {
+                            _selectedDateKejadian = date;
+                          });
+                        },
+                        onSave: (value) => null,
+                        validator: (value) {
+                          if (_selectedDateKejadian == null) {
+                            return 'Tanggal Kejadian tidak boleh kosong';
+                          }
+                          return null;
+                        },
+                      ),
+                      _buildTextField(
+                        context: context,
+                        label: 'Lokasi Lengkap',
+                        hint: 'alamat subjek keluhan',
+                        onSave: (value) => _lokasiLengkap = value,
+                      ),
+                      _buildDropdownField(
+                        context: context,
+                        label: 'Instansi Tujuan',
+                        items: ['Disdukcapil', 'Kominfo', 'Dishub'],
+                        onSave: (value) => _instansiTujuan = value,
+                      ),
+                      _buildRadioField(
+                        context: context,
+                        label: 'Anonimitas',
+                        items: ['Anonim', 'Sertakan Nama'],
+                        groupValue: _anonimitas,
+                        onSaved: (value) => _anonimitas = value,
+                        onChanged: (value) {
+                          setState(() {
+                            _anonimitas = value;
+                          });
+                        },
+                      ),
+                      _buildTextField(
+                        context: context,
+                        label: 'Nomor Telepon',
+                        hint: '+62 ...',
+                        isNumber: true,
+                        onSave: (value) => _noTelepon = value != null ? int.tryParse(value) : null,
+                      ),
+                      _buildSubTitle('Kartu Keluarga Orang Tua'),
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 16.0),
+                        child: Stack(
+                          clipBehavior: Clip.none,
+                          children: [
+                            GestureDetector(
+                              onTap: () async {
+                                // ini buat handle upload document nya thin
+                                await _pickFile((file) {
+                                    _kkOrangTua = file;
+                                });
+                              },
+                              child: Container(
+                                height: 100,
+                                decoration: BoxDecoration(
+                                  color: Color(0xFFE0E5E7),
+                                  borderRadius: BorderRadius.circular(7),
+                                ),
+                                child: Center(
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Image.asset(
+                                        'assets/upload-icon.png',
+                                        height: 30,
+                                        width: 30,
                                       ),
-                                      child: Text(
-                                        'Pilih gambar atau dokumen',
-                                        style: TextStyle(
-                                          fontFamily: 'Ubuntu',
-                                          color: Colors.black54,
+                                      SizedBox(height: 8),
+                                      Container(
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: 8, vertical: 4),
+                                        decoration: BoxDecoration(
+                                          color: Color(0xFFE2DED0),
+                                          borderRadius: BorderRadius.circular(4),
+                                        ),
+                                        child: Text(
+                                          'Pilih gambar atau dokumen',
+                                          style: TextStyle(
+                                            fontFamily: 'Ubuntu',
+                                            color: Colors.black54,
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
-                          Positioned(
-                            top: -10,
-                            right: -10,
-                            child: Container(
-                              width: 24,
-                              height: 24,
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: Color(0xFF4F4E49),
-                              ),
-                              child: IconButton(
-                                padding: EdgeInsets.zero,
-                                icon: Icon(Icons.close,
-                                    color: Colors.white, size: 16),
-                                onPressed: () {
-                                  // ini nanti buat remove nya thinnn mas broo);
-                                },
+                            Positioned(
+                              top: -10,
+                              right: -10,
+                              child: Container(
+                                width: 24,
+                                height: 24,
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: Color(0xFF4F4E49),
+                                ),
+                                child: IconButton(
+                                  padding: EdgeInsets.zero,
+                                  icon: Icon(Icons.close,
+                                      color: Colors.white, size: 16),
+                                  onPressed: () {
+                                    // ini nanti buat remove nya thinnn mas broo);
+                                    _removeFile(() {
+                                      _kkOrangTua = null;
+                                    });
+                                  },
+                                ),
                               ),
                             ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(height: 34),
-                Align(
-                  alignment: Alignment.center,
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 30.0),
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Color(0xFF2F5061),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20),
+                          ],
                         ),
-                        padding:
-                            EdgeInsets.symmetric(vertical: 12, horizontal: 50),
                       ),
-                      onPressed: () {},
-                      child: Text(
-                        'AJUKAN',
-                        style: TextStyle(
-                          fontFamily: 'Ubuntu',
-                          fontWeight: FontWeight.w700, // Very bold font weight
-                          color: Colors.white,
+                    ],
+                  ),
+                  SizedBox(height: 34),
+                  Align(
+                    alignment: Alignment.center,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                      child: Form(
+                        child: ElevatedButton(
+                          onPressed: _submitForm,
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Color(0xFF2F5061),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                            padding:
+                                EdgeInsets.symmetric(vertical: 12, horizontal: 50),
+                          ),
+                          child: Text(
+                            'AJUKAN',
+                            style: TextStyle(
+                              fontFamily: 'Ubuntu',
+                              fontWeight: FontWeight.w700, // Very bold font weight
+                              color: Colors.white,
+                            ),
+                          ),
                         ),
                       ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),
@@ -271,7 +361,15 @@ class _PengaduanMasyarakat extends State<PengaduanMasyarakat> {
   Widget _buildDatePickerField({
     required BuildContext context,
     required String label,
+    required FormFieldSetter<String> onSave,
+    required FormFieldValidator<String> validator,
+    DateTime? selectedDate,
+    ValueChanged<DateTime>? onSelect,
   }) {
+    TextEditingController _controller = TextEditingController(
+      text: selectedDate != null ? "${selectedDate.toLocal()}".split(' ')[0] : '',
+    );
+
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8),
       child: Column(
@@ -286,7 +384,9 @@ class _PengaduanMasyarakat extends State<PengaduanMasyarakat> {
             ),
           ),
           SizedBox(height: 8),
-          GestureDetector(
+          TextFormField(
+            controller: _controller,
+            readOnly: true,
             onTap: () async {
               DateTime? date = await showDatePicker(
                 context: context,
@@ -311,33 +411,24 @@ class _PengaduanMasyarakat extends State<PengaduanMasyarakat> {
                   );
                 },
               );
-              // Handle the selected date
+              if (date != null) {
+                _controller.text = "${date.toLocal()}".split(' ')[0];
+                if (onSelect != null) {
+                  onSelect(date);
+                }
+              }
             },
-            child: Container(
-              width: double.infinity,
-              height: 60,
-              decoration: BoxDecoration(
-                color: Colors.white,
+            decoration: InputDecoration(
+              suffixIcon: Icon(Icons.calendar_today, color: Colors.black),
+              border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(7),
+                borderSide: BorderSide.none,
               ),
-              padding: EdgeInsets.symmetric(horizontal: 12, vertical: 16),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: Text(
-                      'BB-HH-TTTT',
-                      style: TextStyle(
-                        fontFamily: 'Ubuntu',
-                        fontStyle: FontStyle.italic,
-                        fontWeight: FontWeight.w100,
-                        color: Colors.black54,
-                      ),
-                    ),
-                  ),
-                  Icon(Icons.calendar_today, color: Colors.black),
-                ],
-              ),
+              filled: true,
+              fillColor: Colors.white,
             ),
+            onSaved: onSave,
+            validator: validator,
           ),
         ],
       ),
@@ -349,6 +440,7 @@ class _PengaduanMasyarakat extends State<PengaduanMasyarakat> {
     required String label,
     required String hint,
     bool isNumber = false,
+    required FormFieldSetter<String?> onSave, // Menyesuaikan dengan tipe data nullable
   }) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8),
@@ -357,20 +449,38 @@ class _PengaduanMasyarakat extends State<PengaduanMasyarakat> {
         children: [
           Text(
             label,
-            style: TextStyle(
+            style: const TextStyle(
               fontFamily: 'Ubuntu',
               fontWeight: FontWeight.bold,
               color: Colors.black,
             ),
           ),
-          SizedBox(height: 8),
-          TextField(
+          const SizedBox(height: 8),
+          TextFormField(
+            onSaved: (value) {
+              if (isNumber) {
+                // Konversi string ke integer jika isNumber true
+                onSave(value?.isNotEmpty == true ? int.tryParse(value!)?.toString() : null);
+              } else {
+                onSave(value);
+              }
+            },
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return '$label tidak boleh kosong';
+              }
+              if (isNumber && int.tryParse(value) == null) {
+                return '$label tidak boleh kosong';
+              }
+              return null;
+            },
+            keyboardType: isNumber ? TextInputType.number : TextInputType.text,
             decoration: InputDecoration(
               hintText: hint,
-              hintStyle: TextStyle(
+              hintStyle: const TextStyle(
                 fontStyle: FontStyle.italic,
-                fontWeight: FontWeight.w100,
-                color: Colors.black54,
+                fontWeight: FontWeight.w300,
+                fontFamily: 'Ubuntu',
               ),
               filled: true,
               fillColor: Colors.white,
@@ -379,12 +489,11 @@ class _PengaduanMasyarakat extends State<PengaduanMasyarakat> {
                 borderSide: BorderSide.none,
               ),
             ),
-            keyboardType: isNumber ? TextInputType.number : TextInputType.text,
-            style: TextStyle(
-              fontFamily: 'Ubuntu',
+            style: const TextStyle(
               color: Colors.black,
             ),
           ),
+          const SizedBox(height: 15),
         ],
       ),
     );
@@ -394,6 +503,8 @@ class _PengaduanMasyarakat extends State<PengaduanMasyarakat> {
     required BuildContext context,
     required String label,
     required List<String> items,
+    String? currentValue,
+    Function(String?)? onSave,
   }) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8),
@@ -421,7 +532,7 @@ class _PengaduanMasyarakat extends State<PengaduanMasyarakat> {
                 filled: true,
                 border: InputBorder.none,
               ),
-              value: _selectedGender,
+              value: items.contains(currentValue) ? currentValue : null,
               items: items.map((String value) {
                 return DropdownMenuItem<String>(
                   value: value,
@@ -429,11 +540,19 @@ class _PengaduanMasyarakat extends State<PengaduanMasyarakat> {
                 );
               }).toList(),
               onChanged: (value) {
-                setState(() {
-                  _selectedGender = value;
-                });
+                if (onSave != null) {
+                  onSave(value);
+                }
+              },
+              onSaved: onSave,
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return '$label tidak boleh kosong';
+                }
+                return null;
               },
               dropdownColor: Colors.white,
+              isExpanded: true, 
             ),
           ),
         ],
@@ -445,31 +564,103 @@ class _PengaduanMasyarakat extends State<PengaduanMasyarakat> {
     required BuildContext context,
     required String label,
     required List<String> items,
+    required String? groupValue,
+    required void Function(String?)? onSaved,
     required ValueChanged<String?> onChanged,
   }) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      child: FormField<String>(
+        onSaved: onSaved,
+        validator: (value) {
+          if (value == null || value.isEmpty) {
+            return '$label tidak boleh kosong';
+          }
+          return null;
+        },
+        builder: (FormFieldState<String> state) {
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                label,
+                style: TextStyle(
+                  fontFamily: 'Ubuntu',
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
+                ),
+              ),
+              SizedBox(height: 8),
+              Column(
+                children: items.map((String item) {
+                  return RadioListTile<String>(
+                    title: Text(item),
+                    value: item,
+                    groupValue: groupValue,
+                    onChanged: (value) {
+                      state.didChange(value);
+                      onChanged(value);
+                      setState(() {
+                        if (value == 'Sertakan Nama') {
+                          _anonimitas = 'Sertakan Nama';
+                        } else if (value == 'Anonim') {
+                          _namaAnonimitas = null;
+                        }
+                      });
+                    },
+                    activeColor: Colors.black,
+                  );
+                }).toList(),
+              ),
+              if (groupValue == 'Sertakan Nama')
+                Padding(
+                  padding: const EdgeInsets.only(top: 8.0),
+                  child: _buildTextField(
+                    context: context,
+                    label: 'Nama Anonimitas',
+                    hint: '',
+                    onSave: (value) => _namaAnonimitas = value,
+                  ),
+                ),
+              if (state.hasError)
+                Padding(
+                  padding: const EdgeInsets.only(top: 8.0),
+                  child: Text(
+                    state.errorText!,
+                    style: TextStyle(color: Colors.red, fontSize: 12),
+                  ),
+                ),
+            ],
+          );
+        },
+      ),
+    );
+  }
+
+  Widget _buildFilePicker({
+    required String label,
+    required File? file,
+    required Future<void> Function() onPick,
+    required VoidCallback onRemove,
+  }) {
+    return Padding(
+      padding: EdgeInsets.symmetric(vertical: 8.0),
+      child: Row(
         children: [
-          Text(
-            label,
-            style: TextStyle(
-              fontFamily: 'Ubuntu',
-              fontWeight: FontWeight.bold,
-              color: Colors.black,
+          Expanded(
+            child: Text(
+              file == null ? label : 'File selected: ${file.path.split('/').last}',
+              style: TextStyle(
+                fontFamily: 'Ubuntu',
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+              ),
             ),
           ),
-          ...items.map((item) {
-            return ListTile(
-              title: Text(item),
-              leading: Radio<String>(
-                value: item,
-                groupValue: _selectedJenisPelapor,
-                onChanged: onChanged,
-              ),
-            );
-          }).toList(),
+          IconButton(
+            icon: Icon(file == null ? Icons.upload : Icons.remove),
+            onPressed: file == null ? () async => await onPick() : onRemove,
+          ),
         ],
       ),
     );
