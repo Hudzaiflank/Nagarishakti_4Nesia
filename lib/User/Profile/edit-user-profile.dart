@@ -20,7 +20,7 @@ class _EditUserProfilePageState extends State<EditUserProfilePage> {
   late TextEditingController _usernameController;
   late TextEditingController _passwordController;
   late TextEditingController _namaLengkapController;
-  late TextEditingController _gambarController;
+  final TextEditingController _gambarController = TextEditingController();
   late TextEditingController _tempatLahirController;
   late TextEditingController _tanggalLahirController;
   late TextEditingController _alamatLengkapController;
@@ -36,7 +36,6 @@ class _EditUserProfilePageState extends State<EditUserProfilePage> {
     _usernameController = TextEditingController();
     _passwordController = TextEditingController();
     _namaLengkapController = TextEditingController();
-    _gambarController = TextEditingController();
     _tempatLahirController = TextEditingController();
     _tanggalLahirController = TextEditingController();
     _alamatLengkapController = TextEditingController();
@@ -238,29 +237,42 @@ class _EditUserProfilePageState extends State<EditUserProfilePage> {
                                 ElevatedButton(
                                   onPressed: () async {
                                     if (_formKey.currentState!.validate()) {
-                                      final updatedRegister = Register(
-                                        username: _usernameController.text,
-                                        password: _passwordController.text,
-                                        namaLengkap: _namaLengkapController.text,
-                                        gambar: _gambarController.text,
-                                        tempatLahir: _tempatLahirController.text,
-                                        tanggalLahir: _selectedDate ?? DateTime.now(),
-                                        alamatLengkap: _alamatLengkapController.text,
-                                        agama: _agamaController.text,
-                                        jenisPekerjaan: _jenisPekerjaanController.text,
-                                        jenisKelamin: _gender ?? '',
-                                        noTelepon: int.tryParse(_noTeleponController.text) ?? 0,
-                                        noRekening: int.tryParse(_noRekeningController.text) ?? 0,
-                                      );
-
+                                      _formKey.currentState!.save();
                                       final dbUser = DatabaseUser.instance;
-                                      await dbUser.updateRegister(updatedRegister);
+                                            // Get existing admin by username
+                                      final existingUser = await dbUser.getRegisterByUsername(_usernameController.text);
 
-                                      ScaffoldMessenger.of(context).showSnackBar(
-                                        const SnackBar(content: Text('Data berhasil diubah')),
-                                      );
+                                      if (existingUser != null && existingUser.password == _passwordController.text) {
+                                        final updatedRegister = Register(
+                                          id: existingUser.id,
+                                          username: _usernameController.text,
+                                          password: _passwordController.text,
+                                          namaLengkap: _namaLengkapController.text,
+                                          gambar: _gambarController.text,
+                                          tempatLahir: _tempatLahirController.text,
+                                          tanggalLahir: _selectedDate ?? DateTime.now(),
+                                          alamatLengkap: _alamatLengkapController.text,
+                                          agama: _agamaController.text,
+                                          jenisPekerjaan: _jenisPekerjaanController.text,
+                                          jenisKelamin: _gender ?? '',
+                                          noTelepon: int.tryParse(_noTeleponController.text) ?? 0,
+                                          noRekening: int.tryParse(_noRekeningController.text) ?? 0,
+                                        );
 
-                                      Navigator.pop(context);
+                                        final dbUser = DatabaseUser.instance;
+                                        await dbUser.updateRegisters(updatedRegister);
+
+                                        ScaffoldMessenger.of(context).showSnackBar(
+                                          const SnackBar(content: Text('Data berhasil diubah')),
+                                        );
+
+                                        Navigator.pop(context);
+                                      } else {
+                                        // Show error if admin does not exist
+                                        ScaffoldMessenger.of(context).showSnackBar(
+                                          const SnackBar(content: Text('User tidak ditemukan atau kredensial salah')),
+                                        );
+                                      } 
                                     }
                                   },
                                   style: ElevatedButton.styleFrom(
@@ -299,7 +311,7 @@ class _EditUserProfilePageState extends State<EditUserProfilePage> {
     );
   }
 
-    Widget buildProfilePictureFeature() {
+  Widget buildProfilePictureFeature() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -346,6 +358,7 @@ class _EditUserProfilePageState extends State<EditUserProfilePage> {
                   if (pickedFile != null) {
                     setState(() {
                       _image = File(pickedFile.path);
+                      _gambarController.text = pickedFile.path;                      
                     });
                   }
                 },
@@ -359,6 +372,7 @@ class _EditUserProfilePageState extends State<EditUserProfilePage> {
                   if (pickedFile != null) {
                     setState(() {
                       _image = File(pickedFile.path);
+                      _gambarController.text = pickedFile.path;                      
                     });
                   }
                 },

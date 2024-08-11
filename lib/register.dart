@@ -59,7 +59,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       );
 
       final dbUser = DatabaseUser.instance;
-      await dbUser.insertRegister(newUser);
+      await dbUser.insertRegisters(newUser);
 
       Navigator.pop(context);
     }

@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'edit-admin-profile.dart'; //
 import 'package:shared_preferences/shared_preferences.dart';
@@ -13,7 +14,7 @@ class EditAdminProfile extends StatefulWidget {
 class _EditAdminProfileState extends State<EditAdminProfile> {
   String _username = '';
   // String _password = '';
-  // String _gambar = '';
+  String _gambar = '';
   String _namaInstansi = '';
   String _alamatInstansi = '';
   int _noTelepon = 0;
@@ -50,7 +51,7 @@ class _EditAdminProfileState extends State<EditAdminProfile> {
       setState(() {
         _username = admin.username;
         // _password = admin.password;
-        // _gambar = admin.gambar;
+        _gambar = admin.gambar;
         _namaInstansi = admin.namaInstansi;
         _alamatInstansi = admin.alamatInstansi;
         _noTelepon = admin.noTelepon;
@@ -115,8 +116,7 @@ class _EditAdminProfileState extends State<EditAdminProfile> {
                       children: [
                         CircleAvatar(
                           radius: 60,
-                          backgroundImage:
-                              AssetImage('assets/user-home/admin-profile.png'),
+                          backgroundImage: _getBackgroundImage(),
                           backgroundColor: Colors.transparent,
                         ),
                         SizedBox(height: 17),
@@ -232,6 +232,14 @@ class _EditAdminProfileState extends State<EditAdminProfile> {
         ],
       ),
     );
+  }
+
+  ImageProvider _getBackgroundImage() {
+    if (_gambar.isNotEmpty && File(_gambar).existsSync()) {
+      return FileImage(File(_gambar));
+    } else {
+      return const AssetImage('assets/user-home/admin-profile.png');
+    }
   }
 
   Widget buildInfoRow(String label, String value) {

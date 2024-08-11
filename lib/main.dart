@@ -43,9 +43,9 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   // Delete the existing database
-  // await DatabaseUser.instance.deleteDatabaseFile();
-  // await DatabaseAdmin.instance.deleteDatabaseFile();
-  // await DatabaseSuperAdmin.instance.deleteDatabaseFile();
+  await DatabaseUser.instance.deleteDatabaseFile();
+  await DatabaseAdmin.instance.deleteDatabaseFile();
+  await DatabaseSuperAdmin.instance.deleteDatabaseFile();
   await DatabaseDestinasi.instance.deleteDatabaseFile();
   await DatabaseDetailDestinasi.instance.deleteDatabaseFile();
   await DatabaseDokumen.instance.deleteDatabaseFile();
@@ -130,7 +130,7 @@ Future<void> _insertInitialData() async {
       noTelepon: 08123456789,
       noRekening: 1234567890,
     );
-    await dbUser.insertRegister(user);
+    await dbUser.insertRegisters(user);
   }
 
   // Insert an admin record if not exists
@@ -145,7 +145,7 @@ Future<void> _insertInitialData() async {
       noTelepon: 227271724,
       email: "disbudpar@bandung",
     );
-    await dbAdmin.insertRegisterAdmin(admin);
+    await dbAdmin.insertRegistersAdmin(admin);
   }
 
   // Insert a super admin record if not exists
