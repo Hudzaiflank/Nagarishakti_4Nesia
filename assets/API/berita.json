@@ -2,19 +2,19 @@
     "berita" : [
         {
             "image": "assets/contoh-gambar.png",
-            "news": "Pemerintah Daerah Menjalin Kerjasama dengan PT 1nesia untuk menyatukan kuasa"
+            "title": "Pemerintah Daerah Kota Bandung Menjalin Kerjasama dengan PT 4nesia untuk menyatukan kuasa"
         },
         {
             "image": "assets/contoh-gambar.png",
-            "news": "Pemerintah Daerah Menjalin Kerjasama dengan PT 2nesia untuk menyatukan kuasa"
+            "title": "Pemerintah Daerah Kota Sukabumi Menjalin Kerjasama dengan PT 4nesia untuk menyatukan kuasa"
         },
         {
             "image": "assets/contoh-gambar.png",
-            "news": "Pemerintah Daerah Menjalin Kerjasama dengan PT 3nesia untuk menyatukan kuasa"
+            "title": "Pemerintah Daerah Kota Sorong Menjalin Kerjasama dengan PT 4nesia untuk menyatukan kuasa"
         },
         {
             "image": "assets/contoh-gambar.png",
-            "news": "Pemerintah Daerah Menjalin Kerjasama dengan PT 4nesia untuk menyatukan kuasa"
+            "title": "Pemerintah Daerah Kota Tegal Menjalin Kerjasama dengan PT 4nesia untuk menyatukan kuasa"
         }
     ]
 }

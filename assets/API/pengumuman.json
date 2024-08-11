@@ -2,22 +2,22 @@
     "pengumuman" : [
         {
             "date": "1 Juli 2024",
-            "announcement": "Pembukaan Fitur Pelayanan Transportasi",
+            "title": "Pembukaan Fitur Pelayanan Transportasi",
             "subtitle": "Fitur pelayanan transportasi baru akan dibuka pada tanggal 17 Agustus 2024. Anda bisa mengeceknya pada sublayanan Informasi Transportasi"
         },
         {
             "date": "2 Juli 2024",
-            "announcement": "Pembukaan Fitur Pelayanan Timeline",
+            "title": "Pembukaan Fitur Pelayanan Timeline",
             "subtitle": "Fitur pelayanan timeline baru akan dibuka pada tanggal 18 Agustus 2024. Anda bisa mengeceknya pada sublayanan Informasi Timeline"
         },
         {
             "date": "3 Juli 2024",
-            "announcement": "Pembukaan Fitur Pelayanan Destinasi",
+            "title": "Pembukaan Fitur Pelayanan Destinasi",
             "subtitle": "Fitur pelayanan destinasi baru akan dibuka pada tanggal 19 Agustus 2024. Anda bisa mengeceknya pada sublayanan Informasi Destinasi"
         },
         {
             "date": "4 Juli 2024",
-            "announcement": "Pembukaan Fitur Pelayanan Kependudukan",
+            "title": "Pembukaan Fitur Pelayanan Kependudukan",
             "subtitle": "Fitur pelayanan kependudukan baru akan dibuka pada tanggal 20 Agustus 2024. Anda bisa mengeceknya pada sublayanan Informasi Kependudukan"
         }
     ]

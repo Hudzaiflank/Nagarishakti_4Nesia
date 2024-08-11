@@ -99,6 +99,9 @@ flutter:
     - assets/API/transportasi.json
     - assets/API/agenda.json
     - assets/API/dokumen.json
+    - assets/API/berita.json
+    - assets/API/pengumuman.json
+    - assets/API/detailBerita.json
 
   #   - images/a_dot_ham.jpeg
 

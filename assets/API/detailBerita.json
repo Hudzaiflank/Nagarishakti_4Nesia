@@ -2,27 +2,35 @@
     "detailBerita" : [
         {
             "id": 1,
-            "date": "1 Juli 2024",
-            "announcement": "Pembukaan Fitur Pelayanan Transportasi",
-            "subtitle": "Fitur pelayanan transportasi baru akan dibuka pada tanggal 17 Agustus 2024. Anda bisa mengeceknya pada sublayanan Informasi Transportasi"
+            "subtitle": "01-07-2024 07:30 | Illa Alfira",
+            "firstImage": "assets/contoh-gambar.png",
+            "firstDescription": "Dalam upaya meningkatkan pelayanan kepada masyarakat, Pemerintah Daerah Kota Bandung telah resmi menjalin kerjasama dengan PT 4nesia. Kerjasama ini bertujuan untuk menyatukan berbagai layanan yang ada dengan integrasi ketersediaan pemerintah daerah dan instansi Kota Bandung.",
+            "secondImage": "assets/contoh-gambar.png",
+            "secondDescription": "Kerjasama ini mencakup pengembangan aplikasi berbasis mobile yang dapat membantu mempermudah masyarakat Kota Bandung dalam mengakses berbagai layanan, mulai dari pendaftaran online, pemrosesan dokumen, hingga pelayanan informasi publik. Diharapkan dengan adanya aplikasi ini, masyarakat bisa lebih mudah mendapatkan layanan tanpa harus datang langsung ke kantor pemerintah daerah Kota Bandung serta menghemat waktu dan biaya."
         },
         {
             "id": 2,
-            "date": "2 Juli 2024",
-            "announcement": "Pembukaan Fitur Pelayanan Timeline",
-            "subtitle": "Fitur pelayanan timeline baru akan dibuka pada tanggal 18 Agustus 2024. Anda bisa mengeceknya pada sublayanan Informasi Timeline"
+            "subtitle": "02-07-2024 07:30 | Illa Alfira",
+            "firstImage": "assets/contoh-gambar.png",
+            "firstDescription": "Dalam upaya meningkatkan pelayanan kepada masyarakat, Pemerintah Daerah Kota Sukabumi telah resmi menjalin kerjasama dengan PT 4nesia. Kerjasama ini bertujuan untuk menyatukan berbagai layanan yang ada dengan integrasi ketersediaan pemerintah daerah dan instansi Kota Sukabumi.",
+            "secondImage": "assets/contoh-gambar.png",
+            "secondDescription": "Kerjasama ini mencakup pengembangan aplikasi berbasis mobile yang dapat membantu mempermudah masyarakat Kota Sukabumi dalam mengakses berbagai layanan, mulai dari pendaftaran online, pemrosesan dokumen, hingga pelayanan informasi publik. Diharapkan dengan adanya aplikasi ini, masyarakat bisa lebih mudah mendapatkan layanan tanpa harus datang langsung ke kantor pemerintah daerah Kota Sukabumi serta menghemat waktu dan biaya."
         },
         {
             "id": 3,
-            "date": "3 Juli 2024",
-            "announcement": "Pembukaan Fitur Pelayanan Destinasi",
-            "subtitle": "Fitur pelayanan destinasi baru akan dibuka pada tanggal 19 Agustus 2024. Anda bisa mengeceknya pada sublayanan Informasi Destinasi"
+            "subtitle": "03-07-2024 07:30 | Illa Alfira",
+            "firstImage": "assets/contoh-gambar.png",
+            "firstDescription": "Dalam upaya meningkatkan pelayanan kepada masyarakat, Pemerintah Daerah Kota Sorong telah resmi menjalin kerjasama dengan PT 4nesia. Kerjasama ini bertujuan untuk menyatukan berbagai layanan yang ada dengan integrasi ketersediaan pemerintah daerah dan instansi Kota Sorong.",
+            "secondImage": "assets/contoh-gambar.png",
+            "secondDescription": "Kerjasama ini mencakup pengembangan aplikasi berbasis mobile yang dapat membantu mempermudah masyarakat Kota Sorong dalam mengakses berbagai layanan, mulai dari pendaftaran online, pemrosesan dokumen, hingga pelayanan informasi publik. Diharapkan dengan adanya aplikasi ini, masyarakat bisa lebih mudah mendapatkan layanan tanpa harus datang langsung ke kantor pemerintah daerah Kota Sorong serta menghemat waktu dan biaya."
         },
         {
             "id": 4,
-            "date": "4 Juli 2024",
-            "announcement": "Pembukaan Fitur Pelayanan Kependudukan",
-            "subtitle": "Fitur pelayanan kependudukan baru akan dibuka pada tanggal 20 Agustus 2024. Anda bisa mengeceknya pada sublayanan Informasi Kependudukan"
+            "subtitle": "04-07-2024 07:30 | Illa Alfira",
+            "firstImage": "assets/contoh-gambar.png",
+            "firstDescription": "Dalam upaya meningkatkan pelayanan kepada masyarakat, Pemerintah Daerah Kota Tegal telah resmi menjalin kerjasama dengan PT 4nesia. Kerjasama ini bertujuan untuk menyatukan berbagai layanan yang ada dengan integrasi ketersediaan pemerintah daerah dan instansi Kota Tegal.",
+            "secondImage": "assets/contoh-gambar.png",
+            "secondDescription": "Kerjasama ini mencakup pengembangan aplikasi berbasis mobile yang dapat membantu mempermudah masyarakat Kota Tegal dalam mengakses berbagai layanan, mulai dari pendaftaran online, pemrosesan dokumen, hingga pelayanan informasi publik. Diharapkan dengan adanya aplikasi ini, masyarakat bisa lebih mudah mendapatkan layanan tanpa harus datang langsung ke kantor pemerintah daerah Kota Tegal serta menghemat waktu dan biaya."
         }
     ]
 }
