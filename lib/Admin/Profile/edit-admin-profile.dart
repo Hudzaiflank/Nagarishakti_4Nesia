@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import '/Database/database_admin.dart';
+import 'dart:io';
 
 class EditAdminProfilePage extends StatefulWidget {
   @override
@@ -8,8 +11,74 @@ class EditAdminProfilePage extends StatefulWidget {
 
 class _EditAdminProfilePageState extends State<EditAdminProfilePage> {
   final _formKey = GlobalKey<FormState>();
-  DateTime? _selectedDate;
-  String? _gender;
+  File? _image;
+
+  late TextEditingController _usernameController;
+  late TextEditingController _passwordController;
+  late TextEditingController _gambarController;
+  late TextEditingController _namaInstansiController;
+  late TextEditingController _alamatInstansiController;
+  late TextEditingController _noTeleponController;
+  late TextEditingController _emailController;
+
+  @override
+  void initState() {
+    super.initState();
+    _usernameController = TextEditingController();
+    _passwordController = TextEditingController();
+    _gambarController = TextEditingController();
+    _namaInstansiController = TextEditingController();
+    _alamatInstansiController = TextEditingController();
+    _noTeleponController = TextEditingController();
+    _emailController = TextEditingController();
+    _loadUserInfo();
+  }
+
+    Future<void> _loadUserInfo() async {
+    final prefs = await SharedPreferences.getInstance();
+    final username = prefs.getString('loggedInUsername') ?? '';
+
+    if (username.isNotEmpty) {
+      final dbAdmin = DatabaseAdmin.instance;
+      final registersAdmin = await dbAdmin.getRegistersAdmin();
+
+      final admin = registersAdmin.firstWhere(
+        (RegisterAdmin) => RegisterAdmin.username == username,
+        orElse: () => RegisterAdmin(
+          username: 'N/A',
+          password: 'N/A',
+          gambar: 'assets/user-home/admin-profile.png',
+          namaInstansi: 'N/A',
+          alamatInstansi: 'N/A',
+          noTelepon: 0,
+          email: 'N/A',
+        ),
+      );
+
+      setState(() {
+        _usernameController.text = admin.username;
+        _passwordController.text = admin.password;
+        _gambarController.text = admin.gambar;
+        _image = File(admin.gambar);
+        _namaInstansiController.text = admin.namaInstansi;
+        _alamatInstansiController.text = admin.alamatInstansi;
+        _noTeleponController.text = admin.noTelepon.toString();
+        _emailController.text = admin.email;
+      });
+    }
+  }
+
+  @override
+  void dispose() {
+    _gambarController.dispose();
+    _namaInstansiController.dispose();
+    _alamatInstansiController.dispose();
+    _noTeleponController.dispose();
+    _emailController.dispose();
+    _usernameController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -71,33 +140,35 @@ class _EditAdminProfilePageState extends State<EditAdminProfilePage> {
                                 children: [
                                   buildProfilePictureFeature(),
                                   _buildTextField(
-                                    label: 'Nama Lengkap',
-                                    hint: 'nama lengkap huruf kapital',
-                                  ),
-                                  _buildTextField(
                                     label: 'Nama Instansi',
                                     hint: 'nama instansi daerah',
+                                    controller: _namaInstansiController,
                                   ),
                                   _buildBigTextField(
                                     label: 'Alamat Instansi',
                                     hint: 'alamat lengkap intansi',
+                                    controller: _alamatInstansiController,
                                   ),
                                   _buildTextField(
                                     label: 'Nomor Telepon',
                                     hint: '08...',
+                                    controller: _noTeleponController,
                                     keyboardType: TextInputType.phone,
                                   ),
                                   _buildTextField(
                                     label: 'Email',
                                     hint: 'rinapermata@itd.go.id',
+                                    controller: _emailController,
                                   ),
                                   _buildTextField(
                                     label: 'Username',
                                     hint: 'rina_permata',
+                                    controller: _usernameController,
                                   ),
                                   _buildTextField(
                                     label: 'Password',
                                     hint: '********',
+                                    controller: _passwordController,
                                     obscureText: true,
                                   ),
                                 ],

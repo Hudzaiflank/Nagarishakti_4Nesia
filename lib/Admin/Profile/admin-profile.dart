@@ -1,7 +1,71 @@
 import 'package:flutter/material.dart';
 import 'edit-admin-profile.dart'; //
+import 'package:shared_preferences/shared_preferences.dart';
+import '/Database/database_admin.dart';
 
-class EditAdminProfile extends StatelessWidget {
+class EditAdminProfile extends StatefulWidget {
+  const EditAdminProfile({super.key});
+
+  @override
+  _EditAdminProfileState createState() => _EditAdminProfileState();
+}
+
+class _EditAdminProfileState extends State<EditAdminProfile> {
+  String _username = '';
+  // String _password = '';
+  // String _gambar = '';
+  String _namaInstansi = '';
+  String _alamatInstansi = '';
+  int _noTelepon = 0;
+  String _email = '';
+
+  @override
+  void initState() {
+    super.initState();
+    _loadUserInfo();
+  }
+
+  Future<void> _loadUserInfo() async {
+    final prefs = await SharedPreferences.getInstance();
+    final username = prefs.getString('loggedInUsername') ?? '';
+
+    if (username.isNotEmpty) {
+      final dbAdmin = DatabaseAdmin.instance;
+      final registersAdmin = await dbAdmin.getRegistersAdmin(); // Fetch all registers
+
+      // Mencari user berdasarkan username
+      final admin = registersAdmin.firstWhere(
+        (registerAdmin) => registerAdmin.username == username,
+        orElse: () => RegisterAdmin(
+          username: 'N/A',
+          password: 'N/A',
+          gambar: 'assets/user-home/admin-profile.png',
+          namaInstansi: 'N/A',
+          alamatInstansi: 'N/A',
+          noTelepon: 0,
+          email: 'N/A',
+        ),
+      );
+
+      setState(() {
+        _username = admin.username;
+        // _password = admin.password;
+        // _gambar = admin.gambar;
+        _namaInstansi = admin.namaInstansi;
+        _alamatInstansi = admin.alamatInstansi;
+        _noTelepon = admin.noTelepon;
+        _email = admin.email;
+      });
+    }
+  }
+
+  Future<void> _logout() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool('isLoggedIn', false);
+    await prefs.remove('loggedInUsername');
+    Navigator.pushReplacementNamed(context, '/login');
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -57,7 +121,7 @@ class EditAdminProfile extends StatelessWidget {
                         ),
                         SizedBox(height: 17),
                         Text(
-                          'RINA PERMATA',
+                          _namaInstansi.isNotEmpty ? _namaInstansi : 'N/A',
                           style: TextStyle(
                             fontFamily: 'Roboto',
                             fontWeight: FontWeight.bold,
@@ -66,7 +130,7 @@ class EditAdminProfile extends StatelessWidget {
                         ),
                         SizedBox(height: 7),
                         Text(
-                          '1102936785',
+                          _username.isNotEmpty ? _username : 'N/A',
                           style: TextStyle(
                             fontFamily: 'Roboto',
                             fontSize: 16,
@@ -97,13 +161,13 @@ class EditAdminProfile extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          buildInfoRow('Username', 'rina_permata'),
-                          buildInfoRow('Nama Instansi', 'Diskominfo Sukabumi'),
-                          buildInfoRow('Alamat Instansi',
-                              'Jl. Syamsudin. SH N0.25, Cikole, Kota Sukabumi, Jawa Barat, 43113'),
-                          buildInfoRow('Agama', 'Islam'),
-                          buildInfoRow('No Telepon', '081236484722'),
-                          buildInfoRow('Email', 'rinapermata@itd.go.id'),
+                          buildInfoRow('Username', _username),
+                          // buildInfoRow('Password', _password),
+                          // buildInfoRow('Gambar', _gambar),
+                          buildInfoRow('Nama Instansi', _namaInstansi),
+                          buildInfoRow('Alamat Instansi', _alamatInstansi),
+                          buildInfoRow('No Telepon', _noTelepon.toString()),
+                          buildInfoRow('Email', _email),
                         ],
                       ),
                     ),
@@ -140,7 +204,7 @@ class EditAdminProfile extends StatelessWidget {
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: 110),
                       child: ElevatedButton(
-                        onPressed: () {},
+                        onPressed: _logout,
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Color(0xFF2F5061),
                           shape: RoundedRectangleBorder(
@@ -179,7 +243,7 @@ class EditAdminProfile extends StatelessWidget {
           Container(
             width: 150,
             child: Text(
-              '$label',
+              label,
               style: TextStyle(
                 fontFamily: 'Ubuntu',
                 fontWeight: FontWeight.bold,

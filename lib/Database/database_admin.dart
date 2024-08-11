@@ -57,6 +57,13 @@ class DatabaseAdmin {
     return result.map((json) => RegisterAdmin.fromMap(json)).toList();
   }
 
+  Future<void> deleteDatabaseFile() async {
+    final dbPath = await getDatabasesPath();
+    final path = join(dbPath, 'registersAdmin.db');
+    await databaseFactory.deleteDatabase(path);
+    print('Database deleted');
+  }
+
   Future close() async {
     final db = await instance.database;
     db.close();

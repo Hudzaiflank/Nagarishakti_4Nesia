@@ -11,7 +11,7 @@ class DatabaseUser {
 
   Future<Database> get database async {
     if (_database != null) return _database!;
-    _database = await _initDB('regist_database.db');
+    _database = await _initDB('register.db');
     return _database!;
   }
 
@@ -69,6 +69,13 @@ class DatabaseUser {
     final db = await instance.database;
     final result = await db.query('registers');
     return result.map((json) => Register.fromMap(json)).toList();
+  }
+  
+  Future<void> deleteDatabaseFile() async {
+    final dbPath = await getDatabasesPath();
+    final path = join(dbPath, 'register.db');
+    await databaseFactory.deleteDatabase(path);
+    print('Database deleted');
   }
 
   Future close() async {

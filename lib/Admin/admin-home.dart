@@ -74,15 +74,15 @@ class _AdminHomeState extends State<AdminHome> {
                   const SizedBox(width: 10), //
                   GestureDetector(
                     onTap: () {
-                      // if (!isLoggedIn) {
-                      //   Navigator.pushReplacementNamed(context, '/login');
-                      // } else {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => EditAdminProfile()),
-                      );
-                      // }
+                      if (!isLoggedIn) {
+                        Navigator.pushReplacementNamed(context, '/login');
+                      } else {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => EditAdminProfile()),
+                        );
+                      }
                     },
                     child: const CircleAvatar(
                       radius: 22,

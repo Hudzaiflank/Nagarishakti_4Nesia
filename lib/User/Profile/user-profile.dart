@@ -44,7 +44,7 @@ class _EditUserProfileState extends State<EditUserProfile> {
         orElse: () => Register(
           username: 'N/A',
           password: 'N/A',
-          gambar: 'N/A',
+          gambar: 'assets/user-home/profile-logo.png',
           namaLengkap: 'N/A',
           tempatLahir: 'N/A',
           tanggalLahir: DateTime(2000, 2, 29),

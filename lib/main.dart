@@ -43,6 +43,9 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   // Delete the existing database
+  // await DatabaseUser.instance.deleteDatabaseFile();
+  // await DatabaseAdmin.instance.deleteDatabaseFile();
+  // await DatabaseSuperAdmin.instance.deleteDatabaseFile();
   await DatabaseDestinasi.instance.deleteDatabaseFile();
   await DatabaseDetailDestinasi.instance.deleteDatabaseFile();
   await DatabaseDokumen.instance.deleteDatabaseFile();
@@ -136,7 +139,7 @@ Future<void> _insertInitialData() async {
     final admin = RegisterAdmin(
       username: "admin1",
       password: "admin1mantap",
-      gambar: "defaultAdminImage.png",
+      gambar: "assets/user-home/admin-profile.png",
       namaInstansi: "Dinas Pariwisata Kota Bandung",
       alamatInstansi: "Jl. Asia Afrika",
       noTelepon: 227271724,
@@ -152,7 +155,7 @@ Future<void> _insertInitialData() async {
     final superAdmin = RegisterSuperAdmin(
       username: "superadmin1",
       password: "superadmin1mantap",
-      gambar: "defaultSuperAdminImage.png",
+      gambar: "assets/user-home/admin-profile.png",
     );
     await dbSuperAdmin.insertRegisterSuperAdmin(superAdmin);
   }
