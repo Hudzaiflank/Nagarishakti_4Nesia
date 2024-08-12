@@ -80,10 +80,10 @@ class _SuratKematianState extends State<SuratKematian> {
         tempatKematianAlmarhum: _tempatKematianAlmarhum!,      
         penyebabKematianAlmarhum: _penyebabKematianAlmarhum!,
         buktiKematianAlmarhum: _buktiKematianAlmarhum!,      
-        suratKematianAlmarhum: _suratKematianAlmarhum!,
-        ktpPemohon: _ktpPemohon!,
-        ktpAlmarhum: _ktpAlmarhum!,
-        kkAlmarhum: _kkAlmarhum!,
+        suratKematianAlmarhum: _suratKematianAlmarhum!.path,
+        ktpPemohon: _ktpPemohon!.path,
+        ktpAlmarhum: _ktpAlmarhum!.path,
+        kkAlmarhum: _kkAlmarhum!.path,
       );
 
       final dbKematian = DatabaseSuratKematian.instance;
@@ -328,7 +328,9 @@ class _SuratKematianState extends State<SuratKematian> {
                                           borderRadius: BorderRadius.circular(4),
                                         ),
                                         child: Text(
-                                          'Pilih gambar atau dokumen',
+                                          _suratKematianAlmarhum != null
+                                              ? _suratKematianAlmarhum!.path.split('/').last
+                                              : 'Pilih gambar atau dokumen',
                                           style: TextStyle(
                                             fontFamily: 'Ubuntu',
                                             color: Colors.black54,
@@ -340,29 +342,30 @@ class _SuratKematianState extends State<SuratKematian> {
                                 ),
                               ),
                             ),
-                            Positioned(
-                              top: -10,
-                              right: -10,
-                              child: Container(
-                                width: 24,
-                                height: 24,
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: Color(0xFF4F4E49),
-                                ),
-                                child: IconButton(
-                                  padding: EdgeInsets.zero,
-                                  icon: Icon(Icons.close,
-                                      color: Colors.white, size: 16),
-                                  onPressed: () {
-                                    // ini nanti buat remove nya thinnn mas broo
-                                    _removeFile(() {
-                                      _suratKematianAlmarhum = null;
-                                    });
-                                  },
+                            if (_suratKematianAlmarhum != null)
+                              Positioned(
+                                top: -10,
+                                right: -10,
+                                child: Container(
+                                  width: 24,
+                                  height: 24,
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: Color(0xFF4F4E49),
+                                  ),
+                                  child: IconButton(
+                                    padding: EdgeInsets.zero,
+                                    icon: Icon(Icons.close,
+                                        color: Colors.white, size: 16),
+                                    onPressed: () {
+                                      // ini nanti buat remove nya thinnn mas broo
+                                      _removeFile(() {
+                                        _suratKematianAlmarhum = null;
+                                      });
+                                    },
+                                  ),
                                 ),
                               ),
-                            ),
                           ],
                         ),
                       ),
@@ -403,7 +406,9 @@ class _SuratKematianState extends State<SuratKematian> {
                                           borderRadius: BorderRadius.circular(4),
                                         ),
                                         child: Text(
-                                          'Pilih gambar atau dokumen',
+                                          _ktpPemohon != null
+                                              ? _ktpPemohon!.path.split('/').last
+                                              : 'Pilih gambar atau dokumen',
                                           style: TextStyle(
                                             fontFamily: 'Ubuntu',
                                             color: Colors.black54,
@@ -415,29 +420,30 @@ class _SuratKematianState extends State<SuratKematian> {
                                 ),
                               ),
                             ),
-                            Positioned(
-                              top: -10,
-                              right: -10,
-                              child: Container(
-                                width: 24,
-                                height: 24,
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: Color(0xFF4F4E49),
-                                ),
-                                child: IconButton(
-                                  padding: EdgeInsets.zero,
-                                  icon: Icon(Icons.close,
-                                      color: Colors.white, size: 16),
-                                  onPressed: () {
-                                    // ini nanti buat remove nya thinnn mas broo
-                                    _removeFile(() {
-                                      _ktpPemohon = null;
-                                    });
-                                  },
+                            if (_ktpPemohon != null)
+                              Positioned(
+                                top: -10,
+                                right: -10,
+                                child: Container(
+                                  width: 24,
+                                  height: 24,
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: Color(0xFF4F4E49),
+                                  ),
+                                  child: IconButton(
+                                    padding: EdgeInsets.zero,
+                                    icon: Icon(Icons.close,
+                                        color: Colors.white, size: 16),
+                                    onPressed: () {
+                                      // ini nanti buat remove nya thinnn mas broo
+                                      _removeFile(() {
+                                        _ktpPemohon = null;
+                                      });
+                                    },
+                                  ),
                                 ),
                               ),
-                            ),
                           ],
                         ),
                       ),
@@ -478,7 +484,9 @@ class _SuratKematianState extends State<SuratKematian> {
                                           borderRadius: BorderRadius.circular(4),
                                         ),
                                         child: Text(
-                                          'Pilih gambar atau dokumen',
+                                          _ktpAlmarhum != null
+                                              ? _ktpAlmarhum!.path.split('/').last
+                                              : 'Pilih gambar atau dokumen',
                                           style: TextStyle(
                                             fontFamily: 'Ubuntu',
                                             color: Colors.black54,
@@ -490,29 +498,30 @@ class _SuratKematianState extends State<SuratKematian> {
                                 ),
                               ),
                             ),
-                            Positioned(
-                              top: -10,
-                              right: -10,
-                              child: Container(
-                                width: 24,
-                                height: 24,
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: Color(0xFF4F4E49),
-                                ),
-                                child: IconButton(
-                                  padding: EdgeInsets.zero,
-                                  icon: Icon(Icons.close,
-                                      color: Colors.white, size: 16),
-                                  onPressed: () {
-                                    // ini nanti buat remove nya thinnn mas broo
-                                    _removeFile(() {
-                                      _ktpAlmarhum = null;
-                                    });
-                                  },
+                            if (_ktpAlmarhum != null)
+                              Positioned(
+                                top: -10,
+                                right: -10,
+                                child: Container(
+                                  width: 24,
+                                  height: 24,
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: Color(0xFF4F4E49),
+                                  ),
+                                  child: IconButton(
+                                    padding: EdgeInsets.zero,
+                                    icon: Icon(Icons.close,
+                                        color: Colors.white, size: 16),
+                                    onPressed: () {
+                                      // ini nanti buat remove nya thinnn mas broo
+                                      _removeFile(() {
+                                        _ktpAlmarhum = null;
+                                      });
+                                    },
+                                  ),
                                 ),
                               ),
-                            ),
                           ],
                         ),
                       ),
@@ -553,7 +562,9 @@ class _SuratKematianState extends State<SuratKematian> {
                                           borderRadius: BorderRadius.circular(4),
                                         ),
                                         child: Text(
-                                          'Pilih gambar atau dokumen',
+                                          _kkAlmarhum != null
+                                              ? _kkAlmarhum!.path.split('/').last
+                                              : 'Pilih gambar atau dokumen',
                                           style: TextStyle(
                                             fontFamily: 'Ubuntu',
                                             color: Colors.black54,
@@ -565,29 +576,30 @@ class _SuratKematianState extends State<SuratKematian> {
                                 ),
                               ),
                             ),
-                            Positioned(
-                              top: -10,
-                              right: -10,
-                              child: Container(
-                                width: 24,
-                                height: 24,
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: Color(0xFF4F4E49),
-                                ),
-                                child: IconButton(
-                                  padding: EdgeInsets.zero,
-                                  icon: Icon(Icons.close,
-                                      color: Colors.white, size: 16),
-                                  onPressed: () {
-                                    // ini nanti buat remove nya thinnn mas broo
-                                    _removeFile(() {
-                                      _kkAlmarhum = null;
-                                    });
-                                  },
+                            if (_kkAlmarhum != null)
+                              Positioned(
+                                top: -10,
+                                right: -10,
+                                child: Container(
+                                  width: 24,
+                                  height: 24,
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: Color(0xFF4F4E49),
+                                  ),
+                                  child: IconButton(
+                                    padding: EdgeInsets.zero,
+                                    icon: Icon(Icons.close,
+                                        color: Colors.white, size: 16),
+                                    onPressed: () {
+                                      // ini nanti buat remove nya thinnn mas broo
+                                      _removeFile(() {
+                                        _kkAlmarhum = null;
+                                      });
+                                    },
+                                  ),
                                 ),
                               ),
-                            ),
                           ],
                         ),
                       ),

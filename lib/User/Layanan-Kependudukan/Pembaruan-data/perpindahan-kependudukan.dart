@@ -145,10 +145,10 @@ class _PerpindahanKependudukanState extends State<PerpindahanKependudukan> {
         tanggalPerpindahan: _selectedDatePerpindahan!,      
         nomorHandphone: _nomorHandphone!,
         namaPelapor: _namaPelapor!,       
-        ktpPemohon: _ktpPemohon!,
-        kartuKeluarga: _kartuKeluarga!,
-        formulirF102: _formulirF102!,
-        formulirF103: _formulirF103!,
+        ktpPemohon: _ktpPemohon!.path,
+        kartuKeluarga: _kartuKeluarga!.path,
+        formulirF102: _formulirF102!.path,
+        formulirF103: _formulirF103!.path,
       );
 
       final dbPerpindahan = DatabasePerpindahan.instance;
@@ -754,7 +754,9 @@ class _PerpindahanKependudukanState extends State<PerpindahanKependudukan> {
                                                 BorderRadius.circular(4),
                                           ),
                                           child: Text(
-                                            'Pilih gambar atau dokumen',
+                                          _ktpPemohon != null
+                                              ? _ktpPemohon!.path.split('/').last
+                                              : 'Pilih gambar atau dokumen',
                                             style: TextStyle(
                                               fontFamily: 'Ubuntu',
                                               color: Colors.black54,
@@ -766,29 +768,30 @@ class _PerpindahanKependudukanState extends State<PerpindahanKependudukan> {
                                   ),
                                 ),
                               ),
-                              Positioned(
-                                top: -10,
-                                right: -10,
-                                child: Container(
-                                  width: 24,
-                                  height: 24,
-                                  decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    color: Color(0xFF4F4E49),
-                                  ),
-                                  child: IconButton(
-                                    padding: EdgeInsets.zero,
-                                    icon: Icon(Icons.close,
-                                        color: Colors.white, size: 16),
-                                    onPressed: () {
-                                      // ini nanti buat remove nya thinnn mas broo
-                                      _removeFile(() {
-                                        _ktpPemohon = null;
-                                      });
-                                    },
+                              if (_ktpPemohon != null)
+                                Positioned(
+                                  top: -10,
+                                  right: -10,
+                                  child: Container(
+                                    width: 24,
+                                    height: 24,
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: Color(0xFF4F4E49),
+                                    ),
+                                    child: IconButton(
+                                      padding: EdgeInsets.zero,
+                                      icon: Icon(Icons.close,
+                                          color: Colors.white, size: 16),
+                                      onPressed: () {
+                                        // ini nanti buat remove nya thinnn mas broo
+                                        _removeFile(() {
+                                          _ktpPemohon = null;
+                                        });
+                                      },
+                                    ),
                                   ),
                                 ),
-                              ),
                             ],
                           ),
                         ),
@@ -830,7 +833,9 @@ class _PerpindahanKependudukanState extends State<PerpindahanKependudukan> {
                                                 BorderRadius.circular(4),
                                           ),
                                           child: Text(
-                                            'Pilih gambar atau dokumen',
+                                          _kartuKeluarga != null
+                                              ? _kartuKeluarga!.path.split('/').last
+                                              : 'Pilih gambar atau dokumen',
                                             style: TextStyle(
                                               fontFamily: 'Ubuntu',
                                               color: Colors.black54,
@@ -842,29 +847,30 @@ class _PerpindahanKependudukanState extends State<PerpindahanKependudukan> {
                                   ),
                                 ),
                               ),
-                              Positioned(
-                                top: -10,
-                                right: -10,
-                                child: Container(
-                                  width: 24,
-                                  height: 24,
-                                  decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    color: Color(0xFF4F4E49),
-                                  ),
-                                  child: IconButton(
-                                    padding: EdgeInsets.zero,
-                                    icon: Icon(Icons.close,
-                                        color: Colors.white, size: 16),
-                                    onPressed: () {
-                                      // ini nanti buat remove nya thinnn mas broo
-                                      _removeFile(() {
-                                        _kartuKeluarga = null;
-                                      });
-                                    },
+                              if (_kartuKeluarga != null)
+                                Positioned(
+                                  top: -10,
+                                  right: -10,
+                                  child: Container(
+                                    width: 24,
+                                    height: 24,
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: Color(0xFF4F4E49),
+                                    ),
+                                    child: IconButton(
+                                      padding: EdgeInsets.zero,
+                                      icon: Icon(Icons.close,
+                                          color: Colors.white, size: 16),
+                                      onPressed: () {
+                                        // ini nanti buat remove nya thinnn mas broo
+                                        _removeFile(() {
+                                          _kartuKeluarga = null;
+                                        });
+                                      },
+                                    ),
                                   ),
                                 ),
-                              ),
                             ],
                           ),
                         ),
@@ -906,7 +912,9 @@ class _PerpindahanKependudukanState extends State<PerpindahanKependudukan> {
                                                 BorderRadius.circular(4),
                                           ),
                                           child: Text(
-                                            'Pilih gambar atau dokumen',
+                                          _formulirF102 != null
+                                              ? _formulirF102!.path.split('/').last
+                                              : 'Pilih gambar atau dokumen',
                                             style: TextStyle(
                                               fontFamily: 'Ubuntu',
                                               color: Colors.black54,
@@ -918,29 +926,30 @@ class _PerpindahanKependudukanState extends State<PerpindahanKependudukan> {
                                   ),
                                 ),
                               ),
-                              Positioned(
-                                top: -10,
-                                right: -10,
-                                child: Container(
-                                  width: 24,
-                                  height: 24,
-                                  decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    color: Color(0xFF4F4E49),
-                                  ),
-                                  child: IconButton(
-                                    padding: EdgeInsets.zero,
-                                    icon: Icon(Icons.close,
-                                        color: Colors.white, size: 16),
-                                    onPressed: () {
-                                      // ini nanti buat remove nya thinnn mas broo
-                                      _removeFile(() {
-                                        _formulirF102 = null;
-                                      });
-                                    },
+                              if (_formulirF102 != null)
+                                Positioned(
+                                  top: -10,
+                                  right: -10,
+                                  child: Container(
+                                    width: 24,
+                                    height: 24,
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: Color(0xFF4F4E49),
+                                    ),
+                                    child: IconButton(
+                                      padding: EdgeInsets.zero,
+                                      icon: Icon(Icons.close,
+                                          color: Colors.white, size: 16),
+                                      onPressed: () {
+                                        // ini nanti buat remove nya thinnn mas broo
+                                        _removeFile(() {
+                                          _formulirF102 = null;
+                                        });
+                                      },
+                                    ),
                                   ),
                                 ),
-                              ),
                             ],
                           ),
                         ),
@@ -982,7 +991,9 @@ class _PerpindahanKependudukanState extends State<PerpindahanKependudukan> {
                                                 BorderRadius.circular(4),
                                           ),
                                           child: Text(
-                                            'Pilih gambar atau dokumen',
+                                          _formulirF103 != null
+                                              ? _formulirF103!.path.split('/').last
+                                              : 'Pilih gambar atau dokumen',
                                             style: TextStyle(
                                               fontFamily: 'Ubuntu',
                                               color: Colors.black54,
@@ -994,29 +1005,30 @@ class _PerpindahanKependudukanState extends State<PerpindahanKependudukan> {
                                   ),
                                 ),
                               ),
-                              Positioned(
-                                top: -10,
-                                right: -10,
-                                child: Container(
-                                  width: 24,
-                                  height: 24,
-                                  decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    color: Color(0xFF4F4E49),
-                                  ),
-                                  child: IconButton(
-                                    padding: EdgeInsets.zero,
-                                    icon: Icon(Icons.close,
-                                        color: Colors.white, size: 16),
-                                    onPressed: () {
-                                      // ini nanti buat remove nya thinnn mas broo
-                                      _removeFile(() {
-                                        _formulirF103 = null;
-                                      });
-                                    },
+                              if (_formulirF103 != null)
+                                Positioned(
+                                  top: -10,
+                                  right: -10,
+                                  child: Container(
+                                    width: 24,
+                                    height: 24,
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: Color(0xFF4F4E49),
+                                    ),
+                                    child: IconButton(
+                                      padding: EdgeInsets.zero,
+                                      icon: Icon(Icons.close,
+                                          color: Colors.white, size: 16),
+                                      onPressed: () {
+                                        // ini nanti buat remove nya thinnn mas broo
+                                        _removeFile(() {
+                                          _formulirF103 = null;
+                                        });
+                                      },
+                                    ),
                                   ),
                                 ),
-                              ),
                             ],
                           ),
                         ),
@@ -1335,7 +1347,9 @@ class _PerpindahanKependudukanState extends State<PerpindahanKependudukan> {
                                                 BorderRadius.circular(4),
                                           ),
                                           child: Text(
-                                            'Pilih gambar atau dokumen',
+                                          _ktpPemohon != null
+                                              ? _ktpPemohon!.path.split('/').last
+                                              : 'Pilih gambar atau dokumen',
                                             style: TextStyle(
                                               fontFamily: 'Ubuntu',
                                               color: Colors.black54,
@@ -1347,29 +1361,30 @@ class _PerpindahanKependudukanState extends State<PerpindahanKependudukan> {
                                   ),
                                 ),
                               ),
-                              Positioned(
-                                top: -10,
-                                right: -10,
-                                child: Container(
-                                  width: 24,
-                                  height: 24,
-                                  decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    color: Color(0xFF4F4E49),
-                                  ),
-                                  child: IconButton(
-                                    padding: EdgeInsets.zero,
-                                    icon: Icon(Icons.close,
-                                        color: Colors.white, size: 16),
-                                    onPressed: () {
-                                      // ini nanti buat remove nya thinnn mas broo
-                                    _removeFile(() {
-                                        _ktpPemohon = null;
-                                      });
-                                    },
+                              if (_ktpPemohon != null)
+                                Positioned(
+                                  top: -10,
+                                  right: -10,
+                                  child: Container(
+                                    width: 24,
+                                    height: 24,
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: Color(0xFF4F4E49),
+                                    ),
+                                    child: IconButton(
+                                      padding: EdgeInsets.zero,
+                                      icon: Icon(Icons.close,
+                                          color: Colors.white, size: 16),
+                                      onPressed: () {
+                                        // ini nanti buat remove nya thinnn mas broo
+                                      _removeFile(() {
+                                          _ktpPemohon = null;
+                                        });
+                                      },
+                                    ),
                                   ),
                                 ),
-                              ),
                             ],
                           ),
                         ),
@@ -1411,7 +1426,9 @@ class _PerpindahanKependudukanState extends State<PerpindahanKependudukan> {
                                                 BorderRadius.circular(4),
                                           ),
                                           child: Text(
-                                            'Pilih gambar atau dokumen',
+                                          _kartuKeluarga != null
+                                              ? _kartuKeluarga!.path.split('/').last
+                                              : 'Pilih gambar atau dokumen',
                                             style: TextStyle(
                                               fontFamily: 'Ubuntu',
                                               color: Colors.black54,
@@ -1423,29 +1440,30 @@ class _PerpindahanKependudukanState extends State<PerpindahanKependudukan> {
                                   ),
                                 ),
                               ),
-                              Positioned(
-                                top: -10,
-                                right: -10,
-                                child: Container(
-                                  width: 24,
-                                  height: 24,
-                                  decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    color: Color(0xFF4F4E49),
-                                  ),
-                                  child: IconButton(
-                                    padding: EdgeInsets.zero,
-                                    icon: Icon(Icons.close,
-                                        color: Colors.white, size: 16),
-                                    onPressed: () {
-                                      // ini nanti buat remove nya thinnn mas broo
-                                      _removeFile(() {
-                                        _kartuKeluarga = null;
-                                      });
-                                    },
+                              if (_kartuKeluarga != null)
+                                Positioned(
+                                  top: -10,
+                                  right: -10,
+                                  child: Container(
+                                    width: 24,
+                                    height: 24,
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: Color(0xFF4F4E49),
+                                    ),
+                                    child: IconButton(
+                                      padding: EdgeInsets.zero,
+                                      icon: Icon(Icons.close,
+                                          color: Colors.white, size: 16),
+                                      onPressed: () {
+                                        // ini nanti buat remove nya thinnn mas broo
+                                        _removeFile(() {
+                                          _kartuKeluarga = null;
+                                        });
+                                      },
+                                    ),
                                   ),
                                 ),
-                              ),
                             ],
                           ),
                         ),
@@ -1487,7 +1505,9 @@ class _PerpindahanKependudukanState extends State<PerpindahanKependudukan> {
                                                 BorderRadius.circular(4),
                                           ),
                                           child: Text(
-                                            'Pilih gambar atau dokumen',
+                                          _formulirF102 != null
+                                              ? _formulirF102!.path.split('/').last
+                                              : 'Pilih gambar atau dokumen',
                                             style: TextStyle(
                                               fontFamily: 'Ubuntu',
                                               color: Colors.black54,
@@ -1499,29 +1519,30 @@ class _PerpindahanKependudukanState extends State<PerpindahanKependudukan> {
                                   ),
                                 ),
                               ),
-                              Positioned(
-                                top: -10,
-                                right: -10,
-                                child: Container(
-                                  width: 24,
-                                  height: 24,
-                                  decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    color: Color(0xFF4F4E49),
-                                  ),
-                                  child: IconButton(
-                                    padding: EdgeInsets.zero,
-                                    icon: Icon(Icons.close,
-                                        color: Colors.white, size: 16),
-                                    onPressed: () {
-                                      // ini nanti buat remove nya thinnn mas broo
-                                      _removeFile(() {
-                                        _formulirF102 = null;
-                                      });
-                                    },
+                              if (_formulirF102 != null)
+                                Positioned(
+                                  top: -10,
+                                  right: -10,
+                                  child: Container(
+                                    width: 24,
+                                    height: 24,
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: Color(0xFF4F4E49),
+                                    ),
+                                    child: IconButton(
+                                      padding: EdgeInsets.zero,
+                                      icon: Icon(Icons.close,
+                                          color: Colors.white, size: 16),
+                                      onPressed: () {
+                                        // ini nanti buat remove nya thinnn mas broo
+                                        _removeFile(() {
+                                          _formulirF102 = null;
+                                        });
+                                      },
+                                    ),
                                   ),
                                 ),
-                              ),
                             ],
                           ),
                         ),
@@ -1563,7 +1584,9 @@ class _PerpindahanKependudukanState extends State<PerpindahanKependudukan> {
                                                 BorderRadius.circular(4),
                                           ),
                                           child: Text(
-                                            'Pilih gambar atau dokumen',
+                                          _formulirF103 != null
+                                              ? _formulirF103!.path.split('/').last
+                                              : 'Pilih gambar atau dokumen',
                                             style: TextStyle(
                                               fontFamily: 'Ubuntu',
                                               color: Colors.black54,
@@ -1575,29 +1598,30 @@ class _PerpindahanKependudukanState extends State<PerpindahanKependudukan> {
                                   ),
                                 ),
                               ),
-                              Positioned(
-                                top: -10,
-                                right: -10,
-                                child: Container(
-                                  width: 24,
-                                  height: 24,
-                                  decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    color: Color(0xFF4F4E49),
-                                  ),
-                                  child: IconButton(
-                                    padding: EdgeInsets.zero,
-                                    icon: Icon(Icons.close,
-                                        color: Colors.white, size: 16),
-                                    onPressed: () {
-                                      // ini nanti buat remove nya thinnn mas broo
-                                      _removeFile(() {
-                                        _formulirF103 = null;
-                                      });
-                                    },
+                              if (_formulirF103 != null)
+                                Positioned(
+                                  top: -10,
+                                  right: -10,
+                                  child: Container(
+                                    width: 24,
+                                    height: 24,
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: Color(0xFF4F4E49),
+                                    ),
+                                    child: IconButton(
+                                      padding: EdgeInsets.zero,
+                                      icon: Icon(Icons.close,
+                                          color: Colors.white, size: 16),
+                                      onPressed: () {
+                                        // ini nanti buat remove nya thinnn mas broo
+                                        _removeFile(() {
+                                          _formulirF103 = null;
+                                        });
+                                      },
+                                    ),
                                   ),
                                 ),
-                              ),
                             ],
                           ),
                         ),

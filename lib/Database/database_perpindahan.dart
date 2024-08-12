@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:io';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:intl/intl.dart';
@@ -95,6 +94,13 @@ class DatabasePerpindahan {
     return result.map((json) => Perpindahan.fromMap(json)).toList();
   }
 
+  Future<void> deleteDatabaseFile() async {
+    final dbPath = await getDatabasesPath();
+    final path = join(dbPath, 'perpindahanKependudukan.db');
+    await databaseFactory.deleteDatabase(path);
+    print('Database deleted');
+  }
+
   Future close() async {
     final db = await instance.database;
     db.close();
@@ -134,10 +140,10 @@ class Perpindahan {
   final DateTime tanggalPerpindahan;
   final int nomorHandphone;
   final String namaPelapor;
-  final File ktpPemohon;
-  final File kartuKeluarga;
-  final File formulirF102;
-  final File formulirF103;
+  final String ktpPemohon;
+  final String kartuKeluarga;
+  final String formulirF102;
+  final String formulirF103;
 
   Perpindahan({
     this.id,
@@ -253,10 +259,10 @@ class Perpindahan {
       tanggalPerpindahan: DateTime.parse(map['tanggalPerpindahan'] as String),
       nomorHandphone: map['nomorHandphone'] as int,
       namaPelapor: map['namaPelapor'] as String,
-      ktpPemohon: map['ktpPemohon'] as File,
-      kartuKeluarga: map['kartuKeluarga'] as File,
-      formulirF102: map['formulirF102'] as File,
-      formulirF103: map['formulirF103'] as File,
+      ktpPemohon: map['ktpPemohon'] as String,
+      kartuKeluarga: map['kartuKeluarga'] as String,
+      formulirF102: map['formulirF102'] as String,
+      formulirF103: map['formulirF103'] as String,
     );
   }
 

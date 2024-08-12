@@ -1440,7 +1440,7 @@ class _UserHomeState extends State<UserHome> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => PengajuanDokumen()),
+                                  builder: (context) => PengajuanDokumenPage()),
                             );
                           },
                           child: ListTile(
@@ -1470,7 +1470,7 @@ class _UserHomeState extends State<UserHome> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => PengajuanKeluhan()),
+                                  builder: (context) => PengajuanKeluhanPage()),
                             );
                           },
                           child: ListTile(

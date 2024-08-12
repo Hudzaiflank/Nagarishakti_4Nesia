@@ -1,13 +1,30 @@
 import 'package:flutter/material.dart';
+import '/Database/database_pengajuanKeluhan.dart';
 
-class PengajuanKeluhan extends StatefulWidget {
-  const PengajuanKeluhan({super.key});
+class PengajuanKeluhanPage extends StatefulWidget {
+  const PengajuanKeluhanPage({super.key});
 
   @override
-  _PengajuanKeluhanState createState() => _PengajuanKeluhanState();
+  _PengajuanKeluhanPageState createState() => _PengajuanKeluhanPageState();
 }
 
-class _PengajuanKeluhanState extends State<PengajuanKeluhan> {
+class _PengajuanKeluhanPageState extends State<PengajuanKeluhanPage> {
+  List<PengajuanKeluhan> _pengajuanKeluhans = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _loadKeluhansFromDB();
+  }
+
+  Future<void> _loadKeluhansFromDB() async {
+    final DatabasePengajuanKeluhan db = DatabasePengajuanKeluhan.instance;
+    final List<PengajuanKeluhan> pengajuanKeluhans = await db.getPengajuanKeluhan();
+    setState(() {
+      _pengajuanKeluhans = pengajuanKeluhans;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -73,7 +90,7 @@ class _PengajuanKeluhanState extends State<PengajuanKeluhan> {
             SizedBox(height: 20),
             Center(
               child: Text(
-                'STATISTIK ADUAN',
+                'STATISTIK KELUHAN',
                 style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w600,
@@ -83,12 +100,15 @@ class _PengajuanKeluhanState extends State<PengajuanKeluhan> {
               ),
             ),
             SizedBox(height: 10),
-            _buildStatisticContainer('ADUAN MASUK', '7140', Color(0xFF173538)),
-            SizedBox(height: 10),
-            _buildStatisticContainer(
-                'ADUAN DITANGANI', '1139', Color(0xFF327178)),
-            SizedBox(height: 10),
-            _buildStatisticContainer('ADUAN SELESAI', '554', Color(0xFF327178)),
+            for (var pengajuanKeluhan in _pengajuanKeluhans)
+              Padding(
+                padding: const EdgeInsets.only(bottom: 10),
+                child: _buildStatisticContainer(
+                  pengajuanKeluhan.title,
+                  pengajuanKeluhan.jumlahKeluhan.toString(),
+                  Color(pengajuanKeluhan.warnaBackground),
+                ),
+              ),
             SizedBox(height: 20),
             _buildButtonContainer(
                 'Ajukan Keluhan Lainnya', Icons.arrow_forward),
@@ -140,12 +160,12 @@ class _PengajuanKeluhanState extends State<PengajuanKeluhan> {
     );
   }
 
-  Widget _buildStatisticContainer(String title, String count, Color bgColor) {
+  Widget _buildStatisticContainer(String title, String jumlahKeluhan, Color warnaBackground) {
     return Container(
       width: double.infinity,
       padding: EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: bgColor,
+        color: warnaBackground,
         borderRadius: BorderRadius.circular(7),
       ),
       child: Column(
@@ -162,7 +182,7 @@ class _PengajuanKeluhanState extends State<PengajuanKeluhan> {
           ),
           SizedBox(height: 4),
           Text(
-            count,
+            jumlahKeluhan,
             style: TextStyle(
               fontSize: 25,
               color: Colors.white,
