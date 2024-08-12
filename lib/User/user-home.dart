@@ -1293,6 +1293,7 @@ class _UserHomeState extends State<UserHome> {
                                       Padding(
                                         padding: const EdgeInsets.all(8.0),
                                         child: Text(
+                                          //TODO HARUS DIUBAH
                                           'Judul Berita $index',
                                           style: const TextStyle(
                                             fontWeight: FontWeight.bold,

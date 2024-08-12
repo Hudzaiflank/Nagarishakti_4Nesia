@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:io';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:intl/intl.dart';
@@ -85,7 +84,7 @@ class Pengaduan {
   final String anonimitas;
   final String namaAnonimitas;
   final int noTelepon;
-  final File kkOrangTua;
+  final String kkOrangTua;
 
   Pengaduan({
     this.id,
@@ -126,7 +125,7 @@ class Pengaduan {
       anonimitas: map['anonimitas'] as String,
       namaAnonimitas: map['namaAnonimitas'] as String,
       noTelepon: map['noTelepon'] as int,
-      kkOrangTua: map['kkOrangTua'] as File,
+      kkOrangTua: map['kkOrangTua'] as String,
     );
   }
 

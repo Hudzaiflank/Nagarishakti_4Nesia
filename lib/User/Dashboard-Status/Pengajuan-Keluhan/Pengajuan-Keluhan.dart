@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class PengajuanKeluhan extends StatefulWidget {
+  const PengajuanKeluhan({super.key});
+
   @override
   _PengajuanKeluhanState createState() => _PengajuanKeluhanState();
 }

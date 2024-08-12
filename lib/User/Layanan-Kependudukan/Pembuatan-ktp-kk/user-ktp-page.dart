@@ -73,9 +73,9 @@ class _UserKtpPageState extends State<UserKtpPage> {
         jenisPekerjaan: _jenisPekerjaan!,
         jenisKelamin: _jenisKelamin!,
         statusPerkawinan: _statusPerkawinan!,
-        kartuKeluarga: _kartuKeluarga!,
-        suratPengantar: _suratPengantar!,
-        buktiKehilangan: _buktiKehilangan!,
+        kartuKeluarga: _kartuKeluarga!.path,
+        suratPengantar: _suratPengantar!.path,
+        buktiKehilangan: _buktiKehilangan!.path,
       );
 
       final dbKtp = DatabaseKtp.instance;
@@ -222,9 +222,12 @@ class _UserKtpPageState extends State<UserKtpPage> {
                           return null;
                         },
                       ),
-                      _buildRadioButtonGroup(
+                      _buildRadioField(
+                        context: context,
                         label: 'Jenis Kelamin',
-                        onSave: (value) => _jenisKelamin = value,
+                        items: ['Laki-laki', 'Perempuan'],
+                        groupValue: _jenisKelamin,
+                        onSaved: (value) => _jenisKelamin = value,
                       ),
                       _buildTextField(
                         context: context,
@@ -343,7 +346,9 @@ class _UserKtpPageState extends State<UserKtpPage> {
                                         borderRadius: BorderRadius.circular(4),
                                       ),
                                       child: Text(
-                                        'Pilih gambar atau dokumen',
+                                          _kartuKeluarga != null
+                                              ? _kartuKeluarga!.path.split('/').last
+                                              : 'Pilih gambar atau dokumen',
                                         style: TextStyle(
                                           fontFamily: 'Ubuntu',
                                           color: Colors.black54,
@@ -355,29 +360,30 @@ class _UserKtpPageState extends State<UserKtpPage> {
                               ),
                             ),
                           ),
-                          Positioned(
-                            top: -10,
-                            right: -10,
-                            child: Container(
-                              width: 24,
-                              height: 24,
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: Color(0xFF4F4E49),
-                              ),
-                              child: IconButton(
-                                padding: EdgeInsets.zero,
-                                icon: Icon(Icons.close,
-                                    color: Colors.white, size: 16),
-                                onPressed: () {
-                                  // ini nanti buat remove nya thinnn mas broo
-                                  _removeFile(() {
-                                    _kartuKeluarga = null;
-                                  });
-                                },
+                          if (_kartuKeluarga != null)
+                            Positioned(
+                              top: -10,
+                              right: -10,
+                              child: Container(
+                                width: 24,
+                                height: 24,
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: Color(0xFF4F4E49),
+                                ),
+                                child: IconButton(
+                                  padding: EdgeInsets.zero,
+                                  icon: Icon(Icons.close,
+                                      color: Colors.white, size: 16),
+                                  onPressed: () {
+                                    // ini nanti buat remove nya thinnn mas broo
+                                    _removeFile(() {
+                                      _kartuKeluarga = null;
+                                    });
+                                  },
+                                ),
                               ),
                             ),
-                          ),
                         ],
                       ),
                     ),
@@ -419,7 +425,9 @@ class _UserKtpPageState extends State<UserKtpPage> {
                                           borderRadius: BorderRadius.circular(4),
                                         ),
                                         child: Text(
-                                          'Pilih gambar atau dokumen',
+                                          _suratPengantar != null
+                                              ? _suratPengantar!.path.split('/').last
+                                              : 'Pilih gambar atau dokumen',
                                           style: TextStyle(
                                             fontFamily: 'Ubuntu',
                                             color: Colors.black54,
@@ -431,29 +439,30 @@ class _UserKtpPageState extends State<UserKtpPage> {
                                 ),
                               ),
                             ),
-                            Positioned(
-                              top: -10,
-                              right: -10,
-                              child: Container(
-                                width: 24,
-                                height: 24,
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: Color(0xFF4F4E49),
-                                ),
-                                child: IconButton(
-                                  padding: EdgeInsets.zero,
-                                  icon: Icon(Icons.close,
-                                      color: Colors.white, size: 16),
-                                  onPressed: () {
-                                    // ini nanti buat remove nya thinnn mas broo
-                                    _removeFile(() {
-                                      _suratPengantar = null;
-                                    });
-                                  },
+                            if (_suratPengantar != null)
+                              Positioned(
+                                top: -10,
+                                right: -10,
+                                child: Container(
+                                  width: 24,
+                                  height: 24,
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: Color(0xFF4F4E49),
+                                  ),
+                                  child: IconButton(
+                                    padding: EdgeInsets.zero,
+                                    icon: Icon(Icons.close,
+                                        color: Colors.white, size: 16),
+                                    onPressed: () {
+                                      // ini nanti buat remove nya thinnn mas broo
+                                      _removeFile(() {
+                                        _suratPengantar = null;
+                                      });
+                                    },
+                                  ),
                                 ),
                               ),
-                            ),
                           ],
                         ),
                       ),
@@ -496,7 +505,9 @@ class _UserKtpPageState extends State<UserKtpPage> {
                                           borderRadius: BorderRadius.circular(4),
                                         ),
                                         child: Text(
-                                          'Pilih gambar atau dokumen',
+                                          _buktiKehilangan != null
+                                              ? _buktiKehilangan!.path.split('/').last
+                                              : 'Pilih gambar atau dokumen',
                                           style: TextStyle(
                                             fontFamily: 'Ubuntu',
                                             color: Colors.black54,
@@ -508,29 +519,30 @@ class _UserKtpPageState extends State<UserKtpPage> {
                                 ),
                               ),
                             ),
-                            Positioned(
-                              top: -10,
-                              right: -10,
-                              child: Container(
-                                width: 24,
-                                height: 24,
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: Color(0xFF4F4E49),
-                                ),
-                                child: IconButton(
-                                  padding: EdgeInsets.zero,
-                                  icon: Icon(Icons.close,
-                                      color: Colors.white, size: 16),
-                                  onPressed: () {
-                                    // ini nanti buat remove nya thinnn mas broo
-                                    _removeFile(() {
-                                      _buktiKehilangan = null;
-                                    });
-                                  },
+                            if (_buktiKehilangan != null)
+                              Positioned(
+                                top: -10,
+                                right: -10,
+                                child: Container(
+                                  width: 24,
+                                  height: 24,
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: Color(0xFF4F4E49),
+                                  ),
+                                  child: IconButton(
+                                    padding: EdgeInsets.zero,
+                                    icon: Icon(Icons.close,
+                                        color: Colors.white, size: 16),
+                                    onPressed: () {
+                                      // ini nanti buat remove nya thinnn mas broo
+                                      _removeFile(() {
+                                        _buktiKehilangan = null;
+                                      });
+                                    },
+                                  ),
                                 ),
                               ),
-                            ),
                           ],
                         ),
                       ),
@@ -713,56 +725,66 @@ class _UserKtpPageState extends State<UserKtpPage> {
     );
   }
 
-  Widget _buildRadioButton(String title, String? groupValue, {Function(String?)? onSave}) {
+  Widget _buildRadioField({
+    required BuildContext context,
+    required String label,
+    required List<String> items,
+    required String? groupValue,
+    required void Function(String?)? onSaved,
+  }) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 16.0),
-      child: RadioListTile<String>(
-        title: Text(title, style: TextStyle(fontFamily: 'Ubuntu')),
-        value: title,
-        groupValue: groupValue,
-        onChanged: (value) {
-          setState(() {
-            _jenisKelamin = value;
-          });
+      padding: const EdgeInsets.symmetric(vertical: 8),
+      child: FormField<String>(
+        onSaved: onSaved,
+        validator: (value) {
+          if (value == null || value.isEmpty) {
+            return '$label tidak boleh kosong';
+          }
+          return null;
         },
-        controlAffinity: ListTileControlAffinity.trailing,
-      ),
-    );
-  }
-
-  Widget _buildRadioButtonGroup({required String label, Function(String?)? onSave}) {
-    return FormField<String>(
-      onSaved: onSave,
-      validator: (value) {
-        if (value == null || value.isEmpty) {
-          return '$label tidak boleh kosong';
-        }
-        return null;
-      },
-      builder: (FormFieldState<String> state) {
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _buildSubTitle(label),
-            _buildRadioButton('Pria', _jenisKelamin, onSave: (value) {
-              state.didChange(value);
-              _jenisKelamin = value;
-            }),
-            _buildRadioButton('Wanita', _jenisKelamin, onSave: (value) {
-              state.didChange(value);
-              _jenisKelamin = value;
-            }),
-            if (state.hasError)
-              Padding(
-                padding: const EdgeInsets.only(left: 16.0, top: 8.0),
-                child: Text(
-                  state.errorText!,
-                  style: TextStyle(color: Colors.red, fontSize: 12),
+        builder: (FormFieldState<String> state) {
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                label,
+                style: TextStyle(
+                  fontFamily: 'Ubuntu',
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
                 ),
               ),
-          ],
-        );
-      },
+              SizedBox(height: 8),
+              Column(
+                children: items.map((String item) {
+                  return RadioListTile<String>(
+                    title: Text(item),
+                    value: item,
+                    groupValue: groupValue,
+                    onChanged: (value) {
+                      state.didChange(value);
+                      onSaved?.call(value);
+                      setState(() {
+                        // Update the value when the radio button is selected
+                        groupValue = value;
+                      });
+                    },
+                    activeColor: Colors.black,
+                  );
+                }).toList(),
+              ),
+              if (state.hasError)
+                Padding(
+                  padding: const EdgeInsets.only(top: 8.0),
+                  child: Text(
+                    state.errorText!,
+                    style: TextStyle(color: Colors.red, fontSize: 12),
+                  ),
+                ),
+            ],
+          );
+        },
+      ),
     );
   }
 

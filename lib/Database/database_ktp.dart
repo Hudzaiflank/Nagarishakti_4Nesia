@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:io';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:intl/intl.dart';
@@ -91,9 +90,9 @@ class Ktp {
   final String agama;
   final String jenisPekerjaan;
   final String statusPerkawinan;
-  final File kartuKeluarga;
-  final File suratPengantar;
-  final File buktiKehilangan;
+  final String kartuKeluarga;
+  final String suratPengantar;
+  final String buktiKehilangan;
 
   Ktp({
     this.id,
@@ -144,9 +143,9 @@ class Ktp {
       agama: map['agama'] as String,
       jenisPekerjaan: map['jenisPekerjaan'] as String,
       statusPerkawinan: map['statusPerkawinan'] as String,
-      kartuKeluarga: map['kartuKeluarga'] as File,
-      suratPengantar: map['suratPengantar'] as File,
-      buktiKehilangan: map['buktiKehilangan'] as File,
+      kartuKeluarga: map['kartuKeluarga'] as String,
+      suratPengantar: map['suratPengantar'] as String,
+      buktiKehilangan: map['buktiKehilangan'] as String,
     );
   }
 

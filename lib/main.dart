@@ -48,6 +48,9 @@ void main() async {
   await DatabaseSuperAdmin.instance.deleteDatabaseFile();
   await DatabaseDestinasi.instance.deleteDatabaseFile();
   await DatabaseDetailDestinasi.instance.deleteDatabaseFile();
+  await DatabaseAcara.instance.deleteDatabaseFile();
+  await DatabaseTransportasi.instance.deleteDatabaseFile();
+  await DatabaseAgenda.instance.deleteDatabaseFile();
   await DatabaseDokumen.instance.deleteDatabaseFile();
   await DatabaseBerita.instance.deleteDatabaseFile();
   await DatabasePengumuman.instance.deleteDatabaseFile();
