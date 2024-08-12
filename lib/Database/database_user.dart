@@ -11,7 +11,7 @@ class DatabaseUser {
 
   Future<Database> get database async {
     if (_database != null) return _database!;
-    _database = await _initDB('regist_database.db');
+    _database = await _initDB('registers.db');
     return _database!;
   }
 
@@ -46,7 +46,7 @@ class DatabaseUser {
     ''');
   }
 
-  Future<void> insertRegister(Register register) async {
+  Future<void> insertRegisters(Register register) async {
     final db = await instance.database;
     await db.insert(
       'registers',
@@ -55,20 +55,46 @@ class DatabaseUser {
     );
   }
 
-  Future<void> updateRegister(Register register) async {
-  final db = await instance.database;
-  await db.update(
-    'registers',
-    register.toMap(),
-    where: 'username = ?',
-    whereArgs: [register.username],
-  );
-}
+  Future<void> updateRegisters(Register register) async {
+    final db = await instance.database;
+    try {
+      await db.update(
+        'registers',
+        register.toMap(),
+        where: 'id = ?', 
+        whereArgs: [register.id],
+      );
+    } catch (e) {
+      print('Error updating register: $e');
+    }
+  }
 
   Future<List<Register>> getRegisters() async {
     final db = await instance.database;
     final result = await db.query('registers');
     return result.map((json) => Register.fromMap(json)).toList();
+  }
+
+  Future<Register?> getRegisterByUsername(String username) async {
+    final db = await instance.database;
+    final maps = await db.query(
+      'registers',
+      where: 'username = ?',
+      whereArgs: [username],
+    );
+
+    if (maps.isNotEmpty) {
+      return Register.fromMap(maps.first);
+    } else {
+      return null;
+    }
+  }
+  
+  Future<void> deleteDatabaseFile() async {
+    final dbPath = await getDatabasesPath();
+    final path = join(dbPath, 'register.db');
+    await databaseFactory.deleteDatabase(path);
+    print('Database deleted');
   }
 
   Future close() async {

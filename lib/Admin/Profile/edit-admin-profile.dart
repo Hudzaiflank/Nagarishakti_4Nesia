@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import '/Database/database_admin.dart';
+import 'dart:io';
 
 class EditAdminProfilePage extends StatefulWidget {
   @override
@@ -8,8 +11,73 @@ class EditAdminProfilePage extends StatefulWidget {
 
 class _EditAdminProfilePageState extends State<EditAdminProfilePage> {
   final _formKey = GlobalKey<FormState>();
-  DateTime? _selectedDate;
-  String? _gender;
+  File? _image;
+
+  late TextEditingController _usernameController;
+  late TextEditingController _passwordController;
+  final TextEditingController _gambarController = TextEditingController();
+  late TextEditingController _namaInstansiController;
+  late TextEditingController _alamatInstansiController;
+  late TextEditingController _noTeleponController;
+  late TextEditingController _emailController;
+
+  @override
+  void initState() {
+    super.initState();
+    _usernameController = TextEditingController();
+    _passwordController = TextEditingController();
+    _namaInstansiController = TextEditingController();
+    _alamatInstansiController = TextEditingController();
+    _noTeleponController = TextEditingController();
+    _emailController = TextEditingController();
+    _loadUserInfo();
+  }
+
+    Future<void> _loadUserInfo() async {
+    final prefs = await SharedPreferences.getInstance();
+    final username = prefs.getString('loggedInUsername') ?? '';
+
+    if (username.isNotEmpty) {
+      final dbAdmin = DatabaseAdmin.instance;
+      final registersAdmin = await dbAdmin.getRegistersAdmin();
+
+      final admin = registersAdmin.firstWhere(
+        (RegisterAdmin) => RegisterAdmin.username == username,
+        orElse: () => RegisterAdmin(
+          username: 'N/A',
+          password: 'N/A',
+          gambar: 'assets/user-home/admin-profile.png',
+          namaInstansi: 'N/A',
+          alamatInstansi: 'N/A',
+          noTelepon: 0,
+          email: 'N/A',
+        ),
+      );
+
+      setState(() {
+        _usernameController.text = admin.username;
+        _passwordController.text = admin.password;
+        _gambarController.text = admin.gambar;
+        _image = File(admin.gambar);
+        _namaInstansiController.text = admin.namaInstansi;
+        _alamatInstansiController.text = admin.alamatInstansi;
+        _noTeleponController.text = admin.noTelepon.toString();
+        _emailController.text = admin.email;
+      });
+    }
+  }
+
+  @override
+  void dispose() {
+    _gambarController.dispose();
+    _namaInstansiController.dispose();
+    _alamatInstansiController.dispose();
+    _noTeleponController.dispose();
+    _emailController.dispose();
+    _usernameController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -71,33 +139,35 @@ class _EditAdminProfilePageState extends State<EditAdminProfilePage> {
                                 children: [
                                   buildProfilePictureFeature(),
                                   _buildTextField(
-                                    label: 'Nama Lengkap',
-                                    hint: 'nama lengkap huruf kapital',
-                                  ),
-                                  _buildTextField(
                                     label: 'Nama Instansi',
                                     hint: 'nama instansi daerah',
+                                    controller: _namaInstansiController,
                                   ),
                                   _buildBigTextField(
                                     label: 'Alamat Instansi',
                                     hint: 'alamat lengkap intansi',
+                                    controller: _alamatInstansiController,
                                   ),
                                   _buildTextField(
                                     label: 'Nomor Telepon',
                                     hint: '08...',
+                                    controller: _noTeleponController,
                                     keyboardType: TextInputType.phone,
                                   ),
                                   _buildTextField(
                                     label: 'Email',
                                     hint: 'rinapermata@itd.go.id',
+                                    controller: _emailController,
                                   ),
                                   _buildTextField(
                                     label: 'Username',
                                     hint: 'rina_permata',
+                                    controller: _usernameController,
                                   ),
                                   _buildTextField(
                                     label: 'Password',
                                     hint: '********',
+                                    controller: _passwordController,
                                     obscureText: true,
                                   ),
                                 ],
@@ -110,9 +180,39 @@ class _EditAdminProfilePageState extends State<EditAdminProfilePage> {
                             child: Column(
                               children: [
                                 ElevatedButton(
-                                  onPressed: () {
+                                  onPressed: () async {
                                     if (_formKey.currentState!.validate()) {
-                                      // Process data
+                                      _formKey.currentState!.save();
+                                      final dbAdmin = DatabaseAdmin.instance;
+                                            // Get existing admin by username
+                                      final existingAdmin = await dbAdmin.getRegisterAdminByUsername(_usernameController.text);
+
+                                      if (existingAdmin != null && existingAdmin.password == _passwordController.text) {
+                                        // Process data if admin exists
+                                        final updatedRegisterAdmin = RegisterAdmin(
+                                          id: existingAdmin.id, // Use the existing ID for the update
+                                          username: _usernameController.text,
+                                          password: _passwordController.text,
+                                          gambar: _gambarController.text,
+                                          namaInstansi: _namaInstansiController.text,
+                                          alamatInstansi: _alamatInstansiController.text,
+                                          noTelepon: int.tryParse(_noTeleponController.text) ?? 0,
+                                          email: _emailController.text,
+                                        );
+
+                                        await dbAdmin.updateRegistersAdmin(updatedRegisterAdmin);
+
+                                        ScaffoldMessenger.of(context).showSnackBar(
+                                          const SnackBar(content: Text('Data berhasil diubah')),
+                                        );
+
+                                        Navigator.pop(context);
+                                      } else {
+                                        // Show error if admin does not exist
+                                        ScaffoldMessenger.of(context).showSnackBar(
+                                          const SnackBar(content: Text('Admin tidak ditemukan atau kredensial salah')),
+                                        );
+                                      }
                                     }
                                   },
                                   style: ElevatedButton.styleFrom(
@@ -151,70 +251,144 @@ class _EditAdminProfilePageState extends State<EditAdminProfilePage> {
     );
   }
 
+  // Widget buildProfilePictureFeature() {
+  //   return Column(
+  //     crossAxisAlignment: CrossAxisAlignment.start,
+  //     children: [
+  //       Text(
+  //         'Foto Profil',
+  //         style: TextStyle(
+  //           fontFamily: 'Ubuntu',
+  //           fontWeight: FontWeight.bold,
+  //         ),
+  //       ),
+  //       SizedBox(height: 10),
+  //       Container(
+  //         height: 40,
+  //         child: Row(
+  //           children: [
+  //             Expanded(
+  //               child: Container(
+  //                 height: 40,
+  //                 decoration: BoxDecoration(
+  //                   color: Color(0xFFE0E5E7),
+  //                   borderRadius: BorderRadius.circular(7),
+  //                 ),
+  //                 child: Center(
+  //                   child: Text(
+  //                     'Pastikan foto terpilih',
+  //                     style: TextStyle(
+  //                       fontFamily: 'Ubuntu',
+  //                       color: Colors.black,
+  //                     ),
+  //                   ),
+  //                 ),
+  //               ),
+  //             ),
+  //             SizedBox(width: 10),
+  //             ElevatedButton(
+  //               onPressed: () {
+  //                 // kode image_picker disini nanti ya thin
+  //               },
+  //               style: ElevatedButton.styleFrom(
+  //                 backgroundColor: Color(0xFF2F5061),
+  //                 shape: RoundedRectangleBorder(
+  //                   borderRadius: BorderRadius.circular(7),
+  //                 ),
+  //               ),
+  //               child: Text(
+  //                 'Pilih Foto',
+  //                 style: TextStyle(
+  //                   fontFamily: 'Ubuntu',
+  //                   color: Colors.white,
+  //                 ),
+  //               ),
+  //             ),
+  //           ],
+  //         ),
+  //       ),
+  //       SizedBox(height: 10),
+  //     ],
+  //   );
+  // }
+
   Widget buildProfilePictureFeature() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
+        const Text(
           'Foto Profil',
           style: TextStyle(
             fontFamily: 'Ubuntu',
             fontWeight: FontWeight.bold,
           ),
         ),
-        SizedBox(height: 10),
-        Container(
-          height: 40,
-          child: Row(
+        const SizedBox(height: 10),
+        Center(
+          child: CircleAvatar(
+            radius: 60,
+            backgroundColor: Colors.grey[300],
+            backgroundImage: _image != null ? FileImage(_image!) : const AssetImage('assets/user-home/admin-profile.png') as ImageProvider<Object>,
+            child: IconButton(
+              icon: const Icon(Icons.camera_alt, color: Colors.white),
+              onPressed: () {
+                _showImagePickerOptions(context);
+              },
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Future<void> _showImagePickerOptions(BuildContext context) async {
+    final picker = ImagePicker();
+    showModalBottomSheet(
+      context: context,
+      builder: (context) {
+        return SafeArea(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
             children: [
-              Expanded(
-                child: Container(
-                  height: 40,
-                  decoration: BoxDecoration(
-                    color: Color(0xFFE0E5E7),
-                    borderRadius: BorderRadius.circular(7),
-                  ),
-                  child: Center(
-                    child: Text(
-                      'Pastikan foto terpilih',
-                      style: TextStyle(
-                        fontFamily: 'Ubuntu',
-                        color: Colors.black,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              SizedBox(width: 10),
-              ElevatedButton(
-                onPressed: () {
-                  // kode image_picker disini nanti ya thin
+              ListTile(
+                leading: const Icon(Icons.camera_alt),
+                title: const Text('Ambil dari Kamera'),
+                onTap: () async {
+                  Navigator.pop(context);
+                  final pickedFile = await picker.pickImage(source: ImageSource.camera);
+                  if (pickedFile != null) {
+                    setState(() {
+                      _image = File(pickedFile.path);
+                      _gambarController.text = pickedFile.path;
+                    });
+                  }
                 },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Color(0xFF2F5061),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(7),
-                  ),
-                ),
-                child: Text(
-                  'Pilih Foto',
-                  style: TextStyle(
-                    fontFamily: 'Ubuntu',
-                    color: Colors.white,
-                  ),
-                ),
+              ),
+              ListTile(
+                leading: const Icon(Icons.photo_library),
+                title: const Text('Pilih dari Galeri'),
+                onTap: () async {
+                  Navigator.pop(context);
+                  final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+                  if (pickedFile != null) {
+                    setState(() {
+                      _image = File(pickedFile.path);
+                      _gambarController.text = pickedFile.path;
+                    });
+                  }
+                },
               ),
             ],
           ),
-        ),
-        SizedBox(height: 10),
-      ],
+        );
+      },
     );
   }
 
   Widget _buildTextField({
     required String label,
     required String hint,
+    required TextEditingController controller,
     TextInputType keyboardType = TextInputType.text,
     bool obscureText = false,
   }) {
@@ -232,8 +406,15 @@ class _EditAdminProfilePageState extends State<EditAdminProfilePage> {
         Container(
           height: 40,
           child: TextFormField(
+            controller: controller,
             keyboardType: keyboardType,
             obscureText: obscureText,
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'Please enter $label';
+              }
+              return null;
+            },
             decoration: InputDecoration(
               filled: true,
               fillColor: Color(0xFFE0E5E7),
@@ -255,6 +436,7 @@ class _EditAdminProfilePageState extends State<EditAdminProfilePage> {
   Widget _buildBigTextField({
     required String label,
     required String hint,
+    required TextEditingController controller,
   }) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -270,7 +452,13 @@ class _EditAdminProfilePageState extends State<EditAdminProfilePage> {
         Container(
           height: 120,
           child: TextFormField(
-            maxLines: null,
+            controller: controller,
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'Please enter $label';
+              }
+              return null;
+            },
             decoration: InputDecoration(
               filled: true,
               fillColor: Color(0xFFE0E5E7),

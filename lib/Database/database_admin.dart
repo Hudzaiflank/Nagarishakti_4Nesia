@@ -42,7 +42,7 @@ class DatabaseAdmin {
     ''');
   }
 
-  Future<void> insertRegisterAdmin(RegisterAdmin registerAdmin) async {
+  Future<void> insertRegistersAdmin(RegisterAdmin registerAdmin) async {
     final db = await instance.database;
     await db.insert(
       'registersAdmin',
@@ -51,10 +51,46 @@ class DatabaseAdmin {
     );
   }
 
+  Future<void> updateRegistersAdmin(RegisterAdmin registerAdmin) async {
+    final db = await instance.database;
+    try {
+      await db.update(
+        'registersAdmin',
+        registerAdmin.toMap(),
+        where: 'id = ?', 
+        whereArgs: [registerAdmin.id],
+      );
+    } catch (e) {
+      print('Error updating registerAdmin: $e');
+    }
+  }
+
   Future<List<RegisterAdmin>> getRegistersAdmin() async {
     final db = await instance.database;
     final result = await db.query('registersAdmin');
     return result.map((json) => RegisterAdmin.fromMap(json)).toList();
+  }
+
+  Future<RegisterAdmin?> getRegisterAdminByUsername(String username) async {
+    final db = await instance.database;
+    final maps = await db.query(
+      'registersAdmin',
+      where: 'username = ?',
+      whereArgs: [username],
+    );
+
+    if (maps.isNotEmpty) {
+      return RegisterAdmin.fromMap(maps.first);
+    } else {
+      return null;
+    }
+  }
+
+  Future<void> deleteDatabaseFile() async {
+    final dbPath = await getDatabasesPath();
+    final path = join(dbPath, 'registersAdmin.db');
+    await databaseFactory.deleteDatabase(path);
+    print('Database deleted');
   }
 
   Future close() async {

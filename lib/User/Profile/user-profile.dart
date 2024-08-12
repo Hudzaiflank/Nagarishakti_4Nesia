@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'edit-user-profile.dart'; // Tambahkan import ini
 import 'package:shared_preferences/shared_preferences.dart';
@@ -14,6 +15,7 @@ class EditUserProfile extends StatefulWidget {
 class _EditUserProfileState extends State<EditUserProfile> {
   String _username = '';
   // String _password = '';
+  String _gambar = '';
   String _namaLengkap = '';
   String _tempatLahir = '';
   DateTime _tanggalLahir = DateTime(2000, 2, 29);
@@ -44,7 +46,7 @@ class _EditUserProfileState extends State<EditUserProfile> {
         orElse: () => Register(
           username: 'N/A',
           password: 'N/A',
-          gambar: 'N/A',
+          gambar: 'assets/user-home/profile-logo.png',
           namaLengkap: 'N/A',
           tempatLahir: 'N/A',
           tanggalLahir: DateTime(2000, 2, 29),
@@ -60,6 +62,7 @@ class _EditUserProfileState extends State<EditUserProfile> {
       setState(() {
         _username = user.username;
         // _password = user.password;
+        _gambar = user.gambar;
         _namaLengkap = user.namaLengkap;
         _tempatLahir = user.tempatLahir;
         _tanggalLahir = user.tanggalLahir;
@@ -127,10 +130,9 @@ class _EditUserProfileState extends State<EditUserProfile> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const CircleAvatar(
+                        CircleAvatar(
                           radius: 60,
-                          backgroundImage:
-                              AssetImage('assets/user-home/profile-logo.png'),
+                          backgroundImage: _getBackgroundImage(),
                           backgroundColor: Colors.transparent,
                         ),
                         const SizedBox(height: 17),
@@ -250,6 +252,14 @@ class _EditUserProfileState extends State<EditUserProfile> {
         ],
       ),
     );
+  }
+
+  ImageProvider _getBackgroundImage() {
+    if (_gambar.isNotEmpty && File(_gambar).existsSync()) {
+      return FileImage(File(_gambar));
+    } else {
+      return const AssetImage('assets/user-home/profile-logo.png');
+    }
   }
 
   Widget buildInfoRow(String label, String value) {
