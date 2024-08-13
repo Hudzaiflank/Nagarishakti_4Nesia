@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:io';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:intl/intl.dart';
@@ -69,6 +68,13 @@ class DatabasePengaduan {
     return result.map((json) => Pengaduan.fromMap(json)).toList();
   }
 
+  Future<void> deleteDatabaseFile() async {
+    final dbPath = await getDatabasesPath();
+    final path = join(dbPath, 'pengaduanMasyarakat.db');
+    await databaseFactory.deleteDatabase(path);
+    print('Database deleted');
+  }
+
   Future close() async {
     final db = await instance.database;
     db.close();
@@ -85,7 +91,7 @@ class Pengaduan {
   final String anonimitas;
   final String namaAnonimitas;
   final int noTelepon;
-  final File kkOrangTua;
+  final String kkOrangTua;
 
   Pengaduan({
     this.id,
@@ -126,7 +132,7 @@ class Pengaduan {
       anonimitas: map['anonimitas'] as String,
       namaAnonimitas: map['namaAnonimitas'] as String,
       noTelepon: map['noTelepon'] as int,
-      kkOrangTua: map['kkOrangTua'] as File,
+      kkOrangTua: map['kkOrangTua'] as String,
     );
   }
 

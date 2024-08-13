@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:io';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:intl/intl.dart';
@@ -95,6 +94,13 @@ class DatabaseAktaKelahiran {
     return result.map((json) => Akta.fromMap(json)).toList();
   }
 
+  Future<void> deleteDatabaseFile() async {
+    final dbPath = await getDatabasesPath();
+    final path = join(dbPath, 'aktaKelahiran.db');
+    await databaseFactory.deleteDatabase(path);
+    print('Database deleted');
+  }
+
   Future close() async {
     final db = await instance.database;
     db.close();
@@ -132,12 +138,12 @@ class Akta {
   final int panjangAnak;
   final String penolongKelahiranAnak;
   final String penolongKelahiranAnakLainnya;
-  final File suratKelahiran;
-  final File buktiSPTJM;
-  final File kkOrangTua;
-  final File ktpAyah;
-  final File ktpIbu;
-  final File dokumenTambahan;
+  final String suratKelahiran;
+  final String buktiSPTJM;
+  final String kkOrangTua;
+  final String ktpAyah;
+  final String ktpIbu;
+  final String dokumenTambahan;
 
   Akta({
     this.id,
@@ -251,12 +257,12 @@ class Akta {
       panjangAnak: map['panjangAnak'] as int,
       penolongKelahiranAnak: map['penolongKelahiranAnak'] as String,
       penolongKelahiranAnakLainnya: map['penolongKelahiranAnakLainnya'] as String,
-      suratKelahiran: map['suratKelahiran'] as File,
-      buktiSPTJM: map['buktiSPTJM'] as File,
-      kkOrangTua: map['kkOrangTua'] as File,
-      ktpAyah: map['ktpAyah'] as File,
-      ktpIbu: map['ktpIbu'] as File,
-      dokumenTambahan: map['dokumenTambahan'] as File,
+      suratKelahiran: map['suratKelahiran'] as String,
+      buktiSPTJM: map['buktiSPTJM'] as String,
+      kkOrangTua: map['kkOrangTua'] as String,
+      ktpAyah: map['ktpAyah'] as String,
+      ktpIbu: map['ktpIbu'] as String,
+      dokumenTambahan: map['dokumenTambahan'] as String,
     );
   }
 

@@ -1,0 +1,19 @@
+{
+    "pengajuanDokumen" : [
+        {
+            "title": "Dokumen Masuk",
+            "jumlahDokumen": 7140,
+            "warnaBackground": "0xFF173538"
+        },
+        {
+            "title": "Dokumen Ditangani",
+            "jumlahDokumen": 1139,
+            "warnaBackground": "0xFF327178"
+        },
+        {
+            "title": "Dokumen Selesai",
+            "jumlahDokumen": 554,
+            "warnaBackground": "0xFF327178"
+        }
+    ]
+}

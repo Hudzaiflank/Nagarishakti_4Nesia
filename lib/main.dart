@@ -21,6 +21,8 @@ import '/Database/database_pengaduan.dart';
 import '/Database/database_berita.dart';
 import '/Database/database_pengumuman.dart';
 import '/Database/database_detailBerita.dart';
+import '/Database/database_pengajuanDokumen.dart';
+import '/Database/database_pengajuanKeluhan.dart';
 import 'User/user-home.dart';
 import 'Admin/admin-home.dart';
 import 'Admin/SuperAdmin-home.dart';
@@ -38,6 +40,8 @@ import 'User/Informasi-publik/Dokumen-publik/Public-Document.dart';
 import 'User/Pengaduan-Masyarakat/pengaduan-masyarakat.dart';
 import 'User/Informasi-publik/berita/news-page.dart';
 import 'User/Informasi-publik/berita/detail-news-page.dart';
+import 'User/Dashboard-Status/Pengajuan-Dokumen/Pengajuan-Dokumen.dart';
+import 'User/Dashboard-Status/Pengajuan-Keluhan/Pengajuan-Keluhan.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -48,10 +52,21 @@ void main() async {
   await DatabaseSuperAdmin.instance.deleteDatabaseFile();
   await DatabaseDestinasi.instance.deleteDatabaseFile();
   await DatabaseDetailDestinasi.instance.deleteDatabaseFile();
+  await DatabaseAcara.instance.deleteDatabaseFile();
+  await DatabaseTransportasi.instance.deleteDatabaseFile();
+  await DatabaseKtp.instance.deleteDatabaseFile();
+  await DatabaseKk.instance.deleteDatabaseFile();
+  await DatabaseAktaKelahiran.instance.deleteDatabaseFile();
+  await DatabaseSuratKematian.instance.deleteDatabaseFile();
+  await DatabasePerpindahan.instance.deleteDatabaseFile();
+  await DatabaseAgenda.instance.deleteDatabaseFile();
   await DatabaseDokumen.instance.deleteDatabaseFile();
+  await DatabasePengaduan.instance.deleteDatabaseFile();
   await DatabaseBerita.instance.deleteDatabaseFile();
   await DatabasePengumuman.instance.deleteDatabaseFile();
   await DatabaseDetailBerita.instance.deleteDatabaseFile();
+  await DatabasePengajuanDokumen.instance.deleteDatabaseFile();
+  await DatabasePengajuanKeluhan.instance.deleteDatabaseFile(); 
 
   // Initialize databases
   await DatabaseUser.instance.database;
@@ -72,6 +87,8 @@ void main() async {
   await DatabaseBerita.instance.database;
   await DatabasePengumuman.instance.database;
   await DatabaseDetailBerita.instance.database;
+  await DatabasePengajuanDokumen.instance.database;
+  await DatabasePengajuanKeluhan.instance.database;
 
   // Check table schema
   await DatabaseDetailDestinasi.instance.checkTableSchema();
@@ -103,8 +120,14 @@ void main() async {
   // Load Announcement from JSON
   await loadPengumumanFromJson();
 
-  // Load Announcement from JSON
+  // Load News Detail from JSON
   await loadDetailBeritaFromJson();
+
+  // Load Document Statistic from JSON
+  await loadStatistikDokumenFromJson();
+
+  // Load Complain Statistic from JSON
+  await loadStatistikKeluhanFromJson();
 
   runApp(const MyApp());
 }
@@ -421,6 +444,88 @@ Future<void> loadDetailBeritaFromJson() async {
     print('Error loading news detail from JSON: $e');
   }
 }
+
+Future<void> loadStatistikDokumenFromJson() async {
+  try {
+    final String response = await rootBundle.loadString('assets/API/pengajuanDokumen.json');
+    final Map<String, dynamic> jsonData = json.decode(response);
+
+    if (jsonData.containsKey('pengajuanDokumen')) {
+      final List<dynamic> data = jsonData['pengajuanDokumen'];
+      final DatabasePengajuanDokumen db = DatabasePengajuanDokumen.instance;
+
+      for (var documentStatistic in data) {
+        String colorString = documentStatistic['warnaBackground'];
+
+        // Remove the "0x" prefix if it exists
+        if (colorString.startsWith('0x')) {
+          colorString = colorString.substring(2);
+        }
+
+        // Ensure the colorString is in ARGB format
+        if (colorString.length == 6) {
+          colorString = 'FF$colorString';
+        }
+
+        // Convert the colorString to int
+        int color = int.parse(colorString, radix: 16);
+
+        final pengajuanDokumen = PengajuanDokumen(
+          id: documentStatistic['id'],
+          title: documentStatistic['title'], 
+          jumlahDokumen: documentStatistic['jumlahDokumen'], 
+          warnaBackground: color,
+        );
+        await db.insertPengajuanDokumen(pengajuanDokumen);
+      }
+    } else {
+      print('Key "pengajuan dokumen" not found in JSON');
+    }
+  } catch (e) {
+    print('Error loading document statistic from JSON: $e');
+  }
+} 
+
+Future<void> loadStatistikKeluhanFromJson() async {
+  try {
+    final String response = await rootBundle.loadString('assets/API/pengajuanKeluhan.json');
+    final Map<String, dynamic> jsonData = json.decode(response);
+
+    if (jsonData.containsKey('pengajuanKeluhan')) {
+      final List<dynamic> data = jsonData['pengajuanKeluhan'];
+      final DatabasePengajuanKeluhan db = DatabasePengajuanKeluhan.instance;
+
+      for (var complainStatistic in data) {
+        String colorString = complainStatistic['warnaBackground'];
+
+        // Remove the "0x" prefix if it exists
+        if (colorString.startsWith('0x')) {
+          colorString = colorString.substring(2);
+        }
+
+        // Ensure the colorString is in ARGB format
+        if (colorString.length == 6) {
+          colorString = 'FF$colorString';
+        }
+
+        // Convert the colorString to int
+        int color = int.parse(colorString, radix: 16);
+
+        final pengajuanKeluhan = PengajuanKeluhan(
+          id: complainStatistic['id'],
+          title: complainStatistic['title'], 
+          jumlahKeluhan: complainStatistic['jumlahKeluhan'], 
+          warnaBackground: color,
+        );
+        await db.insertPengajuanKeluhan(pengajuanKeluhan);
+      }
+    } else {
+      print('Key "pengajuan keluhan" not found in JSON');
+    }
+  } catch (e) {
+    print('Error loading complain statistic from JSON: $e');
+  }
+} 
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});

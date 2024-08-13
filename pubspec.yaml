@@ -102,6 +102,8 @@ flutter:
     - assets/API/berita.json
     - assets/API/pengumuman.json
     - assets/API/detailBerita.json
+    - assets/API/pengajuanDokumen.json
+    - assets/API/pengajuanKeluhan.json    
 
   #   - images/a_dot_ham.jpeg
 

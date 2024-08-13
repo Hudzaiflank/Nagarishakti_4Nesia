@@ -1293,6 +1293,7 @@ class _UserHomeState extends State<UserHome> {
                                       Padding(
                                         padding: const EdgeInsets.all(8.0),
                                         child: Text(
+                                          //TODO HARUS DIUBAH
                                           'Judul Berita $index',
                                           style: const TextStyle(
                                             fontWeight: FontWeight.bold,
@@ -1439,7 +1440,7 @@ class _UserHomeState extends State<UserHome> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => PengajuanDokumen()),
+                                  builder: (context) => PengajuanDokumenPage()),
                             );
                           },
                           child: ListTile(
@@ -1469,7 +1470,7 @@ class _UserHomeState extends State<UserHome> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => PengajuanKeluhan()),
+                                  builder: (context) => PengajuanKeluhanPage()),
                             );
                           },
                           child: ListTile(

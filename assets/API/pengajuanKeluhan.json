@@ -1,0 +1,19 @@
+{
+    "pengajuanKeluhan" : [
+        {
+            "title": "Keluhan Masuk",
+            "jumlahKeluhan": 7140,
+            "warnaBackground": "0xFF173538"
+        },
+        {
+            "title": "Keluhan Ditangani",
+            "jumlahKeluhan": 1139,
+            "warnaBackground": "0xFF327178"
+        },
+        {
+            "title": "Keluhan Selesai",
+            "jumlahKeluhan": 554,
+            "warnaBackground": "0xFF327178"
+        }
+    ]
+}

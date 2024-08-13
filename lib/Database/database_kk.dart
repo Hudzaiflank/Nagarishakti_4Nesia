@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:io';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -75,6 +74,13 @@ class DatabaseKk {
     return result.map((json) => Kk.fromMap(json)).toList();
   }
 
+  Future<void> deleteDatabaseFile() async {
+    final dbPath = await getDatabasesPath();
+    final path = join(dbPath, 'kkBaru.db');
+    await databaseFactory.deleteDatabase(path);
+    print('Database deleted');
+  }
+
   Future close() async {
     final db = await instance.database;
     db.close();
@@ -89,16 +95,16 @@ class Kk {
   final int nomorKK;
   final int nomorHandphone;
   final String email;
-  final File buktiKehilangan;
-  final File buktiStatusHubungan;
-  final File buktiKKLama;
-  final File buktiKematianKepalaKeluarga;
-  final File buktiSKPD;
-  final File buktiSKPLN;
-  final File suratPengantar;
-  final File suratPernyataanKependudukan;
-  final File buktiPerubahanPeristiwa;
-  final File dokumenTambahan;
+  final String buktiKehilangan;
+  final String buktiStatusHubungan;
+  final String buktiKKLama;
+  final String buktiKematianKepalaKeluarga;
+  final String buktiSKPD;
+  final String buktiSKPLN;
+  final String suratPengantar;
+  final String suratPernyataanKependudukan;
+  final String buktiPerubahanPeristiwa;
+  final String dokumenTambahan;
 
   Kk({
     this.id,
@@ -151,16 +157,16 @@ class Kk {
       nomorKK: map['nomorKK'] as int,
       nomorHandphone: map['nomorHandphone'] as int,
       email: map['email'] as String,
-      buktiKehilangan: map['buktiKehilangan'] as File,
-      buktiStatusHubungan: map['buktiStatusHubungan'] as File,
-      buktiKKLama: map['buktiKKLama'] as File,
-      buktiKematianKepalaKeluarga: map['buktiKematianKepalaKeluarga'] as File,
-      buktiSKPD: map['buktiSKPD'] as File,
-      buktiSKPLN: map['buktiSKPLN'] as File,
-      suratPengantar: map['suratPengantar'] as File,
-      suratPernyataanKependudukan: map['suratPernyataanKependudukan'] as File,
-      buktiPerubahanPeristiwa: map['buktiPerubahanPeristiwa'] as File,
-      dokumenTambahan: map['dokumenTambahan'] as File,
+      buktiKehilangan: map['buktiKehilangan'] as String,
+      buktiStatusHubungan: map['buktiStatusHubungan'] as String,
+      buktiKKLama: map['buktiKKLama'] as String,
+      buktiKematianKepalaKeluarga: map['buktiKematianKepalaKeluarga'] as String,
+      buktiSKPD: map['buktiSKPD'] as String,
+      buktiSKPLN: map['buktiSKPLN'] as String,
+      suratPengantar: map['suratPengantar'] as String,
+      suratPernyataanKependudukan: map['suratPernyataanKependudukan'] as String,
+      buktiPerubahanPeristiwa: map['buktiPerubahanPeristiwa'] as String,
+      dokumenTambahan: map['dokumenTambahan'] as String,
     );
   }
 

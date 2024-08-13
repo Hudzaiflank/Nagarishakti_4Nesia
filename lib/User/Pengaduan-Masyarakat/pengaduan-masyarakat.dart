@@ -67,7 +67,7 @@ class _PengaduanMasyarakat extends State<PengaduanMasyarakat> {
         anonimitas: _anonimitas!,
         namaAnonimitas: _namaAnonimitas!,
         noTelepon: _noTelepon!,
-        kkOrangTua: _kkOrangTua!,
+        kkOrangTua: _kkOrangTua!.path,
       );
 
       final dbPengaduan = DatabasePengaduan.instance;
@@ -237,7 +237,9 @@ class _PengaduanMasyarakat extends State<PengaduanMasyarakat> {
                                           borderRadius: BorderRadius.circular(4),
                                         ),
                                         child: Text(
-                                          'Pilih gambar atau dokumen',
+                                          _kkOrangTua != null
+                                              ? _kkOrangTua!.path.split('/').last
+                                              : 'Pilih gambar atau dokumen',
                                           style: TextStyle(
                                             fontFamily: 'Ubuntu',
                                             color: Colors.black54,
@@ -249,29 +251,30 @@ class _PengaduanMasyarakat extends State<PengaduanMasyarakat> {
                                 ),
                               ),
                             ),
-                            Positioned(
-                              top: -10,
-                              right: -10,
-                              child: Container(
-                                width: 24,
-                                height: 24,
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: Color(0xFF4F4E49),
-                                ),
-                                child: IconButton(
-                                  padding: EdgeInsets.zero,
-                                  icon: Icon(Icons.close,
-                                      color: Colors.white, size: 16),
-                                  onPressed: () {
-                                    // ini nanti buat remove nya thinnn mas broo);
-                                    _removeFile(() {
-                                      _kkOrangTua = null;
-                                    });
-                                  },
+                            if (_kkOrangTua != null)
+                              Positioned(
+                                top: -10,
+                                right: -10,
+                                child: Container(
+                                  width: 24,
+                                  height: 24,
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: Color(0xFF4F4E49),
+                                  ),
+                                  child: IconButton(
+                                    padding: EdgeInsets.zero,
+                                    icon: Icon(Icons.close,
+                                        color: Colors.white, size: 16),
+                                    onPressed: () {
+                                      // ini nanti buat remove nya thinnn mas broo);
+                                      _removeFile(() {
+                                          _kkOrangTua = null;
+                                      });
+                                    },
+                                  ),
                                 ),
                               ),
-                            ),
                           ],
                         ),
                       ),

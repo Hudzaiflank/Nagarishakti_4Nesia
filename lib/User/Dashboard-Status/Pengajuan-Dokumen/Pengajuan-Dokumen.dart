@@ -1,11 +1,30 @@
 import 'package:flutter/material.dart';
+import '/Database/database_pengajuanDokumen.dart'; 
 
-class PengajuanDokumen extends StatefulWidget {
+class PengajuanDokumenPage extends StatefulWidget {
+  const PengajuanDokumenPage({super.key});
+
   @override
-  _PengajuanDokumenState createState() => _PengajuanDokumenState();
+  _PengajuanDokumenPageState createState() => _PengajuanDokumenPageState();
 }
 
-class _PengajuanDokumenState extends State<PengajuanDokumen> {
+class _PengajuanDokumenPageState extends State<PengajuanDokumenPage> {
+  List<PengajuanDokumen> _pengajuanDokumens = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _loadDokumensFromDB();
+  }
+
+  Future<void> _loadDokumensFromDB() async {
+    final DatabasePengajuanDokumen db = DatabasePengajuanDokumen.instance;
+    final List<PengajuanDokumen> pengajuanDokumens = await db.getPengajuanDokumen();
+    setState(() {
+      _pengajuanDokumens = pengajuanDokumens;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -71,7 +90,7 @@ class _PengajuanDokumenState extends State<PengajuanDokumen> {
             SizedBox(height: 20),
             Center(
               child: Text(
-                'STATISTIK ADUAN',
+                'STATISTIK DOKUMEN',
                 style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w600,
@@ -81,12 +100,15 @@ class _PengajuanDokumenState extends State<PengajuanDokumen> {
               ),
             ),
             SizedBox(height: 10),
-            _buildStatisticContainer('ADUAN MASUK', '7140', Color(0xFF173538)),
-            SizedBox(height: 10),
-            _buildStatisticContainer(
-                'ADUAN DITANGANI', '1139', Color(0xFF327178)),
-            SizedBox(height: 10),
-            _buildStatisticContainer('ADUAN SELESAI', '554', Color(0xFF327178)),
+            for (var pengajuanDokumen in _pengajuanDokumens)
+              Padding(
+                padding: const EdgeInsets.only(bottom: 10),
+                child: _buildStatisticContainer(
+                  pengajuanDokumen.title,
+                  pengajuanDokumen.jumlahDokumen.toString(),
+                  Color(pengajuanDokumen.warnaBackground),
+                ),
+              ),
             SizedBox(height: 20),
           ],
         ),
@@ -140,12 +162,12 @@ class _PengajuanDokumenState extends State<PengajuanDokumen> {
     );
   }
 
-  Widget _buildStatisticContainer(String title, String count, Color bgColor) {
+  Widget _buildStatisticContainer(String title, String jumlahDokumen, Color warnaBackground) {
     return Container(
       width: double.infinity,
       padding: EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: bgColor,
+        color: warnaBackground,
         borderRadius: BorderRadius.circular(7),
       ),
       child: Column(
@@ -162,7 +184,7 @@ class _PengajuanDokumenState extends State<PengajuanDokumen> {
           ),
           SizedBox(height: 4),
           Text(
-            count,
+            jumlahDokumen,
             style: TextStyle(
               fontSize: 25,
               color: Colors.white,
