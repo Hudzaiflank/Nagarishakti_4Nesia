@@ -103,7 +103,22 @@ flutter:
     - assets/API/pengumuman.json
     - assets/API/detailBerita.json
     - assets/API/pengajuanDokumen.json
-    - assets/API/pengajuanKeluhan.json    
+    - assets/API/pengajuanKeluhan.json
+    - assets/abang-mpok.jpg
+    - assets/bedug-dondang.jpg
+    - assets/blood-donation.jpeg
+    - assets/blood-donation.png
+    - assets/creative-market.jpg
+    - assets/ethnic-food.jpeg
+    - assets/food-festival.jpeg
+    - assets/karnaval.jpeg
+    - assets/konser-kemerdekaan.jpg
+    - assets/marathon.jpeg
+    - assets/night-run.jpg
+    - assets/pameran-industri.jpg
+    - assets/parigi.jpg
+    - assets/pekan-raya.jpg
+    - assets/situ-gede.jpeg
 
   #   - images/a_dot_ham.jpeg
 

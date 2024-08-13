@@ -1,24 +1,54 @@
 {
-    "pengumuman" : [
+    "pengumuman": [
         {
-            "date": "1 Juli 2024",
-            "title": "Pembukaan Fitur Pelayanan Transportasi",
-            "subtitle": "Fitur pelayanan transportasi baru akan dibuka pada tanggal 17 Agustus 2024. Anda bisa mengeceknya pada sublayanan Informasi Transportasi"
+            "date": "12 Agustus 2024",
+            "title": "Penutupan Sementara Layanan Kesehatan",
+            "subtitle": "Layanan Kesehatan akan ditutup sementara mulai 15 Agustus 2024 untuk pemeliharaan sistem. Layanan akan dibuka kembali pada 20 Agustus 2024."
         },
         {
-            "date": "2 Juli 2024",
-            "title": "Pembukaan Fitur Pelayanan Timeline",
-            "subtitle": "Fitur pelayanan timeline baru akan dibuka pada tanggal 18 Agustus 2024. Anda bisa mengeceknya pada sublayanan Informasi Timeline"
+            "date": "1 Agustus 2024",
+            "title": "Peluncuran Fitur Peta Interaktif",
+            "subtitle": "Fitur Peta Interaktif untuk layanan pariwisata akan diluncurkan pada 15 Agustus 2024. Silakan cek fitur ini di sublayanan Informasi Pariwisata."
         },
         {
-            "date": "3 Juli 2024",
-            "title": "Pembukaan Fitur Pelayanan Destinasi",
-            "subtitle": "Fitur pelayanan destinasi baru akan dibuka pada tanggal 19 Agustus 2024. Anda bisa mengeceknya pada sublayanan Informasi Destinasi"
+            "date": "20 Juli 2024",
+            "title": "Peningkatan Sistem Keamanan Data",
+            "subtitle": "Peningkatan sistem keamanan data pengguna akan dilakukan pada 25 Juli 2024. Layanan mungkin akan terganggu selama proses berlangsung."
         },
         {
-            "date": "4 Juli 2024",
-            "title": "Pembukaan Fitur Pelayanan Kependudukan",
-            "subtitle": "Fitur pelayanan kependudukan baru akan dibuka pada tanggal 20 Agustus 2024. Anda bisa mengeceknya pada sublayanan Informasi Kependudukan"
+            "date": "5 Juli 2024",
+            "title": "Penambahan Subfitur Baru di Layanan Kependudukan",
+            "subtitle": "Subfitur baru untuk pendaftaran KIA (Kartu Identitas Anak) akan tersedia mulai 10 Juli 2024. Silakan cek di sublayanan Layanan Kependudukan."
+        },
+        {
+            "date": "25 Juni 2024",
+            "title": "Pemeliharaan Berkala Server",
+            "subtitle": "Pemeliharaan berkala server akan dilakukan pada 30 Juni 2024 pukul 01:00 - 04:00 WIB. Layanan mungkin akan terganggu selama waktu tersebut."
+        },
+        {
+            "date": "10 Juni 2024",
+            "title": "Pemberitahuan Pemadaman Listrik Terjadwal",
+            "subtitle": "Akan ada pemadaman listrik terjadwal di area Balai Kota pada 15 Juni 2024. Beberapa layanan mungkin tidak tersedia selama waktu tersebut."
+        },
+        {
+            "date": "25 Mei 2024",
+            "title": "Peluncuran Layanan Konsultasi Online",
+            "subtitle": "Layanan konsultasi online untuk permasalahan kependudukan akan diluncurkan pada 1 Juni 2024. Anda bisa mengaksesnya melalui aplikasi."
+        },
+        {
+            "date": "15 April 2024",
+            "title": "Pengumuman Libur Hari Raya Idul Fitri",
+            "subtitle": "Layanan pemerintah akan libur selama Hari Raya Idul Fitri mulai 1 Mei 2024 hingga 7 Mei 2024. Layanan akan kembali normal pada 8 Mei 2024."
+        },
+        {
+            "date": "1 Maret 2024",
+            "title": "Pembukaan Layanan Informasi Pajak Daerah",
+            "subtitle": "Layanan Informasi Pajak Daerah akan dibuka mulai 10 Maret 2024. Pengguna bisa mengakses informasi terkait pajak melalui aplikasi."
+        },
+        {
+            "date": "20 Desember 2023",
+            "title": "Pengumuman Cuti Bersama Natal dan Tahun Baru",
+            "subtitle": "Cuti bersama untuk Natal dan Tahun Baru akan berlangsung dari 25 Desember 2023 hingga 1 Januari 2024. Layanan akan kembali normal pada 2 Januari 2024."
         }
     ]
 }

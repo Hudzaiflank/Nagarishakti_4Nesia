@@ -18,7 +18,7 @@ class _UserKtpPageState extends State<UserKtpPage> {
   int? _nik;
   String? _namaLengkap;
   String? _tempatLahir;
-  DateTime? _selectedDate;
+  DateTime? _selectedDateLahir;
   String? _jenisKelamin;
   String? _alamatLengkap;
   String? _agama;
@@ -28,17 +28,19 @@ class _UserKtpPageState extends State<UserKtpPage> {
   File? _suratPengantar;
   File? _buktiKehilangan;
 
-  Future<void> _selectDate(BuildContext context) async {
+  Future<void> _selectDate({
+    required BuildContext context,
+    required DateTime? selectedDate,
+    required ValueChanged<DateTime> onSelect,
+  }) async {
     final DateTime? picked = await showDatePicker(
       context: context,
-      initialDate: DateTime.now(),
+      initialDate: selectedDate ?? DateTime.now(),
       firstDate: DateTime(1900),
       lastDate: DateTime(2101),
     );
-    if (picked != null && picked != _selectedDate) {
-      setState(() {
-        _selectedDate = picked;
-      });
+    if (picked != null) {
+      onSelect(picked);
     }
   }
 
@@ -62,26 +64,45 @@ class _UserKtpPageState extends State<UserKtpPage> {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
 
-      final newKtp = Ktp(
-        alasanPembuatan: _alasanPembuatan!,
-        nik: _nik!,
-        namaLengkap: _namaLengkap!,
-        tempatLahir: _tempatLahir!,
-        tanggalLahir: _selectedDate!,
-        alamatLengkap: _alamatLengkap!,
-        agama: _agama!,
-        jenisPekerjaan: _jenisPekerjaan!,
-        jenisKelamin: _jenisKelamin!,
-        statusPerkawinan: _statusPerkawinan!,
-        kartuKeluarga: _kartuKeluarga!.path,
-        suratPengantar: _suratPengantar!.path,
-        buktiKehilangan: _buktiKehilangan!.path,
-      );
+      bool isValid = true;
 
-      final dbKtp = DatabaseKtp.instance;
-      await dbKtp.insertKtp(newKtp);
+      // Validasi dokumen berdasarkan alasan pembuatan
+      if (_alasanPembuatan == 'Telah berusia 17 tahun') {
+        if (_suratPengantar == null) {
+          isValid = false;
+          print("Error: _suratPengantar is null for Telah berusia 17 tahun.");
+        }
+      } else if (_alasanPembuatan == 'KTP hilang/rusak') {
+        if (_buktiKehilangan == null) {
+          isValid = false;
+          print("Error: _buktiKehilangan is null for KTP hilang/rusak.");
+        }
+      }
 
-      Navigator.pop(context);
+      if (isValid) {
+        final newKtp = Ktp(
+          alasanPembuatan: _alasanPembuatan!,
+          nik: _nik!,
+          namaLengkap: _namaLengkap!,
+          tempatLahir: _tempatLahir!,
+          tanggalLahir: _selectedDateLahir!,
+          alamatLengkap: _alamatLengkap!,
+          agama: _agama!,
+          jenisPekerjaan: _jenisPekerjaan!,
+          jenisKelamin: _jenisKelamin!,
+          statusPerkawinan: _statusPerkawinan!,
+          kartuKeluarga: _kartuKeluarga?.path ?? '',
+          suratPengantar: _suratPengantar?.path ?? '',
+          buktiKehilangan: _buktiKehilangan?.path ?? '',
+        );
+
+        final dbKtp = DatabaseKtp.instance;
+        await dbKtp.insertKtp(newKtp);
+
+        Navigator.pop(context);
+      } else {
+        print("Error: Required documents are missing based on the selected Alasan Pembuatan.");
+      }
     }
   }
 
@@ -147,11 +168,25 @@ class _UserKtpPageState extends State<UserKtpPage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    _buildDropdownField(
-                        context, 
-                        ['Telah berusia 17 tahun', 'KTP hilang/rusak'],
+                    _buildCustomDropdownField(
+                        context: context, 
                         label: 'Alasan Pembuatan',
-                        onSave: (value) => _alasanPembuatan = value,
+                        items: ['Telah berusia 17 tahun', 'KTP hilang/rusak'],
+                        currentValue: _alasanPembuatan,
+                        onSave: (value) {
+                          _alasanPembuatan = value;
+                        },
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Alasan Pembuatan tidak boleh kosong';
+                          }
+                          return null;
+                        },
+                        onChanged: (value) {
+                          setState(() {
+                            _alasanPembuatan = value!;
+                          });
+                        },
                     ),
                   ],
                 ),
@@ -170,53 +205,34 @@ class _UserKtpPageState extends State<UserKtpPage> {
                         context: context,
                         label: 'NIK',
                         hint: 'nomor induk kependudukan',
-                        keyboardType: TextInputType.number,
-                        onSave: (value) => _nik = int.tryParse(value!),
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'NIK tidak boleh kosong';
-                          }
-                          return null;
-                        },
+                        isNumber: true,
+                        onSave: (value) => _nik = value != null ? int.tryParse(value) : null,
                       ),
                       _buildTextField(
                         context: context,
                         label: 'Nama Lengkap',
                         hint: 'nama lengkap huruf kapital',
                         onSave: (value) => _namaLengkap = value,
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Nama Lengkap tidak boleh kosong';
-                          }
-                          return null;
-                        },
                       ),
                       _buildTextField(
                         context: context,
                         label: 'Tempat Lahir',
                         hint: 'tempat lahir',
                         onSave: (value) => _tempatLahir = value,
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Tempat Lahir tidak boleh kosong';
-                          }
-                          return null;
-                        },
                       ),
-                      _buildTextField(
+                      _buildDatePickerField(
                         context: context,
                         label: 'Tanggal Lahir',
                         hint: 'TTTT-BB-HH',
-                        isDateField: true,
-                        selectedDate: _selectedDate,
+                        selectedDate: _selectedDateLahir,
                         onSelect: (date) {
                           setState(() {
-                            _selectedDate = date;
+                            _selectedDateLahir = date;
                           });
                         },
                         onSave: (value) => null,
                         validator: (value) {
-                          if (_selectedDate == null) {
+                          if (_selectedDateLahir == null) {
                             return 'Tanggal Lahir tidak boleh kosong';
                           }
                           return null;
@@ -234,48 +250,36 @@ class _UserKtpPageState extends State<UserKtpPage> {
                         label: 'Alamat Lengkap',
                         hint: 'alamat sesuai KTP',
                         onSave: (value) => _alamatLengkap = value,
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Alamat Lengkap tidak boleh kosong';
-                          }
-                          return null;
-                        },
                       ),
                       _buildTextField(
                         context: context,
                         label: 'Agama',
                         hint: 'agama',
                         onSave: (value) => _agama = value,
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Agama tidak boleh kosong';
-                          }
-                          return null;
-                        },
                       ),
                       _buildTextField(
                         context: context,
                         label: 'Jenis Pekerjaan',
                         hint: 'jenis pekerjaan',
                         onSave: (value) => _jenisPekerjaan = value,
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Jenis Pekerjaan tidak boleh kosong';
-                          }
-                          return null;
-                        },
                       ),
                       _buildDropdownField(
-                          context,
-                          [
+                          context: context,
+                          label: 'Status Perkawinan',
+                          items: [
                             'Belum menikah',
                             'Sudah menikah',
                             'Cerai hidup',
                             'Cerai mati'
                           ],
-                          label: 'Status Perkawinan',
+                          currentValue: _statusPerkawinan,
                           onSave: (value) => _statusPerkawinan = value,
-                          backgroundColor: Color(0xFFE0E5E7),
+                           validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Status Perkawinan tidak boleh kosong';
+                            }
+                            return null;
+                          },
                       ),
                     ],
                   ),
@@ -594,58 +598,47 @@ class _UserKtpPageState extends State<UserKtpPage> {
     required BuildContext context,
     required String label,
     required String hint,
-    required FormFieldSetter<String> onSave,
-    required FormFieldValidator<String> validator,
-    TextInputType keyboardType = TextInputType.text,
-    bool isDateField = false,
-    DateTime? selectedDate,
-    ValueChanged<DateTime>? onSelect,
+    bool isNumber = false,
+    required FormFieldSetter<String?> onSave,
   }) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        _buildSubTitle(label),
-        Padding(
-          padding: const EdgeInsets.only(bottom: 16.0),
-          child: TextFormField(
-            keyboardType: keyboardType,
-            readOnly: isDateField,
-            onTap: isDateField
-                ? () async {
-                    DateTime? date = await showDatePicker(
-                      context: context,
-                      initialDate: DateTime.now(),
-                      firstDate: DateTime(1900),
-                      lastDate: DateTime(2100),
-                      builder: (BuildContext context, Widget? child) {
-                        return Theme(
-                          data: ThemeData.light().copyWith(
-                            primaryColor: Color(0xFF4297A0),
-                            colorScheme: ColorScheme.light(
-                              primary: Color(0xFF4297A0),
-                              onPrimary: Colors.white,
-                              onSurface: Colors.black,
-                            ),
-                            buttonTheme: ButtonThemeData(
-                              textTheme: ButtonTextTheme.primary,
-                            ),
-                            dialogBackgroundColor: Colors.white,
-                          ),
-                          child: child!,
-                        );
-                      },
-                    );
-                    if (date != null && onSelect != null) {
-                      onSelect(date);
-                    }
-                  }
-                : null,
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            label,
+            style: TextStyle(
+              fontFamily: 'Ubuntu',
+              fontWeight: FontWeight.bold,
+              color: Colors.black,
+            ),
+          ),
+          SizedBox(height: 8),
+          TextFormField(
+            onSaved: (value) {
+              if (isNumber) {
+                onSave(value?.isNotEmpty == true ? int.tryParse(value!)?.toString() : null);
+              } else {
+                onSave(value);
+              }
+            },
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return '$label tidak boleh kosong';
+              }
+              if (isNumber && int.tryParse(value) == null) {
+                return '$label tidak boleh kosong';
+              }
+              return null;
+            },
+            keyboardType: isNumber ? TextInputType.number : TextInputType.text,
             decoration: InputDecoration(
               hintText: hint,
               hintStyle: TextStyle(
-                fontFamily: 'Ubuntu',
                 fontStyle: FontStyle.italic,
-                color: Colors.black54,
+                fontWeight: FontWeight.w300,
+                fontFamily: 'Ubuntu',
               ),
               filled: true,
               fillColor: Color(0xFFE0E5E7),
@@ -653,75 +646,216 @@ class _UserKtpPageState extends State<UserKtpPage> {
                 borderRadius: BorderRadius.circular(7),
                 borderSide: BorderSide.none,
               ),
-              suffixIcon: isDateField ? Icon(Icons.calendar_today) : null,
             ),
-            validator: validator,
-            onSaved: onSave,
-            controller: isDateField && selectedDate != null
-                ? TextEditingController(
-                    text: "${selectedDate.toLocal()}".split(' ')[0])
-                : null,
+            style: TextStyle(
+              color: Colors.black,
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 
-  Widget _buildDropdownField(BuildContext context, List<String> items,
-      {String? label, Color backgroundColor = Colors.white, Function(String?)? onSave}) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        if (label != null) _buildSubTitle(label),
-        Padding(
-          padding: const EdgeInsets.only(bottom: 16.0),
-          child: DropdownButtonFormField<String>(
-            value: items.contains(_alasanPembuatan) ? _alasanPembuatan : items.contains(_statusPerkawinan) ? _statusPerkawinan : null,
-            isDense: true,
-            isExpanded: true,
+  Widget _buildCustomDropdownField({
+    required BuildContext context,
+    required String label,
+    required List<String> items,
+    required FormFieldSetter<String?> onSave,
+    required FormFieldValidator<String?> validator,
+    String? currentValue,
+    ValueChanged<String?>? onChanged,
+  }) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            label,
+            style: const TextStyle(
+              fontFamily: 'Ubuntu',
+              fontWeight: FontWeight.bold,
+              color: Colors.black,
+            ),
+          ),
+          const SizedBox(height: 8),
+          Container(
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(7),
+            ),
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: DropdownButtonFormField<String>(
+              decoration: const InputDecoration(
+                fillColor: Colors.white,
+                filled: true,
+                border: InputBorder.none,
+              ),
+              value: items.contains(currentValue) ? currentValue : null,
+              items: items.map((String value) {
+                return DropdownMenuItem<String>(
+                  value: value,
+                  child: Text(
+                    value,
+                    style: const TextStyle(color: Colors.black),
+                  ),
+                );
+              }).toList(),
+              onChanged: (value) {
+                setState(() {
+                  _alasanPembuatan = value; // Update _alasanPembuatan jika dropdown ini digunakan untuk alasan pembuatan
+                });
+                if (onChanged != null) {
+                  onChanged(value);
+                }
+              },
+              onSaved: onSave,
+              validator: validator,
+              dropdownColor: Colors.white,
+              isExpanded: true,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildDropdownField({
+    required BuildContext context,
+    required String label,
+    required List<String> items,
+    String? currentValue,
+    required FormFieldSetter<String?> onSave,
+    required FormFieldValidator<String?> validator,
+    ValueChanged<String?>? onChanged,
+  }) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            label,
+            style: const TextStyle(
+              fontFamily: 'Ubuntu',
+              fontWeight: FontWeight.bold,
+              color: Colors.black,
+            ),
+          ),
+          const SizedBox(height: 8),
+          Container(
+            decoration: BoxDecoration(
+              color: const Color(0xFFE0E5E7), 
+              borderRadius: BorderRadius.circular(7), 
+            ),
+            child: DropdownButtonFormField<String>(
+              decoration: const InputDecoration(
+                fillColor: Color(0xFFE0E5E7),
+                filled: true,
+                border: InputBorder.none,
+                contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+              ),
+              value: items.contains(currentValue) ? currentValue : null,
+              items: items.map((String value) {
+                return DropdownMenuItem<String>(
+                  value: value,
+                  child: Text(value, style: const TextStyle(color: Colors.black)),
+                );
+              }).toList(),
+              onChanged: (value) {
+                setState(() {
+                  _statusPerkawinan = value;
+                });
+                if (onChanged != null) {
+                  onChanged(value);
+                }
+              },
+              onSaved: onSave,
+              validator: validator,
+              dropdownColor: Colors.white,
+              isExpanded: true,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildDatePickerField({
+    required BuildContext context,
+    required String label,
+    required String hint,
+    required FormFieldSetter<String> onSave,
+    required FormFieldValidator<String> validator,
+    DateTime? selectedDate,
+    ValueChanged<DateTime>? onSelect,
+  }) {
+    TextEditingController _controller = TextEditingController(
+      text: selectedDate != null ? "${selectedDate.toLocal()}".split(' ')[0] : '',
+    );
+
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            label,
+            style: const TextStyle(
+              fontFamily: 'Ubuntu',
+              fontWeight: FontWeight.bold,
+              color: Colors.black,
+            ),
+          ),
+          const SizedBox(height: 8),
+          TextFormField(
+            controller: _controller,
+            readOnly: true,
+            onTap: () async {
+              DateTime? date = await showDatePicker(
+                context: context,
+                initialDate: DateTime.now(),
+                firstDate: DateTime(1900),
+                lastDate: DateTime(2100),
+                builder: (BuildContext context, Widget? child) {
+                  return Theme(
+                    data: ThemeData.light().copyWith(
+                      primaryColor: Color(0xFF4297A0),
+                      colorScheme: ColorScheme.light(
+                        primary: Color(0xFF4297A0),
+                        onPrimary: Colors.white,
+                        onSurface: Colors.black,
+                      ),
+                      buttonTheme: ButtonThemeData(
+                        textTheme: ButtonTextTheme.primary,
+                      ),
+                      dialogBackgroundColor: Colors.white,
+                    ),
+                    child: child!,
+                  );
+                },
+              );
+              if (date != null) {
+                _controller.text = "${date.toLocal()}".split(' ')[0];
+                if (onSelect != null) {
+                  onSelect(date);
+                }
+              }
+            },
             decoration: InputDecoration(
-              fillColor: backgroundColor,
-              filled: true,
+              suffixIcon: const Icon(Icons.calendar_today, color: Colors.black),
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(7),
                 borderSide: BorderSide.none,
               ),
+              filled: true,
+              fillColor: Color(0xFFE0E5E7),
             ),
-            items: items
-                .map((label) => DropdownMenuItem<String>(
-                      value: label,
-                      child: Text(
-                        label,
-                        style: TextStyle(
-                          color: Colors.black54,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ),
-                    ))
-                .toList(),
-            onChanged: (value) {
-              setState(() {
-                if (items.contains(_alasanPembuatan)) {
-                  _alasanPembuatan = value!;
-                } else if (items.contains(_statusPerkawinan)) {
-                  _statusPerkawinan = value!;
-                }
-              });
-              if (onSave != null) {
-                onSave(value);
-              }
-            },
             onSaved: onSave,
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-                return '$label tidak boleh kosong';
-              }
-              return null;
-            },
-            dropdownColor: Colors.white,
+            validator: validator,
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 

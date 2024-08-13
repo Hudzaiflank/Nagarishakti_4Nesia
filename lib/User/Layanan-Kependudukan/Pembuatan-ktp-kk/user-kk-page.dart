@@ -52,29 +52,68 @@ class _UserKkPageState extends State<UserKkPage> {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
 
-      final newKk = Kk(
-        alasanPembuatan: _alasanPembuatan!,
-        namaLengkap: _namaLengkap!,
-        nomorNIK: _nomorNIK!,
-        nomorKK: _nomorKK!,
-        nomorHandphone: _nomorHandphone!,
-        email: _email!,
-        buktiKehilangan: _buktiKehilangan!.path,
-        buktiStatusHubungan: _buktiStatusHubungan!.path,
-        buktiKKLama: _buktiKKLama!.path,
-        buktiKematianKepalaKeluarga: _buktiKematianKepalaKeluarga!.path,
-        buktiSKPD: _buktiSKPD!.path,
-        buktiSKPLN: _buktiSKPLN!.path,
-        suratPengantar: _suratPengantar!.path,
-        suratPernyataanKependudukan: _suratPernyataanKependudukan!.path,
-        buktiPerubahanPeristiwa: _buktiPerubahanPeristiwa!.path,
-        dokumenTambahan: _dokumenTambahan!.path,
-      );
+      // Validasi hanya pada file yang diperlukan sesuai dengan alasan pembuatan yang dipilih
+      bool isValid = true;
 
-      final dbKk = DatabaseKk.instance;
-      await dbKk.insertKk(newKk);
+      if (_alasanPembuatan == 'KK hilang/rusak') {
+        if (_buktiKehilangan == null || _dokumenTambahan == null) {
+          isValid = false;
+          print("Error: _buktiKehilangan or _dokumenTambahan is null for KK hilang/rusak.");
+        }
+      } else if (_alasanPembuatan == 'KK Baru (membentuk Keluarga baru)') {
+        if (_buktiStatusHubungan == null) {
+          isValid = false;
+          print("Error: _buktiStatusHubungan is null for KK Baru (membentuk Keluarga baru).");
+        }
+      } else if (_alasanPembuatan == 'KK Baru (Pergantian Kepala Keluarga)') {
+        if (_buktiKematianKepalaKeluarga == null) {
+          isValid = false;
+          print("Error: _buktiKematianKepalaKeluarga is null for KK Baru (Pergantian Kepala Keluarga).");
+        }
+      } else if (_alasanPembuatan == 'KK Baru (Pindah Datang)') {
+        if (_buktiSKPD == null) {
+          isValid = false;
+          print("Error: _buktiSKPD is null for KK Baru (Pindah Datang or Pindah WNI dari luar negeri).");
+        }
+      } else if (_alasanPembuatan == 'KK Baru (Pindah WNI dari luar negeri)') {
+        if (_buktiSKPLN == null) {
+          isValid = false;
+          print("Error: _buktiSKPLN is null for KK Baru (Pindah Datang or Pindah WNI dari luar negeri).");
+        }
+      } else if (_alasanPembuatan == 'KK Perubahan (Peristiwa penting)') {
+        if (_buktiPerubahanPeristiwa == null) {
+          isValid = false;
+          print("Error: _buktiPerubahanPeristiwa is null for KK Perubahan (Peristiwa penting).");
+        }
+      }
 
-      Navigator.pop(context);
+      if (isValid) {
+        final newKk = Kk(
+          alasanPembuatan: _alasanPembuatan!,
+          namaLengkap: _namaLengkap!,
+          nomorNIK: _nomorNIK!,
+          nomorKK: _nomorKK!,
+          nomorHandphone: _nomorHandphone!,
+          email: _email!,
+          buktiKehilangan: _buktiKehilangan?.path ?? '',
+          buktiStatusHubungan: _buktiStatusHubungan?.path ?? '',
+          buktiKKLama: _buktiKKLama?.path ?? '',
+          buktiKematianKepalaKeluarga: _buktiKematianKepalaKeluarga?.path ?? '',
+          buktiSKPD: _buktiSKPD?.path ?? '',
+          buktiSKPLN: _buktiSKPLN?.path ?? '',
+          suratPengantar: _suratPengantar?.path ?? '',
+          suratPernyataanKependudukan: _suratPernyataanKependudukan?.path ?? '',
+          buktiPerubahanPeristiwa: _buktiPerubahanPeristiwa?.path ?? '',
+          dokumenTambahan: _dokumenTambahan?.path ?? '',
+        );
+
+        final dbKk = DatabaseKk.instance;
+        await dbKk.insertKk(newKk);
+
+        Navigator.pop(context);
+      } else {
+        print("Error: Required documents are missing based on the selected Alasan Pembuatan.");
+      }
     }
   }
 
@@ -141,8 +180,9 @@ class _UserKkPageState extends State<UserKkPage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     _buildDropdownField(
-                      context,
-                      [
+                      context: context,
+                      label: 'Alasan Pembuatan',
+                      items: [
                         'KK hilang/rusak',
                         'KK Baru (membentuk Keluarga baru)',
                         'KK Baru (Pergantian Kepala Keluarga)',
@@ -151,8 +191,21 @@ class _UserKkPageState extends State<UserKkPage> {
                         'KK Baru (Rentan Adminduk)',
                         'KK Perubahan (Peristiwa penting)'
                       ],
-                      label: 'Alasan Pembuatan',
-                      onSave: (value) => _alasanPembuatan = value,
+                      currentValue: _alasanPembuatan,
+                      onSave: (value) {
+                        _alasanPembuatan = value;
+                      },
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Alasan Pembuatan tidak boleh kosong';
+                        }
+                        return null;
+                      },
+                      onChanged: (value) {
+                        setState(() {
+                          _alasanPembuatan = value!;
+                        });
+                      },
                     ),
                   ],
                 ),
@@ -186,63 +239,33 @@ class _UserKkPageState extends State<UserKkPage> {
                       label: 'Nama Lengkap',
                       hint: 'nama lengkap kepala keluarga',
                       onSave: (value) => _namaLengkap = value,
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Nama Lengkap tidak boleh kosong';
-                        }
-                        return null;
-                      },
                     ),
                     _buildTextField(
                       context: context,
                       label: 'Nomor Induk Kependudukan',
                       hint: 'nomor induk kependudukan',
                       isNumber: true,
-                      onSave: (value) => _nomorNIK = int.tryParse(value!),
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Nomor Induk Kependudukan tidak boleh kosong';
-                        }
-                        return null;
-                      },
+                      onSave: (value) => _nomorNIK = value != null ? int.tryParse(value) : null,
                     ),
                     _buildTextField(
                       context: context,
                       label: 'Nomor Kartu Keluarga',
                       hint: 'nomor kartu keluarga',
                       isNumber: true,
-                      onSave: (value) => _nomorKK = int.tryParse(value!),
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Nomor Kartu Keluarga tidak boleh kosong';
-                        }
-                        return null;
-                      },
+                      onSave: (value) => _nomorKK = value != null ? int.tryParse(value) : null,
                     ),
                     _buildTextField(
                       context: context,
                       label: 'Nomor Handphone',
                       hint: 'nomor handphone',
                       isNumber: true,
-                      onSave: (value) => _nomorHandphone = int.tryParse(value!),
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Nomor Handphone tidak boleh kosong';
-                        }
-                        return null;
-                      },
+                      onSave: (value) => _nomorHandphone = value != null ? int.tryParse(value) : null,
                     ),
                     _buildTextField(
                       context: context,
                       label: 'Email',
                       hint: 'alamat email',
                       onSave: (value) => _email = value,
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Email tidak boleh kosong';
-                        }
-                        return null;
-                      },
                     ),
                   ],
                 ),
@@ -1713,21 +1736,23 @@ class _UserKkPageState extends State<UserKkPage> {
               ),
               SizedBox(height: 16.0),
               Center(
-                child: ElevatedButton(
-                  onPressed: _submitForm, // ini buat handle submit nya thinnn
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Color(0xFFCDC2AE),
-                    padding: EdgeInsets.symmetric(horizontal: 40),
-                  ),
-                  child: Text(
-                    'Ajukan',
-                    style: TextStyle(
-                      fontFamily: 'Ubuntu',
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black,
+                child: Form(
+                  child: ElevatedButton(
+                    onPressed: _submitForm, // ini buat handle submit nya thinnn
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Color(0xFFCDC2AE),
+                      padding: EdgeInsets.symmetric(horizontal: 40),
+                    ),
+                    child: Text(
+                      'Ajukan',
+                      style: TextStyle(
+                        fontFamily: 'Ubuntu',
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                      ),
                     ),
                   ),
-                ),
+                ),  
               ),
             ],
           ),
@@ -1779,25 +1804,47 @@ class _UserKkPageState extends State<UserKkPage> {
     required BuildContext context,
     required String label,
     required String hint,
-    required FormFieldSetter<String> onSave,
-    required FormFieldValidator<String> validator,
     bool isNumber = false,
+    required FormFieldSetter<String?> onSave,
   }) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        _buildSubTitle(label),
-        Padding(
-          padding: const EdgeInsets.only(bottom: 16.0),
-          child: TextFormField(
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            label,
+            style: TextStyle(
+              fontFamily: 'Ubuntu',
+              fontWeight: FontWeight.bold,
+              color: Colors.black,
+            ),
+          ),
+          SizedBox(height: 8),
+          TextFormField(
+            onSaved: (value) {
+              if (isNumber) {
+                onSave(value?.isNotEmpty == true ? int.tryParse(value!)?.toString() : null);
+              } else {
+                onSave(value);
+              }
+            },
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return '$label tidak boleh kosong';
+              }
+              if (isNumber && int.tryParse(value) == null) {
+                return '$label tidak boleh kosong';
+              }
+              return null;
+            },
             keyboardType: isNumber ? TextInputType.number : TextInputType.text,
-            inputFormatters: isNumber ? [FilteringTextInputFormatter.digitsOnly] : [],
             decoration: InputDecoration(
               hintText: hint,
               hintStyle: TextStyle(
-                fontFamily: 'Ubuntu',
                 fontStyle: FontStyle.italic,
-                color: Colors.black54,
+                fontWeight: FontWeight.w300,
+                fontFamily: 'Ubuntu',
               ),
               filled: true,
               fillColor: Color(0xFFE0E5E7),
@@ -1806,65 +1853,76 @@ class _UserKkPageState extends State<UserKkPage> {
                 borderSide: BorderSide.none,
               ),
             ),
-            validator: validator,
-            onSaved: onSave,
+            style: TextStyle(
+              color: Colors.black,
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 
-  Widget _buildDropdownField(BuildContext context, List<String> items,
-      {String? label, Color backgroundColor = Colors.white, Function(String?)? onSave}) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        if (label != null) _buildSubTitle(label),
-        Padding(
-          padding: const EdgeInsets.only(bottom: 16.0),
-          child: DropdownButtonFormField<String>(
-            value: items.contains(_alasanPembuatan) ? _alasanPembuatan : null,
-            isDense: true,
-            isExpanded: true,
-            decoration: InputDecoration(
-              fillColor: backgroundColor,
-              filled: true,
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(7),
-                borderSide: BorderSide.none,
-              ),
+  Widget _buildDropdownField({
+    required BuildContext context,
+    required String label,
+    required List<String> items,
+    required FormFieldSetter<String?> onSave,
+    required FormFieldValidator<String?> validator,
+    String? currentValue,
+    ValueChanged<String?>? onChanged,
+  }) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            label,
+            style: const TextStyle(
+              fontFamily: 'Ubuntu',
+              fontWeight: FontWeight.bold,
+              color: Colors.black,
             ),
-            items: items
-                .map((label) => DropdownMenuItem<String>(
-                      value: label,
-                      child: Text(
-                        label,
-                        style: TextStyle(
-                          color: Colors.black54,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ),
-                    ))
-                .toList(),
-            onChanged: (value) {
-              setState(() {
-                _alasanPembuatan = value!;
-              });
-              if (onSave != null) {
-                onSave(value);
-              }
-            },
-            onSaved: onSave,
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-                return '$label tidak boleh kosong';
-              }
-              return null;
-            },
-            dropdownColor: Colors.white,
           ),
-        ),
-      ],
+          const SizedBox(height: 8),
+          Container(
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(7),
+            ),
+            padding: const EdgeInsets.symmetric(horizontal: 12),
+            child: DropdownButtonFormField<String>(
+              decoration: const InputDecoration(
+                fillColor: Colors.white,
+                filled: true,
+                border: InputBorder.none,
+              ),
+              value: items.contains(currentValue) ? currentValue : null,
+              items: items.map((String value) {
+                return DropdownMenuItem<String>(
+                  value: value,
+                  child: Text(
+                    value,
+                    style: const TextStyle(color: Colors.black),
+                  ),
+                );
+              }).toList(),
+              onChanged: (value) {
+                setState(() {
+                  _alasanPembuatan = value; // Update _alasanPembuatan jika dropdown ini digunakan untuk alasan pembuatan
+                });
+                if (onChanged != null) {
+                  onChanged(value);
+                }
+              },
+              onSaved: onSave,
+              validator: validator,
+              dropdownColor: Colors.white,
+              isExpanded: true,
+            ),
+          ),
+        ],
+      ),
     );
   }
 

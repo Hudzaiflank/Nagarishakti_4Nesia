@@ -53,21 +53,13 @@ class DatabaseTransportasi {
     print('Inserted Transportation: ${transportasi.nama}');
   }
 
-  Future<List<Transportasi>> getTransportasi(int id) async {
+  Future<List<Transportasi>> getAcara() async {
     final db = await instance.database;
-    final result = await db.query(
-      'transportasi',
-      where: 'id = ?',
-      whereArgs: [id],
-    );
-
-    if (result.isNotEmpty) {
-      print('Fetched Transportation with id $id: ${result.first['nama']}');
-    } else {
-      print('No Transportation found with id $id');
-    }
-
+    final result = await db.query('transportasi');
     List<Transportasi> transportations = result.map((json) => Transportasi.fromMap(json)).toList();
+    for (var transportasi in transportations) {
+      print('Fetched Transportation: ${transportasi.nama}');
+    }
     return transportations;
   }
 
