@@ -32,6 +32,9 @@ class DatabasePengajuanDokumen {
       CREATE TABLE pengajuanDokumen(
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         title TEXT NOT NULL,
+        tanggalDokumen TEXT NOT NULL,
+        statusDokumen TEXT NOT NULL,
+        jenisDokumen TEXT NOT NULL,
         jumlahDokumen INTEGER NOT NULL,
         warnaBackground INTEGER NOT NULL
       )
@@ -87,12 +90,18 @@ class DatabasePengajuanDokumen {
 class PengajuanDokumen {
   final int? id;
   final String title;
+  final String tanggalDokumen;
+  final String statusDokumen;
+  final String jenisDokumen;
   final int jumlahDokumen;
   final int warnaBackground;
 
   PengajuanDokumen({
     this.id,
     required this.title,
+    required this.tanggalDokumen,
+    required this.statusDokumen,
+    required this.jenisDokumen,
     required this.jumlahDokumen,
     required this.warnaBackground,
   });
@@ -101,6 +110,9 @@ class PengajuanDokumen {
     return {
       'id': id,
       'title': title,
+      'tanggalDokumen': tanggalDokumen,
+      'statusDokumen': statusDokumen,
+      'jenisDokumen': jenisDokumen,
       'jumlahDokumen': jumlahDokumen,
       'warnaBackground': warnaBackground,
     };
@@ -110,6 +122,9 @@ class PengajuanDokumen {
     return PengajuanDokumen(
       id: map['id'] as int?,
       title: map['title'] as String,
+      tanggalDokumen: map['tanggalDokumen'] as String,
+      statusDokumen: map['statusDokumen'] as String,
+      jenisDokumen: map['jenisDokumen'] as String,
       jumlahDokumen: map['jumlahDokumen'] as int,
       warnaBackground: map['warnaBackground'] as int,
     );

@@ -79,14 +79,15 @@ class _PengajuanDokumenPageState extends State<PengajuanDokumenPage> {
               ),
             ),
             SizedBox(height: 10),
-            _buildStatusContainer(
-                'Kerusakan Jalan', 'Diajukan 10/07/2024', 'diproses'),
-            SizedBox(height: 10),
-            _buildStatusContainer(
-                'Kurang Infrastruktur', 'Diajukan 10/07/2024', 'diajukan'),
-            SizedBox(height: 10),
-            _buildStatusContainer(
-                'Lampu Lalu Lintas Mati', 'Diajukan 22/03/2024', 'selesai'),
+            for (var pengajuanDokumen in _pengajuanDokumens)
+              Padding(
+                padding: const EdgeInsets.only(bottom: 10),
+                child: _buildStatusContainer(
+                  pengajuanDokumen.title,
+                  pengajuanDokumen.tanggalDokumen,
+                  pengajuanDokumen.statusDokumen,
+                ),
+              ),
             SizedBox(height: 20),
             Center(
               child: Text(
@@ -104,7 +105,7 @@ class _PengajuanDokumenPageState extends State<PengajuanDokumenPage> {
               Padding(
                 padding: const EdgeInsets.only(bottom: 10),
                 child: _buildStatisticContainer(
-                  pengajuanDokumen.title,
+                  pengajuanDokumen.jenisDokumen,
                   pengajuanDokumen.jumlahDokumen.toString(),
                   Color(pengajuanDokumen.warnaBackground),
                 ),
@@ -116,7 +117,7 @@ class _PengajuanDokumenPageState extends State<PengajuanDokumenPage> {
     );
   }
 
-  Widget _buildStatusContainer(String title, String date, String status) {
+  Widget _buildStatusContainer(String title, String tanggalDokumen, String statusDokumen) {
     return Container(
       padding: EdgeInsets.all(16),
       decoration: BoxDecoration(
@@ -126,10 +127,6 @@ class _PengajuanDokumenPageState extends State<PengajuanDokumenPage> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [],
-          ),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -142,7 +139,7 @@ class _PengajuanDokumenPageState extends State<PengajuanDokumenPage> {
               ),
               SizedBox(height: 4),
               Text(
-                date,
+                tanggalDokumen,
                 style: TextStyle(
                   fontFamily: 'Ubuntu',
                 ),
@@ -150,7 +147,7 @@ class _PengajuanDokumenPageState extends State<PengajuanDokumenPage> {
             ],
           ),
           Text(
-            status,
+            statusDokumen,
             style: TextStyle(
               fontStyle: FontStyle.italic,
               fontWeight: FontWeight.w100,
@@ -162,7 +159,7 @@ class _PengajuanDokumenPageState extends State<PengajuanDokumenPage> {
     );
   }
 
-  Widget _buildStatisticContainer(String title, String jumlahDokumen, Color warnaBackground) {
+  Widget _buildStatisticContainer(String jenisDokumen, String jumlahDokumen, Color warnaBackground) {
     return Container(
       width: double.infinity,
       padding: EdgeInsets.all(16),
@@ -173,7 +170,7 @@ class _PengajuanDokumenPageState extends State<PengajuanDokumenPage> {
       child: Column(
         children: [
           Text(
-            title,
+            jenisDokumen,
             style: TextStyle(
               fontSize: 17,
               color: Colors.white,

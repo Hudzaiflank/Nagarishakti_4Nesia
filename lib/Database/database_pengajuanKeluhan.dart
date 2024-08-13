@@ -32,6 +32,9 @@ class DatabasePengajuanKeluhan {
       CREATE TABLE pengajuanKeluhan(
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         title TEXT NOT NULL,
+        tanggalKeluhan TEXT NOT NULL,
+        statusKeluhan TEXT NOT NULL,
+        jenisKeluhan TEXT NOT NULL,
         jumlahKeluhan INTEGER NOT NULL,
         warnaBackground INTEGER NOT NULL
       )
@@ -87,12 +90,18 @@ class DatabasePengajuanKeluhan {
 class PengajuanKeluhan {
   final int? id;
   final String title;
+  final String tanggalKeluhan;
+  final String statusKeluhan;
+  final String jenisKeluhan;
   final int jumlahKeluhan;
   final int warnaBackground;
 
   PengajuanKeluhan({
     this.id,
     required this.title,
+    required this.tanggalKeluhan,
+    required this.statusKeluhan,
+    required this.jenisKeluhan,
     required this.jumlahKeluhan,
     required this.warnaBackground,
   });
@@ -101,6 +110,9 @@ class PengajuanKeluhan {
     return {
       'id': id,
       'title': title,
+      'tanggalKeluhan': tanggalKeluhan,
+      'statusKeluhan': statusKeluhan,
+      'jenisKeluhan': jenisKeluhan,
       'jumlahKeluhan': jumlahKeluhan,
       'warnaBackground': warnaBackground,
     };
@@ -110,6 +122,9 @@ class PengajuanKeluhan {
     return PengajuanKeluhan(
       id: map['id'] as int?,
       title: map['title'] as String,
+      tanggalKeluhan: map['tanggalKeluhan'] as String,
+      statusKeluhan: map['statusKeluhan'] as String,
+      jenisKeluhan: map['jenisKeluhan'] as String,
       jumlahKeluhan: map['jumlahKeluhan'] as int,
       warnaBackground: map['warnaBackground'] as int,
     );
