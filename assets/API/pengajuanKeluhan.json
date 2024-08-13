@@ -1,19 +1,28 @@
 {
     "pengajuanKeluhan" : [
         {
-            "title": "Keluhan Masuk",
+            "title": "Kerusakan Jalan",
+            "tanggalKeluhan": "Diajukan 10/07/2024",
+            "statusKeluhan": "Diproses",
+            "jenisKeluhan": "Keluhan Masuk",
             "jumlahKeluhan": 7140,
             "warnaBackground": "0xFF173538"
         },
         {
-            "title": "Keluhan Ditangani",
+            "title": "Kurang Infrastruktur",
+            "tanggalKeluhan": "Diajukan 10/07/2024",
+            "statusKeluhan": "Diajukan",
+            "jenisKeluhan": "Keluhan Ditangani",
             "jumlahKeluhan": 1139,
             "warnaBackground": "0xFF327178"
         },
         {
-            "title": "Keluhan Selesai",
+            "title": "Lampu Lalu Lintas Mati",
+            "tanggalKeluhan": "Diajukan 22/03/2024",
+            "statusKeluhan": "Selesai",
+            "jenisKeluhan": "Keluhan Selesai",
             "jumlahKeluhan": 554,
-            "warnaBackground": "0xFF327178"
+            "warnaBackground": "0xFF4297A0"
         }
     ]
 }

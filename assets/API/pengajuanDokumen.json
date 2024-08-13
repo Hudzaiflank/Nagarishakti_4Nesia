@@ -1,19 +1,28 @@
 {
     "pengajuanDokumen" : [
         {
-            "title": "Dokumen Masuk",
+            "title": "AKTA KELAHIRAN",
+            "tanggalDokumen": "Diajukan 10/07/2024",
+            "statusDokumen": "Diproses",
+            "jenisDokumen": "Dokumen Masuk",
             "jumlahDokumen": 7140,
             "warnaBackground": "0xFF173538"
         },
         {
-            "title": "Dokumen Ditangani",
+            "title": "SURAT KEMATIAN",
+            "tanggalDokumen": "Diajukan 10/07/2024",
+            "statusDokumen": "Diajukan",
+            "jenisDokumen": "Dokumen Ditangani",
             "jumlahDokumen": 1139,
             "warnaBackground": "0xFF327178"
         },
         {
-            "title": "Dokumen Selesai",
+            "title": "PENGADUAN MASYARAKAT",
+            "tanggalDokumen": "Diajukan 22/03/2024",
+            "statusDokumen": "Selesai",
+            "jenisDokumen": "Dokumen Selesai",
             "jumlahDokumen": 554,
-            "warnaBackground": "0xFF327178"
+            "warnaBackground": "0xFF4297A0"
         }
     ]
 }

@@ -79,14 +79,14 @@ class DatabaseAktaKelahiran {
   }
 
   Future<void> updateAkta(Akta akta) async {
-  final db = await instance.database;
-  await db.update(
-    'aktaKelahiran',
-    akta.toMap(),
-    where: 'id = ?',
-    whereArgs: [akta.id],
-  );
-}
+    final db = await instance.database;
+    await db.update(
+      'aktaKelahiran',
+      akta.toMap(),
+      where: 'id = ?',
+      whereArgs: [akta.id],
+    );
+  }
 
   Future<List<Akta>> getAkta() async {
     final db = await instance.database;

@@ -473,6 +473,9 @@ Future<void> loadStatistikDokumenFromJson() async {
         final pengajuanDokumen = PengajuanDokumen(
           id: documentStatistic['id'],
           title: documentStatistic['title'], 
+          tanggalDokumen: documentStatistic['tanggalDokumen'],
+          statusDokumen: documentStatistic['statusDokumen'],
+          jenisDokumen: documentStatistic['jenisDokumen'],
           jumlahDokumen: documentStatistic['jumlahDokumen'], 
           warnaBackground: color,
         );
@@ -514,6 +517,9 @@ Future<void> loadStatistikKeluhanFromJson() async {
         final pengajuanKeluhan = PengajuanKeluhan(
           id: complainStatistic['id'],
           title: complainStatistic['title'], 
+          tanggalKeluhan: complainStatistic['tanggalKeluhan'],
+          statusKeluhan: complainStatistic['statusKeluhan'],
+          jenisKeluhan: complainStatistic['jenisKeluhan'],
           jumlahKeluhan: complainStatistic['jumlahKeluhan'], 
           warnaBackground: color,
         );

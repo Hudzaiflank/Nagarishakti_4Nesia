@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '/Database/database_pengajuanKeluhan.dart';
+import '../../Pengaduan-Masyarakat/pengaduan-masyarakat.dart';
 
 class PengajuanKeluhanPage extends StatefulWidget {
   const PengajuanKeluhanPage({super.key});
@@ -79,14 +80,15 @@ class _PengajuanKeluhanPageState extends State<PengajuanKeluhanPage> {
               ),
             ),
             SizedBox(height: 10),
-            _buildStatusContainer(
-                'Kerusakan Jalan', 'Diajukan 10/07/2024', 'diproses'),
-            SizedBox(height: 10),
-            _buildStatusContainer(
-                'Kurang Infrastruktur', 'Diajukan 10/07/2024', 'diajukan'),
-            SizedBox(height: 10),
-            _buildStatusContainer(
-                'Lampu Lalu Lintas Mati', 'Diajukan 22/03/2024', 'selesai'),
+            for (var pengajuanKeluhan in _pengajuanKeluhans)
+              Padding(
+                padding: const EdgeInsets.only(bottom: 10),
+                child: _buildStatusContainer(
+                  pengajuanKeluhan.title,
+                  pengajuanKeluhan.tanggalKeluhan,
+                  pengajuanKeluhan.statusKeluhan,
+                ),
+              ),
             SizedBox(height: 20),
             Center(
               child: Text(
@@ -104,7 +106,7 @@ class _PengajuanKeluhanPageState extends State<PengajuanKeluhanPage> {
               Padding(
                 padding: const EdgeInsets.only(bottom: 10),
                 child: _buildStatisticContainer(
-                  pengajuanKeluhan.title,
+                  pengajuanKeluhan.jenisKeluhan,
                   pengajuanKeluhan.jumlahKeluhan.toString(),
                   Color(pengajuanKeluhan.warnaBackground),
                 ),
@@ -118,7 +120,7 @@ class _PengajuanKeluhanPageState extends State<PengajuanKeluhanPage> {
     );
   }
 
-  Widget _buildStatusContainer(String title, String date, String status) {
+  Widget _buildStatusContainer(String title, String tanggalKeluhan, String statusKeluhan) {
     return Container(
       padding: EdgeInsets.all(16),
       decoration: BoxDecoration(
@@ -140,7 +142,7 @@ class _PengajuanKeluhanPageState extends State<PengajuanKeluhanPage> {
               ),
               SizedBox(height: 4),
               Text(
-                date,
+                tanggalKeluhan,
                 style: TextStyle(
                   fontFamily: 'Ubuntu',
                 ),
@@ -148,7 +150,7 @@ class _PengajuanKeluhanPageState extends State<PengajuanKeluhanPage> {
             ],
           ),
           Text(
-            status,
+            statusKeluhan,
             style: TextStyle(
               fontStyle: FontStyle.italic,
               fontWeight: FontWeight.w100,
@@ -160,7 +162,7 @@ class _PengajuanKeluhanPageState extends State<PengajuanKeluhanPage> {
     );
   }
 
-  Widget _buildStatisticContainer(String title, String jumlahKeluhan, Color warnaBackground) {
+  Widget _buildStatisticContainer(String jenisKeluhan, String jumlahKeluhan, Color warnaBackground) {
     return Container(
       width: double.infinity,
       padding: EdgeInsets.all(16),
@@ -171,7 +173,7 @@ class _PengajuanKeluhanPageState extends State<PengajuanKeluhanPage> {
       child: Column(
         children: [
           Text(
-            title,
+            jenisKeluhan,
             style: TextStyle(
               fontSize: 17,
               color: Colors.white,
@@ -197,25 +199,35 @@ class _PengajuanKeluhanPageState extends State<PengajuanKeluhanPage> {
   }
 
   Widget _buildButtonContainer(String title, IconData icon) {
-    return Container(
-      padding: EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: Color(0xFFE2DED0),
-        borderRadius: BorderRadius.circular(7),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(
-            title,
-            style: TextStyle(
-              fontFamily: 'Ubuntu',
-              fontWeight: FontWeight.bold,
-            ),
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => PengaduanMasyarakat(),
           ),
-          Icon(icon, color: Colors.black),
-        ],
+        );
+      },
+      child: Container(
+        padding: EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          color: Color(0xFFE2DED0),
+          borderRadius: BorderRadius.circular(7),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              title,
+              style: TextStyle(
+                fontFamily: 'Ubuntu',
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            Icon(icon, color: Colors.black),
+          ],
+        ),
       ),
-    );
+    ); 
   }
 }
