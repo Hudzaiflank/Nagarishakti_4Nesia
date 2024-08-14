@@ -6,11 +6,13 @@
 
 //TODO: buat sub judul tidak inline block jadi si icon download bisa di tengah
 //TODO: buat popup notifikasi
+import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart' show rootBundle;
 import '/Database/database_dokumen.dart'; 
 import 'package:path_provider/path_provider.dart';
-import 'dart:io';
-import 'package:flutter/services.dart' show rootBundle, ByteData;
+import 'dart:typed_data';
+import 'package:path/path.dart' as path;
 
 class PublicDocumentPage extends StatefulWidget {
   const PublicDocumentPage({super.key});
@@ -53,19 +55,34 @@ class _PublicDocumentPageState extends State<PublicDocumentPage> {
     }).toList();
   }
 
-  Future<void> _downloadFile(String filePath, String fileName) async {
+  Future<void> _downloadFile(String assetPath, String fileName) async {
     try {
-      final ByteData data = await rootBundle.load(filePath);
-      final documentDirectory = await getApplicationDocumentsDirectory();
-      final file = File('${documentDirectory.path}/$fileName');
+      final ByteData data = await rootBundle.load(assetPath);
+      final buffer = data.buffer.asUint8List();
+      final Directory directory = await _getDirectory();
+      final File file = File('${directory.path}/$fileName');
 
-      await file.writeAsBytes(data.buffer.asUint8List());
-      
-      // Show success dialog
-      _showNotification('Download $fileName berhasil');
+      await file.writeAsBytes(buffer);
+      _showNotification('File berhasil disalin ke ${file.path}');
     } catch (e) {
-      // Show failure dialog
-      _showNotification('Download $fileName gagal');
+      _showNotification('Gagal menyalin file: $e');
+    }
+  }
+
+  Future<Directory> _getDirectory() async {
+    if (Platform.isIOS) {
+      return await getApplicationDocumentsDirectory();
+    } else {
+      final dir = Directory('/storage/emulated/0/Download/');
+      if (!await dir.exists()) {
+        final externalDir = await getExternalStorageDirectory();
+        if (externalDir != null) {
+          return externalDir;
+        } else {
+          throw Exception('External storage directory not found');
+        }
+      }
+      return dir;
     }
   }
 
@@ -228,7 +245,7 @@ Widget documentCard({
   required String date,
   required String time,
   required String fileUrl,
-  required Function(String, String) onDownload,
+  required Future<void> Function(String, String) onDownload,
 }) {
   return Card(
     color: Color(0xFFFBFAF8),
@@ -274,7 +291,7 @@ Widget documentCard({
                       width: 24, height: 24),
                   onPressed: () {
                     // TODO: thin buat handle download masing masing disini, panggil aja pk atau id nya
-                    onDownload(fileUrl, '$title.pdf');
+                    onDownload(fileUrl, path.basename(fileUrl));
                   },
                 ),
               ),
