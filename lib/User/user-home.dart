@@ -1,6 +1,8 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '/Database/database_berita.dart'; 
+import '/Database/database_detailBerita.dart';
 import 'Profile/user-profile.dart';
 import 'user-Timeline-Festival.dart';
 import 'Destination/user-Destination-page.dart';
@@ -11,6 +13,7 @@ import './Layanan-Kependudukan/Pendaftaran-AktaLahir-kematian/Akta-lahir.dart';
 import './Layanan-Kependudukan/Pendaftaran-AktaLahir-kematian/Surat-kematian.dart';
 import './Layanan-Kependudukan/Pembaruan-data/perpindahan-kependudukan.dart';
 import 'Informasi-publik/berita/news-page.dart';
+import 'Informasi-publik/berita/detail-news-page.dart';
 import 'Pengaduan-Masyarakat/pengaduan-masyarakat.dart';
 import 'Informasi-publik/Dokumen-publik/Public-Document.dart';
 import 'Informasi-publik/Agenda-Pemerintah/Agenda-pemerintahan.dart';
@@ -33,6 +36,8 @@ class _UserHomeState extends State<UserHome> {
     'assets/contoh-gambar.png',
   ];
 
+  List<Berita> _beritas = [];
+
   bool isLoggedIn = false;
   String username = '';
 
@@ -40,6 +45,7 @@ class _UserHomeState extends State<UserHome> {
   void initState() {
     super.initState();
     checkUserLoginStatus();
+    loadBeritas();
   }
 
   void checkUserLoginStatus() async {
@@ -51,6 +57,42 @@ class _UserHomeState extends State<UserHome> {
       isLoggedIn = loggedIn;
       username = loggedInUsername ?? 'Guest';
     });
+  }
+
+  Future<void> loadBeritas() async {
+    final DatabaseBerita db = DatabaseBerita.instance;
+    final List<Berita> beritas = await db.getBerita();
+    setState(() {
+      _beritas = beritas;
+    });
+  }
+
+  Future<void> _navigateToDetail(Berita news) async {
+    final DatabaseDetailBerita dbDetail = DatabaseDetailBerita.instance;
+    if (news.id != null) {
+      final List<DetailBerita> detailBeritaList = await dbDetail.getDetailBerita(news.id!);
+
+      if (detailBeritaList.isNotEmpty) {
+        final DetailBerita newsDetail = detailBeritaList.first;
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => DetailNewsPage(
+              news: news,
+              newsDetail: newsDetail,
+            ),
+          ),
+        );
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Detail berita tidak ditemukan')),
+        );
+      }
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('ID berita tidak valid')),
+      );
+    }
   }
 
   @override
@@ -1265,39 +1307,49 @@ class _UserHomeState extends State<UserHome> {
                           child: SingleChildScrollView(
                             scrollDirection: Axis.horizontal,
                             child: Row(
-                              children: List.generate(4, (index) {
+                              children: List.generate(_beritas.length, (index) {
+                                final news = _beritas[index];
                                 return Container(
                                   margin: const EdgeInsets.symmetric(
                                       horizontal: 5.0),
                                   width: 150,
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(7.0),
-                                    color: Colors.white,
+                                    color: const Color(0xFFC2DEDC),
                                   ),
                                   child: Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                      ClipRRect(
-                                        borderRadius:
-                                            const BorderRadius.vertical(
-                                          top: Radius.circular(7.0),
-                                        ),
-                                        child: Image.asset(
-                                          'assets/contoh-gambar.png',
-                                          height: 100,
-                                          width: double.infinity,
-                                          fit: BoxFit.cover,
+                                      GestureDetector(
+                                        onTap: () async {
+                                          await _navigateToDetail(news);
+                                        },
+                                        child: ClipRRect(
+                                          borderRadius: const BorderRadius.vertical(
+                                            top: Radius.circular(7.0),
+                                          ),
+                                          child: Image.asset(
+                                            news.image,
+                                            height: 100,
+                                            width: double.infinity,
+                                            fit: BoxFit.cover,
+                                          ),
                                         ),
                                       ),
-                                      Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Text(
-                                          //TODO HARUS DIUBAH
-                                          'Judul Berita $index',
-                                          style: const TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontFamily: 'Ubuntu',
+                                      GestureDetector(
+                                        onTap: () async {
+                                          await _navigateToDetail(news);
+                                        },
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Text(
+                                            news.title,
+                                            style: const TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontFamily: 'Ubuntu',
+                                            ),
+                                            textAlign: TextAlign.justify,
                                           ),
                                         ),
                                       ),
