@@ -1,6 +1,54 @@
 {
     "dokumen" : [
         {
+            "title": "Laporan Akuntabilitas Kinerja Instansi Pemerintah (LAKIP) 2024",
+            "date": "13/08/2024",
+            "time": "10:15 WIB",
+            "fileUrl": "assets/Contoh.pdf"
+        },
+        {
+            "title": "Laporan Realisasi APBD Semester I 2024",
+            "date": "10/08/2024",
+            "time": "14:00 WIB",
+            "fileUrl": "assets/Contoh.pdf"
+        },
+        {
+            "title": "Peraturan Daerah Kota Bekasi No. 4 Tahun 2024",
+            "date": "05/08/2024",
+            "time": "09:00 WIB",
+            "fileUrl": "assets/Contoh.pdf"
+        },
+        {
+            "title": "Peraturan Wali Kota Bekasi No. 12 Tahun 2024",
+            "date": "01/08/2024",
+            "time": "11:30 WIB",
+            "fileUrl": "assets/Contoh.pdf"
+        },
+        {
+            "title": "Laporan Evaluasi Kinerja OPD 2024",
+            "date": "27/07/2024",
+            "time": "08:45 WIB",
+            "fileUrl": "assets/Contoh.pdf"
+        },
+        {
+            "title": "Rencana Aksi Daerah Penanggulangan Kemiskinan 2024",
+            "date": "22/07/2024",
+            "time": "15:20 WIB",
+            "fileUrl": "assets/Contoh.pdf"
+        },
+        {
+            "title": "Rencana Tata Ruang Wilayah (RTRW) 2024-2034",
+            "date": "18/07/2024",
+            "time": "10:00 WIB",
+            "fileUrl": "assets/Contoh.pdf"
+        },
+        {
+            "title": "Laporan Pelaksanaan Anggaran Triwulan II 2024",
+            "date": "14/07/2024",
+            "time": "13:00 WIB",
+            "fileUrl": "assets/Contoh.pdf"
+        },
+        {
             "title": "Rencana Kerja Perangkat Daerah (RKPD) 2024",
             "date": "12/07/2024",
             "time": "08:00 WIB",
@@ -22,6 +70,102 @@
             "title": "Laporan Keterangan Pertanggungjawaban 2023",
             "date": "12/07/2024",
             "time": "08:00 WIB",
+            "fileUrl": "assets/Contoh.pdf"
+        },
+        {
+            "title": "Peraturan Daerah Kota Bekasi No. 3 Tahun 2024",
+            "date": "10/07/2024",
+            "time": "09:45 WIB",
+            "fileUrl": "assets/Contoh.pdf"
+        },
+        {
+            "title": "Peraturan Wali Kota Bekasi No. 10 Tahun 2024",
+            "date": "07/07/2024",
+            "time": "08:15 WIB",
+            "fileUrl": "assets/Contoh.pdf"
+        },
+        {
+            "title": "Rencana Strategis (Renstra) Dinas Pendidikan 2024-2029",
+            "date": "03/07/2024",
+            "time": "10:00 WIB",
+            "fileUrl": "assets/Contoh.pdf"
+        },
+        {
+            "title": "Rencana Pembangunan dan Pengembangan Perumahan dan Kawasan Permukiman 2024",
+            "date": "30/06/2024",
+            "time": "14:30 WIB",
+            "fileUrl": "assets/Contoh.pdf"
+        },
+        {
+            "title": "Laporan Kinerja Tahunan Dinas Kesehatan 2023",
+            "date": "25/06/2024",
+            "time": "09:20 WIB",
+            "fileUrl": "assets/Contoh.pdf"
+        },
+        {
+            "title": "Laporan Pelaksanaan Kegiatan Pembangunan 2023",
+            "date": "21/06/2024",
+            "time": "08:00 WIB",
+            "fileUrl": "assets/Contoh.pdf"
+        },
+        {
+            "title": "Rencana Pembangunan Kawasan Ekonomi Khusus 2024",
+            "date": "15/06/2024",
+            "time": "11:45 WIB",
+            "fileUrl": "assets/Contoh.pdf"
+        },
+        {
+            "title": "Laporan Pengelolaan Lingkungan Hidup Daerah 2023",
+            "date": "10/06/2024",
+            "time": "13:00 WIB",
+            "fileUrl": "assets/Contoh.pdf"
+        },
+        {
+            "title": "Peraturan Wali Kota Bekasi No. 8 Tahun 2024",
+            "date": "05/06/2024",
+            "time": "15:30 WIB",
+            "fileUrl": "assets/Contoh.pdf"
+        },
+        {
+            "title": "Rencana Detail Tata Ruang (RDTR) 2024",
+            "date": "30/05/2024",
+            "time": "12:00 WIB",
+            "fileUrl": "assets/Contoh.pdf"
+        },
+        {
+            "title": "Laporan Pertanggungjawaban Penggunaan Dana Desa 2023",
+            "date": "25/05/2024",
+            "time": "09:00 WIB",
+            "fileUrl": "assets/Contoh.pdf"
+        },
+        {
+            "title": "Laporan Monitoring dan Evaluasi Program Pembangunan 2023",
+            "date": "20/05/2024",
+            "time": "14:00 WIB",
+            "fileUrl": "assets/Contoh.pdf"
+        },
+        {
+            "title": "Laporan Realisasi Anggaran Tahunan 2023",
+            "date": "15/05/2024",
+            "time": "10:00 WIB",
+            "fileUrl": "assets/Contoh.pdf"
+        },
+        {
+            "title": "Rencana Kerja Dinas Sosial 2024",
+            "date": "10/05/2024",
+            "time": "09:30 WIB",
+            "fileUrl": "assets/Contoh.pdf"
+        },
+        {
+            "title": "Peraturan Daerah Kota Bekasi No. 2 Tahun 2024",
+            "date": "05/05/2024",
+            "time": "08:00 WIB",
+            "fileUrl": "assets/Contoh.pdf"
+        },
+        {
+            "title": "Laporan Realisasi APBD Semester II 2023",
+            "date": "01/05/2024",
+            "time": "11:00 WIB",
             "fileUrl": "assets/Contoh.pdf"
         }
     ]

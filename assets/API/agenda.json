@@ -1,29 +1,104 @@
 {
-    "agenda" : [
+    "agenda": [
+        {
+            "judul": "Rapat Koordinasi Pengamanan Natal dan Tahun Baru 2025",
+            "waktu": "20 Desember 2024 14:00 - 16:00 WIB",
+            "lokasi": "Ruang Rapat Utama, Balai Kota Bekasi"
+        },
+        {
+            "judul": "Pembahasan Rencana Kerja Pemerintah Daerah (RKPD) 2025",
+            "waktu": "15 Desember 2024 09:00 - 12:00 WIB",
+            "lokasi": "Gedung Serbaguna Kota Bekasi"
+        },
+        {
+            "judul": "Rapat Persiapan Peringatan Hari Ibu ke-96",
+            "waktu": "12 Desember 2024 09:00 - 11:00 WIB",
+            "lokasi": "Ruang Rapat Utama, Balai Kota Bekasi"
+        },
+        {
+            "judul": "Rapat Evaluasi Program Kerja Tahun 2024",
+            "waktu": "5 Desember 2024 09:00 - 11:00 WIB",
+            "lokasi": "Ruang Rapat Utama, Balai Kota Bekasi"
+        },
+        {
+            "judul": "Rapat Evaluasi Kinerja Perangkat Daerah",
+            "waktu": "30 November 2024 14:00 - 16:00 WIB",
+            "lokasi": "Ruang Rapat Utama, Balai Kota Bekasi"
+        },
+        {
+            "judul": "Rapat Pembahasan APBD Perubahan 2024",
+            "waktu": "25 November 2024 09:00 - 12:00 WIB",
+            "lokasi": "Gedung Paripurna DPRD Kota Bekasi"
+        },
+        {
+            "judul": "Sosialisasi Program Bantuan Langsung Tunai",
+            "waktu": "18 November 2024 10:00 - 12:00 WIB",
+            "lokasi": "Kelurahan Bekasi Jaya"
+        },
+        {
+            "judul": "Penyuluhan Kesehatan Masyarakat",
+            "waktu": "10 November 2024 08:00 - 10:00 WIB",
+            "lokasi": "Puskesmas Bekasi Timur"
+        },
+        {
+            "judul": "Rapat Penyusunan Program Kerja 2025",
+            "waktu": "28 Oktober 2024 09:00 - 11:00 WIB",
+            "lokasi": "Ruang Rapat Utama, Balai Kota Bekasi"
+        },
+        {
+            "judul": "Rapat Koordinasi Pengendalian Inflasi Daerah",
+            "waktu": "18 Oktober 2024 13:00 - 15:00 WIB",
+            "lokasi": "Ruang Rapat Utama, Balai Kota Bekasi"
+        },
+        {
+            "judul": "Peresmian Ruang Publik Terpadu Ramah Anak (RPTRA)",
+            "waktu": "10 Oktober 2024 09:00 - 11:00 WIB",
+            "lokasi": "Kelurahan Margahayu"
+        },
+        {
+            "judul": "Musyawarah Perencanaan Pembangunan (Musrenbang) 2025",
+            "waktu": "5 Oktober 2024 08:00 - 12:00 WIB",
+            "lokasi": "Balai Pertemuan Kota Bekasi"
+        },
+        {
+            "judul": "Rapat Koordinasi Program Kerja 2025",
+            "waktu": "15 September 2024 09:00 - 11:00 WIB",
+            "lokasi": "Ruang Rapat Utama, Balai Kota Bekasi"
+        },
+        {
+            "judul": "Pembukaan Pameran UMKM Kota Bekasi",
+            "waktu": "22 Agustus 2024 10:00 - 17:00 WIB",
+            "lokasi": "Gedung Serbaguna Kota Bekasi"
+        },
+        {
+            "judul": "Rockpot Kesehatan",
+            "waktu": "20 Agustus 2024 06:00 - 08:00 WIB",
+            "lokasi": "Stadion Utama Kota Bekasi"
+        },
+        {
+            "judul": "Penyerahan Bantuan Sosial",
+            "waktu": "12 Agustus 2024 08:00 - 09:00 WIB",
+            "lokasi": "Balai Kota Bekasi"
+        },
+        {
+            "judul": "Kunjungan Kerja ke Seluruh Perangkat Daerah Pemerintah Kota Bekasi (Perumda Aneka Usaha)",
+            "waktu": "11 Agustus 2024 08:00 - 09:00 WIB",
+            "lokasi": "Perumda Aneka Usaha"
+        },
+        {
+            "judul": "(DL) Healthy Cities Summit ke-6 Tahun 2024",
+            "waktu": "28 Juli 2024 09:00 - 12:00 WIB",
+            "lokasi": "Grand Inna Samudra Beach, Sukabumi"
+        },
         {
             "judul": "Rapat Paripurna Pengucapan Sumpah/Janji Anggota DPRD Masa Jabatan 2024-2029",
             "waktu": "4 Juli 2024 09:00 - 12:00 WIB",
             "lokasi": "Gedung Paripurna DPRD Kota Bekasi"
         },
         {
-            "judul": "Kunjungan kerja ke seluruh Perangkat Daerah Pemerintah Kota Bekasi (Perumda Aneka Usaha)",
-            "waktu": "11 Agustus 2024  08:00 - 09:00 WIB",
-            "lokasi": "Perumda Aneka Usaha"
-        },
-        {
-            "judul": "Penyerahan Bantuan Sosial",
-            "waktu": "12 Agustus 2024  08:00 - 09:00 WIB",
-            "lokasi": "Balai Kota Bekasi"
-        },
-        {
-            "judul": "Rockpot Kesehatan",
-            "waktu": "20 Agustus 2024  06:00 - 08:00 WIB",
-            "lokasi": "Stadion Utama Kota Bekasi"
-        },
-        {
-            "judul": "(DL) Healthy Cities summit ke-6 tahun 2024",
-            "waktu": "28 Juli 2024  09:00 - 12:00 WIB",
-            "lokasi": "Grand Inna Samudra Beach, Sukabumi"
+            "judul": "Peringatan Hari Jadi Kota Bekasi ke-27",
+            "waktu": "10 Maret 2024 07:00 - 12:00 WIB",
+            "lokasi": "Alun-Alun Kota Bekasi"
         }
     ]
 }

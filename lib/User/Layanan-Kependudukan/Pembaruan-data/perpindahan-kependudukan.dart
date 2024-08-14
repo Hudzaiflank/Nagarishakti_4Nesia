@@ -109,52 +109,371 @@ class _PerpindahanKependudukanState extends State<PerpindahanKependudukan> {
     });
   }
 
+  // void _submitForm() async {
+  //   if (_formKey.currentState!.validate()) {
+  //     _formKey.currentState!.save();
+
+  //     // Validasi hanya pada file yang diperlukan sesuai dengan alasan pembuatan yang dipilih
+  //     bool isValid = true;
+
+  //     if (_alasanPembuatan == 'Surat Keterangan Pindah') {
+  //       if (_ktpPemohon == null || _kartuKeluarga == null) {
+  //         isValid = false;
+  //         print("Error: _ktpPemohon or _kartuKeluarga is null for Surat Keterangan Pindah.");
+  //       }
+  //     } else if (_alasanPembuatan == 'Surat Keterangan Pindah Luar Negeri (SKPLN)') {
+  //       if (_formulirF102 == null || _formulirF103 == null) {
+  //         isValid = false;
+  //         print("Error: _formulirF102 or _formulirF103 is null for Surat Keterangan Pindah Luar Negeri (SKPLN).");
+  //       }
+  //     }
+
+  //     if (isValid) {
+  //       final newPerpindahan = Perpindahan(
+  //         kkPemohon: _kkPemohon!,
+  //         nikPemohon: _nikPemohon!,
+  //         namaPemohon: _namaPemohon!,
+  //         kedudukanPemohon: _kedudukanPemohon!,
+  //         alasanPembuatan: _alasanPembuatan!,
+  //         alamatAsal: _alamatAsal!,
+  //         rtAsal: _rtAsal!,
+  //         rwAsal: _rwAsal!,
+  //         kodePosAsal: _kodePosAsal!,
+  //         provinsiAsal: _provinsiAsal!,
+  //         kotaKapubatenAsal: _kotaKapubatenAsal!,
+  //         kecamatanAsal: _kecamatanAsal!,
+  //         desaKelurahanAsal: _desaKelurahanAsal!,
+  //         alamatTujuanDaerah: _alamatTujuanDaerah!,
+  //         rtTujuan: _rtTujuan!,
+  //         rwTujuan: _rwTujuan!,
+  //         kodePosTujuan: _kodePosTujuan!,
+  //         provinsiTujuan: _provinsiTujuan!,
+  //         kotaKabupatenTujuan: _kotaKabupatenTujuan!,
+  //         kecamatanTujuan: _kecamatanTujuan!,
+  //         desaKelurahanTujuan: _desaKelurahanTujuan!,
+  //         alasanPerpindahan: _alasanPerpindahan!,
+  //         alasanPerpindahanLainnya: _alasanPerpindahanLainnya!,
+  //         jenisPerpindahan: _jenisPerpindahan!,
+  //         kepindahanAnggotaKeluarga: _kepindahanAnggotaKeluarga!,
+  //         alamatTujuanNegara: _alamatTujuanNegara!,
+  //         kodeNegara: _kodeNegara!,
+  //         namaPenanggungJawab: _namaPenanggungJawab!,
+  //         tanggalPerpindahan: _selectedDatePerpindahan!,
+  //         nomorHandphone: _nomorHandphone!,
+  //         namaPelapor: _namaPelapor!,
+  //         ktpPemohon: _ktpPemohon!.path,
+  //         kartuKeluarga: _kartuKeluarga!.path,
+  //         formulirF102: _formulirF102!.path,
+  //         formulirF103: _formulirF103!.path,
+  //       );
+
+  //       final dbPerpindahan = DatabasePerpindahan.instance;
+  //       await dbPerpindahan.insertPerpindahanKependudukan(newPerpindahan);
+
+  //       Navigator.pop(context);
+  //     } else {
+  //       print("Error: Required documents are missing based on the selected Alasan Pembuatan.");
+  //     }
+  //   }
+  // }
+
+  // void _submitForm() async {
+  //   if (_formKey.currentState!.validate()) {
+  //     _formKey.currentState!.save();
+
+  //     // Cek dan log setiap field yang null
+  //     if (_kkPemohon == null) {
+  //       print("Error: _kkPemohon is null.");
+  //     }
+  //     if (_nikPemohon == null) {
+  //       print("Error: _nikPemohon is null.");
+  //     }
+  //     if (_namaPemohon == null) {
+  //       print("Error: _namaPemohon is null.");
+  //     }
+  //     if (_kedudukanPemohon == null) {
+  //       print("Error: _kedudukanPemohon is null.");
+  //     }
+  //     if (_alasanPembuatan == null) {
+  //       print("Error: _alasanPembuatan is null.");
+  //     }
+  //     if (_alamatAsal == null) {
+  //       print("Error: _alamatAsal is null.");
+  //     }
+  //     if (_rtAsal == null) {
+  //       print("Error: _rtAsal is null.");
+  //     }
+  //     if (_rwAsal == null) {
+  //       print("Error: _rwAsal is null.");
+  //     }
+  //     if (_kodePosAsal == null) {
+  //       print("Error: _kodePosAsal is null.");
+  //     }
+  //     if (_provinsiAsal == null) {
+  //       print("Error: _provinsiAsal is null.");
+  //     }
+  //     if (_kotaKapubatenAsal == null) {
+  //       print("Error: _kotaKapubatenAsal is null.");
+  //     }
+  //     if (_kecamatanAsal == null) {
+  //       print("Error: _kecamatanAsal is null.");
+  //     }
+  //     if (_desaKelurahanAsal == null) {
+  //       print("Error: _desaKelurahanAsal is null.");
+  //     }
+  //     if (_alamatTujuanDaerah == null) {
+  //       print("Error: _alamatTujuanDaerah is null.");
+  //     }
+  //     if (_rtTujuan == null) {
+  //       print("Error: _rtTujuan is null.");
+  //     }
+  //     if (_rwTujuan == null) {
+  //       print("Error: _rwTujuan is null.");
+  //     }
+  //     if (_kodePosTujuan == null) {
+  //       print("Error: _kodePosTujuan is null.");
+  //     }
+  //     if (_provinsiTujuan == null) {
+  //       print("Error: _provinsiTujuan is null.");
+  //     }
+  //     if (_kotaKabupatenTujuan == null) {
+  //       print("Error: _kotaKabupatenTujuan is null.");
+  //     }
+  //     if (_kecamatanTujuan == null) {
+  //       print("Error: _kecamatanTujuan is null.");
+  //     }
+  //     if (_desaKelurahanTujuan == null) {
+  //       print("Error: _desaKelurahanTujuan is null.");
+  //     }
+  //     if (_alasanPerpindahan == null) {
+  //       print("Error: _alasanPerpindahan is null.");
+  //     }
+  //     if (_alasanPerpindahanLainnya == null) {
+  //       print("Error: _alasanPerpindahanLainnya is null.");
+  //     }
+  //     if (_jenisPerpindahan == null) {
+  //       print("Error: _jenisPerpindahan is null.");
+  //     }
+  //     if (_kepindahanAnggotaKeluarga == null) {
+  //       print("Error: _kepindahanAnggotaKeluarga is null.");
+  //     }
+  //     if (_alamatTujuanNegara == null) {
+  //       print("Error: _alamatTujuanNegara is null.");
+  //     }
+  //     if (_kodeNegara == null) {
+  //       print("Error: _kodeNegara is null.");
+  //     }
+  //     if (_namaPenanggungJawab == null) {
+  //       print("Error: _namaPenanggungJawab is null.");
+  //     }
+  //     if (_selectedDatePerpindahan == null) {
+  //       print("Error: _selectedDatePerpindahan is null.");
+  //     }
+  //     if (_nomorHandphone == null) {
+  //       print("Error: _nomorHandphone is null.");
+  //     }
+  //     if (_namaPelapor == null) {
+  //       print("Error: _namaPelapor is null.");
+  //     }
+  //     if (_ktpPemohon == null) {
+  //       print("Error: _ktpPemohon is null.");
+  //     }
+  //     if (_kartuKeluarga == null) {
+  //       print("Error: _kartuKeluarga is null.");
+  //     }
+  //     if (_formulirF102 == null) {
+  //       print("Error: _formulirF102 is null.");
+  //     }
+  //     if (_formulirF103 == null) {
+  //       print("Error: _formulirF103 is null.");
+  //     }
+
+  //     // Jika semua field sudah diisi, lakukan proses penyimpanan
+  //     if (_kkPemohon != null &&
+  //         _nikPemohon != null &&
+  //         _namaPemohon != null &&
+  //         _kedudukanPemohon != null &&
+  //         _alasanPembuatan != null &&
+  //         _alamatAsal != null &&
+  //         _rtAsal != null &&
+  //         _rwAsal != null &&
+  //         _kodePosAsal != null &&
+  //         _provinsiAsal != null &&
+  //         _kotaKapubatenAsal != null &&
+  //         _kecamatanAsal != null &&
+  //         _desaKelurahanAsal != null &&
+  //         _alamatTujuanDaerah != null &&
+  //         _rtTujuan != null &&
+  //         _rwTujuan != null &&
+  //         _kodePosTujuan != null &&
+  //         _provinsiTujuan != null &&
+  //         _kotaKabupatenTujuan != null &&
+  //         _kecamatanTujuan != null &&
+  //         _desaKelurahanTujuan != null &&
+  //         _alasanPerpindahan != null &&
+  //         _alasanPerpindahanLainnya != null &&
+  //         _jenisPerpindahan != null &&
+  //         _kepindahanAnggotaKeluarga != null &&
+  //         _alamatTujuanNegara != null &&
+  //         _kodeNegara != null &&
+  //         _namaPenanggungJawab != null &&
+  //         _selectedDatePerpindahan != null &&
+  //         _nomorHandphone != null &&
+  //         _namaPelapor != null &&
+  //         _ktpPemohon != null &&
+  //         _kartuKeluarga != null &&
+  //         _formulirF102 != null &&
+  //         _formulirF103 != null) {
+
+  //       final newPerpindahan = Perpindahan(
+  //         kkPemohon: _kkPemohon!,
+  //         nikPemohon: _nikPemohon!,
+  //         namaPemohon: _namaPemohon!,
+  //         kedudukanPemohon: _kedudukanPemohon!,
+  //         alasanPembuatan: _alasanPembuatan!,
+  //         alamatAsal: _alamatAsal!,
+  //         rtAsal: _rtAsal!,
+  //         rwAsal: _rwAsal!,
+  //         kodePosAsal: _kodePosAsal!,
+  //         provinsiAsal: _provinsiAsal!,
+  //         kotaKapubatenAsal: _kotaKapubatenAsal!,
+  //         kecamatanAsal: _kecamatanAsal!,
+  //         desaKelurahanAsal: _desaKelurahanAsal!,
+  //         alamatTujuanDaerah: _alamatTujuanDaerah!,
+  //         rtTujuan: _rtTujuan!,
+  //         rwTujuan: _rwTujuan!,
+  //         kodePosTujuan: _kodePosTujuan!,
+  //         provinsiTujuan: _provinsiTujuan!,
+  //         kotaKabupatenTujuan: _kotaKabupatenTujuan!,
+  //         kecamatanTujuan: _kecamatanTujuan!,
+  //         desaKelurahanTujuan: _desaKelurahanTujuan!,
+  //         alasanPerpindahan: _alasanPerpindahan!,
+  //         alasanPerpindahanLainnya: _alasanPerpindahanLainnya!,
+  //         jenisPerpindahan: _jenisPerpindahan!,
+  //         kepindahanAnggotaKeluarga: _kepindahanAnggotaKeluarga!,
+  //         alamatTujuanNegara: _alamatTujuanNegara!,
+  //         kodeNegara: _kodeNegara!,
+  //         namaPenanggungJawab: _namaPenanggungJawab!,
+  //         tanggalPerpindahan: _selectedDatePerpindahan!,
+  //         nomorHandphone: _nomorHandphone!,
+  //         namaPelapor: _namaPelapor!,
+  //         ktpPemohon: _ktpPemohon!.path,
+  //         kartuKeluarga: _kartuKeluarga!.path,
+  //         formulirF102: _formulirF102!.path,
+  //         formulirF103: _formulirF103!.path,
+  //       );
+
+  //       final dbPerpindahan = DatabasePerpindahan.instance;
+  //       await dbPerpindahan.insertPerpindahanKependudukan(newPerpindahan);
+
+  //       Navigator.pop(context);
+  //     } else {
+  //       // Handle jika ada field yang null
+  //       print("Error: One or more fields are null.");
+  //     }
+  //   }
+  // }
+
   void _submitForm() async {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
 
-      final newPerpindahan = Perpindahan(
-        kkPemohon: _kkPemohon!,
-        nikPemohon: _nikPemohon!,
-        namaPemohon: _namaPemohon!,
-        kedudukanPemohon: _kedudukanPemohon!,
-        alasanPembuatan: _alasanPembuatan!,
-        alamatAsal: _alamatAsal!,
-        rtAsal: _rtAsal!,
-        rwAsal: _rwAsal!,
-        kodePosAsal: _kodePosAsal!,
-        provinsiAsal: _provinsiAsal!,
-        kotaKapubatenAsal: _kotaKapubatenAsal!,
-        kecamatanAsal: _kecamatanAsal!,      
-        desaKelurahanAsal: _desaKelurahanAsal!,
-        alamatTujuanDaerah: _alamatTujuanDaerah!,      
-        rtTujuan: _rtTujuan!,
-        rwTujuan: _rwTujuan!,
-        kodePosTujuan: _kodePosTujuan!,
-        provinsiTujuan: _provinsiTujuan!,
-        kotaKabupatenTujuan: _kotaKabupatenTujuan!,
-        kecamatanTujuan: _kecamatanTujuan!,
-        desaKelurahanTujuan: _desaKelurahanTujuan!,
-        alasanPerpindahan: _alasanPerpindahan!, 
-        alasanPerpindahanLainnya: _alasanPerpindahanLainnya!,
-        jenisPerpindahan: _jenisPerpindahan!,
-        kepindahanAnggotaKeluarga: _kepindahanAnggotaKeluarga!,      
-        alamatTujuanNegara: _alamatTujuanNegara!,
-        kodeNegara: _kodeNegara!,  
-        namaPenanggungJawab: _namaPenanggungJawab!,
-        tanggalPerpindahan: _selectedDatePerpindahan!,      
-        nomorHandphone: _nomorHandphone!,
-        namaPelapor: _namaPelapor!,       
-        ktpPemohon: _ktpPemohon!.path,
-        kartuKeluarga: _kartuKeluarga!.path,
-        formulirF102: _formulirF102!.path,
-        formulirF103: _formulirF103!.path,
-      );
+      // Cek dan log setiap field yang null berdasarkan alasan pembuatan
+      List<String> nullFields = [];
+      if (_alasanPembuatan == 'Surat Keterangan Pindah') {
+        // Validasi untuk 'Surat Keterangan Pindah'
+        if (_rtTujuan == null) nullFields.add('_rtTujuan');
+        if (_rwTujuan == null) nullFields.add('_rwTujuan');
+        if (_kodePosTujuan == null) nullFields.add('_kodePosTujuan');
+        if (_provinsiTujuan == null) nullFields.add('_provinsiTujuan');
+        if (_kotaKabupatenTujuan == null) nullFields.add('_kotaKabupatenTujuan');
+        if (_kecamatanTujuan == null) nullFields.add('_kecamatanTujuan');
+        if (_desaKelurahanTujuan == null) nullFields.add('_desaKelurahanTujuan');
+        if (_alasanPerpindahan == null) nullFields.add('_alasanPerpindahan');
+        if (_alasanPerpindahanLainnya == null) nullFields.add('_alasanPerpindahanLainnya');
+        if (_jenisPerpindahan == null) nullFields.add('_jenisPerpindahan');
+        if (_kepindahanAnggotaKeluarga == null) nullFields.add('_kepindahanAnggotaKeluarga');
+        if (_ktpPemohon == null) nullFields.add('_ktpPemohon');
+        if (_kartuKeluarga == null) nullFields.add('_kartuKeluarga');
+      } else if (_alasanPembuatan == 'Surat Keterangan Pindah Luar Negeri (SKPLN)') {
+        // Validasi untuk 'Surat Keterangan Pindah Luar Negeri (SKPLN)'
+        if (_alamatTujuanNegara == null) nullFields.add('_alamatTujuanNegara');
+        if (_kodeNegara == null) nullFields.add('_kodeNegara');
+        if (_namaPenanggungJawab == null) nullFields.add('_namaPenanggungJawab');
+        if (_selectedDatePerpindahan == null) nullFields.add('_selectedDatePerpindahan');
+        if (_nomorHandphone == null) nullFields.add('_nomorHandphone');
+        if (_namaPelapor == null) nullFields.add('_namaPelapor');
+        if (_formulirF102 == null) nullFields.add('_formulirF102');
+        if (_formulirF103 == null) nullFields.add('_formulirF103');
+      }
 
-      final dbPerpindahan = DatabasePerpindahan.instance;
-      await dbPerpindahan.insertPerpindahanKependudukan(newPerpindahan);
+      if (nullFields.isNotEmpty) {
+        print("Error: The following fields are null: ${nullFields.join(', ')}");
+        return;
+      }
 
-      Navigator.pop(context);
+      // Validasi tambahan berdasarkan alasan pembuatan
+      bool isValid = true;
+      if (_alasanPembuatan == 'Surat Keterangan Pindah') {
+        if (_ktpPemohon == null || _kartuKeluarga == null) {
+          isValid = false;
+          print("Error: _ktpPemohon or _kartuKeluarga is null for Surat Keterangan Pindah.");
+        }
+      } else if (_alasanPembuatan == 'Surat Keterangan Pindah Luar Negeri (SKPLN)') {
+        if (_formulirF102 == null || _formulirF103 == null) {
+          isValid = false;
+          print("Error: _formulirF102 or _formulirF103 is null for Surat Keterangan Pindah Luar Negeri (SKPLN).");
+        }
+      }
+
+      if (isValid) {
+        // Buat objek Perpindahan sesuai alasan pembuatan
+        final newPerpindahan = Perpindahan(
+          kkPemohon: _kkPemohon ?? 0,
+          nikPemohon: _nikPemohon ?? 0,
+          namaPemohon: _namaPemohon ?? '',
+          kedudukanPemohon: _kedudukanPemohon ?? '',
+          alasanPembuatan: _alasanPembuatan ?? '',
+          alamatAsal: _alamatAsal ?? '',
+          rtAsal: _rtAsal ?? 0, 
+          rwAsal: _rwAsal ?? 0, 
+          kodePosAsal: _kodePosAsal ?? 0,
+          provinsiAsal: _provinsiAsal ?? '',
+          kotaKapubatenAsal: _kotaKapubatenAsal ?? '',
+          kecamatanAsal: _kecamatanAsal ?? '',
+          desaKelurahanAsal: _desaKelurahanAsal ?? '',
+          alamatTujuanDaerah: _alamatTujuanDaerah ?? '',
+          rtTujuan: _rtTujuan ?? 0, 
+          rwTujuan: _rwTujuan ?? 0, 
+          kodePosTujuan: _kodePosTujuan ?? 0,
+          provinsiTujuan: _provinsiTujuan ?? '',
+          kotaKabupatenTujuan: _kotaKabupatenTujuan ?? '',
+          kecamatanTujuan: _kecamatanTujuan ?? '',
+          desaKelurahanTujuan: _desaKelurahanTujuan ?? '',
+          alasanPerpindahan: _alasanPerpindahan ?? '',
+          alasanPerpindahanLainnya: _alasanPerpindahanLainnya ?? '',
+          jenisPerpindahan: _jenisPerpindahan ?? '',
+          kepindahanAnggotaKeluarga: _kepindahanAnggotaKeluarga ?? '',
+          alamatTujuanNegara: _alamatTujuanNegara ?? '',
+          kodeNegara: _kodeNegara ?? '',
+          namaPenanggungJawab: _namaPenanggungJawab ?? '',
+          tanggalPerpindahan: _selectedDatePerpindahan ?? DateTime.now(),
+          nomorHandphone: _nomorHandphone ?? 0,
+          namaPelapor: _namaPelapor ?? '',
+          ktpPemohon: _ktpPemohon?.path ?? '', 
+          kartuKeluarga: _kartuKeluarga?.path ?? '', 
+          formulirF102: _formulirF102?.path ?? '', 
+          formulirF103: _formulirF103?.path ?? '', 
+        );
+
+        // Simpan data ke database
+        final dbPerpindahan = DatabasePerpindahan.instance;
+        await dbPerpindahan.insertPerpindahanKependudukan(newPerpindahan);
+
+        Navigator.pop(context);
+      } else {
+        print("Error: Required documents are missing based on the selected Alasan Pembuatan.");
+      }
     }
   }
 
@@ -251,13 +570,27 @@ class _PerpindahanKependudukanState extends State<PerpindahanKependudukan> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       _buildDropdownField(
-                        context,
-                        [
+                        context: context,
+                        label: 'Alasan Pembuatan',
+                        items: [
                           'Surat Keterangan Pindah',
                           'Surat Keterangan Pindah Luar Negeri (SKPLN)'
                         ],
-                        label: 'Alasan Pembuatan',
-                        onSave: (value) => _alasanPembuatan = value,
+                        currentValue: _alasanPembuatan,
+                        onSave: (value) {
+                          _alasanPembuatan = value;
+                        },
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Alasan Pembuatan tidak boleh kosong';
+                          }
+                          return null;
+                        },
+                        onChanged: (value) {
+                          setState(() {
+                            _alasanPembuatan = value!;
+                          });
+                        },
                       ),
                     ],
                   ),
@@ -1725,7 +2058,7 @@ class _PerpindahanKependudukanState extends State<PerpindahanKependudukan> {
           TextFormField(
             onSaved: (value) {
               if (isNumber) {
-                onSave(value?.isNotEmpty == true ? int.tryParse(value!)?.toString() : null);
+                onSave(value?.isNotEmpty == true ? value : null);
               } else {
                 onSave(value);
               }
@@ -1763,55 +2096,64 @@ class _PerpindahanKependudukanState extends State<PerpindahanKependudukan> {
     );
   }
 
-  Widget _buildDropdownField(BuildContext context, List<String> items,
-      {String? label, Color backgroundColor = Colors.white, Function(String?)? onSave, String? Function(String?)? validator}) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        if (label != null) _buildSubTitle(label),
-        Padding(
-          padding: const EdgeInsets.only(bottom: 16.0),
-          child: DropdownButtonFormField<String>(
-            value: items.contains(_alasanPembuatan) ? _alasanPembuatan : null,
-            isDense: true,
-            isExpanded: true,
-            decoration: InputDecoration(
-              fillColor: backgroundColor,
-              filled: true,
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(7),
-                borderSide: BorderSide.none,
-              ),
+  Widget _buildDropdownField({
+    required BuildContext context,
+    required String label,
+    required List<String> items,
+    required FormFieldSetter<String?> onSave,
+    required FormFieldValidator<String?> validator,
+    String? currentValue,
+    ValueChanged<String?>? onChanged,
+  }) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            label,
+            style: const TextStyle(
+              fontFamily: 'Ubuntu',
+              fontWeight: FontWeight.bold,
+              color: Colors.black,
             ),
-            items: items
-                .map((label) => DropdownMenuItem<String>(
-                      value: label,
-                      child: Text(
-                        label,
-                        style: TextStyle(
-                          color: Colors.black54,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ),
-                    ))
-                .toList(),
-            onChanged: (value) {
-              setState(() {
-                _alasanPembuatan = value!;
-              });
-            },
-            onSaved: onSave,
-            validator: validator ??
-                (value) {
-                  if (value == null || value.isEmpty) {
-                    return '$label tidak boleh kosong';
-                  }
-                  return null;
-                },
-            dropdownColor: Colors.white,
           ),
-        ),
-      ],
+          const SizedBox(height: 8),
+          Container(
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(7),
+            ),
+            padding: const EdgeInsets.symmetric(horizontal: 12),
+            child: DropdownButtonFormField<String>(
+              decoration: const InputDecoration(
+                fillColor: Colors.white,
+                filled: true,
+                border: InputBorder.none,
+              ),
+              value: items.contains(currentValue) ? currentValue : null,
+              items: items.map((String value) {
+                return DropdownMenuItem<String>(
+                  value: value,
+                  child: Text(
+                    value,
+                    style: const TextStyle(color: Colors.black),
+                  ),
+                );
+              }).toList(),
+              onChanged: (value) {
+                if (onChanged != null) {
+                  onChanged(value);
+                }
+              },
+              onSaved: onSave,
+              validator: validator,
+              dropdownColor: Colors.white,
+              isExpanded: true,
+            ),
+          ),
+        ],
+      ),
     );
   }
 

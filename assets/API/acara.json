@@ -1,7 +1,7 @@
 {
     "acara" : [
         {
-            "image": "assets/contoh-gambar.png",
+            "image": "assets/situ-gede.jpeg",
             "title": "FESTIVAL SITU GEDE",
             "date": "04 Juli 2024",
             "location": "Situ Rawa Gede, Rawalumbu",
@@ -9,7 +9,7 @@
             "notification": false
         },
         {
-            "image": "assets/contoh-gambar.png",
+            "image": "assets/ethnic-food.jpeg",
             "title": "BAZAAR ETHNIC FOOD",
             "date": "6-7 Maret 2024",
             "location": "Lapangan Plaza Pemkot Bekasi",
@@ -17,11 +17,91 @@
             "notification": false
         },
         {
-            "image": "assets/contoh-gambar.png",
+            "image": "assets/bedug-dondang.jpg",
             "title": "FEST. BEDUG & DONDANG",
             "date": "21 Mei 2023",
             "location": "Mustikajaya, Bekasi",
             "description": "Festival tradisional yang menampilkan adu bedug dan dondang, sebuah kesenian khas daerah setempat.",
+            "notification": false
+        },
+        {
+            "image": "assets/night-run.jpg",
+            "title": "BEKASI NIGHT RUN",
+            "date": "15 Agustus 2024",
+            "location": "Alun-Alun Kota Bekasi",
+            "description": "Acara lari malam pertama di Kota Bekasi yang mengajak warga untuk berpartisipasi dalam kegiatan olahraga bersama dengan suasana malam yang meriah.",
+            "notification": false
+        },
+        {
+            "image": "assets/konser-kemerdekaan.jpg",
+            "title": "KONSER KEMERDEKAAN",
+            "date": "17 Agustus 2024",
+            "location": "Stadion Patriot Candrabhaga",
+            "description": "Konser musik yang diadakan dalam rangka memperingati Hari Kemerdekaan Indonesia dengan menghadirkan musisi ternama dan berbagai hiburan lainnya.",
+            "notification": false
+        },
+        {
+            "image": "assets/marathon.jpeg",
+            "title": "LOMBA LARI MARATHON",
+            "date": "24 September 2024",
+            "location": "Jalan Ahmad Yani, Bekasi",
+            "description": "Lomba lari marathon yang terbuka untuk umum dengan rute yang melintasi ikon-ikon terkenal di Kota Bekasi.",
+            "notification": false
+        },
+        {
+            "image": "assets/pameran-industri.jpg",
+            "title": "PAMERAN INDUSTRI KREATIF",
+            "date": "10 Oktober 2024",
+            "location": "Summarecon Mall Bekasi",
+            "description": "Pameran yang menampilkan berbagai produk industri kreatif dari Kota Bekasi, mulai dari kerajinan tangan, fashion, hingga kuliner.",
+            "notification": false
+        },
+        {
+            "image": "assets/pekan-raya.jpg",
+            "title": "PEKAN RAYA BEKASI",
+            "date": "1-7 November 2024",
+            "location": "Jababeka Convention Center",
+            "description": "Event tahunan yang menampilkan berbagai pameran, bazaar, dan pertunjukan seni budaya untuk merayakan hari jadi Kota Bekasi.",
+            "notification": false
+        },
+        {
+            "image": "assets/karnaval.jpeg",
+            "title": "KARNAVAL KEBUDAYAAN",
+            "date": "15 Desember 2024",
+            "location": "Jalan Ir. H. Juanda, Bekasi",
+            "description": "Karnaval budaya yang menampilkan parade kesenian tradisional dari berbagai daerah di Indonesia, serta pertunjukan musik dan tari.",
+            "notification": false
+        },
+        {
+            "image": "assets/food-festival.jpeg",
+            "title": "BEKASI FOOD FESTIVAL",
+            "date": "21 Januari 2025",
+            "location": "Taman Mini Indonesia Indah",
+            "description": "Festival kuliner yang menampilkan berbagai macam makanan khas Bekasi dan Nusantara, serta lomba memasak untuk pengunjung.",
+            "notification": false
+        },
+        {
+            "image": "assets/creative-market.jpg",
+            "title": "BEKASI CREATIVE MARKET",
+            "date": "12 Februari 2025",
+            "location": "Alun-Alun Kota Bekasi",
+            "description": "Pasar kreatif yang menampilkan produk-produk dari pelaku usaha mikro, kecil, dan menengah (UMKM) Kota Bekasi, serta penampilan musik akustik.",
+            "notification": false
+        },
+        {
+            "image": "assets/abang-mpok.jpg",
+            "title": "PEMILIHAN ABANG MPOK BEKASI",
+            "date": "25 Maret 2025",
+            "location": "Gedung Graha Hartika, Bekasi",
+            "description": "Ajang pemilihan Abang Mpok Bekasi yang menjadi duta wisata dan budaya Kota Bekasi dengan beragam kegiatan edukasi dan hiburan.",
+            "notification": false
+        },
+        {
+            "image": "assets/blood-donation.png",
+            "title": "BLOOD DONATION DAY",
+            "date": "14 April 2025",
+            "location": "RSUD Kota Bekasi",
+            "description": "Hari donor darah yang diadakan oleh Pemerintah Kota Bekasi bekerja sama dengan Palang Merah Indonesia (PMI), dengan berbagai acara pendukung seperti pemeriksaan kesehatan gratis.",
             "notification": false
         }
     ]
