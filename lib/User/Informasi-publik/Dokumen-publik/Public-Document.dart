@@ -63,9 +63,9 @@ class _PublicDocumentPageState extends State<PublicDocumentPage> {
       final File file = File('${directory.path}/$fileName');
 
       await file.writeAsBytes(buffer);
-      _showNotification('File berhasil disalin ke ${file.path}');
+      _showNotification('File berhasil di download ke ${file.path}');
     } catch (e) {
-      _showNotification('Gagal menyalin file: $e');
+      _showNotification('Gagal download file: $e');
     }
   }
 

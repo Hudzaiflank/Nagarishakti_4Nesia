@@ -53,7 +53,7 @@ class DatabaseTransportasi {
     print('Inserted Transportation: ${transportasi.nama}');
   }
 
-  Future<List<Transportasi>> getAcara() async {
+  Future<List<Transportasi>> getTransportasi() async {
     final db = await instance.database;
     final result = await db.query('transportasi');
     List<Transportasi> transportations = result.map((json) => Transportasi.fromMap(json)).toList();
