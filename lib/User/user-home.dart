@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '/Database/database_berita.dart'; 
 import '/Database/database_detailBerita.dart';
+import '/Database/database_user.dart'; 
 import 'Profile/user-profile.dart';
 import 'user-Timeline-Festival.dart';
 import 'Destination/user-Destination-page.dart';
@@ -19,6 +20,7 @@ import 'Informasi-publik/Dokumen-publik/Public-Document.dart';
 import 'Informasi-publik/Agenda-Pemerintah/Agenda-pemerintahan.dart';
 import 'Dashboard-Status/Pengajuan-Dokumen/Pengajuan-Dokumen.dart';
 import 'Dashboard-Status/Pengajuan-Keluhan/Pengajuan-Keluhan.dart';
+import 'dart:io';
 
 class UserHome extends StatefulWidget {
   const UserHome({super.key});
@@ -36,6 +38,7 @@ class _UserHomeState extends State<UserHome> {
     'assets/contoh-gambar.png',
   ];
 
+  String _gambar = '';
   List<Berita> _beritas = [];
 
   bool isLoggedIn = false;
@@ -46,6 +49,7 @@ class _UserHomeState extends State<UserHome> {
     super.initState();
     checkUserLoginStatus();
     loadBeritas();
+    _loadUserInfo();
   }
 
   void checkUserLoginStatus() async {
@@ -95,6 +99,39 @@ class _UserHomeState extends State<UserHome> {
     }
   }
 
+  Future<void> _loadUserInfo() async {
+    final prefs = await SharedPreferences.getInstance();
+    final username = prefs.getString('loggedInUsername') ?? '';
+
+    if (username.isNotEmpty) {
+      final dbUser = DatabaseUser.instance;
+      final registers = await dbUser.getRegisters(); 
+
+      // Mencari user berdasarkan username
+      final user = registers.firstWhere(
+        (register) => register.username == username,
+        orElse: () => Register(
+          username: 'N/A',
+          password: 'N/A',
+          gambar: 'assets/user-home/profile-logo.png',
+          namaLengkap: 'N/A',
+          tempatLahir: 'N/A',
+          tanggalLahir: DateTime(2000, 2, 29),
+          alamatLengkap: 'N/A',
+          agama: 'N/A',
+          jenisPekerjaan: 'N/A',
+          jenisKelamin: 'N/A',
+          noTelepon: 0,
+          noRekening: 0,
+        ),
+      );
+
+      setState(() {
+        _gambar = user.gambar;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -140,10 +177,9 @@ class _UserHomeState extends State<UserHome> {
                         );
                       }
                     },
-                    child: const CircleAvatar(
+                    child: CircleAvatar(
                       radius: 22,
-                      backgroundImage:
-                          AssetImage('assets/user-home/profile-logo.png'),
+                      backgroundImage: _getBackgroundImage(),
                     ),
                   ),
                 ],
@@ -1557,6 +1593,14 @@ class _UserHomeState extends State<UserHome> {
         ),
       ),
     );
+  }
+
+  ImageProvider _getBackgroundImage() {
+    if (_gambar.isNotEmpty && File(_gambar).existsSync()) {
+      return FileImage(File(_gambar));
+    } else {
+      return const AssetImage('assets/user-home/profile-logo.png');
+    }
   }
 
   Widget _buildPopupItem(BuildContext context, String title, String subtitle,

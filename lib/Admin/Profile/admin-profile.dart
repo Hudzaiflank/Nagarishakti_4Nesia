@@ -23,10 +23,10 @@ class _EditAdminProfileState extends State<EditAdminProfile> {
   @override
   void initState() {
     super.initState();
-    _loadUserInfo();
+    _loadAdminInfo();
   }
 
-  Future<void> _loadUserInfo() async {
+  Future<void> _loadAdminInfo() async {
     final prefs = await SharedPreferences.getInstance();
     final username = prefs.getString('loggedInUsername') ?? '';
 

@@ -2,6 +2,8 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'Profile/admin-profile.dart';
+import '/Database/database_admin.dart'; 
+import 'dart:io';
 
 class AdminHome extends StatefulWidget {
   const AdminHome({super.key});
@@ -19,6 +21,8 @@ class _AdminHomeState extends State<AdminHome> {
     'assets/contoh-gambar.png',
   ];
 
+  String _gambar = '';
+
   bool isLoggedIn = false;
   String username = '';
 
@@ -26,6 +30,7 @@ class _AdminHomeState extends State<AdminHome> {
   void initState() {
     super.initState();
     checkUserLoginStatus();
+    _loadAdminInfo();
   }
 
   void checkUserLoginStatus() async {
@@ -37,6 +42,34 @@ class _AdminHomeState extends State<AdminHome> {
       isLoggedIn = loggedIn;
       username = loggedInUsername ?? 'Guest';
     });
+  }
+
+  Future<void> _loadAdminInfo() async {
+    final prefs = await SharedPreferences.getInstance();
+    final username = prefs.getString('loggedInUsername') ?? '';
+
+    if (username.isNotEmpty) {
+      final dbAdmin = DatabaseAdmin.instance;
+      final registersAdmin = await dbAdmin.getRegistersAdmin(); // Fetch all registers
+
+      // Mencari user berdasarkan username
+      final admin = registersAdmin.firstWhere(
+        (registerAdmin) => registerAdmin.username == username,
+        orElse: () => RegisterAdmin(
+          username: 'N/A',
+          password: 'N/A',
+          gambar: 'assets/user-home/admin-profile.png',
+          namaInstansi: 'N/A',
+          alamatInstansi: 'N/A',
+          noTelepon: 0,
+          email: 'N/A',
+        ),
+      );
+
+      setState(() {
+        _gambar = admin.gambar;
+      });
+    }
   }
 
   @override
@@ -84,10 +117,9 @@ class _AdminHomeState extends State<AdminHome> {
                         );
                       }
                     },
-                    child: const CircleAvatar(
+                    child: CircleAvatar(
                       radius: 22,
-                      backgroundImage:
-                          AssetImage('assets/user-home/admin-profile.png'),
+                      backgroundImage: _getBackgroundImage(),
                     ),
                   ),
                 ],
@@ -551,5 +583,13 @@ class _AdminHomeState extends State<AdminHome> {
         ),
       ),
     );
+  }
+
+  ImageProvider _getBackgroundImage() {
+    if (_gambar.isNotEmpty && File(_gambar).existsSync()) {
+      return FileImage(File(_gambar));
+    } else {
+      return const AssetImage('assets/user-home/admin-profile.png');
+    }
   }
 }
