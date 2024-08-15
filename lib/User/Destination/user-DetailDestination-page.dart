@@ -118,7 +118,7 @@ class _UserDetailDestinationPageState extends State<UserDetailDestinationPage> {
                       ),
                       const SizedBox(height: 16.0),
                       const Text(
-                        'Gambar dan Peta Wisata',
+                        'Gambar',
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,

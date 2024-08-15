@@ -204,7 +204,7 @@ class _UserDestinationPageState extends State<UserDestinationPage> {
                     child: Container(
                       color: Color(destination.backgroundColor),
                       child: ListTile(
-                        contentPadding: const EdgeInsets.all(10.0),
+                        contentPadding: EdgeInsets.all(10.0),
                         leading: CircleAvatar(
                           backgroundImage: AssetImage(destination.imagePath),
                         ),
@@ -214,6 +214,8 @@ class _UserDestinationPageState extends State<UserDestinationPage> {
                             color: Colors.white,
                             fontWeight: FontWeight.bold,
                           ),
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 1,
                         ),
                         subtitle: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -222,10 +224,15 @@ class _UserDestinationPageState extends State<UserDestinationPage> {
                               children: [
                                 const Icon(Icons.location_pin, size: 16, color: Colors.red),
                                 const SizedBox(width: 4),
-                                Text(
-                                  destination.location,
-                                  style: const TextStyle(color: Colors.white),
-                                ),
+                                Expanded(
+                                  child: Text(
+                                    destination.location,
+                                    style: const TextStyle(color: Colors.white),
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                    softWrap: false,
+                                  ),
+                                ),  
                               ],
                             ),
                             Row(

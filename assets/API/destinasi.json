@@ -1,7 +1,7 @@
 {
     "destinasi" : [
         {
-            "imagePath": "assets/contoh-gambar.png",
+            "imagePath": "assets/parigi.jpg",
             "title": "CURUG PARIGI",
             "location": "Jl. Pangkalan 5, Bantar Gebang",
             "savedBy": "Disimpan oleh 372 orang",
@@ -9,7 +9,7 @@
             "bookmark": false
         },
         {
-            "imagePath": "assets/contoh-gambar.png",
+            "imagePath": "assets/deltamas.jpg",
             "title": "DELTAMAS HILL",
             "location": "Hegarmukti, Cikarang Pusat",
             "savedBy": "Disimpan oleh 124 orang",
@@ -17,7 +17,7 @@
             "bookmark": false
         },
         {
-            "imagePath": "assets/contoh-gambar.png",
+            "imagePath": "assets/marakas.jpg",
             "title": "DANAU MARAKASH",
             "location": "Marakash, Kebalen, Babelan",
             "savedBy": "Disimpan oleh 256 orang",
@@ -25,10 +25,90 @@
             "bookmark": false
         },
         {
-            "imagePath": "assets/contoh-gambar.png",
+            "imagePath": "assets/hutan-kota.jpg",
             "title": "HUTAN KOTA",
             "location": "Jl. Jend. Ahmad Yani, Bekasi",
             "savedBy": "Disimpan oleh 398 orang",
+            "backgroundColor": "0xFF60A39C",
+            "bookmark": false
+        },
+        {
+            "imagePath": "assets/go-wet.jpg",
+            "title": "GO WET WATERPARK",
+            "location": "Grand Wisata, Tambun Selatan",
+            "savedBy": "Disimpan oleh 674 orang",
+            "backgroundColor": "0xFF60A39C",
+            "bookmark": false
+        },
+        {
+            "imagePath": "assets/taman-mini.jpeg",
+            "title": "TAMAN MINI KECIL",
+            "location": "Jl. Raya Setu, Cipayung, Cikarang Timur",
+            "savedBy": "Disimpan oleh 358 orang",
+            "backgroundColor": "0xFF60A39C",
+            "bookmark": false
+        },
+        {
+            "imagePath": "assets/tirtamas.jpg",
+            "title": "GALAXY TIRTA MAS",
+            "location": "Jl. Grand Galaxy Park, Bekasi Selatan",
+            "savedBy": "Disimpan oleh 432 orang",
+            "backgroundColor": "0xFF60A39C",
+            "bookmark": false
+        },
+        {
+            "imagePath": "assets/kampung-cikarang.jpg",
+            "title": "KAMPUNG CIKARANG",
+            "location": "Cikarang, Bekasi",
+            "savedBy": "Disimpan oleh 287 orang",
+            "backgroundColor": "0xFF60A39C",
+            "bookmark": false
+        },
+        {
+            "imagePath": "assets/taman-rusa.jpg",
+            "title": "TAMAN RUSA BINA MARGA",
+            "location": "Jl. Raya Cut Mutia, Bekasi Timur",
+            "savedBy": "Disimpan oleh 195 orang",
+            "backgroundColor": "0xFF60A39C",
+            "bookmark": false
+        },
+        {
+            "imagePath": "assets/patriot.jpg",
+            "title": "ALUN-ALUN PATRIOT BEKASI",
+            "location": "Jl. Veteran No.46, Margajaya, Bekasi Selatan",
+            "savedBy": "Disimpan oleh 598 orang",
+            "backgroundColor": "0xFF60A39C",
+            "bookmark": false
+        },
+        {
+            "imagePath": "assets/bulevar.jpg",
+            "title": "TAMAN JOGGING BULEVAR BEKASI",
+            "location": "Jl. Bulevar Selatan, Summarecon Bekasi",
+            "savedBy": "Disimpan oleh 263 orang",
+            "backgroundColor": "0xFF60A39C",
+            "bookmark": false
+        },
+        {
+            "imagePath": "assets/tmii.jpg",
+            "title": "TAMAN MINI INDONESIA INDAH (TMII)",
+            "location": "Cipayung, Bekasi",
+            "savedBy": "Disimpan oleh 789 orang",
+            "backgroundColor": "0xFF60A39C",
+            "bookmark": false
+        },
+        {
+            "imagePath": "assets/muara-gembong.jpg",
+            "title": "PANTAI MUARA GEMBONG",
+            "location": "Muara Gembong, Bekasi",
+            "savedBy": "Disimpan oleh 354 orang",
+            "backgroundColor": "0xFF60A39C",
+            "bookmark": false
+        },
+        {
+            "imagePath": "assets/taman-suropati.jpg",
+            "title": "TAMAN SUROPATI BEKASI",
+            "location": "Jl. Suropati, Bekasi Selatan",
+            "savedBy": "Disimpan oleh 221 orang",
             "backgroundColor": "0xFF60A39C",
             "bookmark": false
         }

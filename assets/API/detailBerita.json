@@ -2,35 +2,115 @@
     "detailBerita" : [
         {
             "id": 1,
-            "subtitle": "01-07-2024 07:30 | Illa Alfira",
-            "firstImage": "assets/contoh-gambar.png",
+            "subtitle": "01-07-2024 07:30 | Admin Bekasi",
+            "firstImage": "assets/4nesia-1.jpg",
             "firstDescription": "Dalam upaya meningkatkan pelayanan kepada masyarakat, Pemerintah Daerah Kota Bandung telah resmi menjalin kerjasama dengan PT 4nesia. Kerjasama ini bertujuan untuk menyatukan berbagai layanan yang ada dengan integrasi ketersediaan pemerintah daerah dan instansi Kota Bandung.",
-            "secondImage": "assets/contoh-gambar.png",
+            "secondImage": "assets/4nesia-1.jpg",
             "secondDescription": "Kerjasama ini mencakup pengembangan aplikasi berbasis mobile yang dapat membantu mempermudah masyarakat Kota Bandung dalam mengakses berbagai layanan, mulai dari pendaftaran online, pemrosesan dokumen, hingga pelayanan informasi publik. Diharapkan dengan adanya aplikasi ini, masyarakat bisa lebih mudah mendapatkan layanan tanpa harus datang langsung ke kantor pemerintah daerah Kota Bandung serta menghemat waktu dan biaya."
         },
         {
             "id": 2,
-            "subtitle": "02-07-2024 07:30 | Illa Alfira",
-            "firstImage": "assets/contoh-gambar.png",
+            "subtitle": "02-07-2024 12:30 | Admin Bekasi",
+            "firstImage": "assets/4nesia-2.jpg",
             "firstDescription": "Dalam upaya meningkatkan pelayanan kepada masyarakat, Pemerintah Daerah Kota Sukabumi telah resmi menjalin kerjasama dengan PT 4nesia. Kerjasama ini bertujuan untuk menyatukan berbagai layanan yang ada dengan integrasi ketersediaan pemerintah daerah dan instansi Kota Sukabumi.",
-            "secondImage": "assets/contoh-gambar.png",
+            "secondImage": "assets/4nesia-2.jpg",
             "secondDescription": "Kerjasama ini mencakup pengembangan aplikasi berbasis mobile yang dapat membantu mempermudah masyarakat Kota Sukabumi dalam mengakses berbagai layanan, mulai dari pendaftaran online, pemrosesan dokumen, hingga pelayanan informasi publik. Diharapkan dengan adanya aplikasi ini, masyarakat bisa lebih mudah mendapatkan layanan tanpa harus datang langsung ke kantor pemerintah daerah Kota Sukabumi serta menghemat waktu dan biaya."
         },
         {
             "id": 3,
-            "subtitle": "03-07-2024 07:30 | Illa Alfira",
-            "firstImage": "assets/contoh-gambar.png",
+            "subtitle": "03-07-2024 07:50 | Admin Bekasi",
+            "firstImage": "assets/4nesia-3.jpeg",
             "firstDescription": "Dalam upaya meningkatkan pelayanan kepada masyarakat, Pemerintah Daerah Kota Sorong telah resmi menjalin kerjasama dengan PT 4nesia. Kerjasama ini bertujuan untuk menyatukan berbagai layanan yang ada dengan integrasi ketersediaan pemerintah daerah dan instansi Kota Sorong.",
-            "secondImage": "assets/contoh-gambar.png",
+            "secondImage": "assets/4nesia-3.jpeg",
             "secondDescription": "Kerjasama ini mencakup pengembangan aplikasi berbasis mobile yang dapat membantu mempermudah masyarakat Kota Sorong dalam mengakses berbagai layanan, mulai dari pendaftaran online, pemrosesan dokumen, hingga pelayanan informasi publik. Diharapkan dengan adanya aplikasi ini, masyarakat bisa lebih mudah mendapatkan layanan tanpa harus datang langsung ke kantor pemerintah daerah Kota Sorong serta menghemat waktu dan biaya."
         },
         {
             "id": 4,
-            "subtitle": "04-07-2024 07:30 | Illa Alfira",
-            "firstImage": "assets/contoh-gambar.png",
+            "subtitle": "04-07-2024 09:10 | Admin Bekasi",
+            "firstImage": "assets/4nesia-4.jpg",
             "firstDescription": "Dalam upaya meningkatkan pelayanan kepada masyarakat, Pemerintah Daerah Kota Tegal telah resmi menjalin kerjasama dengan PT 4nesia. Kerjasama ini bertujuan untuk menyatukan berbagai layanan yang ada dengan integrasi ketersediaan pemerintah daerah dan instansi Kota Tegal.",
-            "secondImage": "assets/contoh-gambar.png",
+            "secondImage": "assets/4nesia-4.jpg",
             "secondDescription": "Kerjasama ini mencakup pengembangan aplikasi berbasis mobile yang dapat membantu mempermudah masyarakat Kota Tegal dalam mengakses berbagai layanan, mulai dari pendaftaran online, pemrosesan dokumen, hingga pelayanan informasi publik. Diharapkan dengan adanya aplikasi ini, masyarakat bisa lebih mudah mendapatkan layanan tanpa harus datang langsung ke kantor pemerintah daerah Kota Tegal serta menghemat waktu dan biaya."
+        },
+        {
+            "id": 5,
+            "subtitle": "05-07-2024 08:00 | Admin Bekasi",
+            "firstImage": "assets/smart-city.jpg",
+            "firstDescription": "Pemerintah Kota Bekasi secara resmi menjalin kerjasama dengan PT 4nesia untuk pengembangan Smart City di Kota Bekasi. Kerjasama ini melibatkan berbagai aspek digitalisasi dan integrasi layanan pemerintah daerah dengan teknologi terkini.",
+            "secondImage": "assets/smart-city.jpg",
+            "secondDescription": "Dengan adanya Smart City, diharapkan masyarakat Kota Bekasi dapat menikmati pelayanan publik yang lebih efisien, transparan, dan terintegrasi secara menyeluruh. Hal ini juga akan memudahkan pemerintah dalam memantau dan mengelola berbagai aspek pelayanan masyarakat."
+        },
+        {
+            "id": 6,
+            "subtitle": "10-07-2024 09:00 | Admin Bekasi",
+            "firstImage": "assets/digitalisasi-layanan.jpg",
+            "firstDescription": "Pemerintah Kota Bekasi meluncurkan program digitalisasi pelayanan kependudukan. Program ini bertujuan untuk mempermudah proses administrasi kependudukan, seperti pembuatan KTP, KK, dan akta kelahiran.",
+            "secondImage": "assets/digitalisasi-layanan.jpg",
+            "secondDescription": "Dengan program digitalisasi ini, masyarakat tidak perlu lagi mengantri di kantor pemerintahan untuk mendapatkan layanan kependudukan. Semua proses dapat dilakukan secara online melalui aplikasi yang telah disediakan oleh Pemerintah Kota Bekasi."
+        },
+        {
+            "id": 7,
+            "subtitle": "15-07-2024 10:00 | Admin Bekasi",
+            "firstImage": "assets/festival-kuliner.jpg",
+            "firstDescription": "Pemerintah Kota Bekasi mengadakan Festival Kuliner Nusantara yang bertujuan untuk meningkatkan pariwisata lokal serta memperkenalkan kekayaan kuliner Nusantara kepada masyarakat.",
+            "secondImage": "assets/festival-kuliner.jpg",
+            "secondDescription": "Festival ini akan diisi oleh berbagai stand kuliner dari seluruh Indonesia dan diadakan di Alun-Alun Kota Bekasi. Selain itu, akan ada pertunjukan musik tradisional dan modern yang menambah semarak acara."
+        },
+        {
+            "id": 8,
+            "subtitle": "20-07-2024 08:30 | Admin Bekasi",
+            "firstImage": "assets/jembatan-bantargebang.jpg",
+            "firstDescription": "Pemerintah Kota Bekasi meresmikan jembatan penghubung baru di Bantargebang. Jembatan ini diharapkan dapat mengurangi kemacetan dan memperlancar arus lalu lintas di wilayah tersebut.",
+            "secondImage": "assets/jembatan-bantargebang.jpg",
+            "secondDescription": "Jembatan ini dibangun dengan teknologi modern dan dilengkapi dengan fasilitas pejalan kaki serta penerangan jalan yang memadai. Ini merupakan salah satu proyek infrastruktur terbesar di Bekasi tahun ini."
+        },
+        {
+            "id": 9,
+            "subtitle": "25-07-2024 07:45 | Admin Bekasi",
+            "firstImage": "assets/baksos.jpg",
+            "firstDescription": "Pemerintah Kota Bekasi menggelar bakti sosial di Kelurahan Margahayu, yang melibatkan pemberian bantuan sembako dan pemeriksaan kesehatan gratis bagi warga sekitar.",
+            "secondImage": "assets/baksos.jpg",
+            "secondDescription": "Acara ini dihadiri oleh berbagai elemen masyarakat dan bertujuan untuk meningkatkan kesejahteraan warga, terutama mereka yang kurang mampu. Pemerintah Kota Bekasi berharap kegiatan ini bisa menjadi rutinitas untuk membantu masyarakat yang membutuhkan."
+        },
+        {
+            "id": 10,
+            "subtitle": "30-07-2024 09:00 | Admin Bekasi",
+            "firstImage": "assets/taman-kota.jpeg",
+            "firstDescription": "Pemerintah Kota Bekasi umumkan pembangunan Taman Kota Baru di Jatiwarna, yang diharapkan dapat menjadi ruang terbuka hijau bagi warga sekitar.",
+            "secondImage": "assets/taman-kota.jpeg",
+            "secondDescription": "Taman ini akan dilengkapi dengan fasilitas jogging track, taman bermain anak, dan area piknik. Pembangunan taman ini adalah bagian dari upaya Pemerintah Kota Bekasi untuk meningkatkan kualitas hidup warganya dengan menyediakan lebih banyak ruang hijau."
+        },
+        {
+            "id": 11,
+            "subtitle": "05-08-2024 08:00 | Admin Bekasi",
+            "firstImage": "assets/lomba-kebersihan.jpg",
+            "firstDescription": "Pemerintah Kota Bekasi mengadakan lomba kebersihan antar kelurahan dalam rangka memperingati Hari Kemerdekaan Indonesia. Lomba ini diikuti oleh seluruh kelurahan di Bekasi.",
+            "secondImage": "assets/lomba-kebersihan.jpg",
+            "secondDescription": "Lomba ini bertujuan untuk meningkatkan kesadaran warga akan pentingnya menjaga kebersihan lingkungan serta menumbuhkan rasa kebersamaan antar warga. Hadiah berupa dana pembangunan untuk kelurahan yang menjadi juara akan diberikan oleh Pemerintah Kota Bekasi."
+        },
+        {
+            "id": 12,
+            "subtitle": "10-08-2024 07:30 | Admin Bekasi",
+            "firstImage": "assets/lapor.jpg",
+            "firstDescription": "Pemerintah Kota Bekasi luncurkan aplikasi pelaporan pengaduan online yang memudahkan warga untuk melaporkan berbagai permasalahan di lingkungan sekitar.",
+            "secondImage": "assets/lapor.jpg",
+            "secondDescription": "Aplikasi ini dirancang untuk mempermudah komunikasi antara warga dan pemerintah. Warga dapat melaporkan masalah seperti jalan rusak, sampah yang menumpuk, atau pelayanan publik yang kurang memadai dengan cepat dan mudah."
+        },
+        {
+            "id": 13,
+            "subtitle": "15-08-2024 09:00 | Admin Bekasi",
+            "firstImage": "assets/seminar-lingkungan.png",
+            "firstDescription": "Pemerintah Kota Bekasi gelar seminar edukasi lingkungan di sekolah-sekolah sebagai bagian dari upaya untuk meningkatkan kesadaran generasi muda tentang pentingnya menjaga kelestarian lingkungan.",
+            "secondImage": "assets/seminar-lingkungan.png",
+            "secondDescription": "Seminar ini diisi oleh para ahli lingkungan dan aktivis yang berbagi ilmu tentang cara menjaga lingkungan, mendaur ulang sampah, dan mengurangi penggunaan plastik. Kegiatan ini diharapkan dapat membentuk kebiasaan peduli lingkungan sejak dini."
+        },
+        {
+            "id": 14,
+            "subtitle": "20-08-2024 08:00 | Admin Bekasi",
+            "firstImage": "assets/e-tilang.jpg",
+            "firstDescription": "Pemerintah Kota Bekasi resmikan sistem E-Tilang untuk meningkatkan keselamatan berkendara dan menekan angka pelanggaran lalu lintas.",
+            "secondImage": "assets/e-tilang.jpg",
+            "secondDescription": "Sistem E-Tilang ini memungkinkan penindakan pelanggaran lalu lintas secara elektronik melalui CCTV yang terpasang di berbagai titik strategis. Dengan sistem ini, pelanggar tidak perlu lagi datang ke pengadilan untuk menyelesaikan tilang, cukup membayar denda secara online."
         }
     ]
 }

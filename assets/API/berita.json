@@ -1,20 +1,60 @@
 {
-    "berita" : [
+    "berita": [
         {
-            "image": "assets/contoh-gambar.png",
-            "title": "Pemerintah Daerah Kota Bandung menjalin kerja sama dengan PT 4nesia untuk menyatukan kuasa"
+            "image": "assets/4nesia-1.jpg",
+            "title": "Pemerintah Daerah Kota Bandung Menjalin Kerjasama dengan PT 4nesia untuk menyatukan kuasa"
         },
         {
-            "image": "assets/contoh-gambar.png",
-            "title": "Pemerintah Daerah Kota Sukabumi menjalin kerja sama dengan PT 4nesia untuk menyatukan kuasa"
+            "image": "assets/4nesia-2.jpg",
+            "title": "Pemerintah Daerah Kota Sukabumi Menjalin Kerjasama dengan PT 4nesia untuk menyatukan kuasa"
         },
         {
-            "image": "assets/contoh-gambar.png",
-            "title": "Pemerintah Daerah Kota Sorong menjalin kerja sama dengan PT 4nesia untuk menyatukan kuasa"
+            "image": "assets/4nesia-3.jpeg",
+            "title": "Pemerintah Daerah Kota Sorong Menjalin Kerjasama dengan PT 4nesia untuk menyatukan kuasa"
         },
         {
-            "image": "assets/contoh-gambar.png",
-            "title": "Pemerintah Daerah Kota Tegal menjalin kerja sama dengan PT 4nesia untuk menyatukan kuasa"
+            "image": "assets/4nesia-4.jpg",
+            "title": "Pemerintah Daerah Kota Tegal Menjalin Kerjasama dengan PT 4nesia untuk menyatukan kuasa"
+        },
+        {
+            "image": "assets/smart-city.jpg",
+            "title": "Pemerintah Daerah Kota Bekasi Menjalin Kerjasama dengan PT 4nesia untuk Pengembangan Smart City"
+        },
+        {
+            "image": "assets/digitalisasi-layanan.jpg",
+            "title": "Pemerintah Kota Bekasi Luncurkan Program Digitalisasi Pelayanan Kependudukan"
+        },
+        {
+            "image": "assets/festival-kuliner.jpg",
+            "title": "Pemerintah Kota Bekasi Mengadakan Festival Kuliner Nusantara untuk Meningkatkan Pariwisata Lokal"
+        },
+        {
+            "image": "assets/jembatan-bantargebang.jpg",
+            "title": "Pemerintah Kota Bekasi Resmikan Jembatan Penghubung Baru di Bantargebang"
+        },
+        {
+            "image": "assets/baksos.jpg",
+            "title": "Pemerintah Kota Bekasi Gelar Bakti Sosial di Kelurahan Margahayu"
+        },
+        {
+            "image": "assets/taman-kota.jpeg",
+            "title": "Pemerintah Kota Bekasi Umumkan Pembangunan Taman Kota Baru di Jatiwarna"
+        },
+        {
+            "image": "assets/lomba-kebersihan.jpg",
+            "title": "Pemerintah Kota Bekasi Adakan Lomba Kebersihan Antar Kelurahan untuk Memperingati Hari Kemerdekaan"
+        },
+        {
+            "image": "assets/lapor.jpg",
+            "title": "Pemerintah Kota Bekasi Luncurkan Aplikasi Pelaporan Pengaduan Online"
+        },
+        {
+            "image": "assets/seminar-lingkungan.png",
+            "title": "Pemerintah Kota Bekasi Gelar Seminar Edukasi Lingkungan di Sekolah-sekolah"
+        },
+        {
+            "image": "assets/e-tilang.jpg",
+            "title": "Pemerintah Kota Bekasi Resmikan Sistem E-Tilang untuk Peningkatan Keselamatan Berkendara"
         }
     ]
 }
