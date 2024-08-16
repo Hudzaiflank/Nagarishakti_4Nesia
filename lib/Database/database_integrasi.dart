@@ -30,12 +30,12 @@ class DatabaseIntegration {
       CREATE TABLE integrations(
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         link_API TEXT NOT NULL,
-        nama_daerah TEXT NOT NULL,
+        nama_daerah TEXT NOT NULL
       )
     ''');
   }
 
-  Future<void> insertIntegration(Integration integration) async {
+  Future<void> insertIntegrations(Integration integration) async {
     final db = await instance.database;
     await db.insert(
       'integrations',
@@ -48,6 +48,13 @@ class DatabaseIntegration {
     final db = await instance.database;
     final result = await db.query('integrations');
     return result.map((json) => Integration.fromMap(json)).toList();
+  }
+
+  Future<void> deleteDatabaseFile() async {
+    final dbPath = await getDatabasesPath();
+    final path = join(dbPath, 'integrations.db');
+    await databaseFactory.deleteDatabase(path);
+    print('Database deleted');
   }
 
   Future close() async {

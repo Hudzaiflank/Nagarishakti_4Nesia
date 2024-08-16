@@ -479,6 +479,8 @@ class _NewsPageState extends State<NewsPage>
                     fontFamily: 'Ubuntu',
                     color: Colors.white,
                   ),
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,                 
                 ),
               ),
             ),

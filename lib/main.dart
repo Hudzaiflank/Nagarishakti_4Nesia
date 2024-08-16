@@ -6,6 +6,7 @@ import 'register.dart';
 import '/Database/database_user.dart';
 import '/Database/database_admin.dart';
 import '/Database/database_superAdmin.dart';
+import '/Database/database_integrasi.dart';
 import '/Database/database_destinasi.dart';
 import '/Database/database_detailDestinasi.dart';
 import '/Database/database_acara.dart';
@@ -50,6 +51,7 @@ void main() async {
   await DatabaseUser.instance.deleteDatabaseFile();
   await DatabaseAdmin.instance.deleteDatabaseFile();
   await DatabaseSuperAdmin.instance.deleteDatabaseFile();
+  await DatabaseIntegration.instance.deleteDatabaseFile();
   await DatabaseDestinasi.instance.deleteDatabaseFile();
   await DatabaseDetailDestinasi.instance.deleteDatabaseFile();
   await DatabaseAcara.instance.deleteDatabaseFile();
@@ -72,6 +74,7 @@ void main() async {
   await DatabaseUser.instance.database;
   await DatabaseAdmin.instance.database; 
   await DatabaseSuperAdmin.instance.database; 
+  await DatabaseIntegration.instance.database;
   await DatabaseDestinasi.instance.database;
   await DatabaseDetailDestinasi.instance.database;
   await DatabaseAcara.instance.database;

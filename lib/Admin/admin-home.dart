@@ -29,18 +29,18 @@ class _AdminHomeState extends State<AdminHome> {
   @override
   void initState() {
     super.initState();
-    checkUserLoginStatus();
+    checkAdminLoginStatus();
     _loadAdminInfo();
   }
 
-  void checkUserLoginStatus() async {
+  void checkAdminLoginStatus() async {
     final prefs = await SharedPreferences.getInstance();
     bool loggedIn = prefs.getBool('isLoggedIn') ?? false;
     String? loggedInUsername = prefs.getString('loggedInUsername');
 
     setState(() {
       isLoggedIn = loggedIn;
-      username = loggedInUsername ?? 'Guest';
+      username = loggedInUsername ?? 'Admin';
     });
   }
 
