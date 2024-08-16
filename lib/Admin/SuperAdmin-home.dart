@@ -64,7 +64,9 @@ class _SuperAdminHome extends State<SuperAdminHome> {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
 
-      // Pastikan bahwa _linkAPI dan _namaDaerah tidak null
+      print('Link API: $_linkAPI');
+      print('Nama Daerah: $_namaDaerah');
+
       if (_linkAPI != null && _namaDaerah != null) {
         final newIntegrasi = Integration(
           linkAPI: _linkAPI!,
@@ -75,24 +77,20 @@ class _SuperAdminHome extends State<SuperAdminHome> {
           final dbIntegrasi = DatabaseIntegration.instance;
           await dbIntegrasi.insertIntegrations(newIntegrasi);
 
-          // Menambahkan data baru ke _history jika diperlukan
+          // Memperbarui state dengan data baru
           setState(() {
             _history.add(_linkAPI!);
-            // Anda bisa juga menambahkan _namaDaerah ke _history jika perlu
             _history.add(_namaDaerah!);
           });
 
-          // Debug log untuk memeriksa _history
           print("Riwayat: $_history");
 
-          // Pastikan _history tidak kosong sebelum menavigasi
           if (_history.isNotEmpty) {
             Navigator.pushReplacementNamed(context, '/login');
           } else {
             print("Riwayat kosong, tidak dapat menavigasi");
           }
         } catch (error) {
-          // Menangani error atau menampilkan pesan
           print("Error saving integration: $error");
         }
       } else {
@@ -440,7 +438,39 @@ class _SuperAdminHome extends State<SuperAdminHome> {
                     borderRadius: BorderRadius.circular(7.0),
                   ),
                   child: Column(
-                    children: [             
+                    children: [        
+                      Text(
+                        'LINK API YANG TELAH TERHUBUNG',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontFamily: 'Ubuntu',
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18,
+                        ),
+                      ),
+                      SizedBox(height: 5), // Jarak ke atas
+                      Divider(color: Colors.white),
+                      SizedBox(height: 5), // Jarak ke bawah
+                      if (_linkAPI != null && _linkAPI!.isNotEmpty)
+                        Text(
+                          _linkAPI!,
+                          style: TextStyle(
+                            fontFamily: 'Ubuntu',
+                            color: Colors.white,
+                          ),
+                        )
+                      else
+                        Text(
+                          'Belum ada link api yang terhubung',
+                          style: TextStyle(
+                            fontFamily: 'Ubuntu',
+                            color: Colors.white,
+                          ),
+                        ),   
+                      SizedBox(height: 5), // Jarak ke atas
+                      Divider(color: Colors.white),
+                      SizedBox(height: 5), // Jarak ke bawah                                                
                       Text(
                         'API DAERAH YANG TELAH TERHUBUNG',
                         textAlign: TextAlign.center,
@@ -470,17 +500,17 @@ class _SuperAdminHome extends State<SuperAdminHome> {
                             color: Colors.white,
                           ),
                         ),
-                      SizedBox(
-                          height:
-                              60), // Jarak dari tulisan terakhir ke "to be continued"
-                      Text(
-                        'to be continued',
-                        style: TextStyle(
-                          fontFamily: 'Ubuntu',
-                          color: Colors.white,
-                          fontStyle: FontStyle.italic,
-                        ),
-                      ),                                  
+                      // SizedBox(
+                      //     height:
+                      //         60), // Jarak dari tulisan terakhir ke "to be continued"
+                      // Text(
+                      //   'to be continued',
+                      //   style: TextStyle(
+                      //     fontFamily: 'Ubuntu',
+                      //     color: Colors.white,
+                      //     fontStyle: FontStyle.italic,
+                      //   ),
+                      // ),                                  
                     ],
                   ),         
                 ),              
