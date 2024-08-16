@@ -108,21 +108,49 @@ flutter:
     - assets/API/detailBerita.json
     - assets/API/pengajuanDokumen.json
     - assets/API/pengajuanKeluhan.json
+    - assets/4nesia-1.jpg
+    - assets/4nesia-2.jpg
+    - assets/4nesia-3.jpeg
+    - assets/4nesia-4.jpg
     - assets/abang-mpok.jpg
+    - assets/baksos.jpg
     - assets/bedug-dondang.jpg
     - assets/blood-donation.jpeg
     - assets/blood-donation.png
+    - assets/bulevar.jpg
     - assets/creative-market.jpg
+    - assets/deltamas.jpg
+    - assets/digitalisasi-layanan.jpg
+    - assets/e-tilang.jpg
     - assets/ethnic-food.jpeg
+    - assets/festival-kuliner.jpg
     - assets/food-festival.jpeg
+    - assets/go-wet.jpg
+    - assets/hutan-kota.jpg
+    - assets/jembatan-bantargebang.jpg
+    - assets/kampung-cikarang.jpg
     - assets/karnaval.jpeg
     - assets/konser-kemerdekaan.jpg
+    - assets/lapor.jpg
+    - assets/lomba-kebersihan.jpg
+    - assets/marakas.jpeg
+    - assets/marakas.jpg
     - assets/marathon.jpeg
+    - assets/muara-gembong.jpg
     - assets/night-run.jpg
     - assets/pameran-industri.jpg
     - assets/parigi.jpg
+    - assets/patriot.jpg
     - assets/pekan-raya.jpg
+    - assets/seminar-lingkungan.png
     - assets/situ-gede.jpeg
+    - assets/smart-city.jpg
+    - assets/taman-kota.jpeg
+    - assets/taman-mini.jpeg
+    - assets/taman-rusa.jpg
+    - assets/taman-suropati.jpg
+    - assets/tirtamas.jpg
+    - assets/tmii.jpg
 
   #   - images/a_dot_ham.jpeg
 

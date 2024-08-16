@@ -1367,7 +1367,7 @@ class _UserHomeState extends State<UserHome> {
                                           ),
                                           child: Image.asset(
                                             news.image,
-                                            height: 100,
+                                            height: 80,
                                             width: double.infinity,
                                             fit: BoxFit.cover,
                                           ),
@@ -1386,6 +1386,8 @@ class _UserHomeState extends State<UserHome> {
                                               fontFamily: 'Ubuntu',
                                             ),
                                             textAlign: TextAlign.justify,
+                                            maxLines: 4,
+                                            overflow: TextOverflow.ellipsis, 
                                           ),
                                         ),
                                       ),

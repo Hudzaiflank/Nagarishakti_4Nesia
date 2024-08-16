@@ -63,12 +63,16 @@ class _UserDetailDestinationPageState extends State<UserDetailDestinationPage> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(
-                            widget.destination.title,
-                            style: const TextStyle(
-                              fontSize: 24,
-                              fontWeight: FontWeight.bold,
-                              fontFamily: 'Ubuntu',
+                          Expanded(
+                            child: Text(
+                              widget.destination.title,
+                              style: const TextStyle(
+                                fontSize: 24,
+                                fontWeight: FontWeight.bold,
+                                fontFamily: 'Ubuntu',
+                              ),
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
                             ),
                           ),
                           Icon(
@@ -94,7 +98,11 @@ class _UserDetailDestinationPageState extends State<UserDetailDestinationPage> {
                             child: Text(
                               widget.destination.location,
                               style: const TextStyle(
-                                  color: Colors.grey, fontFamily: 'Ubuntu'),
+                                color: Colors.grey,
+                                fontFamily: 'Ubuntu',
+                              ),
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
                             ),
                           ),
                         ],
@@ -118,7 +126,7 @@ class _UserDetailDestinationPageState extends State<UserDetailDestinationPage> {
                       ),
                       const SizedBox(height: 16.0),
                       const Text(
-                        'Gambar dan Peta Wisata',
+                        'Gambar',
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
@@ -137,6 +145,7 @@ class _UserDetailDestinationPageState extends State<UserDetailDestinationPage> {
                               margin:
                                   const EdgeInsets.symmetric(horizontal: 4.0),
                               width: 200,
+                              height: 200,
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(8.0),
                                 child:

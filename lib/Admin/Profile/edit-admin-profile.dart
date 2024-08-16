@@ -30,10 +30,10 @@ class _EditAdminProfilePageState extends State<EditAdminProfilePage> {
     _alamatInstansiController = TextEditingController();
     _noTeleponController = TextEditingController();
     _emailController = TextEditingController();
-    _loadUserInfo();
+    _loadAdminInfo();
   }
 
-    Future<void> _loadUserInfo() async {
+  Future<void> _loadAdminInfo() async {
     final prefs = await SharedPreferences.getInstance();
     final username = prefs.getString('loggedInUsername') ?? '';
 

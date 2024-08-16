@@ -67,9 +67,18 @@ class _DetailNewsPageState extends State<DetailNewsPage> {
               SizedBox(height: 8),
               Divider(color: Colors.black),
               SizedBox(height: 8),
-              ClipRRect(
-                borderRadius: BorderRadius.circular(7),
-                child: Image.asset(widget.newsDetail.firstImage),
+              Center(
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(7),
+                  child: SizedBox(
+                    height: 200,
+                    width: 400,
+                    child: Image.asset(
+                      widget.newsDetail.firstImage,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ),
               ),
               SizedBox(height: 16),
               Container(
@@ -91,9 +100,18 @@ class _DetailNewsPageState extends State<DetailNewsPage> {
                       ),
                     ),
                     SizedBox(height: 16),
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(7),
-                      child: Image.asset(widget.newsDetail.secondImage),
+                    Center(
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(7),
+                        child: SizedBox(
+                          height: 200,
+                          width: 400,
+                          child: Image.asset(
+                            widget.newsDetail.secondImage,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ),
                     ),
                     SizedBox(height: 16),
                     Text(

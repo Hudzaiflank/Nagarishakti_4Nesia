@@ -3,29 +3,99 @@
         {
             "id": 1,
             "deskripsi": "Curug Parigi sering disebut sebagai mini Niagara karena bentuknya yang melengkung. Curug Parigi ini menawarkan suasana sejuk dan pemandangan alam yang indah, cocok untuk wisata alam dan fotografi.",
-            "gambar": "assets/contoh-gambar.png",
+            "gambar": "assets/parigi.jpg",
             "fasilitas": "- Spot Foto\n- Tempat Parkir\n- Gazebo\n- Toilet\n- Tempat Makan",
             "hargaTiket": "- Mobil Rp10.000\n- Motor Rp5.000\n- Sepeda Rp2.000."
         },
         {
             "id": 2,
             "deskripsi": "Deltamas Hill menawarkan suasana tenang dan sejuk serta pemandangan matahari terbenam yang spektakuler. Sehingga Deltamas Hill cocok sebagai tempat untuk untuk melepas penat dan bersantai serta berfoto-foto yang Instagramable.",
-            "gambar": "assets/contoh-gambar.png",
+            "gambar": "assets/deltamas.jpg",
             "fasilitas": "- Spot Foto\n- Tempat Parkir\n- Tempat Makan\n- Jogging Track",
             "hargaTiket": "Gratis"
         },
         {
             "id": 3,
             "deskripsi": "Danau Marakash memiliki pemandangan malam yang indah dan disertai cahaya lampu hias serta atraksi malam seperti komidi putar. Oleh karena itu, Danau Marakash ramai dikunjungi pengunjung bersama keluarganya.",
-            "gambar": "assets/contoh-gambar.png",
+            "gambar": "assets/marakas.jpg",
             "fasilitas": "- Tempat Parkir\n- Toilet & Kamar Mandi\n- Tempat Makan\n- Mushola\n- Kolam Renang",
             "hargaTiket": "Rp5.000"
         },
         {
             "id": 4,
             "deskripsi": "Hutan Kota tergolong asri dengan pepohonan rindang yang tumbuh dengan subur dan udara yang sejuk. Maka, Hutan Kota sering digunakan sebagai tempat berolahraga ataupun tempat bersantai",
-            "gambar": "assets/contoh-gambar.png",
+            "gambar": "assets/hutan-kota.jpg",
             "fasilitas": "- Toilet\n- Mushola\n- Jogging track\n- Taman Bermain Anak-Anak\n- Free WiFi",
+            "hargaTiket": "Gratis"
+        },
+        {
+            "id": 5,
+            "deskripsi": "Go Wet Waterpark adalah taman air terbesar di Bekasi yang memiliki berbagai wahana air menarik seperti seluncuran, kolam ombak, dan lazy river. Tempat ini cocok untuk rekreasi keluarga.",
+            "gambar": "assets/go-wet.jpg",
+            "fasilitas": "- Wahana Air\n- Spot Foto\n- Tempat Makan\n- Kamar Ganti & Shower\n- Tempat Parkir",
+            "hargaTiket": "Rp75.000 - Rp150.000"
+        },
+        {
+            "id": 6,
+            "deskripsi": "Taman Mini Kecil menawarkan miniatur dari berbagai bangunan adat dan ikon dari seluruh Indonesia. Tempat ini cocok untuk wisata edukasi dan budaya.",
+            "gambar": "assets/taman-mini.jpeg",
+            "fasilitas": "- Spot Foto\n- Tempat Parkir\n- Tempat Makan\n- Taman Bermain Anak-Anak",
+            "hargaTiket": "Rp20.000"
+        },
+        {
+            "id": 7,
+            "deskripsi": "Galaxy Tirta Mas adalah kolam renang yang populer di kawasan Galaxy Bekasi. Tempat ini dilengkapi dengan berbagai kolam untuk anak-anak dan dewasa, serta fasilitas bermain air.",
+            "gambar": "assets/tirtamas.jpg",
+            "fasilitas": "- Kolam Renang\n- Tempat Parkir\n- Kamar Ganti & Shower\n- Tempat Makan\n- Spot Foto",
+            "hargaTiket": "Rp25.000"
+        },
+        {
+            "id": 8,
+            "deskripsi": "Kampung Cikarang adalah area wisata yang menampilkan kehidupan tradisional Sunda dengan suasana pedesaan yang asri. Pengunjung dapat menikmati kuliner khas dan kerajinan lokal.",
+            "gambar": "assets/kampung-cikarang.jpg",
+            "fasilitas": "- Tempat Parkir\n- Spot Foto\n- Tempat Makan\n- Gazebo",
+            "hargaTiket": "Gratis"
+        },
+        {
+            "id": 9,
+            "deskripsi": "Taman Rusa Bina Marga adalah tempat rekreasi yang cocok untuk keluarga, di mana pengunjung dapat berinteraksi dengan rusa-rusa yang hidup bebas di taman.",
+            "gambar": "assets/taman-rusa.jpg",
+            "fasilitas": "- Spot Foto\n- Tempat Parkir\n- Toilet\n- Taman Bermain Anak-Anak",
+            "hargaTiket": "Rp10.000"
+        },
+        {
+            "id": 10,
+            "deskripsi": "Alun-Alun Patriot Bekasi adalah ruang terbuka hijau yang sering digunakan untuk berbagai acara komunitas dan kegiatan olahraga. Tempat ini memiliki banyak fasilitas umum untuk pengunjung.",
+            "gambar": "assets/patriot.jpg",
+            "fasilitas": "- Spot Foto\n- Jogging Track\n- Tempat Parkir\n- Toilet\n- Free WiFi",
+            "hargaTiket": "Gratis"
+        },
+        {
+            "id": 11,
+            "deskripsi": "Taman Jogging Bulevar Bekasi adalah tempat yang populer di kalangan warga untuk berolahraga pagi atau sore. Suasana yang asri dan fasilitas yang lengkap menjadikan tempat ini favorit untuk rekreasi.",
+            "gambar": "assets/bulevar.jpg",
+            "fasilitas": "- Jogging Track\n- Spot Foto\n- Tempat Parkir\n- Toilet",
+            "hargaTiket": "Gratis"
+        },
+        {
+            "id": 12,
+            "deskripsi": "Taman Mini Indonesia Indah (TMII) adalah taman rekreasi yang menampilkan kebudayaan Indonesia dengan berbagai paviliun daerah dan wahana pendidikan. Meskipun lokasinya di Bekasi, TMII merupakan ikon wisata nasional.",
+            "gambar": "assets/tmii.jpg",
+            "fasilitas": "- Paviliun Daerah\n- Museum\n- Wahana Permainan\n- Tempat Parkir\n- Tempat Makan",
+            "hargaTiket": "Rp25.000 - Rp50.000"
+        },
+        {
+            "id": 13,
+            "deskripsi": "Pantai Muara Gembong menawarkan suasana pantai yang tenang dengan pemandangan laut yang indah. Cocok untuk berlibur bersama keluarga dan menikmati keindahan alam.",
+            "gambar": "assets/muara-gembong.jpg",
+            "fasilitas": "- Spot Foto\n- Tempat Parkir\n- Toilet\n- Tempat Makan",
+            "hargaTiket": "Rp10.000"
+        },
+        {
+            "id": 14,
+            "deskripsi": "Taman Suropati Bekasi adalah taman kota yang menawarkan suasana tenang di tengah hiruk pikuk kota. Taman ini memiliki jalur jogging dan area bermain anak-anak, cocok untuk bersantai.",
+            "gambar": "assets/taman-suropati.jpg",
+            "fasilitas": "- Jogging Track\n- Tempat Parkir\n- Toilet\n- Taman Bermain Anak-Anak",
             "hargaTiket": "Gratis"
         }
     ]

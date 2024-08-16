@@ -47,10 +47,39 @@ class DatabaseSuperAdmin {
     );
   }
 
+  Future<void> updateRegistersSuperAdmin(RegisterSuperAdmin registerSuperAdmin) async {
+    final db = await instance.database;
+    try {
+      await db.update(
+        'registersSuperAdmin',
+        registerSuperAdmin.toMap(),
+        where: 'id = ?', 
+        whereArgs: [registerSuperAdmin.id],
+      );
+    } catch (e) {
+      print('Error updating register Super Admin: $e');
+    }
+  }
+
   Future<List<RegisterSuperAdmin>> getRegistersSuperAdmin() async {
     final db = await instance.database;
     final result = await db.query('registersSuperAdmin');
     return result.map((json) => RegisterSuperAdmin.fromMap(json)).toList();
+  }
+
+  Future<RegisterSuperAdmin?> getRegisterSuperAdminByUsername(String username) async {
+    final db = await instance.database;
+    final maps = await db.query(
+      'registersSuperAdmin',
+      where: 'username = ?',
+      whereArgs: [username],
+    );
+
+    if (maps.isNotEmpty) {
+      return RegisterSuperAdmin.fromMap(maps.first);
+    } else {
+      return null;
+    }
   }
 
   Future<void> deleteDatabaseFile() async {
